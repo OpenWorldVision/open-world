@@ -1,1 +1,5 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+**Open World**
+
+Run `yarn` to bootstrap project
+
+Run `yarn dev` to start development server
