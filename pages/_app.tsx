@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }) {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <ChakraProvider theme={theme}>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </ChakraProvider>
     </Web3ReactProvider>
   )
