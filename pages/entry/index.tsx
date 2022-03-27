@@ -111,21 +111,21 @@ const Entry = () => {
   return (
     <div className={styles.main}>
       <Image src={commonImage.gameLogo} alt={'logo'} />
-      <Button
-        style={{
-          backgroundColor: '#019C44',
-          maxWidth: 300,
-          width: '100%',
-          marginTop: '24px',
-        }}
-        // onClick={connectWallet}
-      >
-        <Link href={'/home'} passHref>
+      <Link href={'/home'} passHref>
+        <Button
+          style={{
+            backgroundColor: '#019C44',
+            maxWidth: 300,
+            width: '100%',
+            marginTop: '24px',
+          }}
+          // onClick={connectWallet}
+        >
           <Text style={{ color: '#fff', paddingRight: 24, paddingLeft: 24 }}>
             PLAY
           </Text>
-        </Link>
-      </Button>
+        </Button>
+      </Link>
       <div className={styles.bottomContainer}>
         <div>
           <div className={styles.rowView}>
@@ -145,7 +145,7 @@ const Entry = () => {
                 src={playSound ? commonImage.sound : commonImage.mute}
                 width={20}
                 height={20}
-                alt={'musicPlay'}
+                alt={'soundPlay'}
               />
             </div>
           </div>
