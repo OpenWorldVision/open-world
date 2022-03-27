@@ -10,6 +10,7 @@ const Entry = () => {
   const [playMusic, setPlayMusic] = useState(false)
   const [playSound, setPlaySound] = useState(false)
   const [nameOfChain, setNameOfChain] = useState('Binance Smart Chain')
+  //deploy cloudfare
   useEffect(() => {
     const connectWallet = async () => {
       if (window.ethereum && window.ethereum.isMetaMask) {
