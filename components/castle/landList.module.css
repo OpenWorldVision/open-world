@@ -1,0 +1,15 @@
+.landList {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 20px;
+  margin-bottom: 24px;
+  padding-right: 5px;
+  z-index: 1;
+}
+
+.landListEmpty p {
+  margin-top: 16px;
+  font-size: 14px;
+  text-align: center;
+  color: #3e1f05;
+}
