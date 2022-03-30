@@ -1,8 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react'
 import { Button, Text } from '@chakra-ui/react'
 import styles from '../../components/entry.module.css'
-import Image from 'next/image'
-import { commonImage } from 'assets/images/common'
 import Link from 'next/link'
 import { chainName } from 'utils/chainName'
 
@@ -110,7 +109,7 @@ const Entry = () => {
   // const goToHomePage = () => {}
   return (
     <div className={styles.main}>
-      <Image src={commonImage.gameLogo} alt={'logo'} />
+      <img src={'/images/common/gameLogo.png'} alt={'logo'} />
       <Link href={'/home'} passHref>
         <Button
           style={{
@@ -133,19 +132,25 @@ const Entry = () => {
               style={{ marginRight: '1rem' }}
               onClick={() => setPlayMusic(!playMusic)}
             >
-              <Image
-                src={playMusic ? commonImage.play : commonImage.notplay}
-                width={20}
-                height={20}
+              <img
+                src={
+                  playMusic
+                    ? '/images/common/play.svg'
+                    : '/images/common/notplay.svg'
+                }
                 alt={'musicPlay'}
+                className={styles.iconStyle}
               />
             </div>
             <div onClick={() => setPlaySound(!playSound)}>
-              <Image
-                src={playSound ? commonImage.sound : commonImage.mute}
-                width={20}
-                height={20}
+              <img
+                src={
+                  playSound
+                    ? '/images/common/sound.png'
+                    : '/images/common/mute.png'
+                }
                 alt={'soundPlay'}
+                className={styles.iconStyle}
               />
             </div>
           </div>

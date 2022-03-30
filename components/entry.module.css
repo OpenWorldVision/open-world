@@ -1,5 +1,5 @@
 .main {
-  background-image: url(../assets/images/background/background.png);
+  background-image: url('/images/background/background.png');
   display: flex;
   flex-direction: column;
   flex: 1;
