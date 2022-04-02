@@ -1,0 +1,896 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* .btn-lila label,
+.btn-manage label,
+.btn-info label,
+.btn-jeweler label {
+  width: 102px;
+  height: 156px;
+  cursor: url(https://game.defikingdoms.com/static/media/click-cursor-2x.113d2d1d.png),
+    auto;
+} */
+
+/* .modal__body__container {
+  width: 100%;
+  border: 1px solid rgb(76, 62, 35);
+  background-color: rgba(0, 0, 0, 0.85);
+  transition: all linear 0.9s;
+} */
+
+.modal_body_head {
+  text-align: center;
+  width: 100%;
+}
+
+.modal_body_head .title {
+  font-size: 2rem;
+  font-family: Lora;
+  padding: 0.6rem 3.5rem;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.modal_body_content {
+  padding: 1.8rem 1.8rem;
+}
+
+.modal_body_content div {
+  margin-top: 10px;
+}
+
+.modal_body_content.manage {
+  overflow-y: scroll;
+  height: 620px;
+}
+
+.modal__body__container .modal_body_content.manage::-webkit-scrollbar {
+  width: 20px;
+}
+
+.modal__body__container .modal_body_content::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.modal__body__container .modal_body_content.manage::-webkit-scrollbar-thumb {
+  background-color: #282738;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.modal__body__container .warning p {
+  width: 290px;
+  font-size: 0.8rem;
+}
+
+.modal__body__container .warning {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgba(255, 61, 0, 0.65);
+  padding: 10px;
+}
+
+.modal__body__container .warning input {
+  height: 35px;
+  width: 150px;
+  border: 1px solid rgb(250, 192, 93);
+  border-radius: 8px;
+  font-size: 0.7rem;
+  background: transparent;
+  text-shadow: rgb(0 0 0 / 85%) 1px 1px 0px;
+  background-color: black;
+  color: white;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 12px;
+  text-align: center;
+}
+
+.btn-transfer-locked {
+  position: relative;
+  color: #fff;
+  background: #009c44;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 10px 30px;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  border: none;
+  border-radius: 4px;
+  opacity: 0.4;
+}
+
+.modal__body__container .introduce {
+  padding: 15px;
+}
+
+.modal__body__container .total-locked p,
+.modal__body__container .total-wallet p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.modal__body__container .total-locked p img,
+.modal__body__container .total-wallet p img {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+}
+
+.modal__body__container .total-wallet {
+  margin-top: 25px;
+}
+
+.modal__body__container #address {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.border_content {
+  border: 1px solid rgb(76, 62, 35);
+  padding: 1rem;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.5)
+  );
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  animation: fadein linear 0.3s;
+  z-index: 6000;
+  width: 100%;
+  height: 100%;
+}
+.modal__overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(0, 0, 0, 0.4); */
+  background-color: rgba(30, 30, 30, 0.5);
+  cursor: url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png),
+    auto;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.jeweler {
+  position: absolute;
+  background-image: url(https://game.defikingdoms.com/static/media/bank-bg.6b091ffd.png);
+  min-width: 1718px;
+  height: 1392.97px;
+  z-index: 1;
+  background-size: 100%;
+  image-rendering: pixelated;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
+
+.cursor-btn {
+  cursor: url(https://game.defikingdoms.com/static/media/click-cursor-2x.113d2d1d.png),
+    auto;
+}
+
+.layout-btn {
+  overflow: hidden;
+  background-color: transparent;
+  border: 0px;
+  outline: 0px;
+  z-index: 5000;
+  width: 136.081px;
+  height: 156.101px;
+  position: absolute;
+}
+
+.btn-manage {
+  left: 810.176px;
+  top: 253.672px;
+}
+
+.btn-jeweler {
+  left: 801.176px;
+  top: 700px;
+}
+
+.btn-info {
+  left: 361.176px;
+  top: 711px;
+  width: 102.081px;
+  height: 156.101px;
+}
+
+.btn-lila {
+  left: 650.176px;
+  top: 665px;
+}
+
+.btn-info.focus,
+.btn-info:focus,
+.btn-info:hover {
+  color: unset;
+  background-color: unset;
+  border-color: unset;
+}
+
+.btn-info:not(:disabled):not(.disabled).active,
+.btn-info:not(:disabled):not(.disabled):active,
+.show > .btn-info.dropdown-toggle {
+  color: unset;
+  background-color: unset;
+  border-color: unset;
+}
+.btn-info:not(:disabled):not(.disabled).active[data-v-fd8b9234],
+.btn-info[data-v-fd8b9234]:not(:disabled):not(.disabled):active,
+.show > .btn-info.dropdown-toggle[data-v-fd8b9234] {
+  color: unset;
+  background-color: unset;
+  border-color: unset;
+}
+
+.btn-info:not(:disabled):not(.disabled).active:focus,
+.btn-info:not(:disabled):not(.disabled):active:focus,
+.show > .btn-info.dropdown-toggle:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn-info.focus,
+.btn-info:focus {
+  /* -webkit-box-shadow: 0 0 0 0.2rem rgb(58 176 195 / 50%); */
+  box-shadow: none;
+}
+
+.hero-manage img {
+  width: 81.081px;
+  height: 116.101px;
+  position: absolute;
+  left: 841.176px;
+  top: 292.672px;
+}
+
+.hero-jeweler,
+.hero-info,
+.hero-lila,
+.bank-eyes,
+.bank-lights,
+.bankShine,
+.bankShine-chestTL,
+.bankShine-chestTC,
+.bankShine-pig,
+.bankShine-chestTR,
+.bankShine-vaseL,
+.bankShine-vaseR,
+.bankShine-chestBL,
+.bankShine-chestBR,
+.pumpkin {
+  position: absolute;
+  left: 838.176px;
+  top: 764px;
+  width: 65.081px;
+  height: 116.101px;
+  z-index: 188;
+  overflow: hidden;
+}
+
+.hero-info {
+  left: 380.176px;
+  top: 766.672px;
+}
+.hero-lila {
+  left: 619.176px;
+  top: 690.672px;
+  width: 112.081px;
+}
+.bank-eyes {
+  left: 1407.176px;
+  top: 138.672px;
+  width: 101.081px;
+  height: 84.101px;
+}
+/* .bank-lights {
+  width: 1400px;
+  height: 1392.97px;
+  top: 0px;
+  left: 0px;
+  z-index: 400;
+} */
+
+.bank-lights {
+  width: 1712px;
+  height: 1392.97px;
+  top: 0px;
+  left: 0;
+  z-index: 400;
+}
+
+.bankShine {
+  width: 132.162px;
+  height: 159.162px;
+  top: 170.297px;
+  left: 220.73px;
+}
+
+.bankShine-chestTL {
+  width: 139.297px;
+  height: 139.297px;
+  top: 274.595px;
+  left: 369.459px;
+}
+
+.bankShine-chestTC {
+  width: 97.297px;
+  height: 87.297px;
+  top: 254.162px;
+  left: 706.486px;
+}
+
+.bankShine-pig {
+  width: 92.8649px;
+  height: 46.4324px;
+  top: 235.162px;
+  left: 1023.51px;
+}
+
+.bankShine-chestTR {
+  width: 139.297px;
+  height: 92.8649px;
+  top: 227.162px;
+  left: 1341.54px;
+}
+
+.bankShine-vaseL {
+  width: 92.8649px;
+  height: 46.4324px;
+  top: 645.054px;
+  left: 604.622px;
+}
+
+.bankShine-vaseR {
+  width: 92.8649px;
+  height: 46.4324px;
+  top: 649.054px;
+  left: 1048.622px;
+}
+
+.bankShine-chestBL {
+  width: 92.8649px;
+  height: 139.297px;
+  top: 1020.081px;
+  left: 1532px;
+}
+
+.bankShine-chestBR {
+  width: 92.8649px;
+  height: 139.297px;
+  top: 825.081px;
+  left: 1235px;
+}
+
+.pumpkin {
+  width: 92.8649px;
+  height: 139.297px;
+  top: 777.081px;
+  left: 1569px;
+}
+
+.hero-jeweler img,
+.hero-info img {
+  position: absolute;
+  min-width: 670.368px;
+  height: 101.571px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 11s steps(11, end) 0s infinite normal none running dKpWqB;
+}
+
+@keyframes dKpWqB {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -670px;
+    top: 0;
+  }
+}
+
+.bank-eyes img {
+  position: absolute;
+  min-width: 6686.27px;
+  min-width: 2414.49px;
+  height: 92.8649px;
+
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 13s steps(26, end) 0s infinite normal none running
+    animate-bank-eyes;
+}
+
+@keyframes animate-bank-eyes {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -2414.49px;
+    top: 0;
+  }
+}
+
+.hero-lila img {
+  position: absolute;
+  min-width: 6686.27px;
+  height: 101.571px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 14s steps(48, end) 0s infinite normal none running
+    animate-hero-lila;
+}
+
+@keyframes animate-hero-lila {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -6686.27px;
+    top: 0;
+  }
+}
+
+.bank-lights img {
+  position: absolute;
+  min-width: 6880px;
+  height: 1391.97px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 1.2s steps(4) 0s infinite normal none running animate-bank-lights;
+}
+
+@keyframes animate-bank-lights {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -6880px;
+    /* top: 0; */
+  }
+}
+
+.bankShine img {
+  position: absolute;
+  min-width: 20894.6px;
+  height: 232.162px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 9s steps(90, end) 0s infinite normal none running animate-bankShine;
+}
+
+@keyframes animate-bankShine {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -20894.6px;
+    top: 0;
+  }
+}
+
+.bankShine-chestTL img {
+  position: absolute;
+  min-width: 10168.7px;
+  height: 139.297px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 7.3s steps(73, end) 0s infinite normal none running
+    animate-bankShine-chestTL;
+}
+
+@keyframes animate-bankShine-chestTL {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -10168.7px;
+    top: 0;
+  }
+}
+
+.bankShine-chestTC img {
+  position: absolute;
+  width: 12815.4px;
+  height: 139.297px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 9.2s steps(92, end) 0s infinite normal none running
+    animate-bankShine-chestTC;
+}
+
+@keyframes animate-bankShine-chestTC {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -12815.4px;
+    top: 0;
+  }
+}
+
+.bankShine-pig img {
+  position: absolute;
+  min-width: 6686.27px;
+  height: 46.4324px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 7.2s steps(72, end) 0s infinite normal none running
+    animate-bankShine-pig;
+}
+
+@keyframes animate-bankShine-pig {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -6686.27px;
+    top: 0;
+  }
+}
+
+.bankShine-chestTR img {
+  position: absolute;
+  min-width: 11979.6px;
+  height: 92.8649px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 8.6s steps(86, end) 0s infinite normal none running
+    animate-bankShine-chestTR;
+}
+
+@keyframes animate-bankShine-chestTR {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -11979.6px;
+    top: 0;
+  }
+}
+
+.bankShine-vaseL img {
+  position: absolute;
+  min-width: 7429.19px;
+  height: 46.4324px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 8s steps(80, end) 0s infinite normal none running
+    animate-bankShine-vaseL;
+}
+
+@keyframes animate-bankShine-vaseL {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -7429.19px;
+    top: 0;
+  }
+}
+
+.bankShine-vaseR img {
+  position: absolute;
+  min-width: 7429.19px;
+  height: 46.4324px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 8.1s steps(81, end) 0s infinite normal none running
+    animate-bankShine-vaseR;
+}
+
+@keyframes animate-bankShine-vaseR {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -7429.19px;
+    top: 0;
+  }
+}
+
+.bankShine-chestBL img {
+  position: absolute;
+  min-width: 8079.24px;
+  height: 139.297px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 8.7s steps(87, end) 0s infinite normal none running
+    animate-bankShine-chestBL;
+}
+
+@keyframes animate-bankShine-chestBL {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -8079.24px;
+    top: 0;
+  }
+}
+
+.bankShine-chestBR img {
+  position: absolute;
+  min-width: 8079.24px;
+  height: 139.297px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+  animation: 8.8s steps(88, end) 0s infinite normal none running
+    animate-bankShine-chestBR;
+}
+
+@keyframes animate-bankShine-chestBR {
+  0% {
+    left: 0;
+    top: 0;
+  }
+  100% {
+    left: -8079.24px;
+    top: 0;
+  }
+}
+
+.pumpkin img {
+  position: absolute;
+  width: 63.8649px;
+  height: 79.8649px;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+}
+
+.table-manager img {
+  position: absolute;
+  width: 279px;
+  height: 183px;
+  top: 327.027px;
+  left: 742.919px;
+  overflow: hidden;
+  display: flex;
+  padding: 0px;
+  border: 0px;
+  background-color: transparent;
+  z-index: 370;
+}
+
+.table-jeweler img {
+  position: absolute;
+  width: 232px;
+  height: 139px;
+  top: 790px;
+  left: 742.919px;
+  overflow: hidden;
+  display: flex;
+  padding: 0px;
+  border: 0px;
+  background-color: transparent;
+  z-index: 370;
+}
+
+.table-info {
+  position: absolute;
+  min-width: 276px;
+  height: 186px;
+  top: 784px;
+  left: 275.919px;
+  overflow: hidden;
+  display: flex;
+  padding: 0px;
+  border: 0px;
+  background-color: transparent;
+  z-index: 370;
+}
+
+.container-jeweler {
+  background-color: #131313;
+  height: 100vh;
+  width: 100vw;
+  padding: 0 !important;
+  position: absolute;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png),
+    auto;
+  overflow: hidden;
+}
+
+.info-manage {
+  position: absolute;
+  top: 258.868px;
+  left: 879.216px;
+}
+
+.info-jeweler {
+  position: absolute;
+  top: 703.868px;
+  left: 867.216px;
+}
+
+.info-info {
+  position: absolute;
+  top: 696.868px;
+  left: 414px;
+}
+
+.btn-info-manage {
+  animation: 4.5s ease-in-out 0s infinite normal none running animate-btn;
+  pointer-events: revert !important;
+  position: relative;
+  background-image: url(https://game.defikingdoms.com/static/media/text-bubble-left.c3f30af7.png),
+    url(https://game.defikingdoms.com/static/media/text-bubble-right.2fb52ccb.pngg);
+  background-position: left top, right top;
+  background-repeat: repeat-y;
+  background-color: rgb(255, 224, 183);
+  background-size: 11.6081px 8.70608px;
+  image-rendering: initial;
+  left: -50%;
+  z-index: 2000;
+  border: 0;
+}
+
+@keyframes animate-btn {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.btn-info-manage::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -11.6081px;
+  left: 11.6081px;
+  width: calc(100% - 23.2162px);
+  height: calc(100% + 23.2162px);
+  background-image: url(https://game.defikingdoms.com/static/media/text-bubble-top.d04e86af.png),
+    url(https://game.defikingdoms.com/static/media/text-bubble-btm.6e7dfc5b.png);
+  background-position: center top, center bottom;
+  background-repeat: repeat-x;
+  background-size: 46.4324px 11.6081px;
+}
+
+.btn-info-manage::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -11.6081px;
+  left: 0px;
+  width: 100%;
+  height: calc(100% + 23.2162px);
+  background-image: url(https://game.defikingdoms.com/static/media/text-bubble-topLeft.4ef18153.png),
+    url(https://game.defikingdoms.com/static/media/text-bubble-topRight.ef4ff233.png),
+    url(https://game.defikingdoms.com/static/media/text-bubble-btmLeft.67ba4cac.png),
+    url(https://game.defikingdoms.com/static/media/text-bubble-btmRight.52e8daad.png);
+  background-position: left top, right top, left bottom, right bottom;
+  background-repeat: no-repeat;
+  background-size: 26.1182px 27.1182px;
+}
+
+.btn-content {
+  position: relative;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  padding: 0px 31.9223px;
+  font-family: Lora, serif;
+  font-weight: bold;
+  z-index: 2003;
+  font-size: calc(18.1182px);
+}
+
+.btn-info-info {
+  animation: 4.5s ease-in-out 0s infinite normal none running animate-btn;
+  pointer-events: revert !important;
+  position: relative;
+  background-position: left top, right top;
+  background-repeat: repeat-y;
+  background-color: rgb(255, 224, 183);
+  background-size: 11.6081px 8.70608px;
+  image-rendering: initial;
+  left: -50%;
+  z-index: 2000;
+  border: 0;
+}
+
+.btn-info-manage img {
+  position: absolute;
+  width: 23.2162px;
+  height: 20.3142px;
+  image-rendering: pixelated;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2002;
+}
+
+.btn-info-info img {
+  position: absolute;
+  min-width: 80.2162px;
+  height: 40.3142px;
+  image-rendering: pixelated;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2002;
+}
+
+.info-manage label {
+  width: 180px;
+  height: 52px;
+  position: absolute;
+  left: -87px;
+  top: -10px;
+}
