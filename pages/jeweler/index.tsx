@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+// import styled from '@emotion/styled';
 import React, { useEffect, useState, useRef } from 'react'
 import Modal from 'react-modal';
 import ClipLoader from "react-spinners/ClipLoader";
@@ -35,7 +35,6 @@ export default function Jeweler({ allPostsData }) {
     setModalJeweler(false)
     }
     return (
-        <JewelerPage>
         <div>
             <div className="container-jeweler" >   
                 <TransformWrapper 
@@ -1077,11 +1076,1053 @@ export default function Jeweler({ allPostsData }) {
                     </Modal>
             </div>
         </div>
-    </JewelerPage>
+    //     <JewelerPage>
+    //     <div>
+    //         <div className="container-jeweler" >   
+    //             <TransformWrapper 
+    //                 ref={transformWrapper}
+    //                 centerZoomedOut={false}
+    //                 centerOnInit={true}
+    //                 limitToBounds={true}
+    //                 minPositionY={0}
+    //                 minPositionX={0}
+
+    //             >
+    //                 <TransformComponent>
+    //                      <div
+    //                      ref={jeweler}
+    //             className="jeweler container transform-component"
+    //             id="handle_mobile"
+    //             >
+    //                 <div className="info-manage">
+    //                     <button className="btn-info-manage cursor-btn">
+    //                         <div className="btn-content">Manager</div>
+    //                         <img
+    //                             src="https://game.defikingdoms.com/static/media/bubble-arrow.905173b2.png"
+    //                             alt=""
+    //                         />
+    //                     </button>
+    //                 </div>
+    //                 <div className="info-jeweler">
+    //                     <button className="btn-info-manage cursor-btn">
+    //                         <div className="btn-content">Jeweler</div>
+    //                         <img
+    //                             src="https://game.defikingdoms.com/static/media/bubble-arrow.905173b2.png"
+    //                             alt=""
+    //                         />
+    //                     </button>
+    //                 </div>
+    //                 <div className="info-info">
+    //                     <button className="btn-info-info cursor-btn">
+    //                         <img
+    //                             src="https://game.defikingdoms.com/static/media/text_bubble_excl_mark.4ef4a151.png"
+    //                             alt=""
+    //                         />
+    //                     </button>
+    //                 </div>
+    //                 <div className="hero-manage">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bank-npc.8f28ffae.png"
+    //                     alt="hero_manager"
+    //                     />
+    //                 </div>
+    //                 <div className="table-manager">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bank-desk3.ead9fc47.png"
+    //                     alt=""
+    //                     />
+    //                 </div>
+    //                 <div className="table-jeweler">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bank-desk2.02d89879.png"
+    //                     alt=""
+    //                     />
+    //                 </div>
+    //                 <div className="table-info">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bank-desk3.ead9fc47.png"
+    //                     alt=""
+    //                     />
+    //                 </div>
+    //                 <button onClick={() =>{setIsOpen(true)}} className="layout-btn btn-manage cursor-btn">
+    //                 </button>
+    //                 <button onClick={() =>{setModalJeweler(true)}} className="layout-btn cursor-btn btn-jeweler">
+    //                 </button>
+    //                 <button onClick={() =>{setModalInfo(true)}} className="layout-btn cursor-btn btn-info">
+    //                 </button>
+    //                 <button onClick={() =>{setModalLila(true)}} className="layout-btn cursor-btn btn-lila">
+    //                 </button>
+    //                 <div className="hero-jeweler">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/teller-idle.053534ac.png"
+    //                     alt="hero_jeweler"
+    //                     />
+    //                 </div>
+    //                 <div className="hero-info">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/banker-idle.ff6a4d3f.png"
+    //                     alt="hero_info"
+    //                     />
+    //                 </div>
+    //                 <div className="hero-lila">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/lila-animation.a9794464.png"
+    //                     alt="hero_lila"
+    //                     />
+    //                 </div>
+    //                 <div className="bank-eyes">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bank-eyes.049bd9ec.png"
+    //                     alt="bank_eyes"
+    //                     />
+    //                 </div>
+    //                 <div className="bank-lights">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bank-lights.e8e3bf99.png"
+    //                     alt="bank_lights"
+    //                     />
+    //                 </div>
+    //                 <div className="bankShine">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bankShine-statue.783a90a5.png"
+    //                     alt="bankShine"
+    //                     />
+    //                 </div>
+    //                 <div className="bankShine-chestTL">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bankShine-chestTL.fb167560.png"
+    //                     alt="bankShine-chestTL"
+    //                     />
+    //                 </div>
+    //                 <div className="bankShine-chestTC">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bankShine-chestTC.25ffd514.png"
+    //                     alt="bankShine-chestTC"
+    //                     />
+    //                 </div>
+    //                 <div className="bankShine-pig">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bankShine-pig.b50be6a6.png"
+    //                     alt="bankShine-pig"
+    //                     />
+    //                 </div>
+    //                 <div className="bankShine-chestTR">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bankShine-chestTR.f063b7b8.png"
+    //                     alt="bankShine-chestTR"
+    //                     />
+    //                 </div>
+    //                 <div className="bankShine-vaseL">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bankShine-vaseL.0195a7db.png"
+    //                     alt="bankShine-vaseL"
+    //                     />
+    //                 </div>
+    //                 <div className="bankShine-vaseR">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bankShine-vaseL.0195a7db.png"
+    //                     alt="bankShine-vaseR"
+    //                     />
+    //                 </div>
+    //                 <div className="bankShine-chestBL">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bankShine-chestBL.648c7ab8.png"
+    //                     alt="bankShine-chestBL"
+    //                     />
+    //                 </div>
+    //                 <div className="bankShine-chestBR">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/bankShine-chestBR.0e721d9a.png"
+    //                     alt="bankShine-chestBR"
+    //                     />
+    //                 </div>
+    //                 <div className="pumpkin">
+    //                     <img
+    //                     src="https://game.defikingdoms.com/static/media/Pumpkin01.4f7e453e.png"
+    //                     alt="pumpkin"
+    //                     />
+    //                 </div>
+    //                 </div>
+    //                 </TransformComponent>
+    //             </TransformWrapper>
+    //             <Modal
+    //                 className="modal"
+    //                 isOpen={modalIsOpen}
+    //                 onAfterOpen={afterOpenModal}
+    //                 onRequestClose={closeModal}
+    //                 contentLabel="Inline Styles Modal Example"
+    //                 ariaHideApp={false}
+
+    //                 style={{
+    //                     overlay:{
+    //                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    //                     zIndex: '10000',
+    //                     display: 'flex',
+    //                     alignItems: 'center',
+    //                     cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+    //                 },
+    //                     content:{
+    //                         background: 'rgba(0, 0, 0, 0.85)',
+    //                         zIndex: '10001',
+    //                         border: '1px solid rgb(76, 62, 35)',
+    //                         padding: '0',
+    //                         maxWidth: '650px',
+                            
+    //                         maxHeight: '900px',
+    //                         height: '90vh',
+    //                         margin: 'auto',
+    //                         overflow: 'hidden auto',
+    //                         color: '#fff',
+    //                     }
+    //                 }}
+    //                 >
+    //                     <div className="modal__body__container">
+    //                         <div className="modal_body_head">
+    //                             <div
+    //                                 style={{
+    //                                     position: 'relative'
+    //                                 }}
+    //                                 className="title">Locked JEWEL Management  
+    //                                 <div
+    //                                     style={{
+    //                                         position: 'absolute',
+    //                                         right: '26px',
+    //                                         top: '20px'
+    //                                     }}
+    //                                     onClick={() => {setIsOpen(false)}}
+    //                                 >
+    //                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+    //                                     <path fillRule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+    //                                     <path fillRule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+    //                                     </svg>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         <div className="modal_body_content manage" style={{height: '100%'}}>
+    //                             <div className="border_content">
+    //                                 <div className="head">Manager Greg</div>
+    //                                 <div className="body">
+    //                                 Thank you for being a valued client! If you have locked JEWEL,
+    //                                 I can assist you with transferring it to another wallet. I can
+    //                                 only transfer the full balance, so make sure you want to move
+    //                                 everything!
+    //                                 </div>
+    //                             </div>
+    //                             <div className="introduce">
+    //                                 <div>
+    //                                 This function will transfer all of your wallet and locked
+    //                                 JEWEL from one wallet to another. You can use this function if
+    //                                 your wallet has been compromised or if you are moving to a
+    //                                 hardware wallet.
+    //                                 </div>
+    //                                 <div>
+    //                                 You can only transfer the full balance of your locked JEWEL.
+    //                                 Only wallets with active DeFi Kingdoms accounts may receive
+    //                                 locked JEWEL.
+    //                                 </div>
+    //                                 <div>
+    //                                 All unclaimed rewards should be claimed prior to transfer.
+    //                                 Additionally, all JEWEL in the transferring wallet will be
+    //                                 moved to the new wallet when using this feature. If you do not
+    //                                 wish to move your unlocked JEWEL, deposit it with the Jeweler
+    //                                 before using this transfer option. xJEWEL will not be
+    //                                 transferred and will need to be sent manually.
+    //                                 </div>
+    //                                 <div>
+    //                                 The recipient wallet address must be different from the
+    //                                 current wallet. If you try to transfer locked JEWEL to the
+    //                                 same wallet that it is already in, it will be lost forever.
+    //                                 </div>
+    //                             </div>
+    //                             <div className="total-locked">
+    //                                 <p>Total Locked JEWEL</p>
+    //                                 <p>
+    //                                 <img
+    //                                     src="https://game.defikingdoms.com/static/media/cute-jewel.4849f9a3.png"
+    //                                     alt=""
+    //                                 />
+    //                                 0.00
+    //                                 </p>
+    //                             </div>
+    //                             <div className="total-wallet">
+    //                                 <p>Total Locked JEWEL</p>
+    //                                 <p>
+    //                                 <img
+    //                                     src="https://game.defikingdoms.com/static/media/cute-jewel.4849f9a3.png"
+    //                                     alt=""
+    //                                 />
+    //                                 0.00
+    //                                 </p>
+    //                             </div>
+    //                             <div style={{padding: "10px 15px"}}>
+    //                                 <label htmlFor="address" className="cursor-btn"
+    //                                 >Recipient Address</label
+    //                                 >
+    //                                 <input type="text" id="address" />
+    //                             </div>
+    //                             <div style={{padding: "10px 15px"}}>
+    //                                 <div className="warning">
+    //                                 <img
+    //                                     src="https://game.defikingdoms.com/static/media/warning.e34a399d.svg"
+    //                                     alt=""
+    //                                 />
+    //                                 <p>
+    //                                     Warning: This process is irreversible. There is no way to
+    //                                     cancel or undo this transfer, so be sure that you entered
+    //                                     the correct wallet address and that it is not the same
+    //                                     wallet that contains the locked JEWEL that you are
+    //                                     attempting to move.
+    //                                 </p>
+    //                                 <input type="text" placeholder="Type 'SEND'" />
+    //                                 </div>
+    //                                 <button
+    //                                 disabled={true}
+    //                                 className="btn-transfer-locked cursor-btn"
+    //                                 >
+    //                                 TRANSFER LOCKED JEWEL
+    //                                 </button>
+    //                             </div>
+    //                         </div>
+    //                     </div>
+    //                 </Modal> 
+    //                 <Modal
+    //                 isOpen={modalJeweler}
+    //                 onAfterOpen={afterOpenModal}
+    //                 onRequestClose={closeModal}
+    //                 contentLabel="Inline Styles Modal Example"
+    //                 ariaHideApp={false}
+
+    //                 style={{
+    //                     overlay:{
+    //                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    //                     zIndex: '10000',
+    //                     display: 'flex',
+    //                     alignItems: 'center',
+    //                     cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+    //                 },
+    //                     content:{
+    //                         background: 'rgba(0, 0, 0, 0.85)',
+    //                         zIndex: '10001',
+    //                         border: '1px solid rgb(76, 62, 35)',
+    //                         padding: '0',
+    //                         maxWidth: '750px',
+                            
+    //                         maxHeight: '800px',
+    //                         height: '90vh',
+    //                         margin: 'auto',
+    //                         overflow: 'hidden auto',
+    //                         color: '#fff',
+    //                     }
+    //                 }}
+    //                 >
+    //                     <div className="modal__body__container">
+    //                         <div className="modal_body_head">
+    //                         <div
+    //                             style={{
+    //                                 position: 'relative'
+    //                             }}
+    //                             className="title">Jeweler
+    //                                 <div
+    //                                     style={{
+    //                                         position: 'absolute',
+    //                                         right: '26px',
+    //                                         top: '20px'
+    //                                     }}
+    //                                     onClick={() => {setModalJeweler(false)}}
+    //                                 >
+    //                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+    //                                     <path fillRule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+    //                                     <path fillRule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+    //                                     </svg>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         <div className="modal_body_content modal-jeweler">
+    //                             <div className='popup-jeweler-head'>
+    //                                 <div className="border_content">
+    //                                     <h1>Jeweler Ian</h1>
+    //                                     <p>
+    //                                         You can stake your JEWEL tokens here.
+    //                                         We provide rewards for those who do.
+    //                                         You may withdraw at any time.
+    //                                     </p>
+    //                                 </div>
+    //                                 <div className="border_content">
+    //                                     <button onClick={() => {setModalDeposit(true)}} className='cursor-btn deposit'>Deposit</button>
+    //                                     <button onClick={() => {setModalClaim(true)}} className='cursor-btn claim'>Claim</button>
+    //                                     <button onClick={() => {setModalWithdraw(true)}} className='cursor-btn withdraw'>Withdraw</button>
+    //                                 </div>
+    //                             </div>
+    //                             <div className='popup-jeweler-body'>
+    //                                 <div className='TVL'><span>🏆</span>TVL:<span>$539,932,790</span></div>
+    //                                 <div className='dex-fee'>
+    //                                     <div className='dex-fee-head'>
+    //                                         <div>Jeweler - DEX fee sharing</div>
+    //                                         <div>Stake your JEWEL tokens and earn 1/3rd of generated trading fees.</div>
+    //                                     </div>
+    //                                     <div className='dex-fee-body bordered-box bordered-box-hero'>
+    //                                         <div className='jeweler-balance'>
+    //                                             Your xJEWEL Balance
+    //                                             <div>(1 xJEWEL = 1.716 JEWEL)</div>
+    //                                         </div>
+    //                                         <div className='quantity'>
+    //                                             <img src="https://game.defikingdoms.com/static/media/mid-jewel.c24e7697.png" alt="" />
+    //                                             <div>0.0000</div>
+    //                                         </div>
+    //                                         <div className='your-token'>You have <span>0.00</span> JEWEL tokens available to deposit to the Jeweler.</div>
+    //                                     </div>
+    //                                 </div>
+    //                                 <div className='popup-jeweler-body-msg'>
+    //                                     <span>💡</span>
+    //                                     Your JEWEL tokens grow as the xJEWEL multiplier goes up.
+    //                                     Tokens are 100% unlocked when they are claimed.
+    //                                     The Jeweler does not have any withdrawal fees.
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                     </div>
+    //                 </Modal>
+    //                 <Modal
+    //                 isOpen={modalInfo}
+    //                 onAfterOpen={afterOpenModal}
+    //                 onRequestClose={closeModal}
+    //                 contentLabel="Inline Styles Modal Example"
+    //                 ariaHideApp={false}
+    //                 style={{
+    //                     overlay:{
+    //                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    //                     zIndex: '10000',
+    //                     display: 'flex',
+    //                     alignItems: 'center',
+    //                     cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+    //                 },
+    //                     content:{
+    //                         background: 'rgba(0, 0, 0, 0.85)',
+    //                         zIndex: '10001',
+    //                         border: '1px solid rgb(76, 62, 35)',
+    //                         padding: '0',
+    //                         maxWidth: '650px',
+                            
+    //                         maxHeight: '500px',
+    //                         height: '80vh',
+    //                         margin: 'auto',
+    //                         overflow: 'hidden auto',
+    //                         color: '#fff',
+    //                     }
+    //                 }}
+    //                 >
+    //                     <div className="modal__body__container">
+    //                         <div className="modal_body_head">
+    //                             <div
+    //                                 style={{
+    //                                     position: 'relative'
+    //                                 }}
+    //                                 className="title">Info 
+    //                                 <div
+    //                                     style={{
+    //                                         position: 'absolute',
+    //                                         right: '26px',
+    //                                         top: '20px'
+    //                                     }}
+    //                                     onClick={() => {setModalInfo(false)}}
+    //                                 >
+    //                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+    //                                     <path fillRule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+    //                                     <path fillRule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+    //                                     </svg>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         <div className="modal_body_content" style={{height: '100%'}}>
+    //                         <div className="border_content">
+    //                             <div className="head">Jeweler Micah</div>
+    //                             <div className="body">
+    //                             Welcome to Adelyn, the greatest city in Serendale! You can
+    //                             deposit your JEWEL here at the Jeweler, and visit the
+    //                             Marketplace to trade tokens. Lazarus the Druid is also there;
+    //                             he can help you acquire seeds which you can plant in the
+    //                             Gardens to participate in liquidity pools and earn rewards!
+    //                             </div>
+    //                             <div className="footer">
+    //                             You can find Heroes for sale in the Tavern, or visit the
+    //                             Portal to Summon new ones. Again, welcome, and enjoy your
+    //                             stay! If you need more information about anything you find
+    //                             here, visit docs.defikingdoms.com to learn more.
+    //                             </div>
+    //                         </div>
+    //                         </div>
+    //                     </div>
+    //                 </Modal>
+    //                 <Modal
+    //                 isOpen={modalLila}
+    //                 onAfterOpen={afterOpenModal}
+    //                 onRequestClose={closeModal}
+    //                 contentLabel="Inline Styles Modal Example"
+    //                 ariaHideApp={false}
+    //                 style={{
+    //                     overlay:{
+    //                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    //                     zIndex: '10000',
+    //                     display: 'flex',
+    //                     alignItems: 'center',
+    //                     cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+    //                 },
+    //                     content:{
+    //                         background: 'rgba(0, 0, 0, 0.85)',
+    //                         zIndex: '10001',
+    //                         border: '1px solid rgb(76, 62, 35)',
+    //                         padding: '0',
+    //                         maxWidth: '550px',
+                            
+    //                         maxHeight: '200px',
+    //                         height: '90vh',
+    //                         margin: 'auto',
+    //                         overflow: 'hidden auto',
+    //                         color: '#fff',
+    //                     }
+    //                 }}
+    //                 >
+    //                     <div className="modal__body__container">
+    //                         <div className="modal_body_head">
+    //                             <div
+    //                                 style={{
+    //                                     position: 'relative'
+    //                                 }}
+    //                                 className="title">Lila
+    //                                 <div
+    //                                     style={{
+    //                                         position: 'absolute',
+    //                                         right: '26px',
+    //                                         top: '20px'
+    //                                     }}
+    //                                     onClick={() => {setModalLila(false)}}
+    //                                 >
+    //                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+    //                                     <path fillRule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+    //                                     <path fillRule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+    //                                     </svg>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         <div className="modal_body_content">
+    //                         <i className="title">* mumble mumble *</i>
+    //                         <div>So many bills... not enough JEWEL...</div>
+    //                         </div>
+    //                     </div>
+    //                 </Modal>
+    //                 <Modal
+    //                 isOpen={modalDeposit}
+    //                 onAfterOpen={afterOpenModal}
+    //                 onRequestClose={() =>{setModalDeposit(false)}}
+    //                 contentLabel="Inline Styles Modal Example"
+    //                 ariaHideApp={false}
+    //                 style={{
+    //                     overlay:{
+    //                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    //                     zIndex: '10002',
+    //                     display: 'flex',
+    //                     alignItems: 'center',
+    //                     cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+    //                 },
+    //                     content:{
+    //                         background: 'rgba(0, 0, 0, 0.85)',
+    //                         zIndex: '10003',
+    //                         border: 'unset',
+    //                         padding: '0',
+    //                         maxWidth: '550px',
+                            
+    //                         maxHeight: '450px',
+    //                         height: '90vh',
+    //                         margin: 'auto',
+    //                         overflow: 'hidden auto',
+    //                         color: '#fff',
+    //                     },
+    //                 }}
+    //                 >
+    //                     <div className="modal__body__container">
+    //                         <div className="modal_body_head">
+    //                             <div
+    //                                 style={{
+    //                                     position: 'relative',
+    //                                     textAlign: 'left',
+    //                                     fontSize: '1.5rem',
+    //                                     padding: '10px 20px',
+    //                                     background: 'unset'
+    //                                 }}
+    //                                 className="title">Deposit
+    //                                 <div
+    //                                     style={{
+    //                                         position: 'absolute',
+    //                                         right: '26px',
+    //                                         top: '20px'
+    //                                     }}
+    //                                     onClick={() => {setModalDeposit(false)}}
+    //                                 >
+    //                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+    //                                     <path fillRule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+    //                                     <path fillRule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+    //                                     </svg>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         <div className="modal_body_content" style={{padding: '20px'}}>
+    //                             <div style={{
+    //                                 background: 'rgb(33, 36, 41)',
+    //                                 border: '1px solid rgb(44, 47, 54)',
+    //                                 padding: '10px',
+    //                                 }}>
+    //                                 <div
+    //                                 className='available-to-deposit'
+    //                                 style={{
+    //                                     textAlign: 'right',
+    //                                     fontSize: '1.3rem',
+    //                                     color: 'rgb(195, 197, 203)',
+    //                                     margin: 0,
+    //                                 }}>
+    //                                     Available to deposit: 0
+    //                                 </div>
+    //                                 <div style={{
+    //                                     display: 'flex',
+    //                                     alignItems: 'center'
+    //                                 }}>
+    //                                     <input 
+    //                                     className='input-deposit'
+    //                                     style={{
+    //                                         background: 'transparent',
+    //                                         color: 'white', outline: 'none',
+    //                                         fontSize: '1.4rem',
+    //                                         width: '100%'
+    //                                     }} placeholder='0.0' type="number" />
+    //                                     <div className='btn-deposit-container' style={{display: 'flex', flexDirection: 'column'}}>
+    //                                         <button className='cursor-btn'
+    //                                         style={{
+    //                                         width: '50px',
+    //                                         color: 'rgb(102, 153, 153)',
+    //                                         backgroundColor: 'rgba(21, 61, 111, 0.44)',
+    //                                         border: '1px solid rgba(21, 61, 111, 0.44)',
+    //                                         borderRadius: '0.5rem',
+    //                                         }}
+    //                                         >50%</button>
+    //                                         <button className='cursor-btn' 
+    //                                         style={{
+    //                                         width: '50px',
+    //                                         color: 'rgb(102, 153, 153)',
+    //                                         backgroundColor: 'rgba(21, 61, 111, 0.44)',
+    //                                         border: '1px solid rgba(21, 61, 111, 0.44)',
+    //                                         borderRadius: '0.5rem',
+    //                                         marginTop: '5px',
+    //                                         }}>MAX</button>
+    //                                     </div>
+    //                                     <button className='cursor-btn btn-deposit-jewel' style={{
+    //                                         fontSize: '1.3rem',
+    //                                         display: 'flex',
+    //                                         alignItems: 'center',
+    //                                         margin: '0 10px',
+    //                                         padding: '5px 10px',
+    //                                         borderRadius: '12px',
+    //                                         }}>
+    //                                         <img style={{width: '22px', marginRight: '10px'}} src='https://firebasestorage.googleapis.com/v0/b/defi-kingdoms.appspot.com/o/tokens%2FJEWEL.png?alt=media' />
+    //                                         JEWEL
+    //                                     </button>
+    //                                 </div>
+    //                             </div>
+    //                             <div 
+    //                                 className='quantity-jeweler'
+    //                                 style={{
+    //                                     textAlign: 'center',
+    //                                     padding: '20px 0',
+    //                                     fontSize: '1.1rem',
+    //                                     color: 'rgb(195, 197, 203)',
+    //                                 }}>(~<span>000</span>xJEWEL)</div>
+    //                             <div 
+    //                                 className='btn-deposit-container'
+    //                                 style={{
+    //                                 display: 'flex'
+    //                             }}>
+    //                                 <button
+    //                                 className='cursor-btn'
+    //                                 style={{
+    //                                     width: '100%',
+    //                                     padding: '10px 0',
+    //                                     letterSpacing: '1px',
+    //                                     borderRadius: '5px',
+    //                                     backgroundColor: '#009c44',
+    //                                     opacity: '.4'
+    //                                 }}
+    //                                 >APPROVE</button>
+    //                                 <button
+    //                                 className='cursor-btn'
+    //                                 style={{
+    //                                     width: '100%',
+    //                                     padding: '10px 0',
+    //                                     letterSpacing: '1px',
+    //                                     borderRadius: '5px',
+    //                                     backgroundColor: '#009c44',
+    //                                     opacity: '.4'
+    //                                 }}
+    //                                 >ENTER AN AMOUNT</button>
+    //                             </div>
+    //                             <div
+    //                                 style={{
+    //                                     width: 'fit-content',
+    //                                     display: 'flex',
+    //                                     margin: '0 auto',
+    //                                     color: 'rgb(195, 197, 203)',
+    //                                 }}
+    //                             >
+    //                                 <div
+    //                                     style={{
+    //                                         borderRadius: '50%',
+    //                                         backgroundColor: 'rgb(86, 90, 105)',
+    //                                         width: '20px',
+    //                                         height: '20px',
+    //                                         textAlign: 'center',
+    //                                         display: 'flex',
+    //                                         justifyContent: 'center',
+    //                                         alignItems: 'center'
+    //                                     }}
+    //                                 >1</div>
+    //                                 <div>
+    //                                     <div
+    //                                     style={{
+    //                                         width: '100px',
+    //                                         border: '1px solid rgb(195, 197, 203)'
+    //                                     }}
+    //                                     ></div>
+    //                                 </div>
+    //                                 <div
+    //                                     style={{
+    //                                         borderRadius: '50%',
+    //                                         backgroundColor: 'rgb(86, 90, 105)',
+    //                                         width: '20px',
+    //                                         height: '20px',
+    //                                         textAlign: 'center',
+    //                                         display: 'flex',
+    //                                         justifyContent: 'center',
+    //                                         alignItems: 'center'
+    //                                     }}
+    //                                 >2</div>
+    //                             </div>
+    //                         </div>
+    //                     </div>
+    //                 </Modal>
+    //                 <Modal
+    //                 isOpen={modalClaim}
+    //                 onAfterOpen={afterOpenModal}
+    //                 onRequestClose={() =>{setModalClaim(false)}}
+    //                 contentLabel="Inline Styles Modal Example"
+    //                 ariaHideApp={false}
+    //                 style={{
+    //                     overlay:{
+    //                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    //                     zIndex: '10002',
+    //                     display: 'flex',
+    //                     alignItems: 'center',
+    //                     cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+    //                 },
+    //                     content:{
+    //                         background: 'rgba(0, 0, 0, 0.85)',
+    //                         zIndex: '10003',
+    //                         border: 'unset',
+    //                         padding: '0',
+    //                         maxWidth: '650px',
+                            
+    //                         maxHeight: '500px',
+    //                         height: '90vh',
+    //                         margin: 'auto',
+    //                         overflow: 'hidden auto',
+    //                         color: '#fff',
+    //                     },
+    //                 }}
+    //                 >
+    //                     <div className="modal__body__container" style={{padding: '20px', margin: '2px'}}>
+    //                         <div className="modal_body_head">
+    //                             <div
+    //                                 style={{
+    //                                     position: 'relative',
+    //                                     textAlign: 'left',
+    //                                     fontSize: '1.5rem',
+    //                                     padding: '0',
+    //                                     background: 'unset'
+    //                                 }}
+    //                                 className="title">Claim
+    //                                 <div
+    //                                     className='btn-turn-off-modal'
+    //                                     style={{
+    //                                         position: 'absolute',
+    //                                         right: '26px',
+    //                                         top: '20px'
+    //                                     }}
+    //                                     onClick={() => {setModalClaim(false)}}
+    //                                 >
+    //                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+    //                                     <path fillRule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+    //                                     <path fillRule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+    //                                     </svg>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         <div className="modal_body_content"
+    //                             style={{padding: '20px 0'}}
+    //                         >
+    //                             <div 
+    //                             className='diamond-icon'
+    //                             style={{
+    //                                 textAlign: 'center',
+    //                                 fontSize: '30px'
+    //                             }}>💎</div>
+    //                             <div>
+    //                             <p style={{
+    //                                 textAlign: 'center',
+    //                                 fontSize: '30px'
+    //                             }}>When you claim rewards, collected LP fees will be used to market buy JEWEL.</p>
+
+    //                             <p
+    //                             style={{
+    //                                 textAlign: 'center',
+    //                                 fontSize: '30px',
+    //                                 marginTop: '30px',
+    //                             }}>The purchased JEWEL tokens will then be distributed to the Jeweler stakers as a reward.</p>
+    //                             </div>
+    //                         </div>
+    //                         <button
+    //                         className={'cursor-btn btn-claim-jeweler'}
+    //                         onClick={() => {setModalWaitClaim(true),
+    //                             setModalClaim(false)
+    //                         }}
+    //                         style={{
+    //                             width: '100%',
+    //                             padding: '13px 0',
+    //                             letterSpacing: '1px',
+    //                             borderRadius: '5px',
+    //                             backgroundColor: '#009c44',
+    //                             marginTop: '40px',
+    //                             fontSize: '28px'
+    //                         }}
+    //                         >Claim</button>
+    //                     </div>
+    //                 </Modal>
+    //                 <Modal
+    //                 isOpen={modalWaitClaim}
+    //                 onAfterOpen={afterOpenModal}
+    //                 onRequestClose={() =>{setModalWaitClaim(false)}}
+    //                 contentLabel="Inline Styles Modal Example"
+    //                 ariaHideApp={false}
+    //                 style={{
+    //                     overlay:{
+    //                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    //                     zIndex: '10002',
+    //                     display: 'flex',
+    //                     alignItems: 'center',
+    //                     cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+    //                 },
+    //                     content:{
+    //                         background: 'rgba(0, 0, 0, 0.85)',
+    //                         zIndex: '10003',
+    //                         border: 'unset',
+    //                         padding: '0',
+    //                         maxWidth: '650px',
+                            
+    //                         maxHeight: '500px',
+    //                         height: '90vh',
+    //                         margin: 'auto',
+    //                         overflow: 'hidden auto',
+    //                         color: '#fff',
+    //                     },
+    //                 }}
+    //                 >
+    //                     <div className="modal__body__container" style={{padding: '20px', margin: '2px'}}>
+    //                         <div className="modal_body_head">
+    //                             <div
+    //                                 style={{
+    //                                     position: 'relative',
+    //                                 }}>
+    //                                 <div
+    //                                     style={{
+    //                                         position: 'absolute',
+    //                                         right: '26px',
+    //                                         top: '20px'
+    //                                     }}
+    //                                     onClick={() => {
+    //                                         setModalWaitClaim(false),
+    //                                         setModalClaim(true)
+    //                                     }}
+    //                                 >
+    //                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+    //                                     <path fillRule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+    //                                     <path fillRule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+    //                                     </svg>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         <div className="modal_body_content"
+    //                             style={{padding: '20px 0'}}
+    //                         >
+    //                             <div style={{
+    //                                 textAlign: 'center',
+    //                                 padding: '30px 0'
+    //                             }}><ClipLoader color={color} loading={loading} size={100} /></div>
+    //                             <div style={{
+    //                                 textAlign: 'center',
+    //                                 fontSize: '30px',
+    //                                 marginTop: '30px'
+    //                             }}>Claiming Jeweler rewards</div>
+    //                             <div
+    //                             style={{
+    //                                 textAlign: 'center',
+    //                                 fontSize: '30px',
+    //                                 marginTop: '60px'
+    //                             }}
+    //                             >Confirm this transaction in your wallet</div>
+    //                         </div>
+    //                     </div>
+    //                 </Modal>
+    //                 <Modal
+    //                 isOpen={modalWithdraw}
+    //                 onAfterOpen={afterOpenModal}
+    //                 onRequestClose={() =>{setModalWithdraw(false)}}
+    //                 contentLabel="Inline Styles Modal Example"
+    //                 ariaHideApp={false}
+    //                 style={{
+    //                     overlay:{
+    //                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    //                     zIndex: '10002',
+    //                     display: 'flex',
+    //                     alignItems: 'center',
+    //                     cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+    //                 },
+    //                     content:{
+    //                         background: 'rgba(0, 0, 0, 0.85)',
+    //                         zIndex: '10003',
+    //                         border: 'unset',
+    //                         padding: '0',
+    //                         maxWidth: '550px',
+    //                         maxHeight: '450px',
+    //                         height: '90vh',
+    //                         margin: 'auto',
+    //                         overflow: 'hidden auto',
+    //                         color: '#fff',
+    //                     },
+    //                 }}
+    //                 >
+    //                     <div className="modal__body__container">
+    //                         <div className="modal_body_head">
+    //                             <div
+    //                                 style={{
+    //                                     position: 'relative',
+    //                                     textAlign: 'left',
+    //                                     fontSize: '1.5rem',
+    //                                     padding: '10px 20px',
+    //                                     background: 'unset'
+    //                                 }}
+    //                                 className="title">Withdraw
+    //                                 <div
+    //                                     style={{
+    //                                         position: 'absolute',
+    //                                         right: '26px',
+    //                                         top: '20px'
+    //                                     }}
+    //                                     onClick={() => {
+    //                                         setModalWithdraw(false)
+    //                                     }}
+    //                                 >
+    //                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+    //                                     <path fillRule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+    //                                     <path fillRule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+    //                                     </svg>
+    //                                 </div>
+    //                             </div>
+    //                         </div>
+    //                         <div className="modal_body_content" style={{padding: '20px'}}>
+    //                             <div style={{
+    //                                 background: 'rgb(33, 36, 41)',
+    //                                 border: '1px solid rgb(44, 47, 54)',
+    //                                 padding: '10px',
+    //                                 }}>
+    //                                 <div style={{
+    //                                     textAlign: 'right',
+    //                                     fontSize: '1.3rem',
+    //                                     color: 'rgb(195, 197, 203)',
+    //                                     margin: 0,
+    //                                 }}>
+    //                                     Available to deposit: 0
+    //                                 </div>
+    //                                 <div style={{
+    //                                     display: 'flex',
+    //                                     alignItems: 'center'
+    //                                 }}>
+    //                                     <input 
+    //                                     className='input-withdraw'
+    //                                     style={{
+    //                                         background: 'transparent',
+    //                                         color: 'white', outline: 'none',
+    //                                         fontSize: '1.4rem',
+    //                                         width: '100%'
+    //                                     }} placeholder='0.0' type="number" />
+    //                                     <div className='btn-deposit-container' style={{display: 'flex', flexDirection: 'column'}}>
+    //                                         <button className='cursor-btn'
+    //                                         style={{
+    //                                         width: '50px',
+    //                                         color: 'rgb(102, 153, 153)',
+    //                                         backgroundColor: 'rgba(21, 61, 111, 0.44)',
+    //                                         border: '1px solid rgba(21, 61, 111, 0.44)',
+    //                                         borderRadius: '0.5rem',
+    //                                         }}
+    //                                         >50%</button>
+    //                                         <button className='cursor-btn' 
+    //                                         style={{
+    //                                         width: '50px',
+    //                                         color: 'rgb(102, 153, 153)',
+    //                                         backgroundColor: 'rgba(21, 61, 111, 0.44)',
+    //                                         border: '1px solid rgba(21, 61, 111, 0.44)',
+    //                                         borderRadius: '0.5rem',
+    //                                         marginTop: '5px',
+    //                                         }}>MAX</button>
+    //                                     </div>
+    //                                     <button className='cursor-btn btn-deposit-jewel' style={{
+    //                                         fontSize: '1.3rem',
+    //                                         display: 'flex',
+    //                                         alignItems: 'center',
+    //                                         margin: '0 10px',
+    //                                         padding: '5px 10px',
+    //                                         borderRadius: '12px',
+    //                                         }}>
+    //                                         <img style={{width: '22px', marginRight: '10px'}} src='https://firebasestorage.googleapis.com/v0/b/defi-kingdoms.appspot.com/o/tokens%2FJEWEL.png?alt=media' />
+    //                                         JEWEL
+    //                                     </button>
+    //                                 </div>
+    //                             </div>
+    //                             <div style={{
+    //                                 textAlign: 'center',
+    //                                 padding: '20px 0',
+    //                                 fontSize: '1.1rem',
+    //                                 color: 'rgb(195, 197, 203)',
+    //                             }}>(~<span>000</span>xJEWEL)</div>
+    //                             <div style={{
+    //                                 display: 'flex'
+    //                             }}>
+    //                                 <button
+    //                                 className='cursor-btn btn-enter-mount'
+    //                                 style={{
+    //                                     width: '100%',
+    //                                     padding: '10px 0',
+    //                                     letterSpacing: '1px',
+    //                                     borderRadius: '5px',
+    //                                     backgroundColor: '#009c44',
+    //                                     opacity: '.4'
+    //                                 }}
+    //                                 >ENTER AN MOUNT</button>
+    //                             </div>
+    //                         </div>
+    //                     </div>
+    //                 </Modal>
+    //         </div>
+    //     </div>
+    // </JewelerPage>
         )
     }
 
-
+{/* 
     const JewelerPage = styled.div({
     '.container-jeweler': {
         backgroundColor: '#131313',
@@ -1757,4 +2798,4 @@ export default function Jeweler({ allPostsData }) {
             },
         },
     },
-})
+}) */}
