@@ -1,17 +1,8 @@
 import styled from '@emotion/styled';
 import React, { useEffect, useState, useRef } from 'react'
 import Modal from 'react-modal';
-import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-
-
-// const btnJewelerPage = React.memo(
-//     <div>
-
-//     </div>
-// )
-
 
 
 export default function Jeweler({ allPostsData }) {
