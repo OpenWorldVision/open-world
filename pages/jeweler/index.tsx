@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Modal from 'react-modal';
 import ClipLoader from "react-spinners/ClipLoader";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { use } from 'vue/types/umd';
 
 
 export default function Jeweler(props) {
@@ -15,6 +16,9 @@ export default function Jeweler(props) {
     const [modalClaim, setModalClaim] = useState(false)
     const [modalWaitClaim, setModalWaitClaim] = useState(false)
     const [modalWithdraw, setModalWithdraw] = useState(false)
+
+    const [checkButtonTransferLock, setCheckButtonTransferLock] = useState(true)
+    const [addClassOpacityButton, setAddClassOpacityButton] = useState('')
     
     function closeModal() {
     setIsOpen(false)
@@ -22,6 +26,20 @@ export default function Jeweler(props) {
     setModalLila(false)
     setModalJeweler(false)
     }
+
+
+    const handleChangeInput = (e) => {
+        if (e.target.value === ''){
+            setCheckButtonTransferLock(true)
+            setAddClassOpacityButton('')
+        }
+        else{
+            setCheckButtonTransferLock(false)
+            setAddClassOpacityButton('check-button-transfer-lock')
+        }
+        
+    }
+
     return (
         <JewelerPage>
             <div>
@@ -173,7 +191,7 @@ export default function Jeweler(props) {
                         </div>
                         <div className="bankShine-chestBL">
                             <img
-                            src="/images/bankShine-chestB.png"
+                            src="/images/bankShine-chestBL.png"
                             alt="bankShine-chestBL"
                             />
                         </div>
@@ -319,11 +337,12 @@ export default function Jeweler(props) {
                                             wallet that contains the locked JEWEL that you are
                                             attempting to move.
                                         </p>
-                                        <input type="text" placeholder="Type 'SEND'" />
+                                        <input onChange={handleChangeInput} type="text" placeholder="Type 'SEND'" />
                                         </div>
                                         <button
-                                        disabled={true}
-                                        className="btn-transfer-locked cursor-btn"
+                                        // style={{opacity: 0.5}}
+                                        disabled={checkButtonTransferLock}
+                                        className={`btn-transfer-locked cursor-btn ${addClassOpacityButton}`}
                                         >
                                         TRANSFER LOCKED JEWEL
                                         </button>
@@ -1285,8 +1304,8 @@ export default function Jeweler(props) {
                 height: '156.101px',
             },
             '.btn-lila': {
-                left: '616.176px',
-                top: '665px',
+                left: '481.176px',
+                top: '500px',
             },
             '.hero-manage': {
                 'img': {

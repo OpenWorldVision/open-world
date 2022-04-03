@@ -95,6 +95,10 @@ img {
   text-align: center;
 }
 
+.btn-transfer-locked.check-button-transfer-lock {
+  opacity: unset;
+}
+
 .btn-transfer-locked {
   position: relative;
   color: #fff;
@@ -340,6 +344,7 @@ img {
 
   .modal_body_content {
     padding: 10px;
+    margin-bottom: 60px;
   }
 
   .popup-jeweler-head {
@@ -401,7 +406,7 @@ img {
   }
 
   .btn-deposit-container button {
-    padding: 0 !important;
+    padding: 10px !important;
   }
 
   .btn-turn-off-modal {
