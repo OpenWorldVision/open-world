@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import Modal from 'react-modal';
 import ClipLoader from "react-spinners/ClipLoader";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { use } from 'vue/types/umd';
 
 
 export default function Jeweler(props) {
