@@ -5,6 +5,8 @@ import WalletConnectProvider from '@walletconnect/web3-provider'
 let web3Client = null
 let web3Provider = null
 
+//rebuild
+
 const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider, // required
