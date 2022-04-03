@@ -1,12 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react'
-import { Button, Modal, Text } from '@chakra-ui/react'
+import {
+  Button,
+  Modal,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+} from '@chakra-ui/react'
 import styles from '../../components/entry.module.css'
 import Link from 'next/link'
 import { chainName } from 'utils/chainName'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 import { getWeb3Client } from '@lib/web3'
-import ModalAddWallet from './components/ModalAddWallet'
+// import ModalAddWallet from './components/ModalAddWallet'
 
 const Entry = () => {
   const [playMusic, setPlayMusic] = useState(false)
@@ -162,7 +171,22 @@ const Entry = () => {
         </div>
       </div>
       <Modal isOpen={openModalAddWallet} onClose={onCloseModal} isCentered>
-        <ModalAddWallet onAddMetamask={onAddMetamask} />
+        <ModalOverlay>
+          <ModalContent>
+            <ModalHeader>Please add your wallet</ModalHeader>
+            <ModalCloseButton />
+            <ModalFooter>
+              <Button
+                backgroundColor={'#019C44'}
+                variant="ghost"
+                onClick={onAddMetamask}
+                textColor={'#fff'}
+              >
+                Add Metamask
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </ModalOverlay>
       </Modal>
     </div>
   )
