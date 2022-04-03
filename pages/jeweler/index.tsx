@@ -27,11 +27,13 @@ export default function Jeweler(props) {
             <div>
                 <div className="container-jeweler" >   
                     <TransformWrapper 
-                        centerZoomedOut={false}
+                        maxScale={2}
+                        minScale={0.25}
+                        initialScale={0.8}
+                        centerZoomedOut={true}
+                        initialPositionX={0}
+                        initialPositionY={0}
                         centerOnInit={true}
-                        limitToBounds={true}
-                        minPositionY={0}
-                        minPositionX={0}
 
                     >
                         <TransformComponent>
@@ -43,7 +45,7 @@ export default function Jeweler(props) {
                             <button className="btn-info-manage cursor-btn">
                                 <div className="btn-content">Manager</div>
                                 <img
-                                    src="https://game.defikingdoms.com/static/media/bubble-arrow.905173b2.png"
+                                    src="/images/bubble-arrow.png"
                                     alt=""
                                 />
                             </button>
@@ -52,7 +54,7 @@ export default function Jeweler(props) {
                             <button className="btn-info-manage cursor-btn">
                                 <div className="btn-content">Jeweler</div>
                                 <img
-                                    src="https://game.defikingdoms.com/static/media/bubble-arrow.905173b2.png"
+                                    src="/images/bubble-arrow.png"
                                     alt=""
                                 />
                             </button>
@@ -60,32 +62,32 @@ export default function Jeweler(props) {
                         <div className="info-info">
                             <button className="btn-info-info cursor-btn">
                                 <img
-                                    src="https://game.defikingdoms.com/static/media/text_bubble_excl_mark.4ef4a151.png"
+                                    src="/images/text_bubble_excl_mark.png"
                                     alt=""
                                 />
                             </button>
                         </div>
                         <div className="hero-manage">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bank-npc.8f28ffae.png"
+                            src="/images/bank-npc.png"
                             alt="hero_manager"
                             />
                         </div>
                         <div className="table-manager">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bank-desk3.ead9fc47.png"
+                            src="/images/bank-desk3.png"
                             alt=""
                             />
                         </div>
                         <div className="table-jeweler">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bank-desk2.02d89879.png"
+                            src="/images/bank-desk2.png"
                             alt=""
                             />
                         </div>
                         <div className="table-info">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bank-desk3.ead9fc47.png"
+                            src="/images/bank-desk3.png"
                             alt=""
                             />
                         </div>
@@ -99,91 +101,91 @@ export default function Jeweler(props) {
                         </button>
                         <div className="hero-jeweler">
                             <img
-                            src="https://game.defikingdoms.com/static/media/teller-idle.053534ac.png"
+                            src="/images/teller-idle.png"
                             alt="hero_jeweler"
                             />
                         </div>
                         <div className="hero-info">
                             <img
-                            src="https://game.defikingdoms.com/static/media/banker-idle.ff6a4d3f.png"
+                            src="/images/banker-idle.png"
                             alt="hero_info"
                             />
                         </div>
                         <div className="hero-lila">
                             <img
-                            src="https://game.defikingdoms.com/static/media/lila-animation.a9794464.png"
+                            src="/images/lila-animation.png"
                             alt="hero_lila"
                             />
                         </div>
                         <div className="bank-eyes">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bank-eyes.049bd9ec.png"
+                            src="/images/bank-eyes.png"
                             alt="bank_eyes"
                             />
                         </div>
                         <div className="bank-lights">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bank-lights.e8e3bf99.png"
+                            src="/images/bank-lights.png"
                             alt="bank_lights"
                             />
                         </div>
                         <div className="bankShine">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bankShine-statue.783a90a5.png"
+                            src="/images/bankShine-statue.png"
                             alt="bankShine"
                             />
                         </div>
                         <div className="bankShine-chestTL">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bankShine-chestTL.fb167560.png"
+                            src="/images/bankShine-chestTL.png"
                             alt="bankShine-chestTL"
                             />
                         </div>
                         <div className="bankShine-chestTC">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bankShine-chestTC.25ffd514.png"
+                            src="/images/bankShine-chestTC.png"
                             alt="bankShine-chestTC"
                             />
                         </div>
                         <div className="bankShine-pig">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bankShine-pig.b50be6a6.png"
+                            src="/images/bankShine-pig.png"
                             alt="bankShine-pig"
                             />
                         </div>
                         <div className="bankShine-chestTR">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bankShine-chestTR.f063b7b8.png"
+                            src="/images/bankShine-chestTR.png"
                             alt="bankShine-chestTR"
                             />
                         </div>
                         <div className="bankShine-vaseL">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bankShine-vaseL.0195a7db.png"
+                            src="/images/bankShine-vaseL.png"
                             alt="bankShine-vaseL"
                             />
                         </div>
                         <div className="bankShine-vaseR">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bankShine-vaseL.0195a7db.png"
+                            src="/images/bankShine-vaseL.png"
                             alt="bankShine-vaseR"
                             />
                         </div>
                         <div className="bankShine-chestBL">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bankShine-chestBL.648c7ab8.png"
+                            src="/images/bankShine-chestB.png"
                             alt="bankShine-chestBL"
                             />
                         </div>
                         <div className="bankShine-chestBR">
                             <img
-                            src="https://game.defikingdoms.com/static/media/bankShine-chestBR.0e721d9a.png"
+                            src="/images/bankShine-chestBR.png"
                             alt="bankShine-chestBR"
                             />
                         </div>
                         <div className="pumpkin">
                             <img
-                            src="https://game.defikingdoms.com/static/media/Pumpkin01.4f7e453e.png"
+                            src="/images/Pumpkin01.png"
                             alt="pumpkin"
                             />
                         </div>
@@ -203,7 +205,7 @@ export default function Jeweler(props) {
                             zIndex: '10000',
                             display: 'flex',
                             alignItems: 'center',
-                            cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+                            cursor: 'url(/images/default-cursor.png), auto',
                         },
                             content:{
                                 background: 'rgba(0, 0, 0, 0.85)',
@@ -228,6 +230,7 @@ export default function Jeweler(props) {
                                         }}
                                         className="title">Locked JEWEL Management  
                                         <div
+                                            className='cursor-btn'
                                             style={{
                                                 position: 'absolute',
                                                 right: '26px',
@@ -282,7 +285,7 @@ export default function Jeweler(props) {
                                         <p>Total Locked JEWEL</p>
                                         <p>
                                         <img
-                                            src="https://game.defikingdoms.com/static/media/cute-jewel.4849f9a3.png"
+                                            src="/images/cute-jewel.png"
                                             alt=""
                                         />
                                         0.00
@@ -292,7 +295,7 @@ export default function Jeweler(props) {
                                         <p>Total Locked JEWEL</p>
                                         <p>
                                         <img
-                                            src="https://game.defikingdoms.com/static/media/cute-jewel.4849f9a3.png"
+                                            src="/images/cute-jewel.png"
                                             alt=""
                                         />
                                         0.00
@@ -306,10 +309,9 @@ export default function Jeweler(props) {
                                     </div>
                                     <div style={{padding: "10px 15px"}}>
                                         <div className="warning">
-                                        <img
-                                            src="https://game.defikingdoms.com/static/media/warning.e34a399d.svg"
-                                            alt=""
-                                        />
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                                            <path d="M12.984 14.016v-4.031h-1.969v4.031h1.969zM12.984 18v-2.016h-1.969v2.016h1.969zM0.984 21l11.016-18.984 11.016 18.984h-22.031z" fill="#fff"/>
+                                        </svg>
                                         <p>
                                             Warning: This process is irreversible. There is no way to
                                             cancel or undo this transfer, so be sure that you entered
@@ -341,7 +343,7 @@ export default function Jeweler(props) {
                             zIndex: '10000',
                             display: 'flex',
                             alignItems: 'center',
-                            cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+                            cursor: 'url(/images/default-cursor.png), auto',
                         },
                             content:{
                                 background: 'rgba(0, 0, 0, 0.85)',
@@ -409,7 +411,7 @@ export default function Jeweler(props) {
                                                     <div>(1 xJEWEL = 1.716 JEWEL)</div>
                                                 </div>
                                                 <div className='quantity'>
-                                                    <img src="https://game.defikingdoms.com/static/media/mid-jewel.c24e7697.png" alt="" />
+                                                    <img src="/images/mid-jewel.png" alt="" />
                                                     <div>0.0000</div>
                                                 </div>
                                                 <div className='your-token'>You have <span>0.00</span> JEWEL tokens available to deposit to the Jeweler.</div>
@@ -436,7 +438,7 @@ export default function Jeweler(props) {
                             zIndex: '10000',
                             display: 'flex',
                             alignItems: 'center',
-                            cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+                            cursor: 'url(/images/default-cursor.png), auto',
                         },
                             content:{
                                 background: 'rgba(0, 0, 0, 0.85)',
@@ -506,7 +508,7 @@ export default function Jeweler(props) {
                             zIndex: '10000',
                             display: 'flex',
                             alignItems: 'center',
-                            cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+                            cursor: 'url(/images/default-cursor.png), auto',
                         },
                             content:{
                                 background: 'rgba(0, 0, 0, 0.85)',
@@ -562,7 +564,7 @@ export default function Jeweler(props) {
                             zIndex: '10002',
                             display: 'flex',
                             alignItems: 'center',
-                            cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+                            cursor: 'url(/images/default-cursor.png), auto',
                         },
                             content:{
                                 background: 'rgba(0, 0, 0, 0.85)',
@@ -661,7 +663,7 @@ export default function Jeweler(props) {
                                                 padding: '5px 10px',
                                                 borderRadius: '12px',
                                                 }}>
-                                                <img style={{width: '22px', marginRight: '10px'}} src='https://firebasestorage.googleapis.com/v0/b/defi-kingdoms.appspot.com/o/tokens%2FJEWEL.png?alt=media' />
+                                                <img style={{width: '22px', marginRight: '10px'}} src='/images/JEWEL.png' />
                                                 JEWEL
                                             </button>
                                         </div>
@@ -757,7 +759,7 @@ export default function Jeweler(props) {
                             zIndex: '10002',
                             display: 'flex',
                             alignItems: 'center',
-                            cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+                            cursor: 'url(/images/default-cursor.png), auto',
                         },
                             content:{
                                 background: 'rgba(0, 0, 0, 0.85)',
@@ -926,7 +928,7 @@ export default function Jeweler(props) {
                             zIndex: '10002',
                             display: 'flex',
                             alignItems: 'center',
-                            cursor: 'url(https://game.defikingdoms.com/static/media/default-cursor-2x.946e7535.png), auto',
+                            cursor: 'url(/images/default-cursor.png), auto',
                         },
                             content:{
                                 background: 'rgba(0, 0, 0, 0.85)',
@@ -1024,7 +1026,7 @@ export default function Jeweler(props) {
                                                 padding: '5px 10px',
                                                 borderRadius: '12px',
                                                 }}>
-                                                <img style={{width: '22px', marginRight: '10px'}} src='https://firebasestorage.googleapis.com/v0/b/defi-kingdoms.appspot.com/o/tokens%2FJEWEL.png?alt=media' />
+                                                <img style={{width: '22px', marginRight: '10px'}} src='/images/JEWEL.png' />
                                                 JEWEL
                                             </button>
                                         </div>
@@ -1075,7 +1077,7 @@ export default function Jeweler(props) {
         overflow: 'hidden',
         '.jeweler':{
             position: 'absolute',
-            backgroundImage: 'url(https://game.defikingdoms.com/static/media/bank-bg.6b091ffd.png)',
+            backgroundImage: 'url(/images/bank-bg.png)',
             minWidth: '1318px',
             height: '992.97px',
             zIndex: '1',
@@ -1091,7 +1093,7 @@ export default function Jeweler(props) {
                     animation: '4.5s ease-in-out 0s infinite normal none running animate-btn',
                     'pointer-events': 'revert !important',
                     position: 'relative',
-                    backgroundImage: 'url(https://game.defikingdoms.com/static/media/text-bubble-left.c3f30af7.png), url(https://game.defikingdoms.com/static/media/text-bubble-right.2fb52ccb.pngg)',
+                    backgroundImage: 'url(/images/text-bubble-left.png), url(/images/text-bubble-right.png)',
                     backgroundPosition: 'left top, right top',
                     backgroundRepeat: 'repeat-y',
                     backgroundColor: 'rgb(255, 224, 183)',
@@ -1129,7 +1131,7 @@ export default function Jeweler(props) {
                     left: '11.6081px',
                     width: '71px',
                     height: '45px',
-                    backgroundImage:' url(https://game.defikingdoms.com/static/media/text-bubble-top.d04e86af.png), url(https://game.defikingdoms.com/static/media/text-bubble-btm.6e7dfc5b.png)',
+                    backgroundImage:' url(/images/text-bubble-top.png), url(/images/text-bubble-btm.png)',
                     backgroundPosition: 'center top, center bottom',
                     backgroundRepeat: 'repeat-x',
                     backgroundSize: '46.4324px 11.6081px',
@@ -1142,10 +1144,10 @@ export default function Jeweler(props) {
                     left: '0',
                     width: '97px',
                     height: '45px',
-                    backgroundImage: 'url(https://game.defikingdoms.com/static/media/text-bubble-topLeft.4ef18153.png),' +
-                    'url(https://game.defikingdoms.com/static/media/text-bubble-topRight.ef4ff233.png),' + 
-                    'url(https://game.defikingdoms.com/static/media/text-bubble-btmLeft.67ba4cac.png),' + 
-                    'url(https://game.defikingdoms.com/static/media/text-bubble-btmRight.52e8daad.png)',
+                    backgroundImage: 'url(/images/text-bubble-topLeft.png),' +
+                    'url(/images/text-bubble-topRight.png),' + 
+                    'url(/images/text-bubble-btmLeft.png),' + 
+                    'url(/images/text-bubble-btmRight.png)',
                     backgroundPosition: 'left top, right top, left bottom, right bottom',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: '26.1182px 27.1182px',
@@ -1170,7 +1172,7 @@ export default function Jeweler(props) {
                     animation: '4.5s ease-in-out 0s infinite normal none running animate-btn',
                     'pointer-events': 'revert !important',
                     position: 'relative',
-                    backgroundImage: 'url(https://game.defikingdoms.com/static/media/text-bubble-left.c3f30af7.png), url(https://game.defikingdoms.com/static/media/text-bubble-right.2fb52ccb.pngg)',
+                    backgroundImage: 'url(/images/text-bubble-left.png), url(/images/text-bubble-right.png)',
                     backgroundPosition: 'left top, right top',
                     backgroundRepeat: 'repeat-y',
                     backgroundColor: 'rgb(255, 224, 183)',
@@ -1208,7 +1210,7 @@ export default function Jeweler(props) {
                     left: '11.6081px',
                     width: '71px',
                     height: '45px',
-                    backgroundImage:' url(https://game.defikingdoms.com/static/media/text-bubble-top.d04e86af.png), url(https://game.defikingdoms.com/static/media/text-bubble-btm.6e7dfc5b.png)',
+                    backgroundImage:' url(/images/text-bubble-top.png), url(/images/text-bubble-btm.png)',
                     backgroundPosition: 'center top, center bottom',
                     backgroundRepeat: 'repeat-x',
                     backgroundSize: '46.4324px 11.6081px',
@@ -1221,10 +1223,10 @@ export default function Jeweler(props) {
                     left: '0',
                     width: '97px',
                     height: '45px',
-                    backgroundImage: 'url(https://game.defikingdoms.com/static/media/text-bubble-topLeft.4ef18153.png),' +
-                    'url(https://game.defikingdoms.com/static/media/text-bubble-topRight.ef4ff233.png),' + 
-                    'url(https://game.defikingdoms.com/static/media/text-bubble-btmLeft.67ba4cac.png),' + 
-                    'url(https://game.defikingdoms.com/static/media/text-bubble-btmRight.52e8daad.png)',
+                    backgroundImage: 'url(/images/text-bubble-topLeft.png),' +
+                    'url(/images/text-bubble-topRight.png),' + 
+                    'url(/images/text-bubble-btmLeft.png),' + 
+                    'url(/images/text-bubble-btmRight.png)',
                     backgroundPosition: 'left top, right top, left bottom, right bottom',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: '26.1182px 27.1182px',

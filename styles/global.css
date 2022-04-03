@@ -46,34 +46,6 @@ img {
   margin-top: 10px;
 }
 
-/* .modal_body_content.manage{
-  overflow-y: scroll;
-  max-height: 620px;
-  overflow-y: auto;
-}
-
-.modal_body_content.modal-jeweler{
-  overflow-y: scroll;
-  max-height: 800px;
-} */
-
-/* .modal__body__container .modal_body_content.manage::-webkit-scrollbar,
-.modal__body__container .modal_body_content.modal-jeweler::-webkit-scrollbar{
-  width: 20px;
-}
-
-.modal__body__container .modal_body_content::-webkit-scrollbar-track{
-  background-color: transparent;
-}
-
-.modal__body__container .modal_body_content.manage::-webkit-scrollbar-thumb,
-.modal__body__container .modal_body_content.modal-jeweler::-webkit-scrollbar-thumb {
-  background-color: #282738;
-  border-radius: 20px;
-  border: 6px solid transparent;
-  background-clip: content-box;
-} */
-
 .ReactModal__Content.ReactModal__Content--after-open::-webkit-scrollbar {
   width: 20px;
 }
@@ -187,7 +159,6 @@ img {
 }
 
 .popup-jeweler-head .border_content:first-child {
-  /* width: 400px; */
   padding: 20px 30px;
 }
 
@@ -205,7 +176,6 @@ img {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* padding: 30px; */
 }
 
 .modal_body_content .TVL {
@@ -231,15 +201,11 @@ img {
 }
 
 .dex-fee-body {
-  /* border-image-source: url(https://game.defikingdoms.com/static/media/border-hero.02168639.png);
-  border-image-slice: 16;
-  border-image-width: 12px;
-  border-image-outset: 3px; */
   border: 4px solid rgb(250, 192, 93);
 }
 
 .bordered-box.bordered-box-hero {
-  border-image-source: url(https://game.defikingdoms.com/static/media/border-hero.02168639.png);
+  border-image-source: url(/images/border-hero.png);
   border-image-slice: 16;
   border-image-width: 12px;
   border-image-outset: 3px;
@@ -251,8 +217,7 @@ img {
   border-width: 4px;
   border-style: solid;
   border-color: rgb(250, 192, 93);
-  border-image: url(https://game.defikingdoms.com/static/media/border-main.812a2dc7.png)
-    4 / 4px / 0 round;
+  border-image: url(/images/border-main.png) 4 / 4px / 0 round;
   padding: 1rem;
   background-image: linear-gradient(
     to right,
@@ -311,8 +276,7 @@ img {
 .popup-jeweler-head .border_content:last-child .claim:hover,
 .popup-jeweler-head .border_content:last-child .withdraw:hover {
   padding-left: 30px;
-  background: url(https://game.defikingdoms.com/static/media/uncommon-gem-2.8038f32b.gif)
-    0em 40% / 25px 20px no-repeat;
+  background: url(/images/uncommon-gem-2.gif) 0em 40% / 25px 20px no-repeat;
   color: rgb(250, 192, 93);
 }
 
@@ -456,11 +420,19 @@ img {
     width: 350%;
     height: 150%;
   }
+
+  .modal__body__container .warning {
+    flex-direction: column;
+  }
+
+  .modal__body__container .warning input {
+    width: 100%;
+    margin-top: 10px;
+  }
 }
 
 .cursor-btn {
-  cursor: url(https://game.defikingdoms.com/static/media/click-cursor-2x.113d2d1d.png),
-    auto;
+  cursor: url(/images/click-cursor-2x.png), auto;
 }
 
 .layout-btn {
@@ -506,6 +478,5 @@ img {
 
 .btn-info.focus,
 .btn-info:focus {
-  /* -webkit-box-shadow: 0 0 0 0.2rem rgb(58 176 195 / 50%); */
   box-shadow: none;
 }
