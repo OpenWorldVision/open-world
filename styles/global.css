@@ -26,16 +26,14 @@ img {
   display: block;
 }
 
-.modal_body_head {
-  text-align: center;
-  width: 100%;
+.chakra-modal__content-container {
+  cursor: url(/images/default-cursor.png), auto;
 }
 
-.modal_body_head .title {
-  font-size: 2rem;
-  font-family: Lora;
-  padding: 0.6rem 3.5rem;
-  background: rgba(0, 0, 0, 0.9);
+.chakra-modal__content {
+}
+
+.chakra-modal__body {
 }
 
 .modal_body_content {
@@ -46,15 +44,15 @@ img {
   margin-top: 10px;
 }
 
-.ReactModal__Content.ReactModal__Content--after-open::-webkit-scrollbar {
+.chakra-modal__content::-webkit-scrollbar {
   width: 20px;
 }
 
-.ReactModal__Content.ReactModal__Content--after-open::-webkit-scrollbar-track {
+.chakra-modal__content::-webkit-scrollbar-track {
   background-color: transparent;
 }
 
-.ReactModal__Content.ReactModal__Content--after-open::-webkit-scrollbar-thumb {
+.chakra-modal__content::-webkit-scrollbar-thumb {
   background-color: #282738;
   border-radius: 20px;
   border: 6px solid transparent;
@@ -433,6 +431,10 @@ img {
   .modal__body__container .warning input {
     width: 100%;
     margin-top: 10px;
+  }
+  .modal__body__container .warning p {
+    width: 200px;
+    font-size: 16px !important;
   }
 }
 

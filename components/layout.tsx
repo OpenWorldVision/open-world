@@ -6,7 +6,7 @@ export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
   return (
-    <div className={styles.container}>
+    <div style={{cursor: 'url(/images/default-cursor.png), auto'}} className={styles.container}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
