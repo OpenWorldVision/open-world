@@ -5,7 +5,7 @@ import Layout, { siteTitle } from '@components/layout'
 import { Button, Container, Heading, VStack } from '@chakra-ui/react'
 
 const Home = () => {
-  return <div>hahahaha</div>
+  return <div></div>
 }
 
 export default Home

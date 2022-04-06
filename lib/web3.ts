@@ -14,6 +14,7 @@ const providerOptions = {
       infuraId: 'c02c03ef50ed46209d9e14eb1c30ce29', // required
       rpc: {
         56: 'https://bsc-dataseed.binance.org/',
+        97: 'https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/bsc/testnet',
       },
     },
   },

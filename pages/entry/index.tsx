@@ -32,7 +32,10 @@ const Entry = () => {
           window.ethereum
             .request({ method: 'eth_requestAccounts' })
             .then((result) => {
-              if (chainId !== '0x38') {
+              if (
+                chainId !== '0x38' &&
+                process.env.environment === 'production'
+              ) {
                 window.ethereum.request({
                   method: 'wallet_switchEthereumChain',
                   params: [{ chainId: '0x38' }],

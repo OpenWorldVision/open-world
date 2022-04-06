@@ -21,4 +21,7 @@ module.exports = {
     // set the Content-Security-Policy header
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+  env: {
+    environment: 'develop',
+  },
 }
