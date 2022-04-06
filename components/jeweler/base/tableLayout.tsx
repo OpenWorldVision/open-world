@@ -1,19 +1,29 @@
 import styled from '@emotion/styled';
 import React from 'react'
 
-export default function TableLayout (props) {
+type Props = {
+    width: number
+    height: number
+    top: number
+    left: number
+    src: string
+}
+
+export default function TableLayout (props:Props) {
+    const {width, height, top, left, src} = props
+
     return (
         <TableLayoutStyle>
             <div>
                 <div className="table-container">
                     <img
                         style={{
-                            width: props.width,
-                            height: props.height,
-                            top: props.top,
-                            left: props.left,
+                            width,
+                            height,
+                            top,
+                            left,
                         }}
-                        src={props.src}
+                        src={src}
                         alt=""
                     />
                 </div>

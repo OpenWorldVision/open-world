@@ -1,15 +1,22 @@
 import styled from '@emotion/styled';
 import React from 'react'
 
-export default function ButtonAnimate (props) {
+type Props = {
+    top: number
+    left: number
+    contentButton: string
+}
+
+export default function ButtonAnimate (props:Props) {
+    const { top, left, contentButton } = props
     return (
         <ButtonAnimateStyle>
             <div>
-                <div style={{top: props.top, left: props.left}} className="info-manage">
+                <div style={{top, left}} className="info-manage">
                     <button className="btn-animate cursor-btn">
-                        <div className="btn-content">{props.contentButton}</div>
+                        <div className="btn-content">{contentButton}</div>
                         <img
-                            src="/images/bubble-arrow.png"
+                            src="/images/jeweler/bubble-arrow.png"
                             alt="img"
                         />
                     </button>
@@ -26,7 +33,7 @@ const ButtonAnimateStyle = styled.div({
             animation: '4.5s ease-in-out 0s infinite normal none running animate-btn',
             'pointer-events': 'revert !important',
             position: 'relative',
-            backgroundImage: 'url(/images/text-bubble-left.png), url(/images/text-bubble-right.png)',
+            backgroundImage: 'url(/images/jeweler/text-bubble-left.png), url(/images/jeweler/text-bubble-right.png)',
             backgroundPosition: 'left top, right top',
             backgroundRepeat: 'repeat-y',
             backgroundColor: 'rgb(255, 224, 183)',
@@ -64,7 +71,7 @@ const ButtonAnimateStyle = styled.div({
             left: '11.6081px',
             width: '71px',
             height: '45px',
-            backgroundImage:' url(/images/text-bubble-top.png), url(/images/text-bubble-btm.png)',
+            backgroundImage:' url(/images/jeweler/text-bubble-top.png), url(/images/jeweler/text-bubble-btm.png)',
             backgroundPosition: 'center top, center bottom',
             backgroundRepeat: 'repeat-x',
             backgroundSize: '46.4324px 11.6081px',
@@ -77,19 +84,19 @@ const ButtonAnimateStyle = styled.div({
             left: '0',
             width: '97px',
             height: '45px',
-            backgroundImage: 'url(/images/text-bubble-topLeft.png),' +
-            'url(/images/text-bubble-topRight.png),' + 
-            'url(/images/text-bubble-btmLeft.png),' + 
-            'url(/images/text-bubble-btmRight.png)',
+            backgroundImage: 'url(/images/jeweler/text-bubble-topLeft.png),' +
+            'url(/images/jeweler/text-bubble-topRight.png),' + 
+            'url(/images/jeweler/text-bubble-btmLeft.png),' + 
+            'url(/images/jeweler/text-bubble-btmRight.png)',
             backgroundPosition: 'left top, right top, left bottom, right bottom',
             backgroundRepeat: 'no-repeat',
-            backgroundSize: '26.1182px 27.1182px',
+            backgroundSize: '26.1182px 24.1182px',
         },
         '.btn-content': {
             position: 'relative',
             textAlign: 'center',
             color: 'rgb(0, 0, 0)',
-            padding: '0 8.9223px',
+            padding: '0 10.9223px',
             fontFamily: 'Lora, serif',
             fontWeight: 'bold',
             zIndex: '2003',

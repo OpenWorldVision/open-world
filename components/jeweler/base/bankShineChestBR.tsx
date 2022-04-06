@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react'
 
-export default function BankShineChestBR (props) {
+export default function BankShineChestBR () {
     return (
         <BankShineChestBRStyle>
             <div>
                 <div className="bankShine-chestBR">
                     <img
-                        src="/images/bankShine-chestBR.png"
+                        src="/images/jeweler/bankShine-chestBR.png"
                         alt="bankShine-chestBR"
                     />
                 </div>

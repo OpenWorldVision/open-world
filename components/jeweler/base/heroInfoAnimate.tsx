@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react'
 
-export default function HeroInfoAnimate (props) {
+export default function HeroInfoAnimate () {
     return (
         <HeroInfoAnimateStyle>
             <div>
                 <div className="hero-info">
                     <img
-                    src="/images/banker-idle.png"
+                    src="/images/jeweler/banker-idle.png"
                     alt="hero_info"
                     />
                 </div>

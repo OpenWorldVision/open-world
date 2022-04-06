@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react'
 
-export default function BankShineVaseL (props) {
+export default function BankShineVaseL () {
     return (
         <BankShineVaseLStyle>
             <div>
                 <div className="bankShine-vaseL">
                     <img
-                        src="/images/bankShine-vaseL.png"
+                        src="/images/jeweler/bankShine-vaseL.png"
                         alt="bankShine-vaseL"
                     />
                 </div>

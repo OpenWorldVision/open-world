@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react'
 
-export default function BankEyes (props) {
+export default function BankEyes () {
     return (
         <BankEyesStyle>
             <div>
                 <div className="bank-eyes">
                     <img
-                        src="/images/bank-eyes.png"
+                        src="/images/jeweler/bank-eyes.png"
                         alt="bank_eyes"
                     />
                 </div>

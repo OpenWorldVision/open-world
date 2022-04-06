@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react'
 
-export default function HeroLilaAnimate (props) {
+export default function HeroLilaAnimate () {
     return (
         <HeroLilaAnimateStyle>
             <div>
                 <div className="hero-lila">
                     <img
-                        src="/images/lila-animation.png"
+                        src="/images/jeweler/lila-animation.png"
                         alt="hero_lila"
                     />
                 </div>

@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
 import React from 'react'
 
-export default function PumpKin (props) {
+export default function PumpKin () {
     return (
         <PumpKinStyle>
             <div>
                 <div className="pumpkin">
                     <img
-                        src="/images/Pumpkin01.png"
+                        src="/images/jeweler/Pumpkin01.png"
                         alt="pumpkin"
                     />
                 </div>

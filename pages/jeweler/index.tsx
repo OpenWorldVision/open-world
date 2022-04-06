@@ -1,25 +1,26 @@
 import styled from '@emotion/styled';
 import React, { useState } from 'react'
 
-import ButtonAnimate from "../../components/jeweler/base/buttonAnimate"
-import HeroManageAnimate from "../../components/jeweler/base/heroManageAnimate"
-import HeroJewelerAnimate from "../../components/jeweler/base/heroJewelerAnimate"
-import HeroInfoAnimate from "../../components/jeweler/base/heroInfoAnimate"
-import HeroLilaAnimate from "../../components/jeweler/base/heroLilaAnimate"
-import TableLayout from "../../components/jeweler/base/tableLayout"
-import BankEyesStyle from "../../components/jeweler/base/bankEyes"
-import BankLights from "../../components/jeweler/base/bankLights"
-import BankShine from "../../components/jeweler/base/bankShine"
-import BankShineChestTL from "../../components/jeweler/base/bankShineChestTL"
-import BankShineChestTC from "../../components/jeweler/base/bankShineChestTC"
-import BankShinePig from "../../components/jeweler/base/bankShinePig"
-import BankShineChestTR from "../../components/jeweler/base/bankShineChestTR"
-import BankShineVaseL from "../../components/jeweler/base/bankShineVaseL"
-import BankShineVaseR from "../../components/jeweler/base/bankShineVaseR"
-import BankShineChestBL from "../../components/jeweler/base/bankShineChestBL"
-import BankShineChestBR from "../../components/jeweler/base/bankShineChestBR"
-import PumpKin from "../../components/jeweler/base/pumpKin"
-
+import {
+    ButtonAnimate,
+    HeroJewelerAnimate,
+    HeroManageAnimate,
+    HeroLilaAnimate,
+    HeroInfoAnimate,
+    TableLayout,
+    BankEyesStyle,
+    BankLights,
+    BankShine,
+    BankShineChestTL,
+    BankShineChestTC,
+    BankShinePig,
+    BankShineChestTR,
+    BankShineVaseL,
+    BankShineVaseR,
+    BankShineChestBL,
+    BankShineChestBR,
+    PumpKin,
+}   from "../../components/jeweler/index"
 
 import {
     Modal,
@@ -77,12 +78,12 @@ export default function Jeweler(props) {
                             <div
                                 className="jeweler container transform-component"
                             >
-                                <ButtonAnimate top='185.868px' left= '671.216px' contentButton='Manager'/>
-                                <ButtonAnimate top='514.868px' left= '656.216px' contentButton='Jeweler'/>
+                                <ButtonAnimate top={185.868} left={671.216} contentButton='Manager'/>
+                                <ButtonAnimate top={514.868} left= {656.216} contentButton='Jeweler'/>
                                 <div className="info-info">
                                     <button className="btn-info-info cursor-btn">
                                         <img
-                                            src="/images/text_bubble_excl_mark.png"
+                                            src="/images/jeweler/text_bubble_excl_mark.png"
                                             alt=""
                                         />
                                     </button>
@@ -91,14 +92,14 @@ export default function Jeweler(props) {
                                 <HeroJewelerAnimate />
                                 <HeroInfoAnimate />
                                 <HeroLilaAnimate />
-                                <TableLayout wdith='216px' height='145px' top='246.027px' left='567.919px' 
-                                    src='/images/bank-desk3.png'
+                                <TableLayout width={216} height={145} top={246.027} left={567.919}
+                                    src='/images/jeweler/bank-desk3.png'
                                 />
-                                <TableLayout width='178px' height='108px' top='604px' left='569.919px'
-                                    src='/images/bank-desk2.png'
+                                <TableLayout width={178} height={108} top={604} left={569.919}
+                                    src='/images/jeweler/bank-desk2.png'
                                 />
-                                <TableLayout width='214px' height='143px' top='600px' left='210.919px'
-                                    src='/images/bank-desk3.png'
+                                <TableLayout width={214} height={143} top={600} left={210.919}
+                                    src='/images/jeweler/bank-desk3.png'
                                 />
                                 <button onClick={() =>{setIsOpen(true)}} className="layout-btn btn-manage cursor-btn">
                                 </button>
@@ -127,7 +128,7 @@ export default function Jeweler(props) {
                         <ModalOverlay 
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                                cursor: 'url(/images/default-cursor.png), auto',
+                                cursor: 'url(/images/jeweler/default-cursor.png), auto',
                             }}
                         />
                         <ModalContent
@@ -188,7 +189,7 @@ export default function Jeweler(props) {
                                             <p>Total Locked JEWEL</p>
                                             <p>
                                             <img
-                                                src="/images/cute-jewel.png"
+                                                src="/images/jeweler/cute-jewel.png"
                                                 alt=""
                                             />
                                             0.00
@@ -198,7 +199,7 @@ export default function Jeweler(props) {
                                             <p>Total Locked JEWEL</p>
                                             <p>
                                             <img
-                                                src="/images/cute-jewel.png"
+                                                src="/images/jeweler/cute-jewel.png"
                                                 alt=""
                                             />
                                             0.00
@@ -240,7 +241,7 @@ export default function Jeweler(props) {
                         <ModalOverlay 
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                                cursor: 'url(/images/default-cursor.png), auto',
+                                cursor: 'url(/images/jeweler/default-cursor.png), auto',
                             }}
                         />
                         <ModalContent
@@ -287,7 +288,7 @@ export default function Jeweler(props) {
                         <ModalOverlay 
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                                cursor: 'url(/images/default-cursor.png), auto',
+                                cursor: 'url(/images/jeweler/default-cursor.png), auto',
                             }}
                         />
                         <ModalContent
@@ -320,7 +321,7 @@ export default function Jeweler(props) {
                         <ModalOverlay 
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                                cursor: 'url(/images/default-cursor.png), auto',
+                                cursor: 'url(/images/jeweler/default-cursor.png), auto',
                             }}
                         />
                         <ModalContent
@@ -370,7 +371,7 @@ export default function Jeweler(props) {
                                                         <div>(1 xJEWEL = 1.716 JEWEL)</div>
                                                     </div>
                                                     <div className='quantity'>
-                                                        <img src="/images/mid-jewel.png" alt="" />
+                                                        <img src="/images/jeweler/mid-jewel.png" alt="" />
                                                         <div>0.0000</div>
                                                     </div>
                                                     <div className='your-token'>You have <span>0.00</span> JEWEL tokens available to deposit to the Jeweler.</div>
@@ -392,7 +393,7 @@ export default function Jeweler(props) {
                         <ModalOverlay 
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                                cursor: 'url(/images/default-cursor.png), auto',
+                                cursor: 'url(/images/jeweler/default-cursor.png), auto',
                             }}
                         />
                         <ModalContent
@@ -469,7 +470,7 @@ export default function Jeweler(props) {
                                                     padding: '5px 10px',
                                                     borderRadius: '12px',
                                                     }}>
-                                                    <img style={{width: '22px', marginRight: '10px'}} src='/images/JEWEL.png' />
+                                                    <img style={{width: '22px', marginRight: '10px'}} src='/images/jeweler/JEWEL.png' />
                                                     JEWEL
                                                 </button>
                                             </div>
@@ -560,7 +561,7 @@ export default function Jeweler(props) {
                         <ModalOverlay 
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                                cursor: 'url(/images/default-cursor.png), auto',
+                                cursor: 'url(/images/jeweler/default-cursor.png), auto',
                             }}
                         />
                         <ModalContent
@@ -627,7 +628,7 @@ export default function Jeweler(props) {
                         <ModalOverlay 
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                                cursor: 'url(/images/default-cursor.png), auto',
+                                cursor: 'url(/images/jeweler/default-cursor.png), auto',
                             }}
                         />
                         <ModalContent
@@ -683,7 +684,7 @@ export default function Jeweler(props) {
                         <ModalOverlay 
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                                cursor: 'url(/images/default-cursor.png), auto',
+                                cursor: 'url(/images/jeweler/default-cursor.png), auto',
                             }}
                         />
                         <ModalContent
@@ -758,7 +759,7 @@ export default function Jeweler(props) {
                                                     padding: '5px 10px',
                                                     borderRadius: '12px',
                                                     }}>
-                                                    <img style={{width: '22px', marginRight: '10px'}} src='/images/JEWEL.png' />
+                                                    <img style={{width: '22px', marginRight: '10px'}} src='/images/jeweler/JEWEL.png' />
                                                     JEWEL
                                                 </button>
                                             </div>
@@ -807,11 +808,11 @@ export default function Jeweler(props) {
         
         justifyContent: 'center',
         alignItems: 'center',
-        cursor: 'url(/images/default-cursor.png), auto',
+        cursor: 'url(/images/jeweler/default-cursor.png), auto',
         overflow: 'hidden',
         '.jeweler':{
             position: 'absolute',
-            backgroundImage: 'url(/images/bank-bg.png)',
+            backgroundImage: 'url(/images/jeweler/bank-bg.png)',
             minWidth: '1318px',
             height: '992.97px',
             zIndex: '1',
