@@ -26,13 +26,10 @@ export const getWeb3Client = async () => {
     cacheProvider: true, // optional
     providerOptions, // required
   })
-  // console.log('get client', web3Client)
 
   if (!web3Provider) {
     web3Provider = await web3Modal.connect()
   }
-
-  // if(web3Provider) bindingProviderEvents(web3Provider);
 
   if (!web3Client)
     web3Client = new Web3(web3Provider, {

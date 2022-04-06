@@ -31,7 +31,7 @@ const Entry = () => {
           setNameOfChain(chainName[chainId] || '')
           window.ethereum
             .request({ method: 'eth_requestAccounts' })
-            .then((result) => {
+            .then(() => {
               if (
                 chainId !== '0x38' &&
                 process.env.environment === 'production'
@@ -42,7 +42,7 @@ const Entry = () => {
                 })
               }
             })
-            .catch((error) => {
+            .catch((error: unknown) => {
               console.log('error', error)
               // setErrorMessage(error.message);
             })
@@ -75,7 +75,7 @@ const Entry = () => {
           subscribeWalletChanged()
         }
       }
-    } catch (error) {
+    } catch (error: unknown) {
       setOpenModalAddWallet(true)
     }
   }, [])
@@ -102,15 +102,10 @@ const Entry = () => {
               },
             },
           })
-        } catch (error) {
-          console.log(error)
-        }
+        } catch (error: unknown) {}
       }
     }
-    // console.log('nhan dc', balance)
   }
-  // const goToHomePage = () => {}
-
   const onCloseModal = () => {
     setOpenModalAddWallet(false)
   }
