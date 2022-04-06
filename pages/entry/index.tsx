@@ -42,8 +42,7 @@ const Entry = () => {
                 })
               }
             })
-            .catch((error: unknown) => {
-              console.log('error', error)
+            .catch(() => {
               // setErrorMessage(error.message);
             })
         }
