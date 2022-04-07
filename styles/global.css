@@ -6,10 +6,13 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 18px;
+  cursor: url('/images/castle/default-cursor.png'), auto !important;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: inherit;
 }
 
 a {
@@ -486,4 +489,170 @@ img {
 .btn-info.focus,
 .btn-info:focus {
   box-shadow: none;
+}
+
+button {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+ul,
+li {
+  padding-left: 0;
+  list-style: none;
+}
+
+hr {
+  width: 100%;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-bottom: 1px solid rgba(62, 31, 5, 0.1);
+  margin: 1em 0 0;
+}
+
+.click-cursor {
+  cursor: url('/images/castle/click-cursor.png'), auto !important;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.close-btn {
+  background-image: url('/images/castle/modal/close-modal-btn.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 26px;
+  right: 29px;
+  width: 40px;
+  height: 40px;
+}
+
+.close-btn:hover {
+  opacity: 0.9;
+}
+
+.game-border {
+  position: relative;
+  background-color: #ffe3bd;
+  background-image: url('/images/castle/borders/basic-left.png'),
+    url('/images/castle/borders/basic-right.png'),
+    url('/images/castle/borders/fancy-top.png'),
+    url('/images/castle/borders/basic-bottom.png');
+  background-repeat: repeat-y, repeat-y, repeat-x, repeat-x;
+  background-position: 0 0, 100% 0, 0 0, 0 100%;
+  border-radius: 40px;
+}
+
+.game-border::before {
+  content: '';
+  pointer-events: none;
+  display: block;
+  position: absolute;
+  height: 100%;
+  image-rendering: pixelated;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.game-border.basic::before {
+  background-image: url('/images/castle/borders/basic-top-left.png'),
+    url('/images/castle/borders/basic-top-right.png'),
+    url('/images/castle/borders/basic-bottom-left.png'),
+    url('/images/castle/borders/basic-bottom-right.png');
+}
+
+.game-border.fancy::before {
+  background-image: url('/images/castle/borders/fancy-top-left.png'),
+    url('/images/castle/borders/fancy-top-right.png'),
+    url('/images/castle/borders/basic-bottom-left.png'),
+    url('/images/castle/borders/basic-bottom-right.png');
+}
+
+.green-button {
+  position: relative;
+  background-color: #066c45;
+  background-image: url('/images/castle/borders/btn-side.png'),
+    url('/images/castle/borders/btn-side.png');
+  background-repeat: repeat-y, repeat-y;
+  background-position: 0 0, 100% 0;
+  border-radius: 8px;
+  color: #ffe3bc;
+  font-size: 18px;
+  margin: 2px 0;
+  min-width: 120px;
+  transition: background-color 0.3s ease-in;
+  padding: 6px 24px;
+}
+
+.green-button:hover {
+  background-color: #00984b;
+  transition: background-color 0.3s ease-in;
+}
+
+.green-button::after,
+.green-button::before {
+  image-rendering: pixelated;
+  content: '';
+  position: absolute;
+  height: calc(100% + 6px);
+}
+
+.green-button::before {
+  top: -2px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: calc(100% - 6px);
+  border-radius: 8px;
+  background-image: url('/images/castle/borders/btn-top.png'),
+    url('/images/castle/borders/btn-btm.png');
+  background-position: top, bottom;
+  background-repeat: repeat-x, repeat-x;
+}
+
+.green-button::after {
+  top: -2px;
+  left: 0;
+  width: 100%;
+  background-image: url('/images/castle/borders/btn-top-left.png'),
+    url('/images/castle/borders/btn-top-right.png'),
+    url('/images/castle/borders/btn-btm-left.png'),
+    url('/images/castle/borders/btn-btm-right.png');
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.game-scroll-bar::-webkit-scrollbar {
+  width: 6px;
+  padding: 3px 0;
+}
+
+.game-scroll-bar::-webkit-scrollbar-track {
+  background-color: #eecba1;
+  width: 4px;
+  border-radius: 6px;
+}
+
+.game-scroll-bar::-webkit-scrollbar-thumb {
+  background-color: #ffe3bc;
+  border-radius: 16px;
+  margin: 2px 0;
+  width: 6px;
+  border-radius: 16px;
+  border: 1px solid #000;
+  border-color: transparent #eecba1 transparent #eecba1;
 }

@@ -1,0 +1,133 @@
+.landItem {
+  height: auto;
+  background-color: #eecba1;
+  margin-bottom: 15px;
+  padding: 16px 16px 24px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.landImageWrap {
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  margin-bottom: 18px;
+  position: relative;
+  border-radius: 8px 2px 8px 2px;
+  background-image: url('/images/castle/borders/inventory-itemFrameLeft.png'),
+    url('/images/castle/borders/inventory-itemFrameRight.png');
+  background-position: 0 0, 100% 0;
+  background-repeat: repeat-y, repeat-y;
+}
+
+.landImageWrap::before,
+.landImageWrap::after {
+  position: absolute;
+  content: '';
+  height: calc(100% + 6px);
+}
+
+.landImageWrap::before {
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 6px);
+  border-radius: 8px 2px 8px 2px;
+  background-image: url('/images/castle/borders/inventory-itemFrameTop.png'),
+    url('/images/castle/borders/inventory-itemFrameBtm.png');
+  background-position: top, bottom;
+  background-repeat: repeat-x, repeat-x;
+}
+
+.landImageWrap::after {
+  top: -3px;
+  left: 0;
+  width: 100%;
+  background-image: url('/images/castle/borders/inventory-itemFrameTopLeft.png'),
+    url('/images/castle/borders/inventory-itemFrameTopRight.png'),
+    url('/images/castle/borders/inventory-itemFrameBtmLeft.png'),
+    url('/images/castle/borders/inventory-itemFrameBtmRight.png');
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.landImage {
+  position: absolute;
+  width: calc(100% - 6px);
+  height: calc(100% - 1px);
+  top: 0;
+  left: 3px;
+  border-radius: 8px 2px 8px 2px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.landItemHeader {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #3e1f05;
+}
+
+.landInfo {
+  font-size: 13px;
+  color: rgba(62, 31, 5, 0.8);
+}
+
+.landInfoRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.landInfoRow p {
+  margin: 0;
+}
+
+.landItemButtonWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+
+.landSaleTag {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  padding-top: 10px;
+  padding-bottom: 4px;
+  font-size: 16px;
+  background-color: #ffe3bd;
+  color: #3e1f05;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  opacity: 1;
+  text-align: center;
+}
+
+.landItemPrice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landItemPrice p {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  color: #3e1f05;
+  font-family: Poppins;
+}
+
+.landItemPrice img {
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+}
