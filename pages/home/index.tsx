@@ -1,8 +1,11 @@
+import React from 'react'
 import Head from 'next/head'
 import Layout, { siteTitle } from '@components/layout'
+// import { getSortedPostsData } from '@lib/posts'
 import { Button, Container, Heading, VStack } from '@chakra-ui/react'
-import Entry from './entry/index'
 
-export default function Home({ allPostsData }) {
-  return <Entry />
+const Home = () => {
+  return <div></div>
 }
+
+export default Home
