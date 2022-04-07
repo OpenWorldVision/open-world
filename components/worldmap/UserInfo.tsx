@@ -1,17 +1,19 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
 
-export default function Menu({ setIsOpenUserInfo }) {
+export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
     const [isOpenUserDetail, setIsOpenUserDetail] = useState(false)
     const [isOpenSearchOption, setIsOpenSearchOption] = useState(true)
-    const handleCloseModalUserInfo = (e: any) => {
+    const handleCloseModalUserInfo = useCallback((e: any) => {
         if (e.target !== e.currentTarget) return
         setIsOpenUserInfo(false)
-    }
-    const handleCloseModalUserDetail = (e: any) => {
+    }, [isOpenUserInfo])
+
+    const handleCloseModalUserDetail = useCallback((e: any) => {
         if (e.target !== e.currentTarget) return
         setIsOpenUserDetail(false)
-    }
+    }, [isOpenUserDetail])
+
 
 
     return (

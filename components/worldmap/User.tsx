@@ -59,7 +59,7 @@ export default function User() {
                         </ul>
                     </div>
                 )}
-                {isOpenUserInfo &&  <UserInfo setIsOpenUserInfo={setIsOpenUserInfo} />}
+                {isOpenUserInfo &&  <UserInfo setIsOpenUserInfo={setIsOpenUserInfo} isOpenUserInfo={isOpenUserInfo} />}
             </div>
         </UserCSS>
     )

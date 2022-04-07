@@ -7,6 +7,7 @@ import { keyframes } from '@emotion/react'
 
 import Menu from '@components/worldmap/Menu'
 import User from '@components/worldmap/User'
+import Link from 'next/link'
 
 
 const valueDefaultInitial = {
@@ -30,46 +31,66 @@ export default function Home({ allPostsData }) {
           >
             <div className='containerWorldMap'>
               <img className='world_map' src='/images/WorldMapXmasPro.png' alt='img' />
-              <a href='/castle' className='castle' onClick={() => { }}>
-                <img src='/images/Castle.png' alt='img' />
-                <button></button>
-              </a>
-              <a href='/portal' className='portal' onClick={() => { }}>
-                <img src='/images/Portal.png' alt='img' />
-                <button></button>
-              </a>
-              <a href='/marketplace' className='marketplace' onClick={() => { }}>
-                <img src='/images/Marketplace.png' alt='img' />
-                <button></button>
-              </a>
-              <a href='/docks' className='docks' onClick={() => { }}>
-                <img src='/images/Docks.png' alt='img' />
-                <button></button>
-              </a>
-              <a href='/professions' className='professions' onClick={() => { }}>
-                <img src='/images/Professions.png' alt='img' />
-                <button></button>
-              </a>
-              <a href='/gardens' className='gardens' onClick={() => { }}>
-                <img src='/images/Gardens.png' alt='img' />
-                <button></button>
-              </a>
-              <a href='/tavern' className='tavern' onClick={() => { }}>
-                <img src='/images/Tavern.png' alt='img' />
-                <button></button>
-              </a>
-              <a href='/jeweler' className='jeweler' onClick={() => { }}>
-                <img src='/images/Jeweler.png' alt='img' />
-                <button></button>
-              </a>
-              <a href='/alchemist' className='alchemist' onClick={() => { }}>
-                <img src='/images/Alchemist.png' alt='img' />
-                <button></button>
-              </a>
-              <a href='/meditation_circle' className='meditation_circle' onClick={() => { }}>
-                <img src='/images/MeditationCircle.png' alt='img' />
-                <button></button>
-              </a>
+              <Link href='/castle'>
+                <a className='castle' >
+                  <img src='/images/Castle.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
+              <Link href='/portal'>
+                <a className='portal' >
+                  <img src='/images/Portal.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
+              <Link href='/marketplace'>
+                <a className='marketplace' >
+                  <img src='/images/Marketplace.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
+              <Link href='/docks'>
+                <a className='docks' >
+                  <img src='/images/Docks.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
+              <Link href='/professions'>
+                <a className='professions' >
+                  <img src='/images/Professions.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
+              <Link href='/gardens'>
+                <a className='gardens' >
+                  <img src='/images/Gardens.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
+              <Link href='/tavern'>
+                <a className='tavern' >
+                  <img src='/images/Tavern.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
+              <Link href='/jeweler'>
+                <a className='jeweler' >
+                  <img src='/images/Jeweler.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
+              <Link href='/alchemist'>
+                <a className='alchemist' >
+                  <img src='/images/Alchemist.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
+              <Link href='/meditation_circle'>
+                <a className='meditation_circle' >
+                  <img src='/images/MeditationCircle.png' alt='img' />
+                  <button></button>
+                </a>
+              </Link>
             </div>
           </MapInteractionCSS>
           <Menu />
