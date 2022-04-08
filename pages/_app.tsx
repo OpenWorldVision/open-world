@@ -5,7 +5,7 @@ import { providers } from 'ethers'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import theme from '../components/theme'
-config.autoAddCss = false
+// config.autoAddCss = false
 
 function getLibrary(provider, connector) {
   return new providers.JsonRpcProvider(provider) // this will vary according to whether you use e.g. ethers or web3.js
