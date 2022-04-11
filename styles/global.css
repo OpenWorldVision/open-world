@@ -29,7 +29,7 @@ img {
 }
 
 .chakra-modal__content-container {
-  cursor: url(/images/default-cursor.png), auto;
+  cursor: url(/images/jeweler/default-cursor.png), auto;
 }
 
 .chakra-modal__content {
@@ -209,7 +209,7 @@ img {
 }
 
 .bordered-box.bordered-box-hero {
-  border-image-source: url(/images/border-hero.png);
+  border-image-source: url(/images/jeweler/border-hero.png);
   border-image-slice: 16;
   border-image-width: 12px;
   border-image-outset: 3px;
@@ -221,7 +221,7 @@ img {
   border-width: 4px;
   border-style: solid;
   border-color: rgb(250, 192, 93);
-  border-image: url(/images/border-main.png) 4 / 4px / 0 round;
+  border-image: url(/images/jeweler/border-main.png) 4 / 4px / 0 round;
   padding: 1rem;
   background-image: linear-gradient(
     to right,
@@ -280,7 +280,8 @@ img {
 .popup-jeweler-head .border_content:last-child .claim:hover,
 .popup-jeweler-head .border_content:last-child .withdraw:hover {
   padding-left: 30px;
-  background: url(/images/uncommon-gem-2.gif) 0em 40% / 25px 20px no-repeat;
+  background: url(/images/jeweler/uncommon-gem-2.gif) 0em 40% / 25px 20px
+    no-repeat;
   color: rgb(250, 192, 93);
 }
 
@@ -423,7 +424,7 @@ img {
 }
 
 .cursor-btn {
-  cursor: url(/images/click-cursor-2x.png), auto;
+  cursor: url(/images/jeweler/click-cursor-2x.png), auto;
 }
 
 .layout-btn {
