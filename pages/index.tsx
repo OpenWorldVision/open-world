@@ -9,12 +9,11 @@ import Menu from '@components/worldmap/Menu'
 import User from '@components/worldmap/User'
 import Link from 'next/link'
 
-
 const valueDefaultInitial = {
   scale: 1.2,
   translation: {
     x: -510,
-    y: -2650
+    y: -2650,
   },
 }
 export default function Home({ allPostsData }) {
@@ -27,67 +26,72 @@ export default function Home({ allPostsData }) {
         <WorldMap>
           <MapInteractionCSS
             defaultValue={valueDefaultInitial}
-            minScale={0.6} maxScale={1.3}
+            minScale={0.6}
+            maxScale={1.3}
           >
-            <div className='containerWorldMap'>
-              <img className='world_map' src='/images/WorldMapXmasPro.png' alt='img' />
-              <Link href='/castle'>
-                <a className='castle' >
-                  <img src='/images/Castle.png' alt='img' />
+            <div className="containerWorldMap">
+              <img
+                className="world_map"
+                src="/images/WorldMapXmasPro.png"
+                alt="img"
+              />
+              <Link href="/castle">
+                <a className="castle">
+                  <img src="/images/Castle.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/portal'>
-                <a className='portal' >
-                  <img src='/images/Portal.png' alt='img' />
+              <Link href="/portal">
+                <a className="portal">
+                  <img src="/images/Portal.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/marketplace'>
-                <a className='marketplace' >
-                  <img src='/images/Marketplace.png' alt='img' />
+              <Link href="/marketplace">
+                <a className="marketplace">
+                  <img src="/images/Marketplace.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/docks'>
-                <a className='docks' >
-                  <img src='/images/Docks.png' alt='img' />
+              <Link href="/docks">
+                <a className="docks">
+                  <img src="/images/Docks.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/professions'>
-                <a className='professions' >
-                  <img src='/images/Professions.png' alt='img' />
+              <Link href="/professions">
+                <a className="professions">
+                  <img src="/images/Professions.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/gardens'>
-                <a className='gardens' >
-                  <img src='/images/Gardens.png' alt='img' />
+              <Link href="/gardens">
+                <a className="gardens">
+                  <img src="/images/Gardens.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/tavern'>
-                <a className='tavern' >
-                  <img src='/images/Tavern.png' alt='img' />
+              <Link href="/tavern">
+                <a className="tavern">
+                  <img src="/images/Tavern.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/jeweler'>
-                <a className='jeweler' >
-                  <img src='/images/Jeweler.png' alt='img' />
+              <Link href="/jeweler">
+                <a className="jeweler">
+                  <img src="/images/Jeweler.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/alchemist'>
-                <a className='alchemist' >
-                  <img src='/images/Alchemist.png' alt='img' />
+              <Link href="/alchemist">
+                <a className="alchemist">
+                  <img src="/images/Alchemist.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/meditation_circle'>
-                <a className='meditation_circle' >
-                  <img src='/images/MeditationCircle.png' alt='img' />
+              <Link href="/meditation_circle">
+                <a className="meditation_circle">
+                  <img src="/images/MeditationCircle.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
@@ -97,12 +101,12 @@ export default function Home({ allPostsData }) {
           <User />
         </WorldMap>
       </VStack>
-    </Layout >
+    </Layout>
   )
 }
 export async function getStaticProps() {
   // const allPostsData = getSortedPostsData()
-  const allPostsData =  []
+  const allPostsData = []
   return {
     props: {
       allPostsData,
@@ -116,7 +120,7 @@ const wordMap_kf = keyframes`
   to {
     transform: translate(-40960px, 0);
   }
-`;
+`
 const items_kf = keyframes`
   from {
     transform: translate(0, 0);
@@ -124,7 +128,7 @@ const items_kf = keyframes`
   to {
     transform: translate(0, -12px);
   }
-`;
+`
 const WorldMap = styled.div({
   backgroundColor: 'rgb(148,151,168)',
   cursor: 'url(/images/CursorDefault.png), auto',
@@ -137,9 +141,10 @@ const WorldMap = styled.div({
     height: '5120px',
     overflow: 'hidden',
     position: 'relative',
-    '.castle, .portal, .marketplace, .docks, .professions, .gardens, .tavern, .jeweler, .alchemist': {
-      cursor: 'url(/images/SelectCursor.png), auto',
-    },
+    '.castle, .portal, .marketplace, .docks, .professions, .gardens, .tavern, .jeweler, .alchemist':
+      {
+        cursor: 'url(/images/SelectCursor.png), auto',
+      },
     '.world_map': {
       position: 'absolute',
       minWidth: '40960px',
@@ -160,8 +165,8 @@ const WorldMap = styled.div({
         left: '-92px',
         top: '64px',
         width: '302px',
-        height: '215px'
-      }
+        height: '215px',
+      },
     },
     '.portal': {
       position: 'absolute',
@@ -170,15 +175,15 @@ const WorldMap = styled.div({
       img: {
         animation: `${items_kf} 1.8s linear 0s infinite alternate none running`,
         width: '121px',
-        height: '45px'
+        height: '45px',
       },
       button: {
         position: 'absolute',
         left: '0px',
         top: '50px',
         width: '114px',
-        height: '90px'
-      }
+        height: '90px',
+      },
     },
     '.marketplace': {
       position: 'absolute',
@@ -187,15 +192,15 @@ const WorldMap = styled.div({
       img: {
         animation: `${items_kf} 1.8s linear 0s infinite alternate none running`,
         width: '178px',
-        height: '45px'
+        height: '45px',
       },
       button: {
         position: 'absolute',
         left: '29px',
         top: '60px',
         width: '122px',
-        height: '124px'
-      }
+        height: '124px',
+      },
     },
     '.docks': {
       position: 'absolute',
@@ -204,15 +209,15 @@ const WorldMap = styled.div({
       img: {
         animation: `${items_kf} 1.8s linear 0s infinite alternate none running`,
         width: '128px',
-        height: '45px'
+        height: '45px',
       },
       button: {
         position: 'absolute',
         left: '-90px',
         top: '94px',
         width: '240px',
-        height: '170px'
-      }
+        height: '170px',
+      },
     },
     '.professions': {
       position: 'absolute',
@@ -221,15 +226,15 @@ const WorldMap = styled.div({
       img: {
         animation: `${items_kf} 1.8s linear 0s infinite alternate none running`,
         width: '172px',
-        height: '45px'
+        height: '45px',
       },
       button: {
         position: 'absolute',
         left: '0',
         top: '32px',
         width: '170px',
-        height: '127px'
-      }
+        height: '127px',
+      },
     },
     '.gardens': {
       position: 'absolute',
@@ -238,15 +243,15 @@ const WorldMap = styled.div({
       img: {
         animation: `${items_kf} 1.8s linear 0s infinite alternate none running`,
         width: '148px',
-        height: '45px'
+        height: '45px',
       },
       button: {
         position: 'absolute',
         left: '28px',
         top: '50px',
         width: '110px',
-        height: '100px'
-      }
+        height: '100px',
+      },
     },
     '.tavern': {
       position: 'absolute',
@@ -255,15 +260,15 @@ const WorldMap = styled.div({
       img: {
         animation: `${items_kf} 1.8s linear 0s infinite alternate none running`,
         width: '130px',
-        height: '45px'
+        height: '45px',
       },
       button: {
         position: 'absolute',
         left: '10px',
         top: '30px',
         width: '115px',
-        height: '96px'
-      }
+        height: '96px',
+      },
     },
     '.jeweler': {
       position: 'absolute',
@@ -272,15 +277,15 @@ const WorldMap = styled.div({
       img: {
         animation: `${items_kf} 1.8s linear 0s infinite alternate none running`,
         width: '142px',
-        height: '45px'
+        height: '45px',
       },
       button: {
         position: 'absolute',
         left: '0',
         top: '30px',
         width: '115px',
-        height: '96px'
-      }
+        height: '96px',
+      },
     },
     '.alchemist': {
       position: 'absolute',
@@ -289,15 +294,15 @@ const WorldMap = styled.div({
       img: {
         animation: `${items_kf} 1.8s linear 0s infinite alternate none running`,
         width: '160px',
-        height: '45px'
+        height: '45px',
       },
       button: {
         position: 'absolute',
         left: '28px',
         top: '44px',
         width: '90px',
-        height: '88px'
-      }
+        height: '88px',
+      },
     },
     '.meditation_circle': {
       position: 'absolute',
@@ -306,15 +311,15 @@ const WorldMap = styled.div({
       img: {
         animation: `${items_kf} 1.8s linear 0s infinite alternate none running`,
         width: '220px',
-        height: '45px'
+        height: '45px',
       },
       button: {
         position: 'absolute',
         left: '28px',
         top: '44px',
         width: '220px',
-        height: '88px'
-      }
+        height: '88px',
+      },
     },
   },
 })
