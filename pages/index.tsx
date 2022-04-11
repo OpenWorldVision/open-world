@@ -26,65 +26,69 @@ export default function Home({ allPostsData }) {
             minScale={0.6}
             maxScale={1.3}
           >
-            <div className='containerWorldMap'>
-              <img className='world_map' src='/images/worldmap/WorldMapXmasPro.png' alt='img' />
-              <Link href='/castle'>
-                <a onTouchEnd={() => window.location.href='/castle'} className='castle'>
-                  <img src='/images/worldmap/Castle.png' alt='img' />
+            <div className="containerWorldMap">
+              <img
+                className="world_map"
+                src="/images/worldmap/WorldMapXmasPro.png"
+                alt="img"
+              />
+              <Link href="/castle">
+                <a className="castle">
+                  <img src="/images/worldmap/Castle.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/portal'>
-                <a onTouchEnd={() => window.location.href='/portal'} className='portal' >
-                  <img src='/images/worldmap/Portal.png' alt='img' />
+              <Link href="/portal">
+                <a className="portal">
+                  <img src="/images/worldmap/Portal.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/marketplace'>
-                <a onTouchEnd={() => window.location.href='/marketplace'} className='marketplace' >
-                  <img src='/images/worldmap/Marketplace.png' alt='img' />
+              <Link href="/marketplace">
+                <a className="marketplace">
+                  <img src="/images/worldmap/Marketplace.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/docks'>
-                <a onTouchEnd={() => window.location.href='/docks'} className='docks' >
-                  <img src='/images/worldmap/Docks.png' alt='img' />
+              <Link href="/docks">
+                <a className="docks">
+                  <img src="/images/worldmap/Docks.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/professions'>
-                <a onTouchEnd={() => window.location.href='/professions'} className='professions' >
-                  <img src='/images/worldmap/Professions.png' alt='img' />
+              <Link href="/professions">
+                <a className="professions">
+                  <img src="/images/worldmap/Professions.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/gardens'>
-                <a onTouchEnd={() => window.location.href='/gardens'} className='gardens' >
-                  <img src='/images/worldmap/Gardens.png' alt='img' />
+              <Link href="/gardens">
+                <a className="gardens">
+                  <img src="/images/worldmap/Gardens.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/tavern'>
-                <a onTouchEnd={() => window.location.href='/tavern'} className='tavern' >
-                  <img src='/images/worldmap/Tavern.png' alt='img' />
+              <Link href="/tavern">
+                <a className="tavern">
+                  <img src="/images/worldmap/Tavern.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/jeweler'>
-                <a onTouchEnd={() => window.location.href='/jeweler'} className='jeweler' >
-                  <img src='/images/worldmap/Jeweler.png' alt='img' />
+              <Link href="/jeweler">
+                <a className="jeweler">
+                  <img src="/images/worldmap/Jeweler.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/alchemist'>
-                <a onTouchEnd={() => window.location.href='/alchemist'} className='alchemist' >
-                  <img src='/images/worldmap/Alchemist.png' alt='img' />
+              <Link href="/alchemist">
+                <a className="alchemist">
+                  <img src="/images/worldmap/Alchemist.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
-              <Link href='/meditation_circle'>
-                <a onTouchEnd={() => window.location.href='/meditation_circle'} className='meditation_circle' >
-                  <img src='/images/worldmap/MeditationCircle.png' alt='img' />
+              <Link href="/meditation_circle">
+                <a className="meditation_circle">
+                  <img src="/images/worldmap/MeditationCircle.png" alt="img" />
                   <button></button>
                 </a>
               </Link>
@@ -134,7 +138,7 @@ const WorldMap = styled.div({
     position: 'relative',
     '.castle, .portal, .marketplace, .docks, .professions, .gardens, .tavern, .jeweler, .alchemist':
       {
-        cursor: 'url(/images/SelectCursor.png), auto',
+        cursor: 'url(/images/worldmap/SelectCursor.png), auto',
       },
     '.world_map': {
       position: 'absolute',
