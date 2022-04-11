@@ -29,61 +29,61 @@ export default function Home({ allPostsData }) {
             <div className='containerWorldMap'>
               <img className='world_map' src='/images/worldmap/WorldMapXmasPro.png' alt='img' />
               <Link href='/castle'>
-                <a className='castle' >
+                <a onTouchEnd={() => window.location.href='/castle'} className='castle'>
                   <img src='/images/worldmap/Castle.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
               <Link href='/portal'>
-                <a className='portal' >
+                <a onTouchEnd={() => window.location.href='/portal'} className='portal' >
                   <img src='/images/worldmap/Portal.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
               <Link href='/marketplace'>
-                <a className='marketplace' >
+                <a onTouchEnd={() => window.location.href='/marketplace'} className='marketplace' >
                   <img src='/images/worldmap/Marketplace.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
               <Link href='/docks'>
-                <a className='docks' >
+                <a onTouchEnd={() => window.location.href='/docks'} className='docks' >
                   <img src='/images/worldmap/Docks.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
               <Link href='/professions'>
-                <a className='professions' >
+                <a onTouchEnd={() => window.location.href='/professions'} className='professions' >
                   <img src='/images/worldmap/Professions.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
               <Link href='/gardens'>
-                <a className='gardens' >
+                <a onTouchEnd={() => window.location.href='/gardens'} className='gardens' >
                   <img src='/images/worldmap/Gardens.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
               <Link href='/tavern'>
-                <a className='tavern' >
+                <a onTouchEnd={() => window.location.href='/tavern'} className='tavern' >
                   <img src='/images/worldmap/Tavern.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
               <Link href='/jeweler'>
-                <a className='jeweler' >
+                <a onTouchEnd={() => window.location.href='/jeweler'} className='jeweler' >
                   <img src='/images/worldmap/Jeweler.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
               <Link href='/alchemist'>
-                <a className='alchemist' >
+                <a onTouchEnd={() => window.location.href='/alchemist'} className='alchemist' >
                   <img src='/images/worldmap/Alchemist.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
               <Link href='/meditation_circle'>
-                <a className='meditation_circle' >
+                <a onTouchEnd={() => window.location.href='/meditation_circle'} className='meditation_circle' >
                   <img src='/images/worldmap/MeditationCircle.png' alt='img' />
                   <button></button>
                 </a>
@@ -124,7 +124,7 @@ const WorldMap = styled.div({
   backgroundColor: 'rgb(148,151,168)',
   cursor: 'url(/images/worldmap/CursorDefault.png), auto',
   'button, input, select': {
-    cursor: 'url(/images/SelectCursor.png), auto',
+    cursor: 'url(/images/worldmap/SelectCursor.png), auto',
   },
   '.containerWorldMap': {
     cursor: 'url(/images/worldmap/CursorDefault.png), auto',
