@@ -57,14 +57,14 @@ export default function Jeweler(props) {
             setCheckButtonTransferLock(false)
             setAddClassOpacityButton('check-button-transfer-lock')
         }
-        
+
     }
 
     return (
         <JewelerPage>
             <div>
-                <div className="container-jeweler" >   
-                    <TransformWrapper 
+                <div className="container-jeweler" >
+                    <TransformWrapper
                         maxScale={2}
                         minScale={0.25}
                         initialScale={0.8}
@@ -72,7 +72,6 @@ export default function Jeweler(props) {
                         initialPositionX={0}
                         initialPositionY={0}
                         centerOnInit={true}
-
                     >
                         <TransformComponent>
                             <div
@@ -125,7 +124,7 @@ export default function Jeweler(props) {
                         </TransformComponent>
                     </TransformWrapper>
                     <Modal isOpen={modalIsOpen} onClose={() => {setIsOpen(false)}}>
-                        <ModalOverlay 
+                        <ModalOverlay
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
                                 cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -238,7 +237,7 @@ export default function Jeweler(props) {
                         </ModalContent>
                     </Modal>
                     <Modal isOpen={modalInfo} onClose={() => {setModalInfo(false)}}>
-                        <ModalOverlay 
+                        <ModalOverlay
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
                                 cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -285,7 +284,7 @@ export default function Jeweler(props) {
                         </ModalContent>
                     </Modal>
                     <Modal isOpen={modalLila} onClose={() => {setModalLila(false)}}>
-                        <ModalOverlay 
+                        <ModalOverlay
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
                                 cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -318,7 +317,7 @@ export default function Jeweler(props) {
                         </ModalContent>
                     </Modal>
                     <Modal isOpen={modalJeweler} onClose={() => {setModalJeweler(false)}}>
-                        <ModalOverlay 
+                        <ModalOverlay
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
                                 cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -390,7 +389,7 @@ export default function Jeweler(props) {
                         </ModalContent>
                     </Modal>
                     <Modal isOpen={modalDeposit} onClose={() => {setModalDeposit(false)}}>
-                        <ModalOverlay 
+                        <ModalOverlay
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
                                 cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -434,7 +433,7 @@ export default function Jeweler(props) {
                                                 display: 'flex',
                                                 alignItems: 'center'
                                             }}>
-                                                <input 
+                                                <input
                                                 className='input-deposit'
                                                 style={{
                                                     background: 'transparent',
@@ -452,7 +451,7 @@ export default function Jeweler(props) {
                                                     borderRadius: '0.5rem',
                                                     }}
                                                     >50%</button>
-                                                    <button className='cursor-btn' 
+                                                    <button className='cursor-btn'
                                                     style={{
                                                     width: '50px',
                                                     color: 'rgb(102, 153, 153)',
@@ -475,7 +474,7 @@ export default function Jeweler(props) {
                                                 </button>
                                             </div>
                                         </div>
-                                        <div 
+                                        <div
                                             className='quantity-jeweler'
                                             style={{
                                                 textAlign: 'center',
@@ -483,7 +482,7 @@ export default function Jeweler(props) {
                                                 fontSize: '1.1rem',
                                                 color: 'rgb(195, 197, 203)',
                                             }}>(~<span>000</span>xJEWEL)</div>
-                                        <div 
+                                        <div
                                             className='btn-deposit-container'
                                             style={{
                                             display: 'flex'
@@ -558,7 +557,7 @@ export default function Jeweler(props) {
                         </ModalContent>
                     </Modal>
                     <Modal isOpen={modalClaim} onClose={() => {setModalClaim(false)}}>
-                        <ModalOverlay 
+                        <ModalOverlay
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
                                 cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -585,7 +584,7 @@ export default function Jeweler(props) {
                                     <div className="modal_body_content"
                                         style={{padding: '20px 0'}}
                                     >
-                                        <div 
+                                        <div
                                         className='diamond-icon'
                                         style={{
                                             textAlign: 'center',
@@ -625,7 +624,7 @@ export default function Jeweler(props) {
                         </ModalContent>
                     </Modal>
                     <Modal isOpen={modalWaitClaim} onClose={() => {setModalWaitClaim(false)}}>
-                        <ModalOverlay 
+                        <ModalOverlay
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
                                 cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -681,7 +680,7 @@ export default function Jeweler(props) {
                         </ModalContent>
                     </Modal>
                     <Modal isOpen={modalWithdraw} onClose={() => {setModalWithdraw(false)}}>
-                        <ModalOverlay 
+                        <ModalOverlay
                             style={{
                                 backgroundColor: 'rgba(30, 30, 30, 0.5)',
                                 cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -723,7 +722,7 @@ export default function Jeweler(props) {
                                                 display: 'flex',
                                                 alignItems: 'center'
                                             }}>
-                                                <input 
+                                                <input
                                                 className='input-withdraw'
                                                 style={{
                                                     background: 'transparent',
@@ -741,7 +740,7 @@ export default function Jeweler(props) {
                                                     borderRadius: '0.5rem',
                                                     }}
                                                     >50%</button>
-                                                    <button className='cursor-btn' 
+                                                    <button className='cursor-btn'
                                                     style={{
                                                     width: '50px',
                                                     color: 'rgb(102, 153, 153)',
@@ -792,6 +791,26 @@ export default function Jeweler(props) {
                     </Modal>
                 </div>
             </div>
+
+            <style jsx>{`
+                .react-transform-wrapper.transform-component-module_wrapper__1_Fgj,
+                .react-transform-component.transform-component-module_content__2jYgh {
+                  width: 100%;
+                  height: 100%;
+                }
+
+                .react-transform-component.transform-component-module_content__2jYgh {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                }
+
+                .react-transform-wrapper.transform-component-module_wrapper__1_Fgj,
+                .react-transform-component.transform-component-module_content__2jYgh {
+                  width: 350%;
+                  height: 150%;
+                }
+            `}</style>
         </JewelerPage>
         )
     }
@@ -805,7 +824,7 @@ export default function Jeweler(props) {
         position: 'absolute',
         left: '0',
         display: 'flex',
-        
+
         justifyContent: 'center',
         alignItems: 'center',
         cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -865,8 +884,6 @@ export default function Jeweler(props) {
                 left: '481.176px',
                 top: '500px',
             },
-            
-
         },
     },
 })
