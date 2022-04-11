@@ -22,27 +22,42 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
 
   return (
     <UserInfoCSS>
-      <div onClick={(e) => { handleCloseModalUserInfo(e) }} className='modal-user-info'>
-        <div className='modal-content-user-info'>
-          <div className='modal-content-user-info-header'>
-            <button onClick={() => { setIsOpenUserInfo(false) }}>
-              <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'>
-                <path d='M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z' />
+      <div
+        onClick={(e) => {
+          handleCloseModalUserInfo(e)
+        }}
+        className="modal-user-info"
+      >
+        <div className="modal-content-user-info">
+          <div className="modal-content-user-info-header">
+            <button
+              onClick={() => {
+                setIsOpenUserInfo(false)
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z" />
               </svg>
             </button>
             <div>
               Your JEWEL & Hero Breakdown
-              <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'>
-                <path d='M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z' />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z" />
               </svg>
             </div>
           </div>
-          <div className='modal-content-user-info-body'>
+          <div className="modal-content-user-info-body">
             <div>
-              <button onClick={(e) => { setIsOpenUserDetail(true) }}>MY HEROES</button>
+              <button
+                onClick={(e) => {
+                  setIsOpenUserDetail(true)
+                }}
+              >
+                MY HEROES
+              </button>
             </div>
             <div>
-              <img src='/images/worldmap/Hope2.png' alt='img' />
+              <img src="/images/worldmap/Hope2.png" alt="img" />
               0.00
             </div>
             <div>
@@ -98,32 +113,52 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
               <button>0x63BB...2461</button>
             </div>
           </div>
-          {isOpenUserDetail &&
-            <div onClick={(e) => { handleCloseModalUserDetail(e) }} className='modal-user-detail'>
-              <div className='modal-content-user-detail'>
+          {isOpenUserDetail && (
+            <div
+              onClick={(e) => {
+                handleCloseModalUserDetail(e)
+              }}
+              className="modal-user-detail"
+            >
+              <div className="modal-content-user-detail">
                 <div>
                   Your Heroes
-                  <button onClick={() => { setIsOpenUserDetail(false) }}>
-                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'>
-                      <path d='M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z' />
+                  <button
+                    onClick={() => {
+                      setIsOpenUserDetail(false)
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 320 512"
+                    >
+                      <path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z" />
                     </svg>
                   </button>
                 </div>
                 <div>
-                  {isOpenSearchOption
-                    ? <div>
+                  {isOpenSearchOption ? (
+                    <div>
                       <div>
                         <div>Filter</div>
                         <button>
-                          <svg onClick={() => { setIsOpenSearchOption(isOpenSearchOption => !isOpenSearchOption) }} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'>
-                            <path d='M224 480c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l169.4 169.4c12.5 12.5 12.5 32.75 0 45.25C240.4 476.9 232.2 480 224 480z' />
+                          <svg
+                            onClick={() => {
+                              setIsOpenSearchOption(
+                                (isOpenSearchOption) => !isOpenSearchOption
+                              )
+                            }}
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 320 512"
+                          >
+                            <path d="M224 480c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25l192-192c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L77.25 256l169.4 169.4c12.5 12.5 12.5 32.75 0 45.25C240.4 476.9 232.2 480 224 480z" />
                           </svg>
                         </button>
                       </div>
                       <div>
                         <div>
                           <div>
-                            <div className='select'>
+                            <div className="select">
                               <button>BASICS</button>
                             </div>
                             <div>
@@ -139,7 +174,7 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
                           </div>
                         </div>
                         <div>
-                          <input type="text" placeholder='Search by Hero ID' />
+                          <input type="text" placeholder="Search by Hero ID" />
                           <div>
                             <div>Status</div>
                             <div>
@@ -335,29 +370,57 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
                           </div>
                           <div>
                             <div>Summons Remainning</div>
-                            <input type="range" name="quantity" min="0" max="10"></input>
+                            <input
+                              type="range"
+                              name="quantity"
+                              min="0"
+                              max="10"
+                            ></input>
                           </div>
                           <div>
                             <div>Rarity</div>
-                            <input type="range" name="quantity" min="0" max="4"></input>
+                            <input
+                              type="range"
+                              name="quantity"
+                              min="0"
+                              max="4"
+                            ></input>
                           </div>
                           <div>
                             <div>Generation</div>
-                            <input type="range" name="quantity" min="0" max="11"></input>
+                            <input
+                              type="range"
+                              name="quantity"
+                              min="0"
+                              max="11"
+                            ></input>
                           </div>
                           <div>
                             <div>Level</div>
-                            <input type="range" name="quantity" min="0" max="100"></input>
+                            <input
+                              type="range"
+                              name="quantity"
+                              min="0"
+                              max="100"
+                            ></input>
                           </div>
                         </div>
                       </div>
                     </div>
-                    : <button onClick={() => { setIsOpenSearchOption(!isOpenSearchOption) }}>
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setIsOpenSearchOption(!isOpenSearchOption)
+                      }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                      >
                         <path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z" />
                       </svg>
                     </button>
-                  }
+                  )}
 
                   <div>
                     <div>
@@ -366,7 +429,10 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
                         <div>
                           <div>
                             <button>
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"
+                              >
                                 <path d="M464 16c-17.67 0-32 14.31-32 32v74.09C392.1 66.52 327.4 32 256 32C161.5 32 78.59 92.34 49.58 182.2c-5.438 16.81 3.797 34.88 20.61 40.28c16.89 5.5 34.88-3.812 40.3-20.59C130.9 138.5 189.4 96 256 96c50.5 0 96.26 24.55 124.4 64H336c-17.67 0-32 14.31-32 32s14.33 32 32 32h128c17.67 0 32-14.31 32-32V48C496 30.31 481.7 16 464 16zM441.8 289.6c-16.92-5.438-34.88 3.812-40.3 20.59C381.1 373.5 322.6 416 256 416c-50.5 0-96.25-24.55-124.4-64H176c17.67 0 32-14.31 32-32s-14.33-32-32-32h-128c-17.67 0-32 14.31-32 32v144c0 17.69 14.33 32 32 32s32-14.31 32-32v-74.09C119.9 445.5 184.6 480 255.1 480c94.45 0 177.4-60.34 206.4-150.2C467.9 313 458.6 294.1 441.8 289.6z" />
                               </svg>
                             </button>
@@ -402,15 +468,21 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
                     </div>
                     <div>
                       <div>No heroes match the currently selected criteria</div>
-                      <div>Dont see your heroes? Use Xfinity internet? Click below to whitelist the API.</div>
-                      <div>(This will open another page, and then display an error message; Not to worry! Thats expected behaviour.)</div>
+                      <div>
+                        Dont see your heroes? Use Xfinity internet? Click below
+                        to whitelist the API.
+                      </div>
+                      <div>
+                        (This will open another page, and then display an error
+                        message; Not to worry! Thats expected behaviour.)
+                      </div>
                       <button>WHITELIST DFK API</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          }
+          )}
         </div>
       </div>
     </UserInfoCSS>
@@ -516,15 +588,15 @@ const UserInfoCSS = styled.div({
           },
         },
         '> div:nth-child(3), > div:nth-child(4), > div:nth-child(5), > div:nth-child(6)':
-        {
-          padding: '8px 20px',
-          borderBottom: '1px solid rgb(55,55,55)',
-          '> div': {
-            display: 'flex',
-            justifyContent: 'space-between',
-            margin: '10px 0',
+          {
+            padding: '8px 20px',
+            borderBottom: '1px solid rgb(55,55,55)',
+            '> div': {
+              display: 'flex',
+              justifyContent: 'space-between',
+              margin: '10px 0',
+            },
           },
-        },
         '> div:nth-child(7)': {
           padding: '8px 20px',
           paddingBottom: '30px',

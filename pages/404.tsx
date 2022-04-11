@@ -4,12 +4,11 @@ import { MapInteractionCSS } from 'react-map-interaction'
 import { keyframes } from '@emotion/react'
 import Link from 'next/link'
 
-
 const valueDefaultInitial = {
   scale: 1.2,
   translation: {
     x: -510,
-    y: -2650
+    y: -2650,
   },
 }
 export default function Home({ allPostsData }) {
@@ -18,12 +17,17 @@ export default function Home({ allPostsData }) {
       <WorldMap>
         <MapInteractionCSS
           defaultValue={valueDefaultInitial}
-          minScale={0.6} maxScale={1.3}
+          minScale={0.6}
+          maxScale={1.3}
           disableZoom
           disablePan
         >
-          <div className='containerWorldMap'>
-            <img className='world_map' src='/images/worldmap/WorldMapXmasPro.png' alt='img' />
+          <div className="containerWorldMap">
+            <img
+              className="world_map"
+              src="/images/worldmap/WorldMapXmasPro.png"
+              alt="img"
+            />
           </div>
         </MapInteractionCSS>
         <div className="modal">
@@ -48,7 +52,7 @@ const wordMap_kf = keyframes`
   to {
     transform: translate(-40960px, 0);
   }
-`;
+`
 const WorldMap = styled.div({
   backgroundColor: 'rgb(148,151,168)',
   cursor: 'url(/images/worldmap/CursorDefault.png), auto',
@@ -88,7 +92,7 @@ const WorldMap = styled.div({
     flexDirection: 'column',
     div: {
       fontSize: '50px',
-      color: 'rgb(253,206,110)'
+      color: 'rgb(253,206,110)',
     },
     button: {
       backgroundColor: 'rgb(0,156,68)',
@@ -98,12 +102,12 @@ const WorldMap = styled.div({
       marginTop: '50px',
       fontWeight: 'bold',
       a: {
-        textDecoration: 'none'
+        textDecoration: 'none',
       },
       ':hover': {
         backgroundColor: 'rgb(253,206,110)',
-        color: 'black'
-      }
-    }
-  }
+        color: 'black',
+      },
+    },
+  },
 })
