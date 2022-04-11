@@ -4,9 +4,6 @@ import { VStack } from '@chakra-ui/react'
 import styled from '@emotion/styled'
 import { MapInteractionCSS } from 'react-map-interaction'
 import { keyframes } from '@emotion/react'
-
-import Menu from '@components/worldmap/Menu'
-import User from '@components/worldmap/User'
 import Link from 'next/link'
 
 const valueDefaultInitial = {
@@ -29,76 +26,70 @@ export default function Home({ allPostsData }) {
             minScale={0.6}
             maxScale={1.3}
           >
-            <div className="containerWorldMap">
-              <img
-                className="world_map"
-                src="/images/WorldMapXmasPro.png"
-                alt="img"
-              />
-              <Link href="/castle">
-                <a className="castle">
-                  <img src="/images/Castle.png" alt="img" />
+            <div className='containerWorldMap'>
+              <img className='world_map' src='/images/worldmap/WorldMapXmasPro.png' alt='img' />
+              <Link href='/castle'>
+                <a className='castle' >
+                  <img src='/images/worldmap/Castle.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
-              <Link href="/portal">
-                <a className="portal">
-                  <img src="/images/Portal.png" alt="img" />
+              <Link href='/portal'>
+                <a className='portal' >
+                  <img src='/images/worldmap/Portal.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
-              <Link href="/marketplace">
-                <a className="marketplace">
-                  <img src="/images/Marketplace.png" alt="img" />
+              <Link href='/marketplace'>
+                <a className='marketplace' >
+                  <img src='/images/worldmap/Marketplace.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
-              <Link href="/docks">
-                <a className="docks">
-                  <img src="/images/Docks.png" alt="img" />
+              <Link href='/docks'>
+                <a className='docks' >
+                  <img src='/images/worldmap/Docks.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
-              <Link href="/professions">
-                <a className="professions">
-                  <img src="/images/Professions.png" alt="img" />
+              <Link href='/professions'>
+                <a className='professions' >
+                  <img src='/images/worldmap/Professions.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
-              <Link href="/gardens">
-                <a className="gardens">
-                  <img src="/images/Gardens.png" alt="img" />
+              <Link href='/gardens'>
+                <a className='gardens' >
+                  <img src='/images/worldmap/Gardens.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
-              <Link href="/tavern">
-                <a className="tavern">
-                  <img src="/images/Tavern.png" alt="img" />
+              <Link href='/tavern'>
+                <a className='tavern' >
+                  <img src='/images/worldmap/Tavern.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
-              <Link href="/jeweler">
-                <a className="jeweler">
-                  <img src="/images/Jeweler.png" alt="img" />
+              <Link href='/jeweler'>
+                <a className='jeweler' >
+                  <img src='/images/worldmap/Jeweler.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
-              <Link href="/alchemist">
-                <a className="alchemist">
-                  <img src="/images/Alchemist.png" alt="img" />
+              <Link href='/alchemist'>
+                <a className='alchemist' >
+                  <img src='/images/worldmap/Alchemist.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
-              <Link href="/meditation_circle">
-                <a className="meditation_circle">
-                  <img src="/images/MeditationCircle.png" alt="img" />
+              <Link href='/meditation_circle'>
+                <a className='meditation_circle' >
+                  <img src='/images/worldmap/MeditationCircle.png' alt='img' />
                   <button></button>
                 </a>
               </Link>
             </div>
           </MapInteractionCSS>
-          <Menu />
-          <User />
         </WorldMap>
       </VStack>
     </Layout>
@@ -131,12 +122,12 @@ const items_kf = keyframes`
 `
 const WorldMap = styled.div({
   backgroundColor: 'rgb(148,151,168)',
-  cursor: 'url(/images/CursorDefault.png), auto',
+  cursor: 'url(/images/worldmap/CursorDefault.png), auto',
   'button, input, select': {
     cursor: 'url(/images/SelectCursor.png), auto',
   },
   '.containerWorldMap': {
-    cursor: 'url(/images/CursorDefault.png), auto',
+    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
     width: '5120px',
     height: '5120px',
     overflow: 'hidden',

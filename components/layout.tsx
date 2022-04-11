@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import styles from './layout.module.css'
 import Link from 'next/link'
+import Menu from '@components/worldmap/Menu'
+import User from '@components/worldmap/User'
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -32,7 +34,11 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <main>{children}</main>
+      <main>
+        {children}
+        <Menu />
+        <User />
+      </main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
