@@ -5,7 +5,7 @@ import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol
 import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
 import "@openzeppelin/contracts/math/Math.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
-import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/SafeERC20Upgradeable.sol";
 
 // Inheritance
 import "./interfaces/IStakingRewards.sol";
@@ -21,12 +21,12 @@ contract StakingRewardsUpgradeable is
     PausableUpgradeable
 {
     using SafeMath for uint256;
-    using SafeERC20 for IERC20;
+    using SafeERC20Upgradeable for IERC20Upgradeable;
 
     /* ========== STATE VARIABLES ========== */
 
-    IERC20 public rewardsToken;
-    IERC20 public stakingToken;
+    IERC20Upgradeable public rewardsToken;
+    IERC20Upgradeable public stakingToken;
     uint256 public periodFinish;
     uint256 public override rewardRate;
     uint256 public override rewardsDuration;
@@ -66,8 +66,8 @@ contract StakingRewardsUpgradeable is
         // for consistency with the old contract
         transferOwnership(_owner);
 
-        rewardsToken = IERC20(_rewardsToken);
-        stakingToken = IERC20(_stakingToken);
+        rewardsToken = IERC20Upgradeable(_rewardsToken);
+        stakingToken = IERC20Upgradeable(_stakingToken);
         rewardsDistribution = _rewardsDistribution;
         minimumStakeTime = _minimumStakeTime;
 
@@ -271,7 +271,7 @@ contract StakingRewardsUpgradeable is
             tokenAddress != address(stakingToken),
             "Cannot withdraw the staking token"
         );
-        IERC20(tokenAddress).safeTransfer(owner(), tokenAmount);
+        IERC20Upgradeable(tokenAddress).safeTransfer(owner(), tokenAmount);
         emit Recovered(tokenAddress, tokenAmount);
     }
 

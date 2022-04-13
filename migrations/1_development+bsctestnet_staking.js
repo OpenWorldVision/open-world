@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { deployProxy } = require('@openzeppelin/truffle-upgrades')
 
-const LPStakingRewardsUpgradeable = artifacts.require('StakingRewards')
+const LPStakingRewardsUpgradeable = artifacts.require(
+  'StakingRewardsUpgradeable'
+)
 
-module.exports = async function (deployer, network, accounts) {
+module.exports = async function (deployer, network) {
   // if (network === 'development' || network === 'development-fork' || network === 'bsctestnet' || network === 'bsctestnet-fork') {
   //   const token = await xBlade.at("0x27a339d9B59b21390d7209b78a839868E319301B");
   //   const expToken = await ExperimentToken.deployed();
@@ -13,7 +15,7 @@ module.exports = async function (deployer, network, accounts) {
   //   await deployProxy(LPStakingRewardsUpgradeable, [accounts[0], accounts[0], token.address, expToken.address, 0], { deployer });
   // }
   if (network === 'bsctestnet') {
-    const ownerAddress = accounts[0]
+    const ownerAddress = '0xab2525670F881fB03A478630c5E94D0b1d8c516B'
     const rewardDistributorAddress =
       '0xab2525670F881fB03A478630c5E94D0b1d8c516B'
 
@@ -23,7 +25,7 @@ module.exports = async function (deployer, network, accounts) {
     await deployProxy(
       LPStakingRewardsUpgradeable,
       [
-        '0xab2525670F881fB03A478630c5E94D0b1d8c516B',
+        ownerAddress,
         rewardDistributorAddress,
         openWorldTokenAddress,
         lpTokenAddress,
