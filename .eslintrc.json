@@ -5,5 +5,5 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
-  "ignorePatterns": "truffle-config.js"
+  "ignorePatterns": ["truffle-config.js", "**/migrations/*.js"]
 }
