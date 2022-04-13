@@ -1,0 +1,195 @@
+.professionsOverlay {
+  background-image: url('/images/background/background.png');
+  height: 100vh;
+  z-index: 1000;
+}
+
+.professionsContainer {
+  position: relative;
+  width: 1858px;
+  height: 1393.5px;
+  min-width: 640px;
+  background-image: url('/images/professions/professions-border.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.professionsBg {
+  position: absolute;
+  background-image: url('/images/professions/professions-bg.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  width: 1809px;
+  height: 1344px;
+  top: 23.4844px;
+  left: 24.4844px;
+  z-index: 1000;
+  image-rendering: pixelated;
+  border-radius: 40px;
+}
+
+.fishingRodWrap,
+.petsWrap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1300;
+}
+
+.fishingRodWrap {
+  top: -42px;
+  left: -34px;
+}
+
+.fishingRod,
+.pets {
+  position: absolute;
+  width: 14864px;
+  height: 1393.5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  image-rendering: pixelated;
+  transform: scale(1, 1);
+}
+
+.fishingRod {
+  background-image: url('/images/professions/fishingRod.png');
+  animation: translateAnimation steps(8) normal 5s infinite;
+}
+
+.petsWrap {
+  top: -35px;
+  left: -23px;
+}
+
+.pets {
+  background-image: url('/images/professions/pets.png');
+  animation: translateAnimation steps(8) normal 1s infinite;
+  width: 14890px;
+}
+
+.npcWrap {
+  position: absolute;
+  overflow: hidden;
+  z-index: 1300;
+}
+
+.npc {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  image-rendering: pixelated;
+}
+
+.npcBtn {
+  position: absolute;
+  overflow: hidden;
+  background-color: transparent;
+  border: 0px;
+  outline: 0px;
+  padding-top: 10px;
+  z-index: 5000;
+  display: flex;
+  justify-content: center;
+}
+
+.npcForagerWrap {
+  width: 116.125px;
+  height: 139.35px;
+  top: 557.4px;
+  left: 650.3px;
+  transform: scale(-1, 1);
+}
+
+.npcForager {
+  background-image: url('/images/professions/foragerNPC.png');
+  width: 3716px;
+  height: 139.35px;
+  animation: translateAnimation steps(4) normal 4s infinite;
+}
+
+.foragerBtn {
+  width: 128.609px;
+  height: 176.641px;
+  left: 646.203px;
+  top: 508.303px;
+}
+
+.npcDruidWrap {
+  width: 214.831px;
+  height: 162.575px;
+  top: 963.838px;
+  left: 476.113px;
+}
+
+.npcDruid {
+  background-image: url('/images/professions/druidNPC.png');
+  width: 6874.6px;
+  height: 162.575px;
+  animation: translateAnimation steps(4) normal 4s infinite;
+}
+
+.druidBtn {
+  width: 214.831px;
+  height: 215.575px;
+  top: 903.838px;
+  left: 476.113px;
+}
+
+.npcFisherWrap {
+  width: 290.312px;
+  height: 290.312px;
+  top: 891.259px;
+  left: 1347.05px;
+}
+
+.npcFisher {
+  width: 7838.44px;
+  height: 290.312px;
+  background-image: url('/images/professions/fisherNPC.png');
+  animation: translateAnimation steps(27) normal 10s infinite;
+}
+
+.fisherBtn {
+  width: 124.312px;
+  height: 210.312px;
+  top: 874.259px;
+  left: 1351.05px;
+}
+
+.npcMinerWrap {
+  width: 101.609px;
+  height: 124.834px;
+  top: 603.85px;
+  left: 1410.92px;
+}
+
+.npcMiner {
+  width: 4470.81px;
+  height: 124.834px;
+  background-image: url('/images/professions/miningNPC.png');
+  animation: translateAnimation steps(44) normal 20s infinite;
+}
+
+.minerBtn {
+  width: 124.312px;
+  height: 182.312px;
+  top: 534.85px;
+  left: 1396.92px;
+}
+
+@keyframes translateAnimation {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

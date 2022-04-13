@@ -1,12 +1,24 @@
 .modalOverlay {
+  position: absolute;
   z-index: 1;
   opacity: 0;
+  overflow-x: hidden;
   will-change: opacity;
   transition: all 0.5s linear;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   display: flex;
+  color: #f9f3ea;
+  letter-spacing: 1.1666666667px;
+  text-shadow: 3.5px 0 0 #321208, 3.23365px 1.33945px 0 #321208,
+    2.47485px 2.47485px 0 #321208, 1.33945px 3.23365px 0 #321208,
+    0 3.5px 0 #321208, -1.33945px 3.23365px 0 #321208,
+    -2.47485px 2.47485px 0 #321208, -3.23365px 1.33945px 0 #321208,
+    -3.5px 0 0 #321208, -3.23365px -1.33945px 0 #321208,
+    -2.47485px -2.47485px 0 #321208, -1.33945px -3.23365px 0 #321208,
+    0 -3.5px 0 #321208, 1.33945px -3.23365px 0 #321208,
+    2.47485px -2.47485px 0 #321208, 3.23365px -1.33945px 0 #321208;
 }
 
 .modalOverlay.active {
@@ -22,29 +34,22 @@
 }
 
 .modalTitle {
-  color: #764d43;
   text-align: center;
   margin-bottom: 0;
   font-weight: 700;
-}
-
-.modalTitle.basic {
-  font-size: 28px;
-  font-family: 'Lora', Georgia, serif;
-  font-weight: 400;
+  padding: 0 20px;
+  font-size: 24px;
 }
 
 .modalTitle.fancy {
   position: relative;
   top: -42px;
-  font-size: 16px;
   margin-top: 30px;
-  color: #764d43;
   background-image: url('/images/borders/modal-title-middle.png');
   background-repeat: repeat-x;
   margin: 0 auto;
   height: 70px;
-  width: 130px;
+  width: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,18 +77,26 @@
   align-items: center;
 }
 
-.comingSoonWrap {
+.comingSoonWrap,
+.startQuestWrap {
   width: 100%;
+  max-width: 565px;
+  margin: 0 auto;
+}
+
+.comingSoonWrap {
   pointer-events: none;
 }
 
-.comingSoon {
+.comingSoon,
+.startQuest {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  max-width: 300px;
+  width: 90%;
+  max-width: 400px;
   margin: 6px auto;
   height: 68px;
   max-height: 68px;
@@ -96,10 +109,10 @@
   font-size: 20px;
   font-weight: 700;
   font-family: 'Lora', sans-serif;
-  color: #744e45;
 }
 
-.comingSoon::before {
+.comingSoon::before,
+.startQuest::before {
   content: '';
   display: block;
   width: calc(100% + 80px);
@@ -113,11 +126,39 @@
   background-position: 0 0, 100% 0;
 }
 
+.startQuest {
+  background-image: url('/images/modal/modal-btn-middle.png');
+}
+
+.startQuest::before {
+  background-image: url('/images/modal/modal-btn-left.png'),
+    url('/images/modal/modal-btn-right.png');
+}
+
+.startQuest:hover {
+  background-position: 0 100%;
+}
+
+.startQuest:hover:before {
+  background-position: 0 100%, 100% 100%;
+}
+
+.npcAvaWrap {
+  width: 965px;
+}
+
+.npcAvaWrap img {
+  position: absolute;
+  bottom: 0;
+  left: 4px;
+  width: 289px;
+  height: auto;
+  image-rendering: pixelated;
+  z-index: 2;
+}
+
 .npcDialogue {
   position: relative;
-  padding: 56px 40px 36px;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -moz-crisp-edges;
   image-rendering: pixelated;
   background-color: #ffe3bd;
   background-image: url('/images/borders/npcDialogue-left.png'),
@@ -127,6 +168,9 @@
   background-repeat: repeat-y, repeat-y, repeat-x, repeat-x;
   background-position: 0 0, 100% 0, 0 0, 0 100%;
   border-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+  min-height: 250px;
 }
 
 .npcDialogue::before {
@@ -148,13 +192,14 @@
 .npcDialogue p {
   margin: 0;
   font-size: 16px;
+  padding: 50px 24px 24px 16px;
   color: #744e45;
+  text-shadow: none;
 }
 
 .npcName {
   position: absolute;
   top: -18px;
-  left: 80px;
   margin: 0;
   background-image: url('/images/borders/npcName-middle.png');
   background-repeat: repeat-x;
@@ -167,7 +212,7 @@
 .npcName span {
   position: relative;
   font-family: 'Lora', Georgia, serif;
-  color: #744e45;
+
   font-size: 26px;
 }
 
@@ -191,6 +236,11 @@
 }
 
 @media (max-width: 590px) {
+  .modalOverlay {
+    overflow-y: scroll;
+    bottom: unset;
+  }
+
   .modal,
   .npcDialogue {
     width: 100vw !important;
@@ -198,6 +248,34 @@
 
   .modalTitle.fancy {
     top: 17px;
+    font-size: 16px;
+  }
+
+  .startQuest {
+    transform: scale(0.8);
+    margin-top: 20px;
+  }
+
+  .comingSoon {
+    transform: scale(0.8);
+  }
+
+  .npcAvaWrap {
+    height: 300px;
+  }
+
+  .npcDialogue {
+    flex-direction: column-reverse;
+  }
+
+  .npcDialogue p {
+    padding: 24px 24px 24px 16px;
+    text-align: center;
+  }
+
+  .npcName {
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .closeBtn {
