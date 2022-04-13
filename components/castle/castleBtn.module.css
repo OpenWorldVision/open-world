@@ -1,0 +1,107 @@
+.gameButton {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  display: block;
+  position: absolute;
+  background-image: url('/images/castle/borders/text-bubble-left.png'),
+    url('/images/castle/borders/text-bubble-right.png');
+  background-position: left top, right top;
+  background-repeat: repeat-y;
+  background-color: rgb(255, 224, 183);
+  background-size: 4.7398px 3.55485px;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  z-index: 2000;
+  height: 22px;
+  min-width: 66px;
+  -webkit-animation: buttonAnimation 2s infinite;
+  animation: buttonAnimation 2s infinite;
+  cursor: url('/images/castle/click-cursor.png'), auto !important;
+}
+
+.gameButton::before,
+.gameButton::after {
+  content: '';
+  display: block;
+  position: absolute;
+}
+
+.gameButton::before {
+  top: -4.7398px;
+  left: 4.7398px;
+  width: calc(100% - 9.47959px);
+  height: calc(100% + 9.47959px);
+  background-position: center top, center bottom;
+  background-repeat: repeat-x;
+  background-size: 18.9592px 4.7398px;
+  background-image: url('/images/castle/borders/text-bubble-top.png'),
+    url('/images/castle/borders/text-bubble-btm.png');
+}
+
+.gameButton::after {
+  top: -4.7398px;
+  left: 0px;
+  width: 100%;
+  height: calc(100% + 9.47959px);
+  background-position: left top, right top, left bottom, right bottom;
+  background-repeat: no-repeat;
+  background-size: 10.6645px 10.6645px;
+  background-image: url('/images/castle/borders/text-bubble-topLeft.png'),
+    url('/images/castle/borders/text-bubble-topRight.png'),
+    url('/images/castle/borders/text-bubble-btmLeft.png'),
+    url('/images/castle/borders/text-bubble-btmRight.png');
+}
+
+.bubbleArrow {
+  position: absolute;
+  width: 9.47959px;
+  height: 9.47959px;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+  left: 50%;
+  bottom: -8.47959px;
+  transform: translateX(-50%);
+  z-index: 2002;
+}
+
+.title {
+  position: relative;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  padding: 0px 15.0344px;
+  font-family: Lora, serif;
+  font-weight: bold;
+  z-index: 2003;
+  font-size: 16.6645px;
+  word-wrap: normal;
+  text-align: center;
+  width: 160px;
+}
+
+@-webkit-keyframes buttonAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes buttonAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

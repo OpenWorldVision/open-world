@@ -6,10 +6,12 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 18px;
-}
-
-* {
+  cursor: url('/images/castle/default-cursor.png'), auto !important;
   box-sizing: border-box;
+  overflow: hidden;
+}
+* {
+  box-sizing: inherit;
 }
 
 a {
@@ -24,4 +26,614 @@ a:hover {
 img {
   max-width: 100%;
   display: block;
+}
+
+.chakra-modal__content-container {
+  cursor: url(/images/default-cursor.png), auto;
+}
+
+.chakra-modal__content {
+}
+
+.chakra-modal__body {
+}
+
+.modal_body_content {
+  padding: 1.8rem 1.8rem;
+}
+
+.modal_body_content div {
+  margin-top: 10px;
+}
+
+.chakra-modal__content::-webkit-scrollbar {
+  width: 20px;
+}
+
+.chakra-modal__content::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.chakra-modal__content::-webkit-scrollbar-thumb {
+  background-color: #282738;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.modal__body__container .warning p {
+  width: 290px;
+  font-size: 0.8rem;
+}
+
+.modal__body__container .warning {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgba(255, 61, 0, 0.65);
+  padding: 10px;
+}
+
+.modal__body__container .warning input {
+  height: 35px;
+  width: 150px;
+  border: 1px solid rgb(250, 192, 93);
+  border-radius: 8px;
+  font-size: 0.7rem;
+  background: transparent;
+  text-shadow: rgb(0 0 0 / 85%) 1px 1px 0px;
+  background-color: black;
+  color: white;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 12px;
+  text-align: center;
+}
+
+.btn-transfer-locked.check-button-transfer-lock {
+  opacity: unset;
+}
+
+.btn-transfer-locked {
+  position: relative;
+  color: #fff;
+  background: #009c44;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 10px 30px;
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  border: none;
+  border-radius: 4px;
+  opacity: 0.4;
+}
+
+.modal__body__container .introduce {
+  padding: 15px;
+}
+
+.modal__body__container .total-locked p,
+.modal__body__container .total-wallet p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.modal__body__container .total-locked p img,
+.modal__body__container .total-wallet p img {
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+}
+
+.modal__body__container .total-wallet {
+  margin-top: 25px;
+}
+
+.modal__body__container #address {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.border_content {
+  border: 1px solid rgb(76, 62, 35);
+  padding: 1rem;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.5)
+  );
+}
+
+.popup-jeweler-head {
+  display: flex;
+}
+
+.popup-jeweler-head .border_content:first-child {
+  padding: 20px 30px;
+}
+
+.popup-jeweler-head .border_content:first-child h1 {
+  font-size: 25px;
+}
+
+.popup-jeweler-head .border_content:first-child p {
+  margin-top: 10px;
+}
+
+.popup-jeweler-head .border_content:last-child {
+  margin-left: 15px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.modal_body_content .TVL {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.dex-fee {
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dex-fee-head {
+  text-align: center;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.dex-fee-head div:first-child {
+  font-size: 1.5rem;
+}
+
+.dex-fee-body {
+  border: 4px solid rgb(250, 192, 93);
+}
+
+.bordered-box.bordered-box-hero {
+  border-image-source: url(/images/border-hero.png);
+  border-image-slice: 16;
+  border-image-width: 12px;
+  border-image-outset: 3px;
+}
+
+.bordered-box {
+  position: relative;
+  image-rendering: pixelated;
+  border-width: 4px;
+  border-style: solid;
+  border-color: rgb(250, 192, 93);
+  border-image: url(/images/border-main.png) 4 / 4px / 0 round;
+  padding: 1rem;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.8),
+    rgba(0, 0, 0, 0.5)
+  );
+}
+
+.jeweler-balance {
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+.jeweler-balance div {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.quantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantity img {
+  width: 20px;
+}
+
+.quantity div {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 2rem;
+}
+
+.popup-jeweler-body-msg {
+  text-align: center;
+  padding: 0 40px;
+  font-size: 1.3rem;
+  font-family: Poppins;
+  color: rgb(195, 197, 203);
+}
+
+.popup-jeweler-body-msg span {
+  font-size: 15px;
+  margin-right: 5px;
+}
+
+.popup-jeweler-head .border_content:last-child .deposit,
+.popup-jeweler-head .border_content:last-child .claim,
+.popup-jeweler-head .border_content:last-child .withdraw {
+  padding-left: 30px;
+  font-size: 1.3rem;
+}
+
+.popup-jeweler-head .border_content:last-child .deposit:hover,
+.popup-jeweler-head .border_content:last-child .claim:hover,
+.popup-jeweler-head .border_content:last-child .withdraw:hover {
+  padding-left: 30px;
+  background: url(/images/uncommon-gem-2.gif) 0em 40% / 25px 20px no-repeat;
+  color: rgb(250, 192, 93);
+}
+
+.btn-deposit-container button:hover {
+  border: 1px solid rgb(20, 194, 90) !important;
+}
+
+.btn-deposit-jewel:hover {
+  background-color: rgb(44, 47, 54);
+}
+
+.btn-claim-jeweler:hover {
+  background-color: rgb(203, 189, 41) !important;
+  transform: translateY(-10px);
+}
+
+/* .btn-claim-jeweler-animate:hover{
+  animation: 5s ease-out animate-btn-claim-jeweler-hover;
+}
+
+@keyframes animate-btn-claim-jeweler-hover{
+  0% {
+    transform: translateY(-6px);
+    background-color: rgb(203, 189, 41) !important;
+  }
+  100% {
+    transform: translateY(0);
+  }
+} */
+
+.unhover {
+  background-color: rgb(20, 194, 90) !important;
+  animation: 0.5s animate-btn-claim-jeweler-unhover;
+}
+
+@keyframes animate-btn-claim-jeweler-unhover {
+  0% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .modal_body_head .title {
+    font-size: 24px !important;
+  }
+
+  .modal_body_content {
+    padding: 10px;
+    margin-bottom: 60px;
+  }
+
+  .popup-jeweler-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+  }
+
+  .modal_body_head svg {
+    width: 20px;
+  }
+
+  .popup-jeweler-head .border_content:first-child h1,
+  .jeweler-balance {
+    font-size: 18px;
+  }
+
+  .popup-jeweler-head .border_content:last-child {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .popup-jeweler-head .border_content:last-child button,
+  .quantity-jeweler {
+    font-size: 18px !important;
+  }
+
+  .dex-fee-head div:first-child,
+  .quantity div {
+    font-size: 20px;
+  }
+
+  .dex-fee-head div:last-child,
+  .jeweler-balance div,
+  .TVL,
+  .your-token,
+  .popup-jeweler-body-msg {
+    font-size: 16px;
+    padding: 0;
+  }
+
+  .available-to-deposit,
+  .diamond-icon,
+  .modal_body_content p,
+  .modal_body_content div {
+    font-size: 20px !important;
+  }
+
+  .input-deposit,
+  .btn-deposit-container button,
+  .btn-deposit-jewel,
+  .input-withdraw {
+    font-size: 14px !important;
+  }
+
+  .btn-deposit-jewel img {
+    width: 18px !important;
+  }
+
+  .btn-deposit-container button {
+    padding: 10px !important;
+  }
+
+  .btn-turn-off-modal {
+    top: 0 !important;
+  }
+
+  .btn-claim-jeweler,
+  .btn-enter-mount {
+    margin-top: 10px !important;
+    padding: 0 !important;
+    font-size: 20px !important;
+  }
+
+  .modal__body__container .warning {
+    flex-direction: column;
+  }
+
+  .modal__body__container .warning input {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .modal__body__container .warning p {
+    width: 200px;
+    font-size: 16px !important;
+  }
+}
+
+.cursor-btn {
+  cursor: url(/images/click-cursor-2x.png), auto;
+}
+
+.layout-btn {
+  overflow: hidden;
+  background-color: transparent;
+  border: 0px;
+  outline: 0px;
+  z-index: 5000;
+  width: 98.081px;
+  height: 122.101px;
+  position: absolute;
+}
+
+.btn-info.focus,
+.btn-info:focus,
+.btn-info:hover {
+  color: unset;
+  background-color: unset;
+  border-color: unset;
+}
+
+.btn-info:not(:disabled):not(.disabled).active,
+.btn-info:not(:disabled):not(.disabled):active,
+.show > .btn-info.dropdown-toggle {
+  color: unset;
+  background-color: unset;
+  border-color: unset;
+}
+.btn-info:not(:disabled):not(.disabled).active[data-v-fd8b9234],
+.btn-info[data-v-fd8b9234]:not(:disabled):not(.disabled):active,
+.show > .btn-info.dropdown-toggle[data-v-fd8b9234] {
+  color: unset;
+  background-color: unset;
+  border-color: unset;
+}
+
+.btn-info:not(:disabled):not(.disabled).active:focus,
+.btn-info:not(:disabled):not(.disabled):active:focus,
+.show > .btn-info.dropdown-toggle:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn-info.focus,
+.btn-info:focus {
+  box-shadow: none;
+}
+
+button {
+  outline: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+ul,
+li {
+  padding-left: 0;
+  list-style: none;
+}
+
+hr {
+  width: 100%;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-bottom: 1px solid rgba(62, 31, 5, 0.1);
+  margin: 1em 0 0;
+}
+
+.click-cursor {
+  cursor: url('/images/castle/click-cursor.png'), auto !important;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.close-btn {
+  background-image: url('/images/castle/modal/close-modal-btn.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+  top: 26px;
+  right: 29px;
+  width: 40px;
+  height: 40px;
+}
+
+.close-btn:hover {
+  opacity: 0.9;
+}
+
+.game-border {
+  position: relative;
+  background-color: #ffe3bd;
+  background-image: url('/images/castle/borders/basic-left.png'),
+    url('/images/castle/borders/basic-right.png'),
+    url('/images/castle/borders/fancy-top.png'),
+    url('/images/castle/borders/basic-bottom.png');
+  background-repeat: repeat-y, repeat-y, repeat-x, repeat-x;
+  background-position: 0 0, 100% 0, 0 0, 0 100%;
+  border-radius: 40px;
+}
+
+.game-border::before {
+  content: '';
+  pointer-events: none;
+  display: block;
+  position: absolute;
+  height: 100%;
+  image-rendering: pixelated;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.game-border.basic::before {
+  background-image: url('/images/castle/borders/basic-top-left.png'),
+    url('/images/castle/borders/basic-top-right.png'),
+    url('/images/castle/borders/basic-bottom-left.png'),
+    url('/images/castle/borders/basic-bottom-right.png');
+}
+
+.game-border.fancy::before {
+  background-image: url('/images/castle/borders/fancy-top-left.png'),
+    url('/images/castle/borders/fancy-top-right.png'),
+    url('/images/castle/borders/basic-bottom-left.png'),
+    url('/images/castle/borders/basic-bottom-right.png');
+}
+
+.green-button {
+  position: relative;
+  background-color: #066c45;
+  background-image: url('/images/castle/borders/btn-side.png'),
+    url('/images/castle/borders/btn-side.png');
+  background-repeat: repeat-y, repeat-y;
+  background-position: 0 0, 100% 0;
+  border-radius: 8px;
+  color: #ffe3bc;
+  font-size: 18px;
+  margin: 2px 0;
+  min-width: 120px;
+  transition: background-color 0.3s ease-in;
+  padding: 6px 24px;
+}
+
+.green-button:hover {
+  background-color: #00984b;
+  transition: background-color 0.3s ease-in;
+}
+
+.green-button::after,
+.green-button::before {
+  image-rendering: pixelated;
+  content: '';
+  position: absolute;
+  height: calc(100% + 6px);
+}
+
+.green-button::before {
+  top: -2px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: calc(100% - 6px);
+  border-radius: 8px;
+  background-image: url('/images/castle/borders/btn-top.png'),
+    url('/images/castle/borders/btn-btm.png');
+  background-position: top, bottom;
+  background-repeat: repeat-x, repeat-x;
+}
+
+.green-button::after {
+  top: -2px;
+  left: 0;
+  width: 100%;
+  background-image: url('/images/castle/borders/btn-top-left.png'),
+    url('/images/castle/borders/btn-top-right.png'),
+    url('/images/castle/borders/btn-btm-left.png'),
+    url('/images/castle/borders/btn-btm-right.png');
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.game-scroll-bar::-webkit-scrollbar {
+  width: 6px;
+  padding: 3px 0;
+}
+
+.game-scroll-bar::-webkit-scrollbar-track {
+  background-color: #eecba1;
+  width: 4px;
+  border-radius: 6px;
+}
+
+.game-scroll-bar::-webkit-scrollbar-thumb {
+  background-color: #ffe3bc;
+  border-radius: 16px;
+  margin: 2px 0;
+  width: 6px;
+  border-radius: 16px;
+  border: 1px solid #000;
+  border-color: transparent #eecba1 transparent #eecba1;
 }

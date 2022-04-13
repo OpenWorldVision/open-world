@@ -1,0 +1,132 @@
+.landViewContainer {
+  height: 100%;
+  padding: 50px 75px 60px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+}
+
+.landViewHeading {
+  text-align: center;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: #3e1f05;
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.summrySortLand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #3e1f05;
+  margin-bottom: 10px;
+}
+
+.landSummary {
+  font-size: 18px;
+}
+
+.landSort {
+  display: flex;
+  align-items: center;
+}
+
+.landSortLabel {
+  font-size: 14px;
+}
+
+.landSelectList {
+  background-color: #eecba1;
+  border-radius: 8px;
+  box-shadow: 0 0 3px rgb(62 31 5 / 50%);
+  position: relative;
+}
+
+#landPropertyLabel {
+  margin: 0 8px;
+}
+
+.landSelectList select {
+  padding: 4px 30px 4px 5px;
+  min-width: 130px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 14px;
+}
+
+.landSelectList select::-ms-expand {
+  display: none;
+}
+
+.landSelectList select option {
+  background-color: #eecba1;
+  color: #3e1f05;
+}
+
+.landSelectList::after {
+  position: absolute;
+  content: '';
+  top: 14px;
+  right: 3px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: currentColor transparent transparent transparent;
+  opacity: 0.5;
+}
+
+.landSelectList:hover::after {
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .landViewContainer {
+    padding: 115px 55px 70px;
+  }
+
+  .summrySortLand,
+  .landSort {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .landSummary {
+    margin-bottom: 8px;
+  }
+
+  #landPropertyLabel {
+    margin: 0;
+  }
+
+  .landSelectList {
+    width: 100%;
+    margin: 6px 0 !important;
+  }
+
+  .landSelectList select {
+    padding: 8px 30px 8px 5px;
+    min-width: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+}
+
+@media (max-width: 580px) {
+  .landViewContainer {
+    min-height: 900px;
+    padding: 115px 55px 70px;
+  }
+}

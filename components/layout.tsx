@@ -1,14 +1,25 @@
 import Head from 'next/head'
 import styles from './layout.module.css'
 import Link from 'next/link'
+import Menu from '@components/worldmap/Menu'
+import User from '@components/worldmap/User'
 
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
   return (
-    <div className={styles.container}>
+    <div
+      style={{ cursor: 'url(/images/default-cursor.png), auto' }}
+      className={styles.container}
+    >
       <Head>
         <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossOrigin="anonymous"
+        />
         <meta
           name="description"
           content="Learn how to build a personal website using Next.js"
@@ -23,7 +34,11 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <main>{children}</main>
+      <main>
+        {children}
+        <Menu />
+        <User />
+      </main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">

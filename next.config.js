@@ -23,9 +23,5 @@ module.exports = {
   },
   env: {
     environment: 'develop',
-    BINANCE_WALLET_PRIVATE_KEY:
-      'd8566cb10e61f3e106f5f05a830d4c847ef9f210bff108ce7b28e089fd1a4494',
-    BINANCE_WALLET_MNEMONIC:
-      'gallery soap miss tell icon tunnel evoke dwarf normal police select exit',
   },
 }
