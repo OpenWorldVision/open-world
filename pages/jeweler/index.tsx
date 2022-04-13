@@ -177,6 +177,7 @@ export default function Jeweler(props) {
                 margin: 'auto',
                 overflow: 'hidden auto',
                 color: '#fff',
+                cursor: 'url(/images/jeweler/default-cursor.png), auto',
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -312,6 +313,7 @@ export default function Jeweler(props) {
                 margin: 'auto',
                 overflow: 'hidden auto',
                 color: '#fff',
+                cursor: 'url(/images/jeweler/default-cursor.png), auto',
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -374,6 +376,7 @@ export default function Jeweler(props) {
                 margin: 'auto',
                 overflow: 'hidden auto',
                 color: '#fff',
+                cursor: 'url(/images/jeweler/default-cursor.png), auto',
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -417,6 +420,7 @@ export default function Jeweler(props) {
                 margin: 'auto',
                 overflow: 'hidden auto',
                 color: '#fff',
+                cursor: 'url(/images/jeweler/default-cursor.png), auto',
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -528,6 +532,7 @@ export default function Jeweler(props) {
                 margin: 'auto',
                 overflow: 'hidden auto',
                 color: '#fff',
+                cursor: 'url(/images/jeweler/default-cursor.png), auto',
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -746,6 +751,7 @@ export default function Jeweler(props) {
                 margin: 'auto',
                 overflow: 'hidden auto',
                 color: '#fff',
+                cursor: 'url(/images/jeweler/default-cursor.png), auto',
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -809,6 +815,7 @@ export default function Jeweler(props) {
                       backgroundColor: '#009c44',
                       marginTop: '40px',
                       fontSize: '28px',
+                      cursor: 'url(/images/jeweler/default-cursor.png), auto',
                     }}
                   >
                     Claim
@@ -841,6 +848,7 @@ export default function Jeweler(props) {
                 margin: 'auto',
                 overflow: 'hidden auto',
                 color: '#fff',
+                cursor: 'url(/images/jeweler/default-cursor.png), auto',
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -919,6 +927,7 @@ export default function Jeweler(props) {
                 margin: 'auto',
                 overflow: 'hidden auto',
                 color: '#fff',
+                cursor: 'url(/images/jeweler/default-cursor.png), auto',
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -1054,26 +1063,6 @@ export default function Jeweler(props) {
           </Modal>
         </div>
       </div>
-
-      <style jsx>{`
-        .react-transform-wrapper.transform-component-module_wrapper__1_Fgj,
-        .react-transform-component.transform-component-module_content__2jYgh {
-          width: 100%;
-          height: 100%;
-        }
-
-        .react-transform-component.transform-component-module_content__2jYgh {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .react-transform-wrapper.transform-component-module_wrapper__1_Fgj,
-        .react-transform-component.transform-component-module_content__2jYgh {
-          width: 350%;
-          height: 150%;
-        }
-      `}</style>
     </JewelerPage>
   )
 }
@@ -1084,10 +1073,8 @@ const JewelerPage = styled.div({
     height: '100vh',
     width: '100vw',
     padding: '0 !important',
-    position: 'absolute',
     left: '0',
     display: 'flex',
-
     justifyContent: 'center',
     alignItems: 'center',
     cursor: 'url(/images/jeweler/default-cursor.png), auto',
@@ -1147,6 +1134,28 @@ const JewelerPage = styled.div({
       '.btn-lila': {
         left: '481.176px',
         top: '500px',
+      },
+    },
+    '.react-transform-wrapper.transform-component-module_wrapper__1_Fgj': {
+      width: '100%',
+      height: '100%',
+    },
+    '.react-transform-component.transform-component-module_content__2jYgh': {
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+
+    '@media (max-width: 768px)': {
+      '.react-transform-wrapper.transform-component-module_wrapper__1_Fgj': {
+        width: '350%',
+        height: '150%',
+      },
+      '.react-transform-component.transform-component-module_content__2jYgh': {
+        width: '350%',
+        height: '150%',
       },
     },
   },

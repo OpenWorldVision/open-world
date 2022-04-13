@@ -7,7 +7,7 @@ export default function BankShineChestBL() {
       <div>
         <div className="bankShine-chestBL">
           <img
-            src="/images/jeweler/jeweler/bankShine-chestBL.png"
+            src="/images/jeweler/bankShine-chestBL.png"
             alt="bankShine-chestBL"
           />
         </div>
