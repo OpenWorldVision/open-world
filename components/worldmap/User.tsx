@@ -19,12 +19,12 @@ export default function User() {
             }
           }
         >
-          <img src="/images/Frame.png" alt="img" />
+          <img src="/images/worldmap/Frame.png" alt="img" />
           <img
             onClick={() => {
               setIsOpenUserInfo(true)
             }}
-            src="/images/Avatar.png"
+            src="/images/worldmap/Avatar.png"
             alt="img"
           />
           <button

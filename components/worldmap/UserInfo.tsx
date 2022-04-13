@@ -57,7 +57,7 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
               </button>
             </div>
             <div>
-              <img src="/images/Hope2.png" alt="img" />
+              <img src="/images/worldmap/Hope2.png" alt="img" />
               0.00
             </div>
             <div>

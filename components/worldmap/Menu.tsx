@@ -13,7 +13,7 @@ export default function Menu() {
             setIsOpenMenu(!isOpenMenu)
           }}
         >
-          <img src="/images/Menu.png" alt="img" />
+          <img src="/images/worldmap/Menu.png" alt="img" />
           <div>Menu</div>
         </button>
         {isOpenMenu && (
@@ -27,37 +27,59 @@ export default function Menu() {
               <Link href="/">Map</Link>
             </li>
             <li>
-              <Link href="/alchemist">Alchemist</Link>
+              <Link href="/alchemist">
+                <a>Alchemist</a>
+              </Link>
             </li>
             <li>
-              <Link href="/castle">Castle</Link>
+              <Link href="/castle">
+                <a>Castle</a>
+              </Link>
             </li>
             <li>
-              <Link href="/docks">Docks</Link>
+              <Link href="/docks">
+                <a>Docks</a>
+              </Link>
             </li>
             <li>
-              <Link href="/gardens">Gardens</Link>
+              <Link href="/gardens">
+                <a>Gardens</a>
+              </Link>
             </li>
             <li>
-              <Link href="/jeweler">Jeweler</Link>
+              <Link href="/jeweler">
+                <a>Jeweler</a>
+              </Link>
             </li>
             <li>
-              <Link href="/marketplace">Marketplace</Link>
+              <Link href="/marketplace">
+                <a>Marketplace</a>
+              </Link>
             </li>
             <li>
-              <Link href="/meditation-circle">Meditation Circle</Link>
+              <Link href="/meditation-circle">
+                <a>Meditation Circle</a>
+              </Link>
             </li>
             <li>
-              <Link href="/portal">Portal</Link>
+              <Link href="/portal">
+                <a>Portal</a>
+              </Link>
             </li>
             <li>
-              <Link href="/professions">Professions</Link>
+              <Link href="/professions">
+                <a>Professions</a>
+              </Link>
             </li>
             <li>
-              <Link href="/tavern">Tavern</Link>
+              <Link href="/tavern">
+                <a>Tavern</a>
+              </Link>
             </li>
             <li>
-              <Link href="/about">About +</Link>
+              <Link href="/about">
+                <a>About +</a>
+              </Link>
             </li>
           </ul>
         )}
