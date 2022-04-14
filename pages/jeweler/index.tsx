@@ -154,6 +154,7 @@ export default function Jeweler(props) {
             </TransformComponent>
           </TransformWrapper>
           <Modal
+            blockScrollOnMount={false}
             isOpen={modalIsOpen}
             onClose={() => {
               setIsOpen(false)
@@ -290,6 +291,7 @@ export default function Jeweler(props) {
             </ModalContent>
           </Modal>
           <Modal
+            blockScrollOnMount={false}
             isOpen={modalInfo}
             onClose={() => {
               setModalInfo(false)
@@ -353,6 +355,7 @@ export default function Jeweler(props) {
             </ModalContent>
           </Modal>
           <Modal
+            blockScrollOnMount={false}
             isOpen={modalLila}
             onClose={() => {
               setModalLila(false)
@@ -397,6 +400,7 @@ export default function Jeweler(props) {
             </ModalContent>
           </Modal>
           <Modal
+            blockScrollOnMount={false}
             isOpen={modalJeweler}
             onClose={() => {
               setModalJeweler(false)
@@ -509,6 +513,7 @@ export default function Jeweler(props) {
             </ModalContent>
           </Modal>
           <Modal
+            blockScrollOnMount={false}
             isOpen={modalDeposit}
             onClose={() => {
               setModalDeposit(false)
@@ -728,6 +733,7 @@ export default function Jeweler(props) {
             </ModalContent>
           </Modal>
           <Modal
+            blockScrollOnMount={false}
             isOpen={modalClaim}
             onClose={() => {
               setModalClaim(false)
@@ -825,6 +831,7 @@ export default function Jeweler(props) {
             </ModalContent>
           </Modal>
           <Modal
+            blockScrollOnMount={false}
             isOpen={modalWaitClaim}
             onClose={() => {
               setModalWaitClaim(false)
@@ -904,6 +911,7 @@ export default function Jeweler(props) {
             </ModalContent>
           </Modal>
           <Modal
+            blockScrollOnMount={false}
             isOpen={modalWithdraw}
             onClose={() => {
               setModalWithdraw(false)

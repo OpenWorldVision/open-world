@@ -386,7 +386,7 @@ img {
   .btn-deposit-container button,
   .btn-deposit-jewel,
   .input-withdraw {
-    font-size: 14px !important;
+    font-size: 13px !important;
   }
 
   .btn-deposit-jewel img {
@@ -419,6 +419,15 @@ img {
   .modal__body__container .warning p {
     width: 200px;
     font-size: 16px !important;
+  }
+
+  .btn-deposit-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn-deposit-container button:last-child {
+    margin-top: 20px;
   }
 }
 
