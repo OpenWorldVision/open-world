@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled'
 import React from 'react'
 
 export default function AlchemistBgAnimate() {
@@ -25,13 +25,14 @@ const AlchemistBgAnimateStyle = styled.div({
     height: '992.97px',
     zIndex: '400',
     overflow: 'hidden',
-    'img': {
+    img: {
       position: 'absolute',
       minWidth: '10560px',
       height: '973.97px',
       imageRendering: 'pixelated',
       transform: 'scale(1, 1)',
-      animation: '0.8s steps(8) 0s infinite normal none running animate-alchemist-bg-animate',
+      animation:
+        '0.8s steps(8) 0s infinite normal none running animate-alchemist-bg-animate',
     },
     '@keyframes animate-alchemist-bg-animate': {
       '0%': {
@@ -40,7 +41,7 @@ const AlchemistBgAnimateStyle = styled.div({
       },
       '100%': {
         left: '-10560px',
-      }
-    }
+      },
+    },
   },
 })

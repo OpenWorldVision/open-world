@@ -1,0 +1,61 @@
+.currentGold {
+  position: relative;
+  display: inline-grid;
+  width: 120px;
+  min-height: 60px;
+  background-color: #efcba2;
+  border-radius: 8px 2px 8px 2px;
+  background-image: url(/images/alchemist/inventory-itemFrameLeft.png),
+    url(/images/alchemist/inventory-itemFrameRight.png);
+  background-position: 0 0, 100% 0;
+  background-repeat: repeat-y, repeat-y;
+  border: 0;
+  color: #fff;
+  outline: none;
+}
+
+.currentGold::before {
+  content: '';
+  width: 100%;
+  border-radius: 8px 2px 8px 2px;
+  background-image: url(/images/alchemist/inventory-itemFrameTop.png),
+    url(/images/alchemist/inventory-itemFrameBtm.png);
+  background-position: top, bottom;
+  background-repeat: repeat-x, repeat-x;
+  height: 60px;
+}
+
+.currentGold::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background-image: url(/images/alchemist/inventory-itemFrameTopLeft.png),
+    url(/images/alchemist/inventory-itemFrameTopRight.png),
+    url(/images/alchemist/inventory-itemFrameBtmLeft.png),
+    url(/images/alchemist/inventory-itemFrameBtmRight.png);
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.sizeBackgroundItem {
+  width: 60px;
+  min-height: 65px;
+  background-repeat: repeat-y, repeat-y;
+  margin: 0 auto;
+}
+
+.sizeBackgroundItem::before,
+.sizeBackgroundItem::after {
+  height: 65px;
+}
+
+.bunkerCraftGold {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+}

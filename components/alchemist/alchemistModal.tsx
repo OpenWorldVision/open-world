@@ -1,17 +1,17 @@
 import { PropsWithChildren, useState } from 'react'
 import style from './alchemistModalStyle.module.css'
-import CraftPotions from './craftPotions'
+import CraftPotionsContainer from './craftPotionsContainer'
 
 type Props = {
-  isOpen: boolean,
-  width: number,
-  height?: number,
-  npcName?: string,
-  npcDialogue?: string,
-  zIndex?: number,
-  fancyTitle?: string,
-  title?: string,
-  toggleModal: () => void,
+  isOpen: boolean
+  width: number
+  height?: number
+  npcName?: string
+  npcDialogue?: string
+  zIndex?: number
+  fancyTitle?: string
+  title?: string
+  toggleModal: () => void
 }
 
 export default function AlchemistModal(props: PropsWithChildren<Props>) {
@@ -32,9 +32,11 @@ export default function AlchemistModal(props: PropsWithChildren<Props>) {
 
   return (
     <>
-      {isOpen &&
+      {isOpen && (
         <div
-          className={`overlay ${style.modalOverlay} ${isOpen && style.active}`}
+          className={`${style.overlayAlchemist} ${style.modalOverlay} ${
+            isOpen && style.active
+          }`}
         >
           <div
             className={`${style.modal} game-border fancy`}
@@ -50,29 +52,32 @@ export default function AlchemistModal(props: PropsWithChildren<Props>) {
               onClick={toggleModal}
             ></div>
 
-            {fancyTitle &&
+            {fancyTitle && (
               <h3 className={`${style.modalTitle} ${style.fancy}`}>
                 <span>{fancyTitle}</span>
               </h3>
-            }
+            )}
 
-            {title &&
+            {title && (
               <h3 className={`${style.modalTitle} ${style.basic}`}>
                 <span>{title}</span>
               </h3>
-            }
+            )}
 
-            <div className={style.modalBody}>
-              {children}
-            </div>
-            <div onClick={() => { setIsLandAuctionOpen(true) }} className={`${style.btnCraftingContainer}`}>
+            <div className={style.modalBody}>{children}</div>
+            <div
+              onClick={() => {
+                setIsLandAuctionOpen(true)
+              }}
+              className={`${style.btnCraftingContainer}`}
+            >
               <div className={`click-cursor ${style.crafting}`}>
                 <span>Start Crafting</span>
               </div>
             </div>
           </div>
 
-          {npcDialogue &&
+          {npcDialogue && (
             <div
               className={style.npcDialogue}
               style={{
@@ -84,13 +89,13 @@ export default function AlchemistModal(props: PropsWithChildren<Props>) {
               </h4>
               <p>{npcDialogue}</p>
             </div>
-          }
-          <CraftPotions
+          )}
+          <CraftPotionsContainer
             isOpen={isLandAuctionOpen}
             toggleLandAuction={() => setIsLandAuctionOpen(false)}
           />
         </div>
-      }
+      )}
     </>
   )
 }

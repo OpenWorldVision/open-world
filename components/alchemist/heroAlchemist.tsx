@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled'
 
 export default function HeroAlchemist() {
   return (
@@ -24,13 +24,14 @@ const HeroAlchemistStyle = styled.div({
     height: '246.101px',
     zIndex: '188',
     overflow: 'hidden',
-    'img': {
+    img: {
       position: 'absolute',
       minWidth: '5708.93px',
       height: '251.571px',
       imageRendering: 'pixelated',
       transform: 'scale(1, 1)',
-      animation: '8.5s steps(71) 0s infinite normal none running animate-hero-alchemist',
+      animation:
+        '8.5s steps(71) 0s infinite normal none running animate-hero-alchemist',
     },
     '@keyframes animate-hero-alchemist': {
       '0%': {
@@ -40,7 +41,7 @@ const HeroAlchemistStyle = styled.div({
       '100%': {
         left: '-5708.93px',
         top: 0,
-      }
-    }
+      },
+    },
   },
 })

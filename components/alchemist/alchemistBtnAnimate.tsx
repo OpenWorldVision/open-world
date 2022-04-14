@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled'
 
 type Props = {
   top: number
@@ -14,10 +14,7 @@ export default function AlchemistBtnAnimate(props: Props) {
         <div style={{ top, left }} className="alchemist-popup">
           <button className="btn-alchemist-animate cursor-btn">
             <div className="btn-content">{contentButton}</div>
-            <img
-              src="/images/jeweler/bubble-arrow.png"
-              alt="img"
-            />
+            <img src="/images/jeweler/bubble-arrow.png" alt="img" />
           </button>
         </div>
       </div>
@@ -32,7 +29,8 @@ const AlchemistBtnAnimateStyle = styled.div({
       animation: '4.5s ease-in-out 0s infinite normal none running animate-btn',
       'pointer-events': 'revert !important',
       position: 'relative',
-      backgroundImage: 'url(/images/jeweler/text-bubble-left.png), url(/images/jeweler/text-bubble-right.png)',
+      backgroundImage:
+        'url(/images/jeweler/text-bubble-left.png), url(/images/jeweler/text-bubble-right.png)',
       backgroundPosition: 'left top, right top',
       backgroundRepeat: 'repeat-y',
       backgroundColor: 'rgb(255, 224, 183)',
@@ -41,7 +39,7 @@ const AlchemistBtnAnimateStyle = styled.div({
       left: '-50%',
       zIndex: '2000',
       border: '0',
-      'img': {
+      img: {
         position: 'absolute',
         width: '14.2162px',
         height: '20.3142px',
@@ -49,18 +47,18 @@ const AlchemistBtnAnimateStyle = styled.div({
         left: '55%',
         transform: 'translateX(-50%)',
         zIndex: '2002',
-      }
+      },
     },
     '@keyframes animate-btn': {
       '0%': {
-        transform: 'translateY(0)'
+        transform: 'translateY(0)',
       },
       '50%': {
-        transform: 'translateY(10px)'
+        transform: 'translateY(10px)',
       },
       '100%': {
-        transform: 'translateY(0)'
-      }
+        transform: 'translateY(0)',
+      },
     },
     '.btn-alchemist-animate::before': {
       content: '""',
@@ -70,7 +68,8 @@ const AlchemistBtnAnimateStyle = styled.div({
       left: '11.6081px',
       width: '71px',
       height: '45px',
-      backgroundImage: ' url(/images/jeweler/text-bubble-top.png), url(/images/jeweler/text-bubble-btm.png)',
+      backgroundImage:
+        ' url(/images/jeweler/text-bubble-top.png), url(/images/jeweler/text-bubble-btm.png)',
       backgroundPosition: 'center top, center bottom',
       backgroundRepeat: 'repeat-x',
       backgroundSize: '46.4324px 11.6081px',
@@ -83,7 +82,8 @@ const AlchemistBtnAnimateStyle = styled.div({
       left: '0',
       width: '109px',
       height: '45px',
-      backgroundImage: 'url(/images/jeweler/text-bubble-topLeft.png),' +
+      backgroundImage:
+        'url(/images/jeweler/text-bubble-topLeft.png),' +
         'url(/images/jeweler/text-bubble-topRight.png),' +
         'url(/images/jeweler/text-bubble-btmLeft.png),' +
         'url(/images/jeweler/text-bubble-btmRight.png)',
@@ -101,6 +101,6 @@ const AlchemistBtnAnimateStyle = styled.div({
       zIndex: '2003',
       fontSize: 'calc(15.1182px)',
       marginLeft: '11px',
-    }
+    },
   },
 })
