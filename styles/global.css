@@ -386,7 +386,7 @@ img {
   .btn-deposit-container button,
   .btn-deposit-jewel,
   .input-withdraw {
-    font-size: 13px !important;
+    font-size: 12px !important;
   }
 
   .btn-deposit-jewel img {
@@ -394,7 +394,7 @@ img {
   }
 
   .btn-deposit-container button {
-    padding: 10px !important;
+    padding: 5px !important;
   }
 
   .btn-turn-off-modal {

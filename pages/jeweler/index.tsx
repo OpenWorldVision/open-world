@@ -527,7 +527,7 @@ export default function Jeweler(props) {
             />
             <ModalContent
               style={{
-                background: 'rgba(0, 0, 0, 0.85)',
+                background: 'rgba(0, 0, 0, 0.99)',
                 zIndex: '10001',
                 border: '1px solid rgb(76, 62, 35)',
                 padding: '0',
@@ -747,7 +747,7 @@ export default function Jeweler(props) {
             />
             <ModalContent
               style={{
-                background: 'rgba(0, 0, 0, 0.85)',
+                background: 'rgba(0, 0, 0, 0.99)',
                 zIndex: '10001',
                 border: '1px solid rgb(76, 62, 35)',
                 padding: '0',
@@ -845,7 +845,7 @@ export default function Jeweler(props) {
             />
             <ModalContent
               style={{
-                background: 'rgba(0, 0, 0, 0.85)',
+                background: 'rgba(0, 0, 0, 0.99)',
                 zIndex: '10001',
                 border: '1px solid rgb(76, 62, 35)',
                 padding: '0',
@@ -925,7 +925,7 @@ export default function Jeweler(props) {
             />
             <ModalContent
               style={{
-                background: 'rgba(0, 0, 0, 0.85)',
+                background: 'rgba(0, 0, 0, 0.99)',
                 zIndex: '10001',
                 border: '1px solid rgb(76, 62, 35)',
                 padding: '0',
