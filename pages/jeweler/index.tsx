@@ -188,9 +188,7 @@ export default function Jeweler(props) {
           <Modal
             blockScrollOnMount={false}
             isOpen={modalLockedJewel}
-            onClose={() => {
-              modalCloseLockedJewel()
-            }}
+            onClose={modalCloseLockedJewel}
           >
             <ModalOverlay
               style={{
@@ -325,9 +323,7 @@ export default function Jeweler(props) {
           <Modal
             blockScrollOnMount={false}
             isOpen={modalInfo}
-            onClose={() => {
-              modalCloseInfo()
-            }}
+            onClose={modalCloseInfo}
           >
             <ModalOverlay
               style={{
@@ -389,9 +385,7 @@ export default function Jeweler(props) {
           <Modal
             blockScrollOnMount={false}
             isOpen={modalLila}
-            onClose={() => {
-              modalCloseLila()
-            }}
+            onClose={modalCloseLila}
           >
             <ModalOverlay
               style={{
@@ -434,9 +428,7 @@ export default function Jeweler(props) {
           <Modal
             blockScrollOnMount={false}
             isOpen={modalJeweler}
-            onClose={() => {
-              modalCloseJeweler()
-            }}
+            onClose={modalCloseJeweler}
           >
             <ModalOverlay
               style={{
@@ -547,9 +539,7 @@ export default function Jeweler(props) {
           <Modal
             blockScrollOnMount={false}
             isOpen={modalDeposit}
-            onClose={() => {
-              modalCloseDeposit()
-            }}
+            onClose={modalCloseDeposit}
           >
             <ModalOverlay
               style={{
@@ -767,9 +757,7 @@ export default function Jeweler(props) {
           <Modal
             blockScrollOnMount={false}
             isOpen={modalClaim}
-            onClose={() => {
-              modalCloseClaim()
-            }}
+            onClose={modalCloseClaim}
           >
             <ModalOverlay
               style={{
@@ -865,9 +853,7 @@ export default function Jeweler(props) {
           <Modal
             blockScrollOnMount={false}
             isOpen={modalWaitClaim}
-            onClose={() => {
-              modalCloseeWaitClaim()
-            }}
+            onClose={modalCloseeWaitClaim}
           >
             <ModalOverlay
               style={{
@@ -945,9 +931,7 @@ export default function Jeweler(props) {
           <Modal
             blockScrollOnMount={false}
             isOpen={modalWithdraw}
-            onClose={() => {
-              modalCloseWithdraw()
-            }}
+            onClose={modalCloseWithdraw}
           >
             <ModalOverlay
               style={{
