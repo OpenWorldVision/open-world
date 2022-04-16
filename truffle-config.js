@@ -137,6 +137,32 @@ module.exports = {
       gasPrice: 50000000000,
       skipDryRun: true,
     },
+    harmonyTestnet: {
+      provider: () =>
+        new HDWalletProvider(
+          hdWalletProviderOptions(
+            process.env.BINANCE_MAINNET_WALLET_PRIVATE_KEY,
+            process.env.BINANCE_MAINNET_WALLET_MNEMONIC,
+            {
+              providerOrUrl: 'https://api.s0.b.hmny.io',
+            }
+          )
+        ),
+      network_id: 1666700000,
+    },
+    harmony: {
+      provider: () =>
+        new HDWalletProvider(
+          hdWalletProviderOptions(
+            process.env.BINANCE_MAINNET_WALLET_PRIVATE_KEY,
+            process.env.BINANCE_MAINNET_WALLET_MNEMONIC,
+            {
+              providerOrUrl: 'https://api.harmony.one/',
+            }
+          )
+        ),
+      network_id: 1666600000,
+    },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
