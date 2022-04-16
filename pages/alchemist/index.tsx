@@ -1,24 +1,18 @@
 import styled from '@emotion/styled'
-import React, { useState } from 'react'
+import { useState } from 'react'
 
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react'
-import { Spinner } from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 
-import AlchemistBgAnimate from '../../components/alchemist/alchemistBgAnimate'
-import HeroAlchemist from '../../components/alchemist/heroAlchemist'
-import AlchemistBtnAnimate from '../../components/alchemist/alchemistBtnAnimate'
-import AlchemistModal from '../../components/alchemist/alchemistModal'
+import AlchemistBgAnimate from '../../components/alchemist/AlchemistBgAnimate'
+import HeroAlchemist from '../../components/alchemist/HeroAlchemist'
+import AlchemistBtnAnimate from '../../components/alchemist/AlchemistBtnAnimate'
+import AlchemistModal from '../../components/alchemist/AlchemistModal'
+import HeroArnold from '../../components/alchemist/HeroArnold'
+import ArnoldModal from '../../components/alchemist/ArnoldModal'
 
-export default function Alchemist(props) {
-  const [isAlchemistModalOpen, setIsAlchemistModalOpenn] = useState(false)
+export default function Alchemist() {
+  const [isAlchemistModalOpen, setIsAlchemistModalOpen] = useState(false)
+  const [isArnoldModalOpen, setIsArnoldModalOpen] = useState(false)
 
   return (
     <AlchemistPage>
@@ -42,23 +36,40 @@ export default function Alchemist(props) {
                   left={518.216}
                   contentButton="Alchemist"
                 />
+                <HeroArnold />
                 <button
                   onClick={() => {
-                    setIsAlchemistModalOpenn(true)
+                    setIsAlchemistModalOpen(true)
                   }}
                   className="layout-btn btn-alchemist cursor-btn"
+                ></button>
+                <button
+                  onClick={() => {
+                    setIsArnoldModalOpen(true)
+                  }}
+                  className="layout-btn btn-arnold cursor-btn"
                 ></button>
               </div>
             </TransformComponent>
           </TransformWrapper>
           <AlchemistModal
             isOpen={isAlchemistModalOpen}
-            toggleModal={() => setIsAlchemistModalOpenn(false)}
+            toggleModal={() => setIsAlchemistModalOpen(false)}
             fancyTitle="Alchemist"
             height={264}
             width={700}
-            npcDialogue="Double bubble, toil...wait, no. That’s not right. Grumble, grumble, toil and trouble? No! What do you need? Can you remember the incantation?"
+            npcDialogue="Double bubble, toil...wait, no. That`s not right. Grumble, grumble, toil and trouble? No! What do you need? Can you remember the incantation?"
             npcName="Herbert"
+          />
+          <ArnoldModal
+            isOpen={isArnoldModalOpen}
+            toggleModal={() => setIsArnoldModalOpen(false)}
+            fancyTitle="Alchemist Assistance"
+            height={264}
+            width={700}
+            npcDialogue="Potion making requires attention to detail, something I always remind Herbert of every time he blows off his beard! Perhaps if he was a little more organized he`d be able to see the warning labels?"
+            disabled={true}
+            npcName="Arnold"
           />
         </div>
       </div>
@@ -92,6 +103,11 @@ const AlchemistPage = styled.div({
         top: '241px',
         left: '474px',
         height: '230px',
+      },
+      '.btn-arnold': {
+        top: '334px',
+        left: '187px',
+        height: '172px',
       },
     },
     '.react-transform-wrapper.transform-component-module_wrapper__1_Fgj': {

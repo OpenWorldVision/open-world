@@ -39,6 +39,30 @@
   background-repeat: no-repeat;
 }
 
+.currentGold img {
+  position: absolute;
+}
+
+.currentGold img:first-child {
+  left: 45px;
+  top: -25px;
+}
+
+.currentGold img:last-child {
+  left: 15px;
+  top: -15px;
+}
+
+.Gold {
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 400;
+  color: #000;
+}
+
 .sizeBackgroundItem {
   width: 60px;
   min-height: 65px;
@@ -55,6 +79,22 @@
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+}
+
+.BunkerItemContainer {
+  max-width: 400px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.BunkerItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
 }
 
 @media (max-width: 768px) {

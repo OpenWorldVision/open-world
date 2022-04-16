@@ -19,18 +19,6 @@
 .modal {
   position: relative;
   padding: 50px 50px 70px;
-  will-change: opacity;
-  transition: all 0.5s linear;
-}
-
-.overlayAlchemist {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: unset;
-  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .modalTitle {
@@ -84,12 +72,12 @@
   align-items: center;
 }
 
-.btnCraftingContainer {
-  width: 80%;
-  margin: 0 auto;
+.comingSoonWrap {
+  width: 100%;
+  pointer-events: none;
 }
 
-.crafting {
+.comingSoon {
   position: relative;
   display: flex;
   align-items: center;
@@ -102,7 +90,7 @@
   -ms-interpolation-mode: nearest-neighbor;
   image-rendering: -moz-crisp-edges;
   image-rendering: pixelated;
-  background-image: url('/images/alchemist/btn_middle.png');
+  background-image: url('/images/castle/borders/btn-middle-inactive.png');
   background-repeat: repeat-x;
   background-position: 0 0;
   font-size: 20px;
@@ -111,7 +99,7 @@
   color: #744e45;
 }
 
-.crafting::before {
+.comingSoon::before {
   content: '';
   display: block;
   width: calc(100% + 80px);
@@ -119,8 +107,8 @@
   position: absolute;
   top: 0;
   left: -40px;
-  background-image: url('/images/alchemist/btn_left.png'),
-    url('/images/alchemist/btn_right.png');
+  background-image: url('/images/castle/borders/btn-left-inactive.png'),
+    url('/images/castle/borders/btn-right-inactive.png');
   background-repeat: no-repeat;
   background-position: 0 0, 100% 0;
 }
@@ -179,16 +167,8 @@
 .npcName span {
   position: relative;
   font-family: 'Lora', Georgia, serif;
-  color: #f9f3ea;
+  color: #744e45;
   font-size: 26px;
-  text-shadow: 3.5px 0 0 #321208, 3.23365px 1.33945px 0 #321208,
-    2.47485px 2.47485px 0 #321208, 1.33945px 3.23365px 0 #321208,
-    0 3.5px 0 #321208, -1.33945px 3.23365px 0 #321208,
-    -2.47485px 2.47485px 0 #321208, -3.23365px 1.33945px 0 #321208,
-    -3.5px 0 0 #321208, -3.23365px -1.33945px 0 #321208,
-    -2.47485px -2.47485px 0 #321208, -1.33945px -3.23365px 0 #321208,
-    0 -3.5px 0 #321208, 1.33945px -3.23365px 0 #321208,
-    2.47485px -2.47485px 0 #321208, 3.23365px -1.33945px 0 #321208;
 }
 
 .npcName::before {
@@ -237,10 +217,6 @@
   .comingSoon {
     width: 200px;
     top: 14px;
-  }
-
-  .btnCraftingContainer {
-    margin-top: 20px;
   }
 }
 

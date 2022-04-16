@@ -1,150 +1,59 @@
-import { Grid, GridItem } from '@chakra-ui/react'
 import style from './BunkerCraftStyle.module.css'
-// import styled from '@emotion/styled';
 
-export default function BunkerCraft(props) {
+export default function BunkerCraft() {
+  const Arraytest = [
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+  ]
   return (
     <>
       <div className={style.bunkerCraftGold}>
-        <div className={`${style.currentGold}`}></div>
+        <div className={`${style.currentGold}`}>
+          <div>
+            <img src="/images/alchemist/gold-bag.png" alt="pocket-gold" />
+            <img src="/images/alchemist/gold-pile.png" alt="gold" />
+          </div>
+          <div className={style.Gold}>0 Gold</div>
+        </div>
       </div>
-      <div>
-        <Grid
-          templateColumns={{
-            base: 'repeat(3, 1fr)',
-            md: 'repeat(5, 1fr)',
-            lg: 'repeat(6, 1fr)',
-          }}
-          gap={3}
-        >
-          {/* <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div>
-          <div style={{width: '70px', height: '80px', backgroundColor: 'red'}}></div> */}
-
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-          <GridItem
-            w="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <div
-              className={`${style.currentGold} ${style.sizeBackgroundItem}`}
-            ></div>
-          </GridItem>
-        </Grid>
+      <div className={style.BunkerItemContainer}>
+        {Arraytest.map((item, index) => {
+          return (
+            <div key={index} className={style.BunkerItem}>
+              <div
+                className={`${style.currentGold} ${style.sizeBackgroundItem}`}
+              ></div>
+            </div>
+          )
+        })}
       </div>
     </>
   )

@@ -3,11 +3,10 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  max-width: 400px;
 }
 
 .headCraftPosition {
-  width: 278px;
-  margin-left: 76px;
   position: relative;
 }
 
@@ -45,7 +44,6 @@
   background-position: top, bottom;
   background-repeat: repeat-x, repeat-x;
   height: 60px;
-  z-index: 1;
 }
 
 .bgItem::after {
@@ -88,12 +86,121 @@
   justify-content: center;
 }
 
-.craftItemBgOpacity {
+.craftItemBgContainer {
   width: 54px;
   height: 100%;
   position: absolute;
+  display: flex;
+  align-items: center;
 }
 
 .craftItem:hover .craftItemBgOpacity {
   background-color: #daad82;
+}
+
+.ItemCraftSelect {
+  opacity: 1;
+  background-color: #daad82;
+}
+
+.CraftItemQuantitySelected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.BtnQuantityCraft {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #3e1f05;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: url(/images/jeweler/default-cursor.png), auto;
+}
+
+.InputQuantitySelectCraft {
+  background: #f9c588;
+  border: 2px solid #3e1f05;
+  color: #3e1f05;
+  text-align: center;
+  max-width: 60px;
+  padding: 6px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 0 5px;
+}
+
+.InputQuantitySelectCraft::placeholder {
+  color: #3e1f05;
+}
+
+.BtnMaxQuantitySelect {
+  max-width: 50px;
+  align-self: center;
+  padding: 2px 6px;
+  font-size: 14px;
+  line-height: 1;
+  color: #fff;
+  border: 1px solid #fac05d;
+  border-radius: 4px;
+  background-color: #787852;
+  display: flex;
+  align-items: center;
+  margin: 10px auto;
+}
+
+.Ingredients {
+  text-align: center;
+}
+
+.FancyButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 271px;
+  height: 76px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0.5em;
+  background-image: url(/images/alchemist/questscroll-button.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin-top: 20px;
+}
+
+.FancyButton button {
+  position: relative;
+  color: #fff;
+  background: #009c44;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 10px 30px;
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 5px;
+  border: 0;
+  transition: all 0.2s ease-in-out;
+  opacity: 0.4;
+}
+
+.DisabledButton {
+  background: none !important;
+  cursor: url(/images/CursorDefault.png), auto !important;
+  box-shadow: unset;
+}
+
+@media (max-width: 768px) {
+  .FancyButton {
+    transform: scale(0.85);
+    width: 230.35px;
+    height: 64.6px;
+  }
 }

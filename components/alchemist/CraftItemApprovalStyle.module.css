@@ -1,10 +1,12 @@
-.CraftItemSelectedContainer {
-  margin-top: 10px;
-  position: relative;
+.CraftItemApprovalContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.CraftItemSelectedName {
-  color: #3e1f05;
+.ItemApprovalContainer {
+  position: relative;
+  margin-bottom: 20px;
 }
 
 .craftPotionsContainer {
@@ -89,16 +91,50 @@
 }
 
 .craftItem {
+  margin: 10px 10px 0 10px;
   position: relative;
   display: flex;
   justify-content: center;
 }
 
-.craftItemBgOpacity {
+.craftItemBgContainer {
   width: 54px;
   height: 100%;
   position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.BgOpacity {
   opacity: 0.6;
+}
+
+.CraftItemApprovalQuantity {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  pointer-events: none;
+  text-shadow: 1px 1px #000;
+  color: red;
+}
+
+.ScraftApprovalMissing {
+  position: absolute;
+  left: 12%;
+  top: 100%;
+  display: block;
+  align-self: center;
+  padding: 4px 10px;
+  font-size: 10px;
+  line-height: 1;
+  color: #fff;
+  border: 1px solid #fac05d;
+  border-radius: 4px;
+  background-color: #787852;
+  text-transform: uppercase;
 }
 
 .ModalPopoverContent {
@@ -112,10 +148,10 @@
 
 .PopoverContent {
   position: absolute !important;
-  width: 250px !important;
-  height: 120px;
-  top: -100px;
-  left: -80px;
+  width: 200px !important;
+  height: 150px;
+  top: -130px;
+  left: -50px;
   background-color: rgba(0, 0, 0, 0.9) !important;
   border: none !important;
 }
@@ -135,4 +171,40 @@
   font-size: 13px;
   color: #fff;
   text-align: center;
+  height: 60px;
+}
+
+.BtnAddToken {
+  border: 1px solid #fac05d;
+  color: #fac05d;
+  border-radius: 8px;
+  background-color: transparent;
+  padding: 5px 20px;
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  opacity: 1;
+  width: 100%;
+  margin-top: 3px;
+  position: relative;
+}
+
+.BtnAddToken {
+  transition: 0.4s;
+}
+
+.test:hover .BtnAddToken:after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  transition: 0.5s;
+}
+
+.test:hover .BtnAddToken {
+  margin-top: -3px;
+  background-color: #fac05d;
+  color: #000;
+}
+
+.test:hover .BtnAddToken:after {
+  opacity: 1;
 }

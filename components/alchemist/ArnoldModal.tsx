@@ -1,6 +1,5 @@
-import { PropsWithChildren, useState } from 'react'
-import style from './AlchemistModalStyle.module.css'
-import CraftPotionsContainer from './CraftPotionsContainer'
+import { PropsWithChildren } from 'react'
+import style from './ArnoldModalStyle.module.css'
 
 type Props = {
   isOpen: boolean
@@ -11,10 +10,11 @@ type Props = {
   zIndex?: number
   fancyTitle?: string
   title?: string
+  disabled?: boolean
   toggleModal: () => void
 }
 
-export default function AlchemistModal(props: PropsWithChildren<Props>) {
+export default function ArnoldModal(props: PropsWithChildren<Props>) {
   const {
     isOpen,
     width,
@@ -24,19 +24,16 @@ export default function AlchemistModal(props: PropsWithChildren<Props>) {
     zIndex,
     fancyTitle,
     title,
+    disabled,
     toggleModal,
     children,
   } = props
-
-  const [isLandAuctionOpen, setIsLandAuctionOpen] = useState(false)
 
   return (
     <>
       {isOpen && (
         <div
-          className={`${style.overlayAlchemist} ${style.modalOverlay} ${
-            isOpen && style.active
-          }`}
+          className={`overlay ${style.modalOverlay} ${isOpen && style.active}`}
         >
           <div
             className={`${style.modal} game-border fancy`}
@@ -65,16 +62,13 @@ export default function AlchemistModal(props: PropsWithChildren<Props>) {
             )}
 
             <div className={style.modalBody}>{children}</div>
-            <div
-              onClick={() => {
-                setIsLandAuctionOpen(true)
-              }}
-              className={`${style.btnCraftingContainer}`}
-            >
-              <div className={`click-cursor ${style.crafting}`}>
-                <span>Start Crafting</span>
+            {disabled && (
+              <div className={style.comingSoonWrap}>
+                <div className={style.comingSoon}>
+                  <span>Coming Soon</span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {npcDialogue && (
@@ -90,10 +84,6 @@ export default function AlchemistModal(props: PropsWithChildren<Props>) {
               <p>{npcDialogue}</p>
             </div>
           )}
-          <CraftPotionsContainer
-            isOpen={isLandAuctionOpen}
-            toggleLandAuction={() => setIsLandAuctionOpen(false)}
-          />
         </div>
       )}
     </>
