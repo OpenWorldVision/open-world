@@ -34,7 +34,7 @@ import { Spinner } from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 
 export default function Jeweler(props) {
-  const [modalIsOpen, setIsOpen] = useState(false)
+  const [modalLockedJewel, setModalLockedJewel] = useState(false)
   const [modalInfo, setModalInfo] = useState(false)
   const [modalLila, setModalLila] = useState(false)
   const [modalJeweler, setModalJeweler] = useState(false)
@@ -54,6 +54,38 @@ export default function Jeweler(props) {
       setCheckButtonTransferLock(false)
       setAddClassOpacityButton('check-button-transfer-lock')
     }
+  }
+
+  const modalCloseLockedJewel = () => {
+    setModalLockedJewel(false)
+  }
+
+  const modalCloseInfo = () => {
+    setModalInfo(false)
+  }
+
+  const modalCloseLila = () => {
+    setModalLila(false)
+  }
+
+  const modalCloseJeweler = () => {
+    setModalJeweler(false)
+  }
+
+  const modalCloseDeposit = () => {
+    setModalDeposit(false)
+  }
+
+  const modalCloseClaim = () => {
+    setModalClaim(false)
+  }
+
+  const modalCloseeWaitClaim = () => {
+    setModalWaitClaim(false)
+  }
+
+  const modalCloseWithdraw = () => {
+    setModalWithdraw(false)
   }
 
   return (
@@ -116,7 +148,7 @@ export default function Jeweler(props) {
                 />
                 <button
                   onClick={() => {
-                    setIsOpen(true)
+                    setModalLockedJewel(true)
                   }}
                   className="layout-btn btn-manage cursor-btn"
                 ></button>
@@ -155,9 +187,9 @@ export default function Jeweler(props) {
           </TransformWrapper>
           <Modal
             blockScrollOnMount={false}
-            isOpen={modalIsOpen}
+            isOpen={modalLockedJewel}
             onClose={() => {
-              setIsOpen(false)
+              modalCloseLockedJewel()
             }}
           >
             <ModalOverlay
@@ -294,7 +326,7 @@ export default function Jeweler(props) {
             blockScrollOnMount={false}
             isOpen={modalInfo}
             onClose={() => {
-              setModalInfo(false)
+              modalCloseInfo()
             }}
           >
             <ModalOverlay
@@ -358,7 +390,7 @@ export default function Jeweler(props) {
             blockScrollOnMount={false}
             isOpen={modalLila}
             onClose={() => {
-              setModalLila(false)
+              modalCloseLila()
             }}
           >
             <ModalOverlay
@@ -403,7 +435,7 @@ export default function Jeweler(props) {
             blockScrollOnMount={false}
             isOpen={modalJeweler}
             onClose={() => {
-              setModalJeweler(false)
+              modalCloseJeweler()
             }}
           >
             <ModalOverlay
@@ -516,7 +548,7 @@ export default function Jeweler(props) {
             blockScrollOnMount={false}
             isOpen={modalDeposit}
             onClose={() => {
-              setModalDeposit(false)
+              modalCloseDeposit()
             }}
           >
             <ModalOverlay
@@ -736,7 +768,7 @@ export default function Jeweler(props) {
             blockScrollOnMount={false}
             isOpen={modalClaim}
             onClose={() => {
-              setModalClaim(false)
+              modalCloseClaim()
             }}
           >
             <ModalOverlay
@@ -834,7 +866,7 @@ export default function Jeweler(props) {
             blockScrollOnMount={false}
             isOpen={modalWaitClaim}
             onClose={() => {
-              setModalWaitClaim(false)
+              modalCloseeWaitClaim()
             }}
           >
             <ModalOverlay
@@ -914,7 +946,7 @@ export default function Jeweler(props) {
             blockScrollOnMount={false}
             isOpen={modalWithdraw}
             onClose={() => {
-              setModalWithdraw(false)
+              modalCloseWithdraw()
             }}
           >
             <ModalOverlay
