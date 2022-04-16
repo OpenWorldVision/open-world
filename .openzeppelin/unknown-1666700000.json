@@ -1,0 +1,232 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0x54f1f65611319602FDbA4DD750eE524bFBFB23dE",
+    "txHash": "0xa1a30062314713ef0c2d142fafc90211a1d5b607bfdcc9d7cc2a14da3145fe91"
+  },
+  "proxies": [
+    {
+      "address": "0x696Fe083bB63c8788a3d498901be0E6A1c893Ff8",
+      "txHash": "0x0f245195fa29c9e00a317cd5841c3aeb86bd5c3e0b444b064396d1effa5f7936",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "c4bca6e205acfd59272968c6f8f363a452fac83c023b374be45171dd66e24be6": {
+      "address": "0x97399bBD83aFf0397F9165d269043FbbD4ED3Cb5",
+      "txHash": "0x89494692bf9b6ce9ae7a40bf32c5f908c429a5bab65598e456d3b5717fc09968",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)924_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "Profiles",
+            "label": "addressToIndex",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "Profile.sol:8"
+          },
+          {
+            "contract": "Profiles",
+            "label": "nameToIndex",
+            "type": "t_mapping(t_string_memory_ptr,t_uint256)",
+            "src": "Profile.sol:9"
+          },
+          {
+            "contract": "Profiles",
+            "label": "addresses",
+            "type": "t_array(t_address)dyn_storage",
+            "src": "Profile.sol:10"
+          },
+          {
+            "contract": "Profiles",
+            "label": "heroesNftContract",
+            "type": "t_contract(HeroCore)32",
+            "src": "Profile.sol:12"
+          },
+          {
+            "contract": "Profiles",
+            "label": "minLength",
+            "type": "t_uint8",
+            "src": "Profile.sol:14"
+          },
+          {
+            "contract": "Profiles",
+            "label": "maxLength",
+            "type": "t_uint8",
+            "src": "Profile.sol:15"
+          },
+          {
+            "contract": "Profiles",
+            "label": "maxPic",
+            "type": "t_uint8",
+            "src": "Profile.sol:16"
+          },
+          {
+            "contract": "Profiles",
+            "label": "profiles",
+            "type": "t_mapping(t_uint256,t_struct(Profile)113_storage)",
+            "src": "Profile.sol:36"
+          },
+          {
+            "contract": "Profiles",
+            "label": "points",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "Profile.sol:38"
+          }
+        ],
+        "types": {
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_string_memory_ptr,t_uint256)": {
+            "label": "mapping(string => uint256)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_contract(HeroCore)32": {
+            "label": "contract HeroCore"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_mapping(t_uint256,t_struct(Profile)113_storage)": {
+            "label": "mapping(uint256 => struct Profiles.Profile)"
+          },
+          "t_struct(Profile)113_storage": {
+            "label": "struct Profiles.Profile",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "owner",
+                "type": "t_address"
+              },
+              {
+                "label": "name",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "created",
+                "type": "t_uint64"
+              },
+              {
+                "label": "picId",
+                "type": "t_uint8"
+              },
+              {
+                "label": "heroId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "set",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)924_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)924_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)1954_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)1954_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)1689_storage"
+              }
+            ]
+          },
+          "t_struct(Set)1689_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    }
+  }
+}
