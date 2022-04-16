@@ -47,7 +47,7 @@ export default function Jeweler(props) {
   const [addClassOpacityButton, setAddClassOpacityButton] = useState('')
 
   const handleChangeInput = (e) => {
-    if (e.target.value === '') {
+    if (e.target.value !== 'SEND') {
       setCheckButtonTransferLock(true)
       setAddClassOpacityButton('')
     } else {
@@ -541,7 +541,7 @@ export default function Jeweler(props) {
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
-                Jeweler
+                Deposit
               </ModalHeader>
               <ModalCloseButton
                 style={{ boxShadow: 'none' }}
@@ -761,7 +761,7 @@ export default function Jeweler(props) {
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
-                Jeweler
+                Claim
               </ModalHeader>
               <ModalCloseButton
                 style={{ boxShadow: 'none' }}
@@ -939,7 +939,7 @@ export default function Jeweler(props) {
               }}
             >
               <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
-                Jeweler
+                Withdraw
               </ModalHeader>
               <ModalCloseButton
                 style={{ boxShadow: 'none' }}
@@ -966,7 +966,7 @@ export default function Jeweler(props) {
                           margin: 0,
                         }}
                       >
-                        Available to deposit: 0
+                        Available to withdraw: 0
                       </div>
                       <div
                         style={{

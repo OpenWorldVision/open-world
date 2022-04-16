@@ -325,6 +325,10 @@ img {
   }
 }
 
+.check-button-transfer-lock:hover {
+  background-color: #066c45;
+}
+
 @media (max-width: 768px) {
   .modal_body_head .title {
     font-size: 24px !important;
@@ -385,7 +389,8 @@ img {
   .input-deposit,
   .btn-deposit-container button,
   .btn-deposit-jewel,
-  .input-withdraw {
+  .input-withdraw,
+  .btn-enter-mount {
     font-size: 12px !important;
   }
 
@@ -393,7 +398,8 @@ img {
     width: 18px !important;
   }
 
-  .btn-deposit-container button {
+  .btn-deposit-container button,
+  .btn-enter-mount {
     padding: 5px !important;
   }
 
@@ -401,8 +407,7 @@ img {
     top: 0 !important;
   }
 
-  .btn-claim-jeweler,
-  .btn-enter-mount {
+  .btn-claim-jeweler {
     margin-top: 10px !important;
     padding: 0 !important;
     font-size: 20px !important;
