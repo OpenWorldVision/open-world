@@ -17,7 +17,7 @@ export default function Alchemist() {
   return (
     <AlchemistPage>
       <div>
-        <div className="container-alchemist">
+        <div className="container_alchemist">
           <TransformWrapper
             maxScale={2}
             minScale={0.25}
@@ -28,7 +28,7 @@ export default function Alchemist() {
             centerOnInit={true}
           >
             <TransformComponent>
-              <div className="alchemist container transform-component">
+              <div className="alchemist container">
                 <AlchemistBgAnimate />
                 <HeroAlchemist />
                 <AlchemistBtnAnimate
@@ -78,7 +78,7 @@ export default function Alchemist() {
 }
 
 const AlchemistPage = styled.div({
-  '.container-alchemist': {
+  '.container_alchemist': {
     backgroundColor: '#131313',
     height: '100vh',
     width: '100vw',

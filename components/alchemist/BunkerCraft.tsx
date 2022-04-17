@@ -41,13 +41,13 @@ export default function BunkerCraft() {
             <img src="/images/alchemist/gold-bag.png" alt="pocket-gold" />
             <img src="/images/alchemist/gold-pile.png" alt="gold" />
           </div>
-          <div className={style.Gold}>0 Gold</div>
+          <div className={style.gold}>0 Gold</div>
         </div>
       </div>
-      <div className={style.BunkerItemContainer}>
+      <div className={style.bunkerItemContainer}>
         {Arraytest.map((item, index) => {
           return (
-            <div key={index} className={style.BunkerItem}>
+            <div key={index} className={style.bunkerItem}>
               <div
                 className={`${style.currentGold} ${style.sizeBackgroundItem}`}
               ></div>

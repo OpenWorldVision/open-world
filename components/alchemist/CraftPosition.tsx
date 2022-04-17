@@ -41,7 +41,7 @@ export default function CraftPotionsContainer() {
                   style.craftItem
                 } ${
                   checkItemCraftSelect === item.codeName &&
-                  style.ItemCraftSelect
+                  style.itemCraftSelect
                 } cursor-btn`}
               >
                 <div className={`${style.craftItemBgContainer}`}>
@@ -53,15 +53,15 @@ export default function CraftPotionsContainer() {
         </div>
         <CraftItemSelected craftItemSelected={itemCraftSelect} />
         <div>
-          <div className={style.CraftItemQuantitySelected}>
+          <div className={style.craftItemQuantitySelected}>
             <button
               onClick={handlePrevInput}
-              className={`${style.BtnQuantityCraft}`}
+              className={`${style.btnQuantityCraft}`}
             >
               -
             </button>
             <input
-              className={`${style.InputQuantitySelectCraft}`}
+              className={`${style.inputQuantitySelectCraft}`}
               type="text"
               pattern="[0-9.]+"
               placeholder="0"
@@ -69,23 +69,23 @@ export default function CraftPotionsContainer() {
             />
             <button
               onClick={handleDecInput}
-              className={`${style.BtnQuantityCraft}`}
+              className={`${style.btnQuantityCraft}`}
             >
               +
             </button>
           </div>
-          <button className={`${style.BtnMaxQuantitySelect} cursor-btn`}>
+          <button className={`${style.btnMaxQuantitySelect} cursor-btn`}>
             max
           </button>
         </div>
         <div style={{ marginTop: 10 }}>
-          <div className={style.Ingredients}>Ingredients</div>
+          <div className={style.ingredients}>Ingredients</div>
           {itemCraftSelect && (
             <CraftItemApproval craftItemSelected={itemCraftSelect} />
           )}
         </div>
-        <div className={`${style.FancyButton}`}>
-          <button disabled className={`${style.DisabledButton} cursor-btn`}>
+        <div className={`${style.fancyButton}`}>
+          <button disabled className={`${style.disabledButton} cursor-btn`}>
             CRAFT
           </button>
         </div>

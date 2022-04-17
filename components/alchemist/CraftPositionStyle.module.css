@@ -98,19 +98,19 @@
   background-color: #daad82;
 }
 
-.ItemCraftSelect {
+.itemCraftSelect {
   opacity: 1;
   background-color: #daad82;
 }
 
-.CraftItemQuantitySelected {
+.craftItemQuantitySelected {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
 }
 
-.BtnQuantityCraft {
+.btnQuantityCraft {
   width: 20px;
   height: 20px;
   border: 1px solid #3e1f05;
@@ -121,7 +121,7 @@
   cursor: url(/images/jeweler/default-cursor.png), auto;
 }
 
-.InputQuantitySelectCraft {
+.inputQuantitySelectCraft {
   background: #f9c588;
   border: 2px solid #3e1f05;
   color: #3e1f05;
@@ -133,11 +133,11 @@
   margin: 0 5px;
 }
 
-.InputQuantitySelectCraft::placeholder {
+.inputQuantitySelectCraft::placeholder {
   color: #3e1f05;
 }
 
-.BtnMaxQuantitySelect {
+.btnMaxQuantitySelect {
   max-width: 50px;
   align-self: center;
   padding: 2px 6px;
@@ -152,11 +152,11 @@
   margin: 10px auto;
 }
 
-.Ingredients {
+.ingredients {
   text-align: center;
 }
 
-.FancyButton {
+.fancyButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -191,14 +191,14 @@
   opacity: 0.4;
 }
 
-.DisabledButton {
+.disabledButton {
   background: none !important;
   cursor: url(/images/CursorDefault.png), auto !important;
   box-shadow: unset;
 }
 
 @media (max-width: 768px) {
-  .FancyButton {
+  .fancyButton {
     transform: scale(0.85);
     width: 230.35px;
     height: 64.6px;

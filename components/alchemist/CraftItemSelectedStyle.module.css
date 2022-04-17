@@ -1,9 +1,9 @@
-.CraftItemSelectedContainer {
+.craftItemSelectedContainer {
   margin-top: 10px;
   position: relative;
 }
 
-.CraftItemSelectedName {
+.craftItemSelectedName {
   color: #3e1f05;
 }
 
@@ -101,7 +101,7 @@
   opacity: 0.6;
 }
 
-.ModalPopoverContent {
+.modalPopoverContent {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -110,29 +110,29 @@
   z-index: 4;
 }
 
-.PopoverContent {
+.popoverContent {
   position: absolute !important;
   width: 250px !important;
-  height: 120px;
+  /* height: 150px; */
   top: -100px;
   left: -80px;
   background-color: rgba(0, 0, 0, 0.9) !important;
   border: none !important;
 }
 
-.PopoverContent:focus {
+.popoverContent:focus {
   outline: none !important;
   box-shadow: none !important;
 }
 
-.CraftName {
+.craftName {
   text-align: center;
   color: #fff;
   margin-bottom: 5px;
 }
 
-.Description {
-  font-size: 13px;
+.description {
+  font-size: 14px;
   color: #fff;
   text-align: center;
 }

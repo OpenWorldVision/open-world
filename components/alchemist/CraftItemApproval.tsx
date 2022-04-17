@@ -24,10 +24,10 @@ function CraftItemApproval(props: Props) {
 
   return (
     <>
-      <div className={style.CraftItemApprovalContainer}>
+      <div className={style.craftItemApprovalContainer}>
         {craftItemSelected['craftItemApproval']?.map((item, index) => {
           return (
-            <div key={index} className={style.ItemApprovalContainer}>
+            <div key={index} className={style.itemApprovalContainer}>
               <div
                 onClick={() => {
                   handleSetIsEnabled(true),
@@ -37,24 +37,24 @@ function CraftItemApproval(props: Props) {
                 className={`${style.bgItem} ${style.sizeBackgroundItem} ${style.craftItem}`}
               >
                 <div
-                  className={`${style.craftItemBgContainer} ${style.BgOpacity}`}
+                  className={`${style.craftItemBgContainer} ${style.bgOpacity}`}
                 >
                   <img src={item.img} alt={item.name} />
-                  <div className={style.CraftItemApprovalQuantity}>
+                  <div className={style.craftItemApprovalQuantity}>
                     {item.quantity}
                   </div>
                 </div>
               </div>
               {checkItemCraftApproval === item.name && (
                 <Popover trigger="hover" isOpen={isEnabled} placement="bottom">
-                  <PopoverContent className={style.PopoverContent}>
+                  <PopoverContent className={style.popoverContent}>
                     <PopoverBody>
-                      <div className={style.CraftName}>{item['name']}</div>
-                      <div className={style.Description}>
+                      <div className={style.craftName}>{item['name']}</div>
+                      <div className={style.description}>
                         {item['description']}
                       </div>
-                      <div className={style.test}>
-                        <button className={`${style.BtnAddToken} cursor-btn`}>
+                      <div className={style.btnAddTokenContainer}>
+                        <button className={`${style.btnAddToken} cursor-btn`}>
                           ADD TOKEN
                         </button>
                       </div>
@@ -67,11 +67,11 @@ function CraftItemApproval(props: Props) {
                   handleSetIsEnabled(false), handleSetIsEnabledModal('none')
                 }}
                 style={{ display: isEnabledModal }}
-                className={style.ModalPopoverContent}
+                className={style.modalPopoverContent}
               >
                 {isEnabledModal}
               </div>
-              <div className={style.ScraftApprovalMissing}>MISSING</div>
+              <div className={style.scraftApprovalMissing}>MISSING</div>
             </div>
           )
         })}

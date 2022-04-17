@@ -21,8 +21,8 @@ export default function CraftItemSelected(props: Props) {
   }
 
   return (
-    <div className={style.CraftItemSelectedContainer}>
-      <div className={style.CraftItemSelectedName}>
+    <div className={style.craftItemSelectedContainer}>
+      <div className={style.craftItemSelectedName}>
         {craftItemSelected['name']}
       </div>
       <div
@@ -41,12 +41,12 @@ export default function CraftItemSelected(props: Props) {
             handleSetIsEnabled(false), handleSetIsEnabledModal('none')
           }}
           style={{ display: isEnabledModal }}
-          className={style.ModalPopoverContent}
+          className={style.modalPopoverContent}
         ></div>
-        <PopoverContent className={style.PopoverContent}>
+        <PopoverContent className={style.popoverContent}>
           <PopoverBody>
-            <div className={style.CraftName}>{craftItemSelected['name']}</div>
-            <div className={style.Description}>
+            <div className={style.craftName}>{craftItemSelected['name']}</div>
+            <div className={style.description}>
               {craftItemSelected['description']}
             </div>
           </PopoverBody>

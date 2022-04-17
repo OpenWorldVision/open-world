@@ -71,7 +71,7 @@
     margin-bottom: 20px;
   }
 
-  .ScrollContainer {
+  .scrollContainer {
     max-height: 800px;
     height: 90vh;
     position: relative;
@@ -79,15 +79,15 @@
     position: relative;
   }
 
-  .ScrollContainer::-webkit-scrollbar {
+  .scrollContainer::-webkit-scrollbar {
     width: 20px;
   }
 
-  .ScrollContainer::-webkit-scrollbar-track {
+  .scrollContainer::-webkit-scrollbar-track {
     background-color: transparent;
   }
 
-  .ScrollContainer::-webkit-scrollbar-thumb {
+  .scrollContainer::-webkit-scrollbar-thumb {
     background-color: #282738;
     border-radius: 20px;
     border: 6px solid transparent;
@@ -105,7 +105,7 @@
     margin-bottom: 20px;
   }
 
-  .ScrollContainer {
+  .scrollContainer {
     max-height: 800px;
     height: 90vh;
     position: relative;

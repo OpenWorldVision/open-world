@@ -1,10 +1,10 @@
-.CraftItemApprovalContainer {
+.craftItemApprovalContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.ItemApprovalContainer {
+.itemApprovalContainer {
   position: relative;
   margin-bottom: 20px;
 }
@@ -105,11 +105,11 @@
   align-items: center;
 }
 
-.BgOpacity {
+.bgOpacity {
   opacity: 0.6;
 }
 
-.CraftItemApprovalQuantity {
+.craftItemApprovalQuantity {
   position: absolute;
   bottom: 4px;
   right: 6px;
@@ -121,7 +121,7 @@
   color: red;
 }
 
-.ScraftApprovalMissing {
+.scraftApprovalMissing {
   position: absolute;
   left: 12%;
   top: 100%;
@@ -137,7 +137,7 @@
   text-transform: uppercase;
 }
 
-.ModalPopoverContent {
+.modalPopoverContent {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -146,7 +146,7 @@
   z-index: 4;
 }
 
-.PopoverContent {
+.popoverContent {
   position: absolute !important;
   width: 200px !important;
   height: 150px;
@@ -156,25 +156,25 @@
   border: none !important;
 }
 
-.PopoverContent:focus {
+.popoverContent:focus {
   outline: none !important;
   box-shadow: none !important;
 }
 
-.CraftName {
+.craftName {
   text-align: center;
   color: #fff;
   margin-bottom: 5px;
 }
 
-.Description {
+.description {
   font-size: 13px;
   color: #fff;
   text-align: center;
   height: 60px;
 }
 
-.BtnAddToken {
+.btnAddToken {
   border: 1px solid #fac05d;
   color: #fac05d;
   border-radius: 8px;
@@ -188,23 +188,23 @@
   position: relative;
 }
 
-.BtnAddToken {
+.btnAddToken {
   transition: 0.4s;
 }
 
-.test:hover .BtnAddToken:after {
+.tebtnAddTokenContainerst:hover .btnAddToken:after {
   position: absolute;
   opacity: 0;
   top: 0;
   transition: 0.5s;
 }
 
-.test:hover .BtnAddToken {
+.btnAddTokenContainer:hover .btnAddToken {
   margin-top: -3px;
   background-color: #fac05d;
   color: #000;
 }
 
-.test:hover .BtnAddToken:after {
+.btnAddTokenContainer:hover .btnAddToken:after {
   opacity: 1;
 }

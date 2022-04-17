@@ -18,7 +18,7 @@ export default function CraftPotionsContainer(props: Props) {
           isOpen ? style.active : ''
         }`}
       >
-        <div className={style.ScrollContainer}>
+        <div className={style.scrollContainer}>
           <div className={style.modalContent}>
             <div className={style.sizeBgContent}>
               <div className={`${style.filterExpanded} game-border basic`}>
