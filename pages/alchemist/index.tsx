@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 
-import AlchemistBgAnimate from '../../components/alchemist/AlchemistBgAnimate'
+import AlchemistBgAnimate from '../../components/alchemist/alchemistBgAnimate'
 import HeroAlchemist from '../../components/alchemist/HeroAlchemist'
 import AlchemistBtnAnimate from '../../components/alchemist/AlchemistBtnAnimate'
 import AlchemistModal from '../../components/alchemist/AlchemistModal'
