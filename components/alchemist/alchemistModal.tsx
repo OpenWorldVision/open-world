@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState } from 'react'
-import style from './AlchemistModalStyle.module.css'
+import style from './alchemistModalStyle.module.css'
 import CraftPotionsContainer from './CraftPotionsContainer'
 
 type Props = {
