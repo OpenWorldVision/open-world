@@ -1,8 +1,8 @@
-import AlchemistBgAnimate from './AlchemistBgAnimate'
-import AlchemistBtnAnimate from './AlchemistBtnAnimate'
-import HeroAlchemist from './HeroAlchemist'
+import AlchemistBgAnimate from './alchemistBgAnimate'
+import AlchemistBtnAnimate from './alchemistBtnAnimate'
+import HeroAlchemist from './heroAlchemist'
 import HeroArnold from './HeroArnold'
-import AlchemistModal from './AlchemistModal'
+import AlchemistModal from './alchemistModal'
 import ArnoldModal from './ArnoldModal'
 
 export {
