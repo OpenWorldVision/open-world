@@ -32,12 +32,6 @@ img {
   cursor: url(/images/jeweler/default-cursor.png), auto;
 }
 
-.chakra-modal__content {
-}
-
-.chakra-modal__body {
-}
-
 .modal_body_content {
   padding: 1.8rem 1.8rem;
 }
@@ -438,7 +432,7 @@ img {
 }
 
 .cursor-btn {
-  cursor: url(/images/jeweler/click-cursor-2x.png), auto;
+  cursor: url(/images/click-cursor-2x.png), auto !important;
 }
 
 .layout-btn {
