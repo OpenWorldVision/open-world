@@ -18,20 +18,20 @@ export default function HeroAlchemist() {
 const HeroAlchemistStyle = styled.div({
   '.hero-alchemist': {
     position: 'absolute',
-    left: '484.176px',
-    top: '251.672px',
-    width: '77.8723px',
+    left: '465.176px',
+    top: '275.672px',
+    width: '120.8723px',
     height: '246.101px',
     zIndex: '188',
     overflow: 'hidden',
     img: {
       position: 'absolute',
-      minWidth: '5708.93px',
-      height: '251.571px',
+      minWidth: '8708.93px',
+      height: '201.571px',
       imageRendering: 'pixelated',
       transform: 'scale(1, 1)',
       animation:
-        '8.5s steps(71) 0s infinite normal none running animate-hero-alchemist',
+        '10.5s steps(71) 0s infinite normal none running animate-hero-alchemist',
     },
     '@keyframes animate-hero-alchemist': {
       '0%': {
@@ -39,7 +39,7 @@ const HeroAlchemistStyle = styled.div({
         top: 0,
       },
       '100%': {
-        left: '-5708.93px',
+        left: '-8708.93px',
         top: 0,
       },
     },

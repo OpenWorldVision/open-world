@@ -149,9 +149,9 @@
 .popoverContent {
   position: absolute !important;
   width: 200px !important;
-  height: 150px;
+  /* height: 150px; */
   top: -130px;
-  left: -50px;
+  left: -70px;
   background-color: rgba(0, 0, 0, 0.9) !important;
   border: none !important;
 }
@@ -171,7 +171,8 @@
   font-size: 13px;
   color: #fff;
   text-align: center;
-  height: 60px;
+  /* height: 60px; */
+  margin-bottom: 15px;
 }
 
 .btnAddToken {

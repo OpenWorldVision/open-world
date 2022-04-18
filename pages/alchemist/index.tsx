@@ -1,4 +1,7 @@
+import { VStack } from '@chakra-ui/react'
+import Layout, { siteTitle } from '@components/layout'
 import styled from '@emotion/styled'
+import Head from 'next/head'
 import { useState } from 'react'
 
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
@@ -17,65 +20,72 @@ export default function Alchemist() {
   const [isArnoldModalOpen, setIsArnoldModalOpen] = useState(false)
 
   return (
-    <AlchemistPage>
-      <div>
-        <div className="container_alchemist">
-          <TransformWrapper
-            maxScale={2}
-            minScale={0.25}
-            initialScale={0.8}
-            centerZoomedOut={true}
-            initialPositionX={0}
-            initialPositionY={0}
-            centerOnInit={true}
-          >
-            <TransformComponent>
-              <div className="alchemist container">
-                <AlchemistBgAnimate />
-                <HeroAlchemist />
-                <AlchemistBtnAnimate
-                  top={242.868}
-                  left={518.216}
-                  contentButton="Alchemist"
-                />
-                <HeroArnold />
-                <button
-                  onClick={() => {
-                    setIsAlchemistModalOpen(true)
-                  }}
-                  className="layout-btn btn-alchemist cursor-btn"
-                ></button>
-                <button
-                  onClick={() => {
-                    setIsArnoldModalOpen(true)
-                  }}
-                  className="layout-btn btn-arnold cursor-btn"
-                ></button>
-              </div>
-            </TransformComponent>
-          </TransformWrapper>
-          <AlchemistModal
-            isOpen={isAlchemistModalOpen}
-            toggleModal={() => setIsAlchemistModalOpen(false)}
-            fancyTitle="Alchemist"
-            height={264}
-            width={700}
-            npcDialogue="Double bubble, toil...wait, no. That`s not right. Grumble, grumble, toil and trouble? No! What do you need? Can you remember the incantation?"
-            npcName="Herbert"
-          />
-          <ArnoldModal
-            isOpen={isArnoldModalOpen}
-            toggleModal={() => setIsArnoldModalOpen(false)}
-            fancyTitle="Alchemist Assistance"
-            height={264}
-            width={700}
-            npcDialogue="Potion making requires attention to detail, something I always remind Herbert of every time he blows off his beard! Perhaps if he was a little more organized he`d be able to see the warning labels?"
-            disabled={true}
-            npcName="Arnold"
-          />
-        </div>
-      </div>
-    </AlchemistPage>
+    <Layout home>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
+      <VStack>
+        <AlchemistPage>
+          <div>
+            <div className="container_alchemist">
+              <TransformWrapper
+                maxScale={2}
+                minScale={0.25}
+                initialScale={0.8}
+                centerZoomedOut={true}
+                initialPositionX={0}
+                initialPositionY={0}
+                centerOnInit={true}
+              >
+                <TransformComponent>
+                  <div className="alchemist container">
+                    <AlchemistBgAnimate />
+                    <HeroAlchemist />
+                    <AlchemistBtnAnimate
+                      top={242.868}
+                      left={518.216}
+                      contentButton="Alchemist"
+                    />
+                    <HeroArnold />
+                    <button
+                      onClick={() => {
+                        setIsAlchemistModalOpen(true)
+                      }}
+                      className="layout-btn btn-alchemist cursor-btn"
+                    ></button>
+                    <button
+                      onClick={() => {
+                        setIsArnoldModalOpen(true)
+                      }}
+                      className="layout-btn btn-arnold cursor-btn"
+                    ></button>
+                  </div>
+                </TransformComponent>
+              </TransformWrapper>
+              <AlchemistModal
+                isOpen={isAlchemistModalOpen}
+                toggleModal={() => setIsAlchemistModalOpen(false)}
+                fancyTitle="Alchemist"
+                height={264}
+                width={700}
+                npcDialogue="Double bubble, toil...wait, no. That`s not right. Grumble, grumble, toil and trouble? No! What do you need? Can you remember the incantation?"
+                npcName="Herbert"
+              />
+              <ArnoldModal
+                isOpen={isArnoldModalOpen}
+                toggleModal={() => setIsArnoldModalOpen(false)}
+                fancyTitle="Alchemist Assistance"
+                height={264}
+                width={700}
+                npcDialogue="Potion making requires attention to detail, something I always remind Herbert of every time he blows off his beard! Perhaps if he was a little more organized he`d be able to see the warning labels?"
+                disabled={true}
+                npcName="Arnold"
+              />
+            </div>
+          </div>
+        </AlchemistPage>
+      </VStack>
+    </Layout>
   )
 }
 

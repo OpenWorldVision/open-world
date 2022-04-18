@@ -381,7 +381,8 @@ export const craftData: Array<CraftItem> = [
         img: '/images/alchemist/craft/approval/sailfish.png',
         name: 'Sailfish',
         quantity: 2,
-        description: '',
+        description:
+          'Its dorsal fin resembles a sail, and it’s an incredibly fast swimmer.',
       },
       {
         img: '/images/alchemist/craft/approval/swift-thistle.png',
