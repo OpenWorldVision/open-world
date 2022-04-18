@@ -34,4 +34,10 @@ const BtnWorldMapStyle = styled.div({
       'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5))',
     cursor: 'url(/images/jeweler/default-cursor.png), auto',
   },
+  '@media(max-width: 768px)': {
+    '.bordered-box-thin': {
+      padding: '0.25rem',
+      bottom: '100px',
+    },
+  },
 })
