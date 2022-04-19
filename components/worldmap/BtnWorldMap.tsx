@@ -26,7 +26,7 @@ const BtnWorldMapStyle = styled.div({
   },
   '.bordered-box-thin': {
     position: 'fixed',
-    bottom: '200px',
+    bottom: '25px',
     left: '20px',
     border: '1px solid rgb(76, 62, 35)',
     padding: '1rem',
@@ -37,7 +37,7 @@ const BtnWorldMapStyle = styled.div({
   '@media(max-width: 768px)': {
     '.bordered-box-thin': {
       padding: '0.25rem',
-      bottom: '100px',
+      left: '10px',
     },
   },
 })
