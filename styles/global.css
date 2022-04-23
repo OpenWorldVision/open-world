@@ -29,7 +29,7 @@ img {
 }
 
 .chakra-modal__content-container {
-  cursor: url(/images/default-cursor.png), auto;
+  cursor: url(/images/jeweler/default-cursor.png), auto;
 }
 
 .chakra-modal__content {
@@ -325,6 +325,10 @@ img {
   }
 }
 
+.check-button-transfer-lock:hover {
+  background-color: #066c45;
+}
+
 @media (max-width: 768px) {
   .modal_body_head .title {
     font-size: 24px !important;
@@ -385,24 +389,25 @@ img {
   .input-deposit,
   .btn-deposit-container button,
   .btn-deposit-jewel,
-  .input-withdraw {
-    font-size: 14px !important;
+  .input-withdraw,
+  .btn-enter-mount {
+    font-size: 12px !important;
   }
 
   .btn-deposit-jewel img {
     width: 18px !important;
   }
 
-  .btn-deposit-container button {
-    padding: 10px !important;
+  .btn-deposit-container button,
+  .btn-enter-mount {
+    padding: 5px !important;
   }
 
   .btn-turn-off-modal {
     top: 0 !important;
   }
 
-  .btn-claim-jeweler,
-  .btn-enter-mount {
+  .btn-claim-jeweler {
     margin-top: 10px !important;
     padding: 0 !important;
     font-size: 20px !important;
@@ -420,10 +425,19 @@ img {
     width: 200px;
     font-size: 16px !important;
   }
+
+  .btn-deposit-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn-deposit-container button:last-child {
+    margin-top: 20px;
+  }
 }
 
 .cursor-btn {
-  cursor: url(/images/click-cursor-2x.png), auto;
+  cursor: url(/images/jeweler/click-cursor-2x.png), auto;
 }
 
 .layout-btn {
