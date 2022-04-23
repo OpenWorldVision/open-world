@@ -1,0 +1,385 @@
+.questOverlay {
+  z-index: 1;
+  opacity: 0;
+  will-change: opacity;
+  transition: all 0.5s linear;
+  overflow-x: hidden;
+}
+
+.questOverlay img {
+  width: 100%;
+}
+
+.questOverlay.active {
+  z-index: 2000;
+  opacity: 1;
+  will-change: opacity;
+  transition: all 0.5s linear;
+}
+
+.questContainer {
+  width: 100vw;
+  height: 100vh;
+  padding-top: 260px;
+  overflow-x: hidden;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  font-family: 'Lora', Georgia, serif;
+}
+
+.questContainer::-webkit-scrollbar {
+  width: 6px;
+  padding: 3px 0;
+}
+
+.questBg {
+  position: relative;
+  width: 796px;
+  max-width: 90%;
+  margin: 100px auto;
+  background-image: url('/images/professions/quests/quest-bg.png');
+  background-repeat: repeat-y;
+  background-size: 100%;
+  z-index: 1;
+}
+
+.questBanner {
+  max-width: 93.84%;
+  margin: 5.277% auto 0;
+  text-align: center;
+  position: relative;
+}
+
+.questBanner img {
+  width: 100%;
+}
+
+.questBanner h2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: 10.2%;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-align: center;
+  color: #004548;
+  text-transform: capitalize;
+}
+
+.closeQuestBtn {
+  position: absolute;
+  display: block;
+  right: 8.8%;
+  top: 45%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.questHelpContainer {
+  position: absolute;
+  left: 9%;
+  top: 45%;
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+}
+
+.questHelpBtn {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.questHelp {
+  position: relative;
+  bottom: 0;
+  left: 50%;
+  display: block;
+  width: 500px;
+  padding: 24px;
+  font-size: 12px;
+  text-align: left;
+  background-color: #ffe3bd;
+  transform: translate(-50%, 2%);
+  justify-content: center;
+  align-items: center;
+  min-height: 64px;
+  border-radius: 8px 2px 8px 2px;
+  background-image: url('/images/borders/inventory-itemFrameLeft.png'),
+    url('/images/borders/inventory-itemFrameRight.png');
+  background-position: 0 0, 100% 0;
+  background-repeat: repeat-y, repeat-y;
+  border: 0;
+  color: #fff;
+  outline: none;
+  image-rendering: pixelated;
+  color: #3e1f05;
+}
+
+.questHelp::before,
+.questHelp::after {
+  content: '';
+  position: absolute;
+  image-rendering: pixelated;
+  height: calc(100% + 6px);
+  pointer-events: none;
+  display: block;
+}
+
+.questHelp::before {
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 6px);
+  border-radius: 8px 2px 8px 2px;
+  background-image: url('/images/borders/inventory-itemFrameTop.png'),
+    url('/images/borders/inventory-itemFrameBtm.png');
+  background-position: top, bottom;
+  background-repeat: repeat-x, repeat-x;
+}
+
+.questHelp::after {
+  top: -3px;
+  left: 0;
+  width: 100%;
+  background-image: url('/images/borders/inventory-itemFrameTopLeft.png'),
+    url('/images/borders/inventory-itemFrameTopRight.png'),
+    url('/images/borders/inventory-itemFrameBtmLeft.png'),
+    url('/images/borders/inventory-itemFrameBtmRight.png');
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.questLevel {
+  width: 189px;
+  height: 51px;
+  position: relative;
+  margin: -45px auto 10px;
+  background-image: url('/images/professions/quests/quest-level.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 20px;
+  color: #3e1f05;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.questAnimateImgWrap,
+.questDescriptionWrap {
+  width: 85.427%;
+  position: relative;
+  margin: 0 auto;
+}
+
+.questAnimateImgWrap img:first-child {
+  position: relative;
+  z-index: 2;
+}
+
+.questAnimateImgWrap img:nth-child(2) {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.questDescription {
+  position: relative;
+  width: 100%;
+}
+
+.questDescription::before,
+.questDescription::after {
+  content: '';
+  position: absolute;
+  height: calc(100% + 20px);
+  display: block;
+}
+
+.questDescription::before {
+  background-image: url('/images/professions/quests/quest-border-cornerBtmLeft.png'),
+    url('/images/professions/quests/quest-border-cornerBtmRight.png'),
+    url('/images/professions/quests/quest-border-cornerTopLeft.png'),
+    url('/images/professions/quests/quest-border-cornerTopRight.png');
+  background-repeat: no-repeat;
+  background-position: 0 100%, 100% 100%, 0 0, 100% 0;
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  z-index: 2;
+}
+
+.questDescription::after {
+  background-image: url('/images/professions/quests/quest-border-top.png'),
+    url('/images/professions/quests/quest-border-bottom.png');
+  background-repeat: repeat-x, repeat-x;
+  background-position: 0 0, 0 100%;
+  width: calc(100% - 168px);
+  left: 50%;
+  transform: translateX(-50%);
+  top: -10px;
+  z-index: 1;
+}
+
+.questDesContent {
+  background-color: #ffe0b7;
+  background-image: url('/images/professions/quests/quest-border-left.png'),
+    url('/images/professions/quests/quest-border-right.png');
+  background-repeat: repeat-y, repeat-y;
+  background-position: 0 0, 100% 0;
+  position: relative;
+  width: calc(100% - 4px);
+  padding: 6% 8%;
+  margin: 10px auto;
+  color: #3e1f05;
+}
+
+.questDesContent h4 {
+  margin: 0 0 2.802%;
+  font-size: 24px;
+  line-height: 1.29;
+  font-weight: 600;
+  color: #3e1f05;
+  position: relative;
+  z-index: 2;
+}
+
+.questDesContent p {
+  line-height: 1.5;
+  margin: 18px 0;
+  font-size: 18px;
+  color: #3e1f05;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 767px) {
+  .questContainer {
+    padding-top: 375px;
+  }
+
+  .questBg {
+    position: absolute;
+    max-width: 100%;
+  }
+
+  .questBanner {
+    max-width: 200%;
+    width: 115%;
+    margin-left: -7%;
+  }
+
+  .questBanner h2 {
+    font-size: 16px;
+  }
+
+  .questLevel {
+    margin-top: -20px;
+  }
+
+  .questHelp {
+    transform: translateY(-5%);
+    left: 0;
+    width: 300px;
+  }
+
+  .questAnimateImgWrap {
+    width: 130%;
+    margin: 0 0 0 -15%;
+  }
+}
+
+.questTabs {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.questTabs div {
+  border-color: transparent !important;
+}
+
+.questTab {
+  margin: 0;
+  font-family: 'Poppins', Helvetica Neue, sans-serif;
+  font-size: 18px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-style: none !important;
+  color: #3e1f05 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.questTab[aria-selected='true'] {
+  border-bottom-style: solid !important;
+  border-color: currentColor !important;
+}
+
+.questTab[aria-selected='false'] {
+  cursor: not-allowed !important;
+}
+
+.questTab:focus,
+.questTab[data-focus] {
+  box-shadow: none !important;
+  background-color: none;
+}
+
+.beginQuestPanel {
+  text-align: center;
+}
+
+.beginQuestPanel p {
+  margin-bottom: 1.509%;
+  font-size: 24px;
+  letter-spacing: 0;
+  font-family: 'Lora', Georgia, serif;
+  color: #3e1f05;
+}
+
+.heroSelectBtnWrap {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5em;
+  flex-flow: row wrap;
+}
+
+.questBeginBtnWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 20px;
+  gap: 20px;
+  margin-bottom: -50px;
+}
+
+.questBeginBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 271px;
+  height: 76px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0.5em;
+  background-image: url('/images/professions/quests/questscroll-button-begin.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  font-family: 'Poppins', Helvetica Neue, sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #a5a485;
+}

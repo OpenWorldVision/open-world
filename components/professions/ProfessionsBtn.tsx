@@ -1,10 +1,10 @@
-import style from './castleBtn.module.css'
+import style from './professionsBtn.module.css'
 
 type Props = {
   title: string
 }
 
-export default function CastleBtn(props: Props) {
+export default function ProfessionsBtn(props: Props) {
   const { title } = props
 
   return (
