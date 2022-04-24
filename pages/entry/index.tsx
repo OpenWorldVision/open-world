@@ -26,25 +26,22 @@ const Entry = () => {
   useEffect(() => {
     try {
       const connectWallet = async () => {
-        if (window.ethereum && window.ethereum.isMetaMask) {
+        if (window.ethereum) {
           const chainId = window?.ethereum?.chainId
           setNameOfChain(chainName[chainId] || '')
-          window.ethereum
-            .request({ method: 'eth_requestAccounts' })
-            .then(() => {
-              if (
-                chainId !== '0x38' &&
-                process.env.environment === 'production'
-              ) {
+          if (chainId !== '0x63564c40' || chainId !== '0x6357d2e0') {
+            window.ethereum
+              .request({ method: 'eth_requestAccounts' })
+              .then(() => {
                 window.ethereum.request({
                   method: 'wallet_switchEthereumChain',
-                  params: [{ chainId: '0x38' }],
+                  params: [{ chainId: '0x63564c40' }],
                 })
-              }
-            })
-            .catch(() => {
-              // setErrorMessage(error.message);
-            })
+              })
+              .catch(() => {
+                // setErrorMessage(error.message);
+              })
+          }
         }
       }
       connectWallet()
