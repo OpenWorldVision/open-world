@@ -22,6 +22,17 @@ function CraftItemApproval(props: Props) {
     setIsEnabledModal(value)
   }
 
+  const handleTurnOffModal = () => {
+    handleSetIsEnabled(false)
+    handleSetIsEnabledModal('none')
+  }
+
+  const handleTurnOnModal = (name) => {
+    handleSetIsEnabled(true)
+    handleSetIsEnabledModal('block')
+    setCheckItemCraftApproval(name)
+  }
+
   return (
     <>
       <div className={style.craftItemApprovalContainer}>
@@ -30,9 +41,7 @@ function CraftItemApproval(props: Props) {
             <div key={index} className={style.itemApprovalContainer}>
               <div
                 onClick={() => {
-                  handleSetIsEnabled(true),
-                    handleSetIsEnabledModal('block'),
-                    setCheckItemCraftApproval(item.name)
+                  handleTurnOnModal(item.name)
                 }}
                 className={`${style.bgItem} ${style.sizeBackgroundItem} ${style.craftItem}`}
               >
@@ -63,14 +72,10 @@ function CraftItemApproval(props: Props) {
                 </Popover>
               )}
               <div
-                onClick={() => {
-                  handleSetIsEnabled(false), handleSetIsEnabledModal('none')
-                }}
+                onClick={handleTurnOffModal}
                 style={{ display: isEnabledModal }}
                 className={style.modalPopoverContent}
-              >
-                {isEnabledModal}
-              </div>
+              ></div>
               <div className={style.scraftApprovalMissing}>MISSING</div>
             </div>
           )

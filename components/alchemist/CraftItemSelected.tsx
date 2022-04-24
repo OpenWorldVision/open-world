@@ -20,6 +20,11 @@ export default function CraftItemSelected(props: Props) {
     setIsEnabledModal(value)
   }
 
+  const handleTurnOffModal = () => {
+    handleSetIsEnabled(false)
+    handleSetIsEnabledModal('none')
+  }
+
   return (
     <div className={style.craftItemSelectedContainer}>
       <div className={style.craftItemSelectedName}>
@@ -37,9 +42,7 @@ export default function CraftItemSelected(props: Props) {
       </div>
       <Popover trigger="hover" isOpen={isEnabled} placement="bottom">
         <div
-          onClick={() => {
-            handleSetIsEnabled(false), handleSetIsEnabledModal('none')
-          }}
+          onClick={handleTurnOffModal}
           style={{ display: isEnabledModal }}
           className={style.modalPopoverContent}
         ></div>

@@ -40,7 +40,7 @@
   font-size: 16px;
   margin-top: 30px;
   color: #764d43;
-  background-image: url('/images/castle/borders/modal-title-middle.png');
+  background-image: url('/images/borders/modal-title-middle.png');
   background-repeat: repeat-x;
   margin: 0 auto;
   height: 70px;
@@ -58,8 +58,8 @@
   top: 0;
   left: -30px;
   height: 100%;
-  background-image: url('/images/castle/borders/modal-title-left.png'),
-    url('/images/castle/borders/modal-title-right.png');
+  background-image: url('/images/borders/modal-title-left.png'),
+    url('/images/borders/modal-title-right.png');
   background-repeat: no-repeat;
   background-position: 0 0, 100% 0;
 }
@@ -90,7 +90,7 @@
   -ms-interpolation-mode: nearest-neighbor;
   image-rendering: -moz-crisp-edges;
   image-rendering: pixelated;
-  background-image: url('/images/castle/borders/btn-middle-inactive.png');
+  background-image: url('/images/borders/btn-middle-inactive.png');
   background-repeat: repeat-x;
   background-position: 0 0;
   font-size: 20px;
@@ -107,8 +107,8 @@
   position: absolute;
   top: 0;
   left: -40px;
-  background-image: url('/images/castle/borders/btn-left-inactive.png'),
-    url('/images/castle/borders/btn-right-inactive.png');
+  background-image: url('/images/borders/btn-left-inactive.png'),
+    url('/images/borders/btn-right-inactive.png');
   background-repeat: no-repeat;
   background-position: 0 0, 100% 0;
 }
@@ -120,10 +120,10 @@
   image-rendering: -moz-crisp-edges;
   image-rendering: pixelated;
   background-color: #ffe3bd;
-  background-image: url('/images/castle/borders/npcDialogue-left.png'),
-    url('/images/castle/borders/npcDialogue-right.png'),
-    url('/images/castle/borders/npcDialogue-top.png'),
-    url('/images/castle/borders/npcDialogue-bottom.png');
+  background-image: url('/images/borders/npcDialogue-left.png'),
+    url('/images/borders/npcDialogue-right.png'),
+    url('/images/borders/npcDialogue-top.png'),
+    url('/images/borders/npcDialogue-bottom.png');
   background-repeat: repeat-y, repeat-y, repeat-x, repeat-x;
   background-position: 0 0, 100% 0, 0 0, 0 100%;
   border-radius: 25px;
@@ -137,10 +137,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url('/images/castle/borders/npcDialogue-top-left.png'),
-    url('/images/castle/borders/npcDialogue-top-right.png'),
-    url('/images/castle/borders/npcDialogue-bottom-left.png'),
-    url('/images/castle/borders/npcDialogue-bottom-right.png');
+  background-image: url('/images/borders/npcDialogue-top-left.png'),
+    url('/images/borders/npcDialogue-top-right.png'),
+    url('/images/borders/npcDialogue-bottom-left.png'),
+    url('/images/borders/npcDialogue-bottom-right.png');
   background-repeat: no-repeat;
   background-position: 0 0, 100% 0, 0 100%, 100% 100%;
 }
@@ -156,7 +156,7 @@
   top: -18px;
   left: 80px;
   margin: 0;
-  background-image: url('/images/castle/borders/npcName-middle.png');
+  background-image: url('/images/borders/npcName-middle.png');
   background-repeat: repeat-x;
   height: 58px;
   line-height: 58px;
@@ -179,8 +179,8 @@
   top: 0;
   left: -30px;
   height: 100%;
-  background-image: url('/images/castle/borders/npcName-left.png'),
-    url('/images/castle/borders/npcName-right.png');
+  background-image: url('/images/borders/npcName-left.png'),
+    url('/images/borders/npcName-right.png');
   background-repeat: no-repeat;
   background-position: 0 0, 100% 0;
 }
@@ -221,7 +221,7 @@
 }
 
 .closeBtn {
-  background-image: url('/images/castle/modal/close-modal-btn.png');
+  background-image: url('/images/modal/close-modal-btn.png');
   background-repeat: no-repeat;
   background-size: contain;
   position: absolute;
