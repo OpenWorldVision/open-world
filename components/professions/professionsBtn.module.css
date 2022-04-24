@@ -17,7 +17,6 @@
   z-index: 2000;
   height: 22px;
   min-width: 66px;
-  -webkit-animation: buttonAnimation 2s infinite;
   animation: buttonAnimation 2s infinite;
   cursor: url('/images/castle/click-cursor.png'), auto !important;
 }
@@ -31,12 +30,12 @@
 
 .gameButton::before {
   top: -4.7398px;
-  left: 4.7398px;
-  width: calc(100% - 9.47959px);
-  height: calc(100% + 9.47959px);
+  left: 6.7398px;
+  width: calc(100% - 20.6645px);
+  height: calc(100% + 20.6645px);
   background-position: center top, center bottom;
   background-repeat: repeat-x;
-  background-size: 18.9592px 4.7398px;
+  background-size: 18.9592px 9.7398px;
   background-image: url('/images/borders/text-bubble-top.png'),
     url('/images/borders/text-bubble-btm.png');
 }
@@ -45,10 +44,10 @@
   top: -4.7398px;
   left: 0px;
   width: 100%;
-  height: calc(100% + 9.47959px);
+  height: calc(100% + 20.6645px);
   background-position: left top, right top, left bottom, right bottom;
   background-repeat: no-repeat;
-  background-size: 10.6645px 10.6645px;
+  background-size: 20.6645px 20.6645px;
   background-image: url('/images/borders/text-bubble-topLeft.png'),
     url('/images/borders/text-bubble-topRight.png'),
     url('/images/borders/text-bubble-btmLeft.png'),
@@ -57,41 +56,31 @@
 
 .bubbleArrow {
   position: absolute;
-  width: 9.47959px;
-  height: 9.47959px;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -moz-crisp-edges;
+  width: 10.6645px;
+  height: 10.6645px;
   image-rendering: pixelated;
   left: 50%;
-  bottom: -8.47959px;
+  bottom: -20.47959px;
   transform: translateX(-50%);
-  z-index: 2002;
+  z-index: 1200;
 }
 
 .title {
   position: relative;
   text-align: center;
   color: rgb(0, 0, 0);
-  padding: 0px 15.0344px;
+  background-color: #ffe0b7;
+  padding: 0px 28.0344px;
   font-family: Lora, serif;
   font-weight: bold;
   z-index: 2003;
-  font-size: 16.6645px;
+  font-size: 21px;
   word-wrap: normal;
   text-align: center;
-  width: 160px;
-}
-
-@-webkit-keyframes buttonAnimation {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(3px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+  width: fit-content;
+  height: calc(100% + 10.6645px);
+  z-index: -1;
+  border-radius: 16px;
 }
 
 @keyframes buttonAnimation {

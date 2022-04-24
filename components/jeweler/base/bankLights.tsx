@@ -24,7 +24,7 @@ const BankEyesStyle = styled.div({
     overflow: 'hidden',
     img: {
       position: 'absolute',
-      minWidth: '5268px',
+      minWidth: '5276px',
       height: '1067.97px',
       imageRendering: 'pixelated',
       transform: 'scale(1, 1)',
@@ -37,7 +37,7 @@ const BankEyesStyle = styled.div({
         top: 0,
       },
       '100%': {
-        left: '-5268px',
+        left: '-5276px',
       },
     },
   },

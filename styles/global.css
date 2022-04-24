@@ -29,7 +29,7 @@ img {
 }
 
 .chakra-modal__content-container {
-  cursor: url(/images/default-cursor.png), auto;
+  cursor: url(/images/jeweler/default-cursor.png), auto;
 }
 
 .chakra-modal__content {
@@ -325,6 +325,10 @@ img {
   }
 }
 
+.check-button-transfer-lock:hover {
+  background-color: #066c45;
+}
+
 @media (max-width: 768px) {
   .modal_body_head .title {
     font-size: 24px !important;
@@ -385,24 +389,25 @@ img {
   .input-deposit,
   .btn-deposit-container button,
   .btn-deposit-jewel,
-  .input-withdraw {
-    font-size: 14px !important;
+  .input-withdraw,
+  .btn-enter-mount {
+    font-size: 12px !important;
   }
 
   .btn-deposit-jewel img {
     width: 18px !important;
   }
 
-  .btn-deposit-container button {
-    padding: 10px !important;
+  .btn-deposit-container button,
+  .btn-enter-mount {
+    padding: 5px !important;
   }
 
   .btn-turn-off-modal {
     top: 0 !important;
   }
 
-  .btn-claim-jeweler,
-  .btn-enter-mount {
+  .btn-claim-jeweler {
     margin-top: 10px !important;
     padding: 0 !important;
     font-size: 20px !important;
@@ -420,10 +425,19 @@ img {
     width: 200px;
     font-size: 16px !important;
   }
+
+  .btn-deposit-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn-deposit-container button:last-child {
+    margin-top: 20px;
+  }
 }
 
 .cursor-btn {
-  cursor: url(/images/click-cursor-2x.png), auto;
+  cursor: url(/images/jeweler/click-cursor-2x.png), auto;
 }
 
 .layout-btn {
@@ -509,7 +523,7 @@ hr {
 }
 
 .close-btn {
-  background-image: url('/images/castle/modal/close-modal-btn.png');
+  background-image: url('/images/modal/close-modal-btn.png');
   background-repeat: no-repeat;
   background-size: contain;
   position: absolute;
@@ -526,10 +540,9 @@ hr {
 .game-border {
   position: relative;
   background-color: #ffe3bd;
-  background-image: url('/images/castle/borders/basic-left.png'),
-    url('/images/castle/borders/basic-right.png'),
-    url('/images/castle/borders/fancy-top.png'),
-    url('/images/castle/borders/basic-bottom.png');
+  background-image: url('/images/borders/basic-left.png'),
+    url('/images/borders/basic-right.png'), url('/images/borders/fancy-top.png'),
+    url('/images/borders/basic-bottom.png');
   background-repeat: repeat-y, repeat-y, repeat-x, repeat-x;
   background-position: 0 0, 100% 0, 0 0, 0 100%;
   border-radius: 40px;
@@ -550,24 +563,24 @@ hr {
 }
 
 .game-border.basic::before {
-  background-image: url('/images/castle/borders/basic-top-left.png'),
-    url('/images/castle/borders/basic-top-right.png'),
-    url('/images/castle/borders/basic-bottom-left.png'),
-    url('/images/castle/borders/basic-bottom-right.png');
+  background-image: url('/images/borders/basic-top-left.png'),
+    url('/images/borders/basic-top-right.png'),
+    url('/images/borders/basic-bottom-left.png'),
+    url('/images/borders/basic-bottom-right.png');
 }
 
 .game-border.fancy::before {
-  background-image: url('/images/castle/borders/fancy-top-left.png'),
-    url('/images/castle/borders/fancy-top-right.png'),
-    url('/images/castle/borders/basic-bottom-left.png'),
-    url('/images/castle/borders/basic-bottom-right.png');
+  background-image: url('/images/borders/fancy-top-left.png'),
+    url('/images/borders/fancy-top-right.png'),
+    url('/images/borders/basic-bottom-left.png'),
+    url('/images/borders/basic-bottom-right.png');
 }
 
 .green-button {
   position: relative;
   background-color: #066c45;
-  background-image: url('/images/castle/borders/btn-side.png'),
-    url('/images/castle/borders/btn-side.png');
+  background-image: url('/images/borders/btn-side.png'),
+    url('/images/borders/btn-side.png');
   background-repeat: repeat-y, repeat-y;
   background-position: 0 0, 100% 0;
   border-radius: 8px;
@@ -599,8 +612,8 @@ hr {
   transform: translateX(-50%);
   width: calc(100% - 6px);
   border-radius: 8px;
-  background-image: url('/images/castle/borders/btn-top.png'),
-    url('/images/castle/borders/btn-btm.png');
+  background-image: url('/images/borders/btn-top.png'),
+    url('/images/borders/btn-btm.png');
   background-position: top, bottom;
   background-repeat: repeat-x, repeat-x;
 }
@@ -609,10 +622,10 @@ hr {
   top: -2px;
   left: 0;
   width: 100%;
-  background-image: url('/images/castle/borders/btn-top-left.png'),
-    url('/images/castle/borders/btn-top-right.png'),
-    url('/images/castle/borders/btn-btm-left.png'),
-    url('/images/castle/borders/btn-btm-right.png');
+  background-image: url('/images/borders/btn-top-left.png'),
+    url('/images/borders/btn-top-right.png'),
+    url('/images/borders/btn-btm-left.png'),
+    url('/images/borders/btn-btm-right.png');
   background-position: 0 0, 100% 0, 0 100%, 100% 100%;
   background-repeat: no-repeat;
 }

@@ -16,8 +16,8 @@
   margin-bottom: 18px;
   position: relative;
   border-radius: 8px 2px 8px 2px;
-  background-image: url('/images/castle/borders/inventory-itemFrameLeft.png'),
-    url('/images/castle/borders/inventory-itemFrameRight.png');
+  background-image: url('/images/borders/inventory-itemFrameLeft.png'),
+    url('/images/borders/inventory-itemFrameRight.png');
   background-position: 0 0, 100% 0;
   background-repeat: repeat-y, repeat-y;
 }
@@ -35,8 +35,8 @@
   transform: translateX(-50%);
   width: calc(100% - 6px);
   border-radius: 8px 2px 8px 2px;
-  background-image: url('/images/castle/borders/inventory-itemFrameTop.png'),
-    url('/images/castle/borders/inventory-itemFrameBtm.png');
+  background-image: url('/images/borders/inventory-itemFrameTop.png'),
+    url('/images/borders/inventory-itemFrameBtm.png');
   background-position: top, bottom;
   background-repeat: repeat-x, repeat-x;
 }
@@ -45,10 +45,10 @@
   top: -3px;
   left: 0;
   width: 100%;
-  background-image: url('/images/castle/borders/inventory-itemFrameTopLeft.png'),
-    url('/images/castle/borders/inventory-itemFrameTopRight.png'),
-    url('/images/castle/borders/inventory-itemFrameBtmLeft.png'),
-    url('/images/castle/borders/inventory-itemFrameBtmRight.png');
+  background-image: url('/images/borders/inventory-itemFrameTopLeft.png'),
+    url('/images/borders/inventory-itemFrameTopRight.png'),
+    url('/images/borders/inventory-itemFrameBtmLeft.png'),
+    url('/images/borders/inventory-itemFrameBtmRight.png');
   background-position: 0 0, 100% 0, 0 100%, 100% 100%;
   background-repeat: no-repeat;
 }
