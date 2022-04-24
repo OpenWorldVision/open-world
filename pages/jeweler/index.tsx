@@ -1,8 +1,8 @@
 import styled from '@emotion/styled'
-import { VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import Head from 'next/head'
+import { VStack } from '@chakra-ui/react'
 import Layout, { siteTitle } from '@components/layout'
+import Head from 'next/head'
 
 import {
   ButtonAnimate,
@@ -34,11 +34,10 @@ import {
   ModalCloseButton,
 } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/react'
-
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 
 export default function Jeweler(props) {
-  const [modalIsOpen, setIsOpen] = useState(false)
+  const [modalLockedJewel, setModalLockedJewel] = useState(false)
   const [modalInfo, setModalInfo] = useState(false)
   const [modalLila, setModalLila] = useState(false)
   const [modalJeweler, setModalJeweler] = useState(false)
@@ -51,13 +50,45 @@ export default function Jeweler(props) {
   const [addClassOpacityButton, setAddClassOpacityButton] = useState('')
 
   const handleChangeInput = (e) => {
-    if (e.target.value === '') {
+    if (e.target.value !== 'SEND') {
       setCheckButtonTransferLock(true)
       setAddClassOpacityButton('')
     } else {
       setCheckButtonTransferLock(false)
       setAddClassOpacityButton('check-button-transfer-lock')
     }
+  }
+
+  const modalCloseLockedJewel = () => {
+    setModalLockedJewel(false)
+  }
+
+  const modalCloseInfo = () => {
+    setModalInfo(false)
+  }
+
+  const modalCloseLila = () => {
+    setModalLila(false)
+  }
+
+  const modalCloseJeweler = () => {
+    setModalJeweler(false)
+  }
+
+  const modalCloseDeposit = () => {
+    setModalDeposit(false)
+  }
+
+  const modalCloseClaim = () => {
+    setModalClaim(false)
+  }
+
+  const modalCloseeWaitClaim = () => {
+    setModalWaitClaim(false)
+  }
+
+  const modalCloseWithdraw = () => {
+    setModalWithdraw(false)
   }
 
   return (
@@ -125,7 +156,7 @@ export default function Jeweler(props) {
                     />
                     <button
                       onClick={() => {
-                        setIsOpen(true)
+                        setModalLockedJewel(true)
                       }}
                       className="layout-btn btn-manage cursor-btn"
                     ></button>
@@ -163,10 +194,9 @@ export default function Jeweler(props) {
                 </TransformComponent>
               </TransformWrapper>
               <Modal
-                isOpen={modalIsOpen}
-                onClose={() => {
-                  setIsOpen(false)
-                }}
+                blockScrollOnMount={false}
+                isOpen={modalLockedJewel}
+                onClose={modalCloseLockedJewel}
               >
                 <ModalOverlay
                   style={{
@@ -186,6 +216,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
+                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -298,10 +329,9 @@ export default function Jeweler(props) {
                 </ModalContent>
               </Modal>
               <Modal
+                blockScrollOnMount={false}
                 isOpen={modalInfo}
-                onClose={() => {
-                  setModalInfo(false)
-                }}
+                onClose={modalCloseInfo}
               >
                 <ModalOverlay
                   style={{
@@ -321,6 +351,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
+                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -360,10 +391,9 @@ export default function Jeweler(props) {
                 </ModalContent>
               </Modal>
               <Modal
+                blockScrollOnMount={false}
                 isOpen={modalLila}
-                onClose={() => {
-                  setModalLila(false)
-                }}
+                onClose={modalCloseLila}
               >
                 <ModalOverlay
                   style={{
@@ -383,6 +413,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
+                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -403,10 +434,9 @@ export default function Jeweler(props) {
                 </ModalContent>
               </Modal>
               <Modal
+                blockScrollOnMount={false}
                 isOpen={modalJeweler}
-                onClose={() => {
-                  setModalJeweler(false)
-                }}
+                onClose={modalCloseJeweler}
               >
                 <ModalOverlay
                   style={{
@@ -426,6 +456,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
+                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -517,10 +548,9 @@ export default function Jeweler(props) {
                 </ModalContent>
               </Modal>
               <Modal
+                blockScrollOnMount={false}
                 isOpen={modalDeposit}
-                onClose={() => {
-                  setModalDeposit(false)
-                }}
+                onClose={modalCloseDeposit}
               >
                 <ModalOverlay
                   style={{
@@ -530,7 +560,7 @@ export default function Jeweler(props) {
                 />
                 <ModalContent
                   style={{
-                    background: 'rgba(0, 0, 0, 0.85)',
+                    background: 'rgba(0, 0, 0, 0.99)',
                     zIndex: '10001',
                     border: '1px solid rgb(76, 62, 35)',
                     padding: '0',
@@ -540,10 +570,11 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
+                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
-                    Jeweler
+                    Deposit
                   </ModalHeader>
                   <ModalCloseButton
                     style={{ boxShadow: 'none' }}
@@ -738,10 +769,9 @@ export default function Jeweler(props) {
                 </ModalContent>
               </Modal>
               <Modal
+                blockScrollOnMount={false}
                 isOpen={modalClaim}
-                onClose={() => {
-                  setModalClaim(false)
-                }}
+                onClose={modalCloseClaim}
               >
                 <ModalOverlay
                   style={{
@@ -751,7 +781,7 @@ export default function Jeweler(props) {
                 />
                 <ModalContent
                   style={{
-                    background: 'rgba(0, 0, 0, 0.85)',
+                    background: 'rgba(0, 0, 0, 0.99)',
                     zIndex: '10001',
                     border: '1px solid rgb(76, 62, 35)',
                     padding: '0',
@@ -761,10 +791,11 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
+                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
-                    Jeweler
+                    Claim
                   </ModalHeader>
                   <ModalCloseButton
                     style={{ boxShadow: 'none' }}
@@ -824,6 +855,8 @@ export default function Jeweler(props) {
                           backgroundColor: '#009c44',
                           marginTop: '40px',
                           fontSize: '28px',
+                          cursor:
+                            'url(/images/jeweler/default-cursor.png), auto',
                         }}
                       >
                         Claim
@@ -833,10 +866,9 @@ export default function Jeweler(props) {
                 </ModalContent>
               </Modal>
               <Modal
+                blockScrollOnMount={false}
                 isOpen={modalWaitClaim}
-                onClose={() => {
-                  setModalWaitClaim(false)
-                }}
+                onClose={modalCloseeWaitClaim}
               >
                 <ModalOverlay
                   style={{
@@ -846,7 +878,7 @@ export default function Jeweler(props) {
                 />
                 <ModalContent
                   style={{
-                    background: 'rgba(0, 0, 0, 0.85)',
+                    background: 'rgba(0, 0, 0, 0.99)',
                     zIndex: '10001',
                     border: '1px solid rgb(76, 62, 35)',
                     padding: '0',
@@ -856,6 +888,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
+                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -911,10 +944,9 @@ export default function Jeweler(props) {
                 </ModalContent>
               </Modal>
               <Modal
+                blockScrollOnMount={false}
                 isOpen={modalWithdraw}
-                onClose={() => {
-                  setModalWithdraw(false)
-                }}
+                onClose={modalCloseWithdraw}
               >
                 <ModalOverlay
                   style={{
@@ -924,7 +956,7 @@ export default function Jeweler(props) {
                 />
                 <ModalContent
                   style={{
-                    background: 'rgba(0, 0, 0, 0.85)',
+                    background: 'rgba(0, 0, 0, 0.99)',
                     zIndex: '10001',
                     border: '1px solid rgb(76, 62, 35)',
                     padding: '0',
@@ -934,10 +966,11 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
+                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
-                    Jeweler
+                    Withdraw
                   </ModalHeader>
                   <ModalCloseButton
                     style={{ boxShadow: 'none' }}
@@ -964,7 +997,7 @@ export default function Jeweler(props) {
                               margin: 0,
                             }}
                           >
-                            Available to deposit: 0
+                            Available to withdraw: 0
                           </div>
                           <div
                             style={{
@@ -1072,25 +1105,6 @@ export default function Jeweler(props) {
               </Modal>
             </div>
           </div>
-
-          <style jsx>{`
-            .react-transform-wrapper.transform-component-module_wrapper__1_Fgj,
-            .react-transform-component.transform-component-module_content__2jYgh {
-              width: 100%;
-              height: 100%;
-            }
-            .react-transform-component.transform-component-module_content__2jYgh {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
-
-            .react-transform-wrapper.transform-component-module_wrapper__1_Fgj,
-            .react-transform-component.transform-component-module_content__2jYgh {
-              width: 350%;
-              height: 150%;
-            }
-          `}</style>
         </JewelerPage>
       </VStack>
     </Layout>
@@ -1177,6 +1191,7 @@ const JewelerPage = styled.div({
       justifyContent: 'center',
       alignItems: 'center',
     },
+
     '@media (max-width: 768px)': {
       '.react-transform-wrapper.transform-component-module_wrapper__1_Fgj': {
         width: '350%',
