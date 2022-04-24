@@ -29,7 +29,8 @@ const Entry = () => {
         if (window.ethereum) {
           const chainId = window?.ethereum?.chainId
           setNameOfChain(chainName[chainId] || '')
-          if (chainId !== '0x63564c40' || chainId !== '0x6357d2e0') {
+          if (chainId === '0x63564c40' || chainId === '0x6357d2e0') {
+          } else {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
