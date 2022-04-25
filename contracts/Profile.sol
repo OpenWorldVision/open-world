@@ -1,7 +1,7 @@
 pragma solidity 0.7.5;
 
 import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
-
+import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import './HeroCore.sol';
 
 contract Profiles is AccessControlUpgradeable {
@@ -14,6 +14,15 @@ contract Profiles is AccessControlUpgradeable {
   uint8 minLength;
   uint8 maxLength;
   uint8 maxPic;
+  uint256 public requireBalanceProfession;
+  address public governanceToken;
+
+  enum Profession {
+    UNKNOWN,
+    OPENER,
+    SUPPLIER,
+    BLACKSMITH
+  }
 
   // The profile struct.
   struct Profile {
@@ -31,6 +40,7 @@ contract Profiles is AccessControlUpgradeable {
     uint256 heroId;
     // If this is a real profile or not.
     bool set;
+    Profession profession;
   }
 
   mapping(uint256 => Profile) public profiles;
@@ -56,14 +66,16 @@ contract Profiles is AccessControlUpgradeable {
     uint256 heroId
   );
 
-  function initialize() public initializer {
+  function initialize(address _govToken) public initializer {
     __AccessControl_init();
 
     _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    grantRole(MODERATOR_ROLE, msg.sender);
 
     minLength = 3;
     maxLength = 16;
     maxPic = 15;
+    governanceToken = _govToken;
 
     addresses.push(address(0));
     addressToIndex[address(0)] = 0;
@@ -76,7 +88,8 @@ contract Profiles is AccessControlUpgradeable {
       uint64(block.timestamp),
       0,
       0,
-      false
+      false,
+      Profession.UNKNOWN
     );
 
     profiles[0] = profile;
@@ -121,7 +134,8 @@ contract Profiles is AccessControlUpgradeable {
       uint64(block.timestamp),
       _picId,
       0,
-      true
+      true,
+      Profession.UNKNOWN
     );
 
     profiles[profileId] = profile;
@@ -134,6 +148,24 @@ contract Profiles is AccessControlUpgradeable {
       profile.picId
     );
 
+    return true;
+  }
+
+  function setProfession(Profession _profession) public returns (bool success) {
+    require(profileExists(msg.sender), 'profile must exist');
+    Profile storage profile = profiles[addressToIndex[msg.sender]];
+    require(profile.profession == Profession.UNKNOWN, 'Profession already set');
+    require(
+      IERC20(governanceToken).balanceOf(msg.sender) > requireBalanceProfession,
+      'Not enough balance'
+    );
+    profile.profession = _profession;
+    return true;
+  }
+
+  function setRequireBalanceProfession(uint256 _value) public returns (bool) {
+    require(hasRole(MODERATOR_ROLE, msg.sender), 'access denied');
+    requireBalanceProfession = _value;
     return true;
   }
 
@@ -279,7 +311,8 @@ contract Profiles is AccessControlUpgradeable {
       uint64 _created,
       uint8 _picId,
       uint256 _heroId,
-      uint256 _points
+      uint256 _points,
+      Profession _profession
     )
   {
     require(profileExists(profileAddress), 'no profile found');
@@ -291,7 +324,8 @@ contract Profiles is AccessControlUpgradeable {
       profile.created,
       profile.picId,
       profile.heroId,
-      points[profile.id]
+      points[profile.id],
+      profile.profession
     );
   }
 
