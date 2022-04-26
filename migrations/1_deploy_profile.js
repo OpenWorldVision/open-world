@@ -4,12 +4,12 @@ const Profiles = artifacts.require('Profiles')
 module.exports = async function (deployer, network) {
   let govToken
   if (network === 'harmonyTestnet') {
-    profileProxy = '0xe2c25240eA6f598e804BEdcd0a9D7577bB5Fb383'
+    govToken = '0x6c14d24eae373ae930768adbfa75c406119bf569'
   }
   if (network === 'harmony') {
-    profileProxy = ''
+    govToken = ''
   }
-  await deployProxy(Profiles, [], {
+  await deployProxy(Profiles, [govToken], {
     deployer,
   })
 }

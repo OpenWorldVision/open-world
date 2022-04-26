@@ -366,6 +366,15 @@ contract Profiles is AccessControlUpgradeable {
     return addresses[nameToIndex[name]];
   }
 
+  function canSetProfession(address account) public view returns (bool) {
+    Profile memory profile = profiles[addressToIndex[msg.sender]];
+
+    return
+      profileExists(account) &&
+      profile.profession == Profession.UNKNOWN &&
+      IERC20(governanceToken).balanceOf(msg.sender) > requireBalanceProfession;
+  }
+
   /// @dev Adds points to a profile.
   function addPoints(address _address, uint256 _points)
     public
