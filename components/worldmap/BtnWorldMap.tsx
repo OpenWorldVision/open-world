@@ -37,15 +37,7 @@ const BtnWorldMapStyle = styled.div({
   '@media(max-width: 768px)': {
     '.bordered-box-thin': {
       padding: '0.25rem',
-<<<<<<< HEAD
-<<<<<<< HEAD
       left: '10px',
-=======
-      bottom: '100px',
->>>>>>> 24e7157 (button world map on mobile)
-=======
-      left: '10px',
->>>>>>> d0ae18a (fix positon button world map)
     },
   },
 })
