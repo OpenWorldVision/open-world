@@ -34,10 +34,31 @@ const Entry = () => {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
-                window.ethereum.request({
-                  method: 'wallet_switchEthereumChain',
-                  params: [{ chainId: '0x63564c40' }],
-                })
+                window.ethereum
+                  .request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x63564c40' }],
+                  })
+                  .then(() => {
+                    // do nothing
+                  })
+                  .catch((error) => {
+                    window.ethereum.request({
+                      method: 'wallet_addEthereumChain',
+                      params: [
+                        {
+                          chainId: '0x63564c40',
+                          chainName: 'Harmony Mainnet',
+                          rpcUrls: ['https://api.harmony.one'],
+                          nativeCurrency: {
+                            name: 'ONE',
+                            symbol: 'ONE',
+                            decimals: 18,
+                          },
+                        },
+                      ],
+                    })
+                  })
               })
               .catch(() => {
                 // setErrorMessage(error.message);
