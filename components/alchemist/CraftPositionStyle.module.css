@@ -1,0 +1,206 @@
+.craftPotionsContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+}
+
+.headCraftPosition {
+  position: relative;
+}
+
+.headCraftPosition h3 {
+  position: absolute;
+  top: 8px;
+  left: 42px;
+  font-size: 1.1rem;
+}
+
+.bgItem {
+  position: relative;
+  display: inline-grid;
+  width: 120px;
+  min-height: 60px;
+  background-color: #efcba2;
+  border-radius: 8px 2px 8px 2px;
+  background-image: url(/images/alchemist/inventory-itemFrameLeft.png),
+    url(/images/alchemist/inventory-itemFrameRight.png);
+  background-position: 0 0, 100% 0;
+  background-repeat: repeat-y, repeat-y;
+  border: 0;
+  color: #fff;
+  outline: none;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.bgItem::before {
+  content: '';
+  width: 100%;
+  border-radius: 8px 2px 8px 2px;
+  background-image: url(/images/alchemist/inventory-itemFrameTop.png),
+    url(/images/alchemist/inventory-itemFrameBtm.png);
+  background-position: top, bottom;
+  background-repeat: repeat-x, repeat-x;
+  height: 60px;
+}
+
+.bgItem::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background-image: url(/images/alchemist/inventory-itemFrameTopLeft.png),
+    url(/images/alchemist/inventory-itemFrameTopRight.png),
+    url(/images/alchemist/inventory-itemFrameBtmLeft.png),
+    url(/images/alchemist/inventory-itemFrameBtmRight.png);
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.sizeBackgroundItem {
+  width: 60px;
+  height: 65px;
+  background-repeat: repeat-y, repeat-y;
+  /* margin: 0 auto; */
+}
+
+.sizeBackgroundItem::before,
+.sizeBackgroundItem::after {
+  height: 65px;
+}
+
+.craftItemContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.craftItem {
+  margin: 10px;
+  position: relative;
+  opacity: 0.6;
+  display: flex;
+  justify-content: center;
+}
+
+.craftItemBgContainer {
+  width: 54px;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.craftItem:hover .craftItemBgOpacity {
+  background-color: #daad82;
+}
+
+.itemCraftSelect {
+  opacity: 1;
+  background-color: #daad82;
+}
+
+.craftItemQuantitySelected {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.btnQuantityCraft {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #3e1f05;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: url(/images/jeweler/default-cursor.png), auto;
+}
+
+.inputQuantitySelectCraft {
+  background: #f9c588;
+  border: 2px solid #3e1f05;
+  color: #3e1f05;
+  text-align: center;
+  max-width: 60px;
+  padding: 6px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 0 5px;
+}
+
+.inputQuantitySelectCraft::placeholder {
+  color: #3e1f05;
+}
+
+.btnMaxQuantitySelect {
+  max-width: 50px;
+  align-self: center;
+  padding: 2px 6px;
+  font-size: 14px;
+  line-height: 1;
+  color: #fff;
+  border: 1px solid #fac05d;
+  border-radius: 4px;
+  background-color: #787852;
+  display: flex;
+  align-items: center;
+  margin: 10px auto;
+}
+
+.ingredients {
+  text-align: center;
+}
+
+.fancyButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 271px;
+  height: 76px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0.5em;
+  background-image: url(/images/alchemist/questscroll-button.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin-top: 20px;
+}
+
+.FancyButton button {
+  position: relative;
+  color: #fff;
+  background: #009c44;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 10px 30px;
+  height: 100%;
+  width: 100%;
+  padding: 0px;
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 5px;
+  border: 0;
+  transition: all 0.2s ease-in-out;
+  opacity: 0.4;
+}
+
+.disabledButton {
+  background: none !important;
+  cursor: url(/images/CursorDefault.png), auto !important;
+  box-shadow: unset;
+}
+
+@media (max-width: 768px) {
+  .fancyButton {
+    transform: scale(0.85);
+    width: 230.35px;
+    height: 64.6px;
+  }
+}

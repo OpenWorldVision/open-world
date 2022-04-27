@@ -1,0 +1,211 @@
+.craftItemApprovalContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.itemApprovalContainer {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.craftPotionsContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headCraftPosition {
+  width: 278px;
+  margin-left: 76px;
+  position: relative;
+}
+
+.headCraftPosition h3 {
+  position: absolute;
+  top: 8px;
+  left: 42px;
+  font-size: 1.1rem;
+}
+
+.bgItem {
+  position: relative;
+  display: inline-grid;
+  width: 120px;
+  min-height: 60px;
+  background-color: #efcba2;
+  border-radius: 8px 2px 8px 2px;
+  background-image: url(/images/alchemist/inventory-itemFrameLeft.png),
+    url(/images/alchemist/inventory-itemFrameRight.png);
+  background-position: 0 0, 100% 0;
+  background-repeat: repeat-y, repeat-y;
+  border: 0;
+  color: #fff;
+  outline: none;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.bgItem::before {
+  content: '';
+  width: 100%;
+  border-radius: 8px 2px 8px 2px;
+  background-image: url(/images/alchemist/inventory-itemFrameTop.png),
+    url(/images/alchemist/inventory-itemFrameBtm.png);
+  background-position: top, bottom;
+  background-repeat: repeat-x, repeat-x;
+  height: 60px;
+}
+
+.bgItem::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background-image: url(/images/alchemist/inventory-itemFrameTopLeft.png),
+    url(/images/alchemist/inventory-itemFrameTopRight.png),
+    url(/images/alchemist/inventory-itemFrameBtmLeft.png),
+    url(/images/alchemist/inventory-itemFrameBtmRight.png);
+  background-position: 0 0, 100% 0, 0 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.sizeBackgroundItem {
+  width: 60px;
+  height: 65px;
+  background-repeat: repeat-y, repeat-y;
+  /* margin: 0 auto; */
+}
+
+.sizeBackgroundItem::before,
+.sizeBackgroundItem::after {
+  height: 65px;
+}
+
+.craftItemContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.craftItem {
+  margin: 10px 10px 0 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.craftItemBgContainer {
+  width: 54px;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.bgOpacity {
+  opacity: 0.6;
+}
+
+.craftItemApprovalQuantity {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  pointer-events: none;
+  text-shadow: 1px 1px #000;
+  color: red;
+}
+
+.scraftApprovalMissing {
+  position: absolute;
+  left: 12%;
+  top: 100%;
+  display: block;
+  align-self: center;
+  padding: 4px 10px;
+  font-size: 10px;
+  line-height: 1;
+  color: #fff;
+  border: 1px solid #fac05d;
+  border-radius: 4px;
+  background-color: #787852;
+  text-transform: uppercase;
+}
+
+.modalPopoverContent {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+}
+
+.popoverContent {
+  position: absolute !important;
+  width: 200px !important;
+  /* height: 150px; */
+  top: -130px;
+  left: -70px;
+  background-color: rgba(0, 0, 0, 0.9) !important;
+  border: none !important;
+}
+
+.popoverContent:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.craftName {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.description {
+  font-size: 13px;
+  color: #fff;
+  text-align: center;
+  /* height: 60px; */
+  margin-bottom: 15px;
+}
+
+.btnAddToken {
+  border: 1px solid #fac05d;
+  color: #fac05d;
+  border-radius: 8px;
+  background-color: transparent;
+  padding: 5px 20px;
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  opacity: 1;
+  width: 100%;
+  margin-top: 3px;
+  position: relative;
+}
+
+.btnAddToken {
+  transition: 0.4s;
+}
+
+.tebtnAddTokenContainerst:hover .btnAddToken:after {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  transition: 0.5s;
+}
+
+.btnAddTokenContainer:hover .btnAddToken {
+  margin-top: -3px;
+  background-color: #fac05d;
+  color: #000;
+}
+
+.btnAddTokenContainer:hover .btnAddToken:after {
+  opacity: 1;
+}
