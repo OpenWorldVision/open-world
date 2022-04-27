@@ -1,0 +1,115 @@
+.landAuction {
+  z-index: -1;
+  opacity: 0;
+  will-change: opacity;
+  transition: all 0.5s linear;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landAuction.active {
+  z-index: 3000;
+  opacity: 1;
+  will-change: opacity;
+  transition: all 0.5s linear;
+}
+
+.landViewContainer {
+  height: 100%;
+  padding: 50px 50px 60px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+  max-width: 600px;
+  margin-left: 20px;
+}
+
+.filterExpanded {
+  height: 100%;
+  width: 100%;
+  padding: 80px 47px 92px;
+  max-width: 600px;
+}
+
+.modalContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.overlayCraftPotion {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: unset;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.AntiPoison {
+  opacity: 1 !important;
+}
+
+@media (max-width: 1024px) {
+  .landAuction {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  .modalContent {
+    flex-direction: column-reverse;
+  }
+
+  .landViewContainer {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .scrollContainer {
+    max-height: 800px;
+    height: 90vh;
+    position: relative;
+    overflow: hidden auto;
+    position: relative;
+  }
+
+  .scrollContainer::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  .scrollContainer::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .scrollContainer::-webkit-scrollbar-thumb {
+    background-color: #282738;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+@media (max-width: 768px) {
+  .modalContent {
+    flex-direction: column-reverse;
+  }
+
+  .landViewContainer {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .scrollContainer {
+    max-height: 800px;
+    height: 90vh;
+    position: relative;
+    overflow: hidden auto;
+    position: relative;
+  }
+}
