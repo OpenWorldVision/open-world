@@ -3,10 +3,45 @@ import styles from './layout.module.css'
 import Link from 'next/link'
 import Menu from '@components/worldmap/Menu'
 import User from '@components/worldmap/User'
+import BtnWorldMap from './worldmap/BtnWorldMap'
+import { useEffect, useState } from 'react'
 
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
+  const [currentURL, setCurentURL] = useState('')
+  useEffect(() => {
+    setCurentURL(window.location.href)
+  }, [])
+
+  const checkCurrentPage = () => {
+    // const urlCurrent = window.location.href
+    const isAlchemist = currentURL.includes('alchemist')
+    const isCastle = currentURL.includes('castle')
+    const isDocks = currentURL.includes('docks')
+    const isGardens = currentURL.includes('gardens')
+    const isJeweler = currentURL.includes('jeweler')
+    const isMarketPlace = currentURL.includes('marketplace')
+    const isMeditation = currentURL.includes('meditation-circle')
+    const isPortal = currentURL.includes('portal')
+    const isProfessions = currentURL.includes('professions')
+    const isTavern = currentURL.includes('tavern')
+    if (
+      isAlchemist ||
+      isCastle ||
+      isDocks ||
+      isGardens ||
+      isJeweler ||
+      isMarketPlace ||
+      isMeditation ||
+      isPortal ||
+      isProfessions ||
+      isTavern
+    ) {
+      return <BtnWorldMap />
+    }
+  }
+
   return (
     <div
       style={{ cursor: 'url(/images/default-cursor.png), auto' }}
@@ -38,6 +73,7 @@ export default function Layout({ children, home }) {
         {children}
         <Menu />
         <User />
+        {checkCurrentPage()}
       </main>
       {!home && (
         <div className={styles.backToHome}>
