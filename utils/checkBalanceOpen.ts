@@ -27,7 +27,5 @@ export const getBalanceOfOpen = async (web3Client) => {
       .balanceOf(accounts[0])
       .call({ from: accounts[0] })
     return balance
-  } catch (error) {
-    // console.log('error la gi', error)
-  }
+  } catch (error) {}
 }

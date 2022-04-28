@@ -213,7 +213,6 @@ const _styles = {
     backgroundColor: '#019C44',
     maxWidth: 300,
     width: '100%',
-    marginTop: '24px',
   },
   buttonText: {
     color: '#fff',
