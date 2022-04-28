@@ -32,7 +32,7 @@ export default function Home({ allPostsData }) {
         </MapInteractionCSS>
         <div className="modal">
           <div className="modal-content">
-            <img src="/images/worldmap/Logo.png" alt="logo" />
+            <img src="/images/common/openworld_logo.png" alt="logo" />
             <div>Coming Soon</div>
             <Link href="/">
               <button>
@@ -92,10 +92,10 @@ const WorldMap = styled.div({
     flexDirection: 'column',
     div: {
       fontSize: '50px',
-      color: 'rgb(253,206,110)',
+      color: 'white',
     },
     button: {
-      backgroundColor: 'rgb(0,156,68)',
+      backgroundImage: 'linear-gradient(to right, #f85474 ,#8937f1)',
       minWidth: '300px',
       height: '50px',
       borderRadius: '15px',
@@ -105,7 +105,7 @@ const WorldMap = styled.div({
         textDecoration: 'none',
       },
       ':hover': {
-        backgroundColor: 'rgb(253,206,110)',
+        backgroundImage: 'linear-gradient(to right, #f85474 ,#8937f1)',
         color: 'black',
       },
     },
