@@ -26,25 +26,44 @@ const Entry = () => {
   useEffect(() => {
     try {
       const connectWallet = async () => {
-        if (window.ethereum && window.ethereum.isMetaMask) {
+        if (window.ethereum) {
           const chainId = window?.ethereum?.chainId
           setNameOfChain(chainName[chainId] || '')
-          window.ethereum
-            .request({ method: 'eth_requestAccounts' })
-            .then(() => {
-              if (
-                chainId !== '0x38' &&
-                process.env.environment === 'production'
-              ) {
-                window.ethereum.request({
-                  method: 'wallet_switchEthereumChain',
-                  params: [{ chainId: '0x38' }],
-                })
-              }
-            })
-            .catch(() => {
-              // setErrorMessage(error.message);
-            })
+          if (chainId === '0x63564c40' || chainId === '0x6357d2e0') {
+          } else {
+            window.ethereum
+              .request({ method: 'eth_requestAccounts' })
+              .then(() => {
+                window.ethereum
+                  .request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x63564c40' }],
+                  })
+                  .then(() => {
+                    // do nothing
+                  })
+                  .catch((error) => {
+                    window.ethereum.request({
+                      method: 'wallet_addEthereumChain',
+                      params: [
+                        {
+                          chainId: '0x63564c40',
+                          chainName: 'Harmony Mainnet',
+                          rpcUrls: ['https://api.harmony.one'],
+                          nativeCurrency: {
+                            name: 'ONE',
+                            symbol: 'ONE',
+                            decimals: 18,
+                          },
+                        },
+                      ],
+                    })
+                  })
+              })
+              .catch(() => {
+                // setErrorMessage(error.message);
+              })
+          }
         }
       }
       connectWallet()
@@ -194,7 +213,6 @@ const _styles = {
     backgroundColor: '#019C44',
     maxWidth: 300,
     width: '100%',
-    marginTop: '24px',
   },
   buttonText: {
     color: '#fff',

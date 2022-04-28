@@ -20,10 +20,12 @@ const getOpenWorldContract = async (web3Client) => {
 }
 
 export const getBalanceOfOpen = async (web3Client) => {
-  const accounts = await web3Client.web3Client.eth.getAccounts()
-  const contract = await getOpenWorldContract(web3Client.web3Client)
-  const balance = await contract.methods
-    .balanceOf(accounts[0])
-    .call({ from: accounts[0] })
-  return balance
+  try {
+    const accounts = await web3Client.web3Client.eth.getAccounts()
+    const contract = await getOpenWorldContract(web3Client.web3Client)
+    const balance = await contract.methods
+      .balanceOf(accounts[0])
+      .call({ from: accounts[0] })
+    return balance
+  } catch (error) {}
 }
