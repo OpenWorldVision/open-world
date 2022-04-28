@@ -2,7 +2,13 @@ import { Button, Grid, GridItem } from '@chakra-ui/react'
 import mainStyle from '@components/professions/professions.module.css'
 import style from '@components/professions/npc.module.css'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import {
+  fetchRequireBalanceProfession,
+  mintProfessionNFT,
+  fetchUserProfessionNFT,
+} from '../../utils/professions'
+import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 
 const npcs = ['openian', 'supplier', 'blacksmith']
 
@@ -31,14 +37,62 @@ function ProfessionsModal(props) {
   const { params } = props
   const [currentNpcText, setCurrentNpcText] = useState([])
   const [haveNFT, setHaveNFT] = useState(false)
-  const [currentOPEN, setCurrentOPEN] = useState(50000)
+  const [canActivate, setCanActivate] = useState(false)
+  const [currentOPEN, setCurrentOPEN] = useState(0)
+  const [requireBalance, setRequireBalance] = useState(0)
+
+  const getRequireBalanceProfession = async () => {
+    const balance = await fetchRequireBalanceProfession()
+    setRequireBalance(balance)
+  }
+
+  const getUserBalance = async () => {
+    const balance = await getBalanceOfOpen()
+    setCurrentOPEN(parseFloat(balance))
+    return parseFloat(balance);
+  }
+
+  // @test mint heroCore
+  const mintHeroNFT = async () => {
+    const trait = prompt('Enter trait (1-3) to mint NFT, enter 0 for cancel')
+    if (trait !== '0') {
+      await mintProfessionNFT(trait)
+      await checkIfHasNTF()
+      await checkIfCanActive()
+    }
+  }
+
+  const checkIfHasNTF = async () => {
+    const nftList = await fetchUserProfessionNFT()
+    const check = nftList.includes(npcs.indexOf(params.npc) + 1)
+    setHaveNFT(check)
+    return check;
+  }
 
   const getCurrentNpcText = () => {
     setCurrentNpcText(npcText[npcs.indexOf(params.npc)])
   }
 
+  const checkIfCanActive = useCallback(async () => {
+    const checkNFT = await checkIfHasNTF()
+    const checkBalance = await getUserBalance()
+    if (params.npc === 'openian') {
+      setCanActivate(checkNFT)
+    }
+    else {
+      setCanActivate(checkNFT && checkBalance >= requireBalance)
+    }
+  }, [haveNFT, currentOPEN])
+
+  const initialize = async () => {
+    await mintHeroNFT()
+    await getRequireBalanceProfession()
+    checkIfCanActive()
+  }
+
   useEffect(() => {
     getCurrentNpcText()
+    initialize()
   }, [])
 
   return (
@@ -98,10 +152,10 @@ function ProfessionsModal(props) {
                 {params.npc !== 'openian' && (
                   <Button
                     className={`${style.btn} ${style.acceptBtn} ${
-                      currentOPEN === 50000 && style.active
+                      currentOPEN >= requireBalance && style.active
                     } click-cursor`}
                   >
-                    <span>Have 50000 $OPEN</span>
+                    <span>Have {requireBalance} $OPEN</span>
                   </Button>
                 )}
               </div>
@@ -110,7 +164,7 @@ function ProfessionsModal(props) {
           <GridItem colSpan={2} className={style.activateWrap}>
             <Button
               className={`${style.btn} ${style.activateBtn} ${
-                haveNFT && style.active
+                canActivate && style.active
               } click-cursor`}
             ></Button>
           </GridItem>
