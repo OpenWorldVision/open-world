@@ -3,40 +3,39 @@ import styles from './layout.module.css'
 import Link from 'next/link'
 import Menu from '@components/worldmap/Menu'
 import User from '@components/worldmap/User'
+import Entry from '@components/entry/Entry'
+import { useCallback, useState, useEffect } from 'react'
 import BtnWorldMap from './worldmap/BtnWorldMap'
-import { useEffect, useState } from 'react'
 
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
+  const [connected, setConnected] = useState(false)
+
+  const checkIsConnected = useCallback((status) => {
+    console.log(`Connected change from ${connected} to ${status}`)
+    setConnected(status)
+  }, [])
+
   const [currentURL, setCurentURL] = useState('')
   useEffect(() => {
     setCurentURL(window.location.href)
   }, [])
 
   const checkCurrentPage = () => {
-    // const urlCurrent = window.location.href
-    const isAlchemist = currentURL.includes('alchemist')
+    const isArena = currentURL.includes('battleArena')
     const isCastle = currentURL.includes('castle')
-    const isDocks = currentURL.includes('docks')
-    const isGardens = currentURL.includes('gardens')
-    const isJeweler = currentURL.includes('jeweler')
-    const isMarketPlace = currentURL.includes('marketplace')
-    const isMeditation = currentURL.includes('meditation-circle')
-    const isPortal = currentURL.includes('portal')
+    const isFoodCourt = currentURL.includes('foodCourt')
+    const isMarketPlace = currentURL.includes('market')
     const isProfessions = currentURL.includes('professions')
-    const isTavern = currentURL.includes('tavern')
+    const isWorkshop = currentURL.includes('workshop')
     if (
-      isAlchemist ||
+      isArena ||
+      isFoodCourt ||
       isCastle ||
-      isDocks ||
-      isGardens ||
-      isJeweler ||
       isMarketPlace ||
-      isMeditation ||
-      isPortal ||
       isProfessions ||
-      isTavern
+      isWorkshop
     ) {
       return <BtnWorldMap />
     }
@@ -69,12 +68,17 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <main>
-        {children}
-        <Menu />
-        <User />
-        {checkCurrentPage()}
-      </main>
+      {!connected && (
+        <Entry checkIsConnected={(status) => checkIsConnected(status)} />
+      )}
+      {connected && (
+        <main>
+          {children}
+          <Menu />
+          <User />
+          {checkCurrentPage()}
+        </main>
+      )}
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">

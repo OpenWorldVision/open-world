@@ -5,6 +5,7 @@ import { providers } from 'ethers'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import theme from '../components/theme'
+import Layout from '@components/layout'
 // config.autoAddCss = false
 
 function getLibrary(provider, connector) {
@@ -15,7 +16,9 @@ export default function App({ Component, pageProps }) {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
+        <Layout home>
+          <Component {...pageProps} />
+        </Layout>
       </ChakraProvider>
     </Web3ReactProvider>
   )

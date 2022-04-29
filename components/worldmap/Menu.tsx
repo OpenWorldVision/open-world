@@ -14,7 +14,6 @@ export default function Menu() {
           }}
         >
           <img src="/images/worldmap/Menu.png" alt="img" />
-          <div>Menu</div>
         </button>
         {isOpenMenu && (
           <ul>
@@ -27,8 +26,8 @@ export default function Menu() {
               <Link href="/">Map</Link>
             </li>
             <li>
-              <Link href="/alchemist">
-                <a>Alchemist</a>
+              <Link href="/battleArena">
+                <a>Battle Arena</a>
               </Link>
             </li>
             <li>
@@ -37,33 +36,13 @@ export default function Menu() {
               </Link>
             </li>
             <li>
-              <Link href="/docks">
-                <a>Docks</a>
+              <Link href="/foodCourt">
+                <a>Food Court</a>
               </Link>
             </li>
             <li>
-              <Link href="/gardens">
-                <a>Gardens</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/jeweler">
-                <a>Jeweler</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/marketplace">
+              <Link href="/market">
                 <a>Marketplace</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/meditation-circle">
-                <a>Meditation Circle</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/portal">
-                <a>Portal</a>
               </Link>
             </li>
             <li>
@@ -72,9 +51,18 @@ export default function Menu() {
               </Link>
             </li>
             <li>
-              <Link href="/tavern">
-                <a>Tavern</a>
+              <Link href="/workshop">
+                <a>Workshop</a>
               </Link>
+            </li>
+            <li>
+              <a
+                href="https://openworld.vision/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                OPEN
+              </a>
             </li>
             <li>
               <Link href="/about">
@@ -93,29 +81,23 @@ const MenuCSS = styled.div({
     position: 'fixed',
     top: '30px',
     right: '30px',
+    zIndex: '2000',
     '@media(max-width: 720px)': {
-      top: '10px',
       right: '10px',
     },
     button: {
-      width: '90px',
-      height: '90px',
+      width: '70px',
+      height: '70px',
       '@media(max-width: 720px)': {
-        width: '55px',
-        height: '55px',
-      },
-      backgroundImage:
-        'linear-gradient(to right, rgba(1,1,1, 0.6) , rgb(1,1,1))',
-      ':hover': {
-        backgroundImage:
-          'linear-gradient(to right, rgba(1,1,1, 0.6) , rgba(135,81,20, 0.8))',
+        width: '60px',
+        height: '60px',
       },
       img: {
         position: 'absolute',
         top: '-2px',
         left: '-2px',
-        'min-width': '106%',
-        'min-height': '106%',
+        'min-width': '100%',
+        'min-height': '100%',
       },
       div: {
         position: 'absolute',
@@ -131,7 +113,7 @@ const MenuCSS = styled.div({
     },
     ul: {
       position: 'absolute',
-      top: '92px',
+      top: '72px',
       right: 0,
       width: '160px',
       listStyle: 'none',

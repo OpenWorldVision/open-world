@@ -1,0 +1,136 @@
+.linkWrap {
+  position: absolute;
+}
+
+.castleWrap {
+  top: 36%;
+  left: 890px;
+  width: 267px;
+  height: 163px;
+}
+
+.marketWrap {
+  top: 50%;
+  left: 850px;
+  width: 110px;
+  height: 110px;
+}
+
+.workShopWrap {
+  top: 56%;
+  left: 961px;
+  width: 79px;
+  height: 100px;
+}
+
+.foodCourtWrap {
+  top: 64%;
+  left: 924px;
+  width: 89px;
+  height: 100px;
+}
+
+.battleArenaWrap {
+  top: 64%;
+  left: 740px;
+  width: 96px;
+  height: 90px;
+}
+
+.professionsWrap {
+  top: 56%;
+  left: 665px;
+  width: 75px;
+  height: 84px;
+}
+
+.showLinkBtn {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2;
+  background-color: transparent !important;
+}
+
+.navigateLink {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  z-index: -1;
+  top: -20px;
+  opacity: 0;
+  -webkit-tap-highlight-color: transparent;
+  will-change: opacity, top, z-index;
+  transform: translateX(-50%);
+  transition: all 0.5s;
+}
+
+@media (min-width: 1025px) {
+  .showLinkBtn:hover .navigateLink {
+    top: -40px;
+    opacity: 1;
+    will-change: opacity, top;
+    transition: all 0.5s;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .linkOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    transition: all 0.1s;
+  }
+
+  .navigateLink.active {
+    top: -40px;
+    opacity: 1;
+    z-index: 1;
+    will-change: opacity, top, z-index;
+    transition: all 0.5s;
+  }
+
+  .linkOverlay.active {
+    z-index: -1;
+    transition: all 0.7s;
+  }
+}
+
+.navigateLink:hover {
+  text-decoration: none;
+}
+
+.mapBtn {
+  width: fit-content;
+  height: 35px;
+  background-image: url('/images/worldmap/mapBtn.png');
+  background-position: center center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  font-weight: 700;
+  font-size: 12px;
+  font-family: 'Noto Serif', serif;
+  color: #571010;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mapBtn span {
+  padding: 0 30px;
+  white-space: nowrap;
+}
+
+.castleLink {
+  width: 100%;
+}

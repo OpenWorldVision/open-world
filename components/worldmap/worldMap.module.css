@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
+
+.worldMapOverlay {
+  background-color: #000;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.worldMapContainer {
+  position: relative;
+  width: 1858px;
+  height: 100vh;
+  min-width: 1568px;
+  background-color: #000;
+}
+
+.worldMapBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url('/images/worldmap/worldMap-bg.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  width: 1858px;
+  height: 100%;
+  z-index: 1000;
+  background-size: 100% 100%;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+}
+
+@media (max-height: 1023px) {
+  .worldMapOverlay {
+    height: 130vh;
+  }
+  .worldMapContainer {
+    height: 130vh;
+  }
+}
+
+@media (max-height: 375px) {
+  .worldMapOverlay {
+    height: 270vh;
+  }
+  .worldMapContainer {
+    height: 270vh;
+  }
+}
