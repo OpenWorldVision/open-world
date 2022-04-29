@@ -12,4 +12,6 @@ module.exports = async function (deployer, network) {
   await deployProxy(HeroCore, [govToken], {
     deployer,
   })
+  // const hero = await HeroCore.at('0xE8977C9E35a8aCa6cB179681433062d38043FB58')
+  // await hero.mint('0x2CC6D07871A1c0655d6A7c9b0Ad24bED8f940517', '1')
 }
