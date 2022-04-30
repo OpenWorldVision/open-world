@@ -433,6 +433,7 @@ img {
 
 .cursor-btn {
   /* cursor: url(/images/click-cursor-2x.png), auto !important; */
+  cursor: pointer;
 }
 
 .layout-btn {
@@ -505,6 +506,7 @@ hr {
 
 .click-cursor {
   /* cursor: url('/images/castle/click-cursor.png'), auto !important; */
+  cursor: pointer;
 }
 
 .overlay {
