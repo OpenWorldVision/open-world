@@ -1,7 +1,12 @@
 import { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
 
-export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
+export default function Menu({
+  setIsOpenUserInfo,
+  isOpenUserInfo,
+  setIsOpenCreateProfile,
+  profile,
+}) {
   const [isOpenUserDetail, setIsOpenUserDetail] = useState(false)
   const [isOpenSearchOption, setIsOpenSearchOption] = useState(true)
   const handleCloseModalUserInfo = useCallback(
@@ -48,6 +53,19 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
           </div>
           <div className="modal-content-user-info-body">
             <div>
+              {!profile && (
+                <button
+                  css={{
+                    marginBottom: '10px',
+                  }}
+                  onClick={(e) => {
+                    setIsOpenCreateProfile(true)
+                    setIsOpenUserInfo(false)
+                  }}
+                >
+                  CREATE PROFILE
+                </button>
+              )}
               <button
                 onClick={(e) => {
                   setIsOpenUserDetail(true)
@@ -110,7 +128,10 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
             </div>
             <div>
               <div>Account Details</div>
-              <button>0x63BB...2461</button>
+              <button>{`${profile?._owner.slice(
+                0,
+                6
+              )} ... ${profile?._owner.slice(-4)}`}</button>
             </div>
           </div>
           {isOpenUserDetail && (
