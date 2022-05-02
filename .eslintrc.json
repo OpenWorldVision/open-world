@@ -4,5 +4,6 @@
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
     "prettier"
-  ]
+  ],
+  "ignorePatterns": ["truffle-config.js", "**/migrations/*.js"]
 }
