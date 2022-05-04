@@ -67,8 +67,8 @@ export default function Layout({ children, home }) {
           content="/images/worldmap/OW-logo.png"
           // content="/images/favicon-3.png"
         />
-        <meta property="og:image:width" content="100" />
-        <meta property="og:image:height" content="100" />
+        <meta property="og:image:width" content="10" />
+        <meta property="og:image:height" content="10" />
 
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
