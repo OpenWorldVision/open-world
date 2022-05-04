@@ -7,7 +7,7 @@ import Entry from '@components/entry/Entry'
 import { useCallback, useState, useEffect } from 'react'
 import BtnWorldMap from './worldmap/BtnWorldMap'
 
-export const siteTitle = 'Open World #Metaverse'
+export const siteTitle = 'Test #Metaverse'
 
 export default function Layout({ children, home }) {
   const [connected, setConnected] = useState(false)
@@ -63,8 +63,6 @@ export default function Layout({ children, home }) {
           // content="/images/worldmap/OW-logo.png"
           // content="/images/favicon-3.png"
         />
-        <meta property="og:image:width" content="10" />
-        <meta property="og:image:height" content="10" />
 
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
