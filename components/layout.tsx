@@ -64,9 +64,7 @@ export default function Layout({ children, home }) {
           //   siteTitle
           // )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
           // content="/images/worldmap/OW-logo.png"
-          content={`/images/worldmap/OW-logo.png${encodeURI(
-            siteTitle
-          )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
+          content={`/images/worldmap/favicon.ico${encodeURI(siteTitle)}`}
         />
 
         <meta name="og:title" content={siteTitle} />
