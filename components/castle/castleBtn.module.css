@@ -19,7 +19,7 @@
   min-width: 66px;
   -webkit-animation: buttonAnimation 2s infinite;
   animation: buttonAnimation 2s infinite;
-  cursor: url('/images/castle/click-cursor.png'), auto !important;
+  /* cursor: url('/images/castle/click-cursor.png'), auto !important; */
 }
 
 .gameButton::before,

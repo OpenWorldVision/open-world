@@ -201,7 +201,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 />
                 <ModalContent
@@ -216,7 +216,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -336,7 +336,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 />
                 <ModalContent
@@ -351,7 +351,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -398,7 +398,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 />
                 <ModalContent
@@ -413,7 +413,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -441,7 +441,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 />
                 <ModalContent
@@ -456,7 +456,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -555,7 +555,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 />
                 <ModalContent
@@ -570,7 +570,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -776,7 +776,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 />
                 <ModalContent
@@ -791,7 +791,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -855,8 +855,8 @@ export default function Jeweler(props) {
                           backgroundColor: '#009c44',
                           marginTop: '40px',
                           fontSize: '28px',
-                          cursor:
-                            'url(/images/jeweler/default-cursor.png), auto',
+                          // cursor:
+                          //   'url(/images/jeweler/default-cursor.png), auto',
                         }}
                       >
                         Claim
@@ -873,7 +873,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 />
                 <ModalContent
@@ -888,7 +888,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -951,7 +951,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 />
                 <ModalContent
@@ -966,7 +966,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+                    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
