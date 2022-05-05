@@ -9,6 +9,9 @@ module.exports = async function (deployer, network) {
   if (network === 'harmony') {
     govToken = ''
   }
+  if (network === 'bsctestnet') {
+    govToken = '0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B'
+  }
   await deployProxy(HeroCore, [govToken], {
     deployer,
   })
