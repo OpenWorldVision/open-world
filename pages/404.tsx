@@ -13,26 +13,11 @@ const valueDefaultInitial = {
 }
 export default function Home({ allPostsData }) {
   return (
-    <VStack>
-      <WorldMap>
-        <MapInteractionCSS
-          defaultValue={valueDefaultInitial}
-          minScale={0.6}
-          maxScale={1.3}
-          disableZoom
-          disablePan
-        >
-          <div className="containerWorldMap">
-            <img
-              className="world_map"
-              src="/images/worldmap/WorldMapXmasPro.png"
-              alt="img"
-            />
-          </div>
-        </MapInteractionCSS>
+    <NotFoundPage>
+      <div className="containerWorldMap">
         <div className="modal">
           <div className="modal-content">
-            <img src="/images/worldmap/Logo.png" alt="logo" />
+            <img src="/images/worldmap/OW-logo.png" alt="logo" />
             <div>Coming Soon</div>
             <Link href="/">
               <button>
@@ -41,8 +26,8 @@ export default function Home({ allPostsData }) {
             </Link>
           </div>
         </div>
-      </WorldMap>
-    </VStack>
+      </div>
+    </NotFoundPage>
   )
 }
 const wordMap_kf = keyframes`
@@ -53,16 +38,19 @@ const wordMap_kf = keyframes`
     transform: translate(-40960px, 0);
   }
 `
-const WorldMap = styled.div({
+const NotFoundPage = styled.div({
   backgroundColor: 'rgb(148,151,168)',
   cursor: 'url(/images/worldmap/CursorDefault.png), auto',
   'button, input, select': {
     cursor: 'url(/images/worldmap/SelectCursor.png), auto',
   },
   '.containerWorldMap': {
+    backgroundImage: 'url(/images/background/game-bg.jpg)',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
     cursor: 'url(/images/worldmap/CursorDefault.png), auto',
-    width: '5120px',
-    height: '5120px',
+    width: '100vw',
+    height: '100vh',
     overflow: 'hidden',
     position: 'relative',
     '.world_map': {
@@ -80,7 +68,6 @@ const WorldMap = styled.div({
     width: '100%',
     height: '100%',
     overflow: 'auto',
-    backgroundColor: 'rgba(0,0,0,0.9)',
   },
   '.modal-content': {
     margin: '10% auto',
@@ -92,10 +79,10 @@ const WorldMap = styled.div({
     flexDirection: 'column',
     div: {
       fontSize: '50px',
-      color: 'rgb(253,206,110)',
+      color: '#fff',
     },
     button: {
-      backgroundColor: 'rgb(0,156,68)',
+      backgroundImage: 'linear-gradient(to right, #f85474 ,#8937f1)',
       minWidth: '300px',
       height: '50px',
       borderRadius: '15px',
@@ -105,7 +92,7 @@ const WorldMap = styled.div({
         textDecoration: 'none',
       },
       ':hover': {
-        backgroundColor: 'rgb(253,206,110)',
+        backgroundImage: 'linear-gradient(to right, #f85474 ,#8937f1)',
         color: 'black',
       },
     },

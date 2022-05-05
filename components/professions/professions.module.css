@@ -1,195 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
 .professionsOverlay {
-  background-image: url('/images/background/background.png');
-  height: 100vh;
-  z-index: 1000;
+  background-image: url('/images/background/game-bg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #ccc;
+  z-index: 2001;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.professionsOverlay::-webkit-scrollbar-thumb {
+  background-color: rgb(123, 123, 123);
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+.professionsOverlay::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 .professionsContainer {
-  position: relative;
-  width: 1858px;
-  height: 1393.5px;
-  min-width: 640px;
-  background-image: url('/images/professions/professions-border.png');
+  max-width: 1200px;
+  height: fit-content;
+  padding: 120px 15px 0;
+}
+
+.npcCard {
+  display: block;
+  width: 100%;
+  height: 100%;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: contain;
+  background-position: center center;
+}
+
+.npcCard.openianNPC {
+  background-image: url('/images/professions/npc/openianNPC.png');
+}
+
+.npcCard.supplierNPC {
+  background-image: url('/images/professions/npc/supplierNPC.png');
+}
+
+.npcCard.smithNPC {
+  background-image: url('/images/professions/npc/smithNPC.png');
+}
+
+.professionsText {
+  position: relative;
+  margin-top: 40px;
+  min-height: 170px;
+  height: fit-content;
+  background-image: url('/images/professions/borders/border-left.png'),
+    url('/images/professions/borders/border-right.png');
+  background-position: center left, center right;
+  background-repeat: no-repeat;
+  background-size: 30px 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.professionsBg {
+.professionsText::before,
+.professionsText::after {
   position: absolute;
-  background-image: url('/images/professions/professions-bg.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center center;
-  width: 1809px;
-  height: 1344px;
-  top: 23.4844px;
-  left: 24.4844px;
-  z-index: 1000;
-  image-rendering: pixelated;
-  border-radius: 40px;
+  content: '';
 }
 
-.fishingRodWrap,
-.petsWrap {
-  position: absolute;
+.professionsText::before {
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: calc(100% + 12px);
+  background-position: center top, center bottom;
+  background-repeat: no-repeat;
+  background-size: calc(100% - 111px) 26px;
+  background-image: url('/images/professions/borders/border-top.png'),
+    url('/images/professions/borders/border-bottom.png');
+}
+
+.professionsText::after {
+  top: 0;
+  left: 0px;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1300;
-}
-
-.fishingRodWrap {
-  top: -42px;
-  left: -34px;
-}
-
-.fishingRod,
-.pets {
-  position: absolute;
-  width: 14864px;
-  height: 1393.5px;
+  height: calc(100% + 12px);
+  background-position: left top, right top, left bottom, right bottom;
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-  image-rendering: pixelated;
-  transform: scale(1, 1);
+  background-size: 68px;
+  background-image: url('/images/professions/borders/border-top-left.png'),
+    url('/images/professions/borders/border-top-right.png'),
+    url('/images/professions/borders/border-bottom-left.png'),
+    url('/images/professions/borders/border-bottom-right.png');
 }
 
-.fishingRod {
-  background-image: url('/images/professions/fishingRod.png');
-  animation: translateAnimation steps(8) normal 5s infinite;
+.professionsText span {
+  color: #fff;
+  font-family: 'Merriweather', serif;
+  font-size: 36px;
 }
 
-.petsWrap {
-  top: -35px;
-  left: -23px;
-}
-
-.pets {
-  background-image: url('/images/professions/pets.png');
-  animation: translateAnimation steps(8) normal 1s infinite;
-  width: 14890px;
-}
-
-.npcWrap {
+.backBtn {
+  display: block;
   position: absolute;
-  overflow: hidden;
-  z-index: 1300;
-}
-
-.npc {
-  position: absolute;
+  top: 30px;
+  left: 35px;
+  width: 235px;
+  height: 75px;
+  background-image: url('/images/professions/back-btn.png');
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  image-rendering: pixelated;
+  background-size: 100%;
 }
 
-.npcBtn {
-  position: absolute;
-  overflow: hidden;
-  background-color: transparent;
-  border: 0px;
-  outline: 0px;
-  padding-top: 10px;
-  z-index: 5000;
-  display: flex;
-  justify-content: center;
-}
-
-.npcForagerWrap {
-  width: 116.125px;
-  height: 139.35px;
-  top: 557.4px;
-  left: 650.3px;
-  transform: scale(-1, 1);
-}
-
-.npcForager {
-  background-image: url('/images/professions/foragerNPC.png');
-  width: 3716px;
-  height: 139.35px;
-  animation: translateAnimation steps(4) normal 4s infinite;
-}
-
-.foragerBtn {
-  width: 128.609px;
-  height: 176.641px;
-  left: 646.203px;
-  top: 508.303px;
-}
-
-.npcDruidWrap {
-  width: 214.831px;
-  height: 162.575px;
-  top: 963.838px;
-  left: 476.113px;
-}
-
-.npcDruid {
-  background-image: url('/images/professions/druidNPC.png');
-  width: 6874.6px;
-  height: 162.575px;
-  animation: translateAnimation steps(4) normal 4s infinite;
-}
-
-.druidBtn {
-  width: 214.831px;
-  height: 215.575px;
-  top: 903.838px;
-  left: 476.113px;
-}
-
-.npcFisherWrap {
-  width: 290.312px;
-  height: 290.312px;
-  top: 891.259px;
-  left: 1347.05px;
-}
-
-.npcFisher {
-  width: 7838.44px;
-  height: 290.312px;
-  background-image: url('/images/professions/fisherNPC.png');
-  animation: translateAnimation steps(27) normal 10s infinite;
-}
-
-.fisherBtn {
-  width: 124.312px;
-  height: 210.312px;
-  top: 874.259px;
-  left: 1351.05px;
-}
-
-.npcMinerWrap {
-  width: 101.609px;
-  height: 124.834px;
-  top: 603.85px;
-  left: 1410.92px;
-}
-
-.npcMiner {
-  width: 4470.81px;
-  height: 124.834px;
-  background-image: url('/images/professions/miningNPC.png');
-  animation: translateAnimation steps(44) normal 20s infinite;
-}
-
-.minerBtn {
-  width: 124.312px;
-  height: 182.312px;
-  top: 534.85px;
-  left: 1396.92px;
-}
-
-@keyframes translateAnimation {
-  from {
-    transform: translateX(0);
+@media (max-width: 1500px) {
+  .professionsContainer {
+    padding-bottom: 120px;
   }
-  to {
-    transform: translateX(-100%);
+  .professionsText span {
+    font-size: 28px;
+    padding: 20px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .professionsContainer {
+    padding-top: 100px;
+  }
+  .professionsText span {
+    padding: 50px 20px;
+  }
+  .backBtn {
+    width: 140px;
+    height: 75px;
   }
 }

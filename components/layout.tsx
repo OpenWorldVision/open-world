@@ -3,10 +3,44 @@ import styles from './layout.module.css'
 import Link from 'next/link'
 import Menu from '@components/worldmap/Menu'
 import User from '@components/worldmap/User'
+import Entry from '@components/entry/Entry'
+import { useCallback, useState, useEffect } from 'react'
+import BtnWorldMap from './worldmap/BtnWorldMap'
 
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
+  const [connected, setConnected] = useState(false)
+
+  const checkIsConnected = useCallback((status) => {
+    console.log(`Connected change from ${connected} to ${status}`)
+    setConnected(status)
+  }, [])
+
+  const [currentURL, setCurentURL] = useState('')
+  useEffect(() => {
+    setCurentURL(window.location.href)
+  }, [])
+
+  const checkCurrentPage = () => {
+    const isArena = currentURL.includes('battleArena')
+    const isCastle = currentURL.includes('castle')
+    const isFoodCourt = currentURL.includes('foodCourt')
+    const isMarketPlace = currentURL.includes('market')
+    const isProfessions = currentURL.includes('professions')
+    const isWorkshop = currentURL.includes('workshop')
+    if (
+      isArena ||
+      isFoodCourt ||
+      isCastle ||
+      isMarketPlace ||
+      isProfessions ||
+      isWorkshop
+    ) {
+      return <BtnWorldMap />
+    }
+  }
+
   return (
     <div
       style={{ cursor: 'url(/images/default-cursor.png), auto' }}
@@ -34,11 +68,17 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <main>
-        {children}
-        <Menu />
-        <User />
-      </main>
+      {!connected && (
+        <Entry checkIsConnected={(status) => checkIsConnected(status)} />
+      )}
+      {connected && (
+        <main>
+          {children}
+          <Menu />
+          <User />
+          {checkCurrentPage()}
+        </main>
+      )}
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
