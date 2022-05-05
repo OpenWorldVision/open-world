@@ -42,10 +42,19 @@ export default function Entry(props: Props) {
             chainId === '0x6357d2e0' ||
             chainId === '0x61'
           ) {
+            window.ethereum
+              .request({ method: 'eth_requestAccounts' })
+              .then(() => {
+                checkIsConnected(true)
+              })
+              .catch(() => {
+                checkIsConnected(false)
+              })
           } else {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
+                checkIsConnected(true)
                 window.ethereum
                   .request({
                     method: 'wallet_switchEthereumChain',
