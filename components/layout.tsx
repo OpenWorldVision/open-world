@@ -13,7 +13,6 @@ export default function Layout({ children, home }) {
   const [connected, setConnected] = useState(false)
 
   const checkIsConnected = useCallback((status) => {
-    console.log(`Connected change from ${connected} to ${status}`)
     setConnected(status)
   }, [])
 
