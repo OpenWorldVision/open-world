@@ -142,6 +142,7 @@ export default function Entry(props: Props) {
   const switchWallet = () => {
     connectWallet()
   }
+  //build cloudfare
   return (
     <div className={styles.main}>
       <img src={'/images/common/gameLogo.png'} alt={'logo'} />
