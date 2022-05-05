@@ -28,8 +28,13 @@ const Entry = () => {
       const connectWallet = async () => {
         if (window.ethereum) {
           const chainId = window?.ethereum?.chainId
+          console.log('chain id la gi', chainId)
           setNameOfChain(chainName[chainId] || '')
-          if (chainId === '0x63564c40' || chainId === '0x6357d2e0') {
+          if (
+            chainId === '0x63564c40' ||
+            chainId === '0x6357d2e0' ||
+            chainId === '0x61'
+          ) {
           } else {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
