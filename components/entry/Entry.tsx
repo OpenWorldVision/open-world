@@ -35,7 +35,6 @@ export default function Entry(props: Props) {
       const connectWallet = async () => {
         if (window.ethereum) {
           const chainId = window?.ethereum?.chainId
-          console.log('chain id la gi', chainId)
           setNameOfChain(chainName[chainId] || '')
           if (
             chainId === '0x63564c40' ||
