@@ -27,92 +27,14 @@ export default function Entry(props: Props) {
 
   const [playMusic, setPlayMusic] = useState(false)
   const [playSound, setPlaySound] = useState(false)
-  const [nameOfChain, setNameOfChain] = useState('Binance Smart Chain')
+  const [nameOfChain, setNameOfChain] = useState('Harmony Mainnet')
   const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
   //deploy cloudfare 2
   useEffect(() => {
     try {
-      const connectWallet = async () => {
-        if (window.ethereum) {
-          const chainId = window?.ethereum?.chainId
-          setNameOfChain(chainName[chainId] || '')
-          if (
-            chainId === '0x63564c40' ||
-            chainId === '0x6357d2e0' ||
-            chainId === '0x61'
-          ) {
-            window.ethereum
-              .request({ method: 'eth_requestAccounts' })
-              .then(() => {
-                checkIsConnected(true)
-              })
-              .catch(() => {
-                checkIsConnected(false)
-              })
-          } else {
-            window.ethereum
-              .request({ method: 'eth_requestAccounts' })
-              .then(() => {
-                checkIsConnected(true)
-                window.ethereum
-                  .request({
-                    method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0x63564c40' }],
-                  })
-                  .then(() => {
-                    checkIsConnected(true)
-                  })
-                  .catch((error) => {
-                    window.ethereum.request({
-                      method: 'wallet_addEthereumChain',
-                      params: [
-                        {
-                          chainId: '0x63564c40',
-                          chainName: 'Harmony Mainnet',
-                          rpcUrls: ['https://api.harmony.one'],
-                          nativeCurrency: {
-                            name: 'ONE',
-                            symbol: 'ONE',
-                            decimals: 18,
-                          },
-                        },
-                      ],
-                    })
-                  })
-              })
-              .catch(() => {
-                checkIsConnected(false)
-              })
-          }
-        }
-      }
       connectWallet()
       checkTokenWasAdded()
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      const subscribeChainChanged = window.ethereum.on(
-        'chainChanged',
-        async () => {
-          setTimeout(async () => {
-            await connectWallet()
-          }, 1000)
-        }
-      )
-      const subscribeWalletChanged = window.ethereum.on(
-        'accountsChanged',
-        async () => {
-          setTimeout(async () => {
-            await checkTokenWasAdded()
-          }, 1000)
-        }
-      )
-      return () => {
-        if (typeof subscribeChainChanged === 'function') {
-          subscribeChainChanged()
-        }
-        if (typeof subscribeWalletChanged === 'function') {
-          subscribeWalletChanged()
-        }
-      }
     } catch (error: unknown) {
       setOpenModalAddWallet(true)
     }
@@ -144,6 +66,61 @@ export default function Entry(props: Props) {
       }
     }
   }
+
+  const connectWallet = async () => {
+    if (window.ethereum) {
+      const chainId = window?.ethereum?.chainId
+      setNameOfChain(chainName[chainId] || '')
+      if (
+        chainId === '0x63564c40' ||
+        chainId === '0x6357d2e0' ||
+        chainId === '0x61'
+      ) {
+        window.ethereum
+          .request({ method: 'eth_requestAccounts' })
+          .then(() => {
+            checkIsConnected(true)
+          })
+          .catch(() => {
+            checkIsConnected(false)
+          })
+      } else {
+        window.ethereum
+          .request({ method: 'eth_requestAccounts' })
+          .then(() => {
+            // checkIsConnected(true)
+            window.ethereum
+              .request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0x63564c40' }],
+              })
+              .then(() => {
+                checkIsConnected(true)
+              })
+              .catch((error) => {
+                window.ethereum.request({
+                  method: 'wallet_addEthereumChain',
+                  params: [
+                    {
+                      chainId: '0x63564c40',
+                      chainName: 'Harmony Mainnet',
+                      rpcUrls: ['https://api.harmony.one'],
+                      nativeCurrency: {
+                        name: 'ONE',
+                        symbol: 'ONE',
+                        decimals: 18,
+                      },
+                    },
+                  ],
+                })
+              })
+          })
+          .catch(() => {
+            checkIsConnected(false)
+          })
+      }
+    }
+  }
   const onCloseModal = () => {
     setOpenModalAddWallet(false)
   }
@@ -161,14 +138,15 @@ export default function Entry(props: Props) {
       setPlayMusic(!playMusic)
     }
   }
+
+  const switchWallet = () => {
+    connectWallet()
+  }
   return (
     <div className={styles.main}>
       <img src={'/images/common/gameLogo.png'} alt={'logo'} />
       <Link href={'/'} passHref>
-        <Button
-          style={_styles.buttonStyle}
-          // onClick={connectWallet}
-        >
+        <Button style={_styles.buttonStyle} onClick={switchWallet}>
           <Text style={_styles.buttonText}>PLAY</Text>
         </Button>
       </Link>
