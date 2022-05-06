@@ -21,7 +21,6 @@ export default function Layout({ children, home }) {
   useEffect(() => {
     setCurentURL(window.location.href)
   }, [])
-  // console.log(currentURL)
 
   const handleBackToWorldMap = () => {
     setCurentURL('')

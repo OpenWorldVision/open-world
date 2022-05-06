@@ -84,7 +84,7 @@ export default function Entry(props: Props) {
           }
         }
       }
-      console.log(localStorage.getItem('checkConnect'))
+
       connectWallet()
       checkTokenWasAdded()
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -160,7 +160,7 @@ export default function Entry(props: Props) {
       setPlayMusic(!playMusic)
     }
   }
-  // console.log(checkConnected)
+
 
   return (
     <div className={styles.main}>
