@@ -3,5 +3,7 @@
   "[typescript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "solidity.compileUsingLocalVersion": "0.7.5",
+  "solidity.compileUsingRemoteVersion": "0.7.5"
 }

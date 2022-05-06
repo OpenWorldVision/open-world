@@ -15,6 +15,8 @@ const providerOptions = {
       rpc: {
         56: 'https://bsc-dataseed.binance.org/',
         97: 'https://speedy-nodes-nyc.moralis.io/eba7d2e0234f08d2741c13aa/bsc/testnet',
+        1666600000: 'https://api.harmony.one',
+        1666700000: 'https://api.s0.b.hmny.io',
       },
     },
   },
