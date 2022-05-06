@@ -1,10 +1,40 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
+import { getWeb3Client } from '@lib/web3'
+import CreateProfile from '@components/worldmap/CreateProfile'
+import { proFilesContract } from 'utils/profileContract'
 
 export default function User() {
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
+  const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
+  const [profile, setProfile] = useState(null)
+
+  const getContractProfile = async () => {
+    const web3Client = await getWeb3Client()
+    const accounts = await web3Client?.web3Client.eth.getAccounts()
+    const contract = await proFilesContract(web3Client.web3Client)
+
+    try {
+      const profileExist = await contract.methods
+        .profileExists(accounts[0])
+        .call({ from: accounts[0] })
+      if (profileExist) {
+        setProfile(
+          await contract.methods
+            .getProfileByAddress(accounts[0])
+            .call({ from: accounts[0] })
+        )
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    getContractProfile()
+  }, [])
 
   return (
     <UserCSS>
@@ -25,16 +55,13 @@ export default function User() {
         >
           <img src="/images/worldmap/Frame.png" alt="img" />
           <img
-            onClick={() => {
-              setIsOpenUserInfo(true)
-            }}
-            src="/images/worldmap/Avatar.png"
+            src={`./images/profile/hero/hero-${profile?._picId || 'none'}.png`}
             alt="img"
           />
         </button>
         {isOpenAvatar && (
           <div className="user-info">
-            <div>Ngo Thanh Nam</div>
+            <div>{profile?._name}</div>
             <ul>
               <li>0.00 OPEN</li>
               {/* Career : Openian or Supplier or BlackSmith */}
@@ -51,12 +78,40 @@ export default function User() {
                 <div>100/100</div>
               </li>
             </ul>
+            <button
+              css={{
+                width: '100%',
+                backgroundColor: '#009C44',
+                borderRadius: '5px',
+                height: '40px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '6px',
+                ':hover': {
+                  backgroundColor: '#fbeb74',
+                  color: 'black',
+                },
+              }}
+              onClick={() => {
+                setIsOpenUserInfo(true)
+              }}
+            >
+              Profile
+            </button>
           </div>
         )}
         {isOpenUserInfo && (
           <UserInfo
             setIsOpenUserInfo={setIsOpenUserInfo}
             isOpenUserInfo={isOpenUserInfo}
+            setIsOpenCreateProfile={setIsOpenCreateProfile}
+            profile={profile}
+          />
+        )}
+        {isOpenCreateProfile && (
+          <CreateProfile
+            setIsOpenCreateProfile={setIsOpenCreateProfile}
+            isOpenCreateProfile={isOpenCreateProfile}
           />
         )}
       </div>
@@ -82,7 +137,6 @@ const UserCSS = styled.div({
         position: 'absolute',
         top: '-2px',
         left: '-2px',
-        zIndex: 2,
       },
       'img:nth-child(2)': {
         position: 'absolute',
