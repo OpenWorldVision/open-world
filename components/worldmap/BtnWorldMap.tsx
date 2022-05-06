@@ -22,7 +22,7 @@ const BtnWorldMapStyle = styled.div({
     padding: '0em 0.6em 0em 2.1em',
     color: 'rgb(255, 255, 255)',
     textDecoration: 'none',
-    cursor: 'url(/images/worldmap/SelectCursor.png),auto',
+    // cursor: 'url(/images/worldmap/SelectCursor.png),auto',
   },
   '.bordered-box-thin': {
     position: 'fixed',
@@ -32,7 +32,7 @@ const BtnWorldMapStyle = styled.div({
     padding: '1rem',
     backgroundImage:
       'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5))',
-    cursor: 'url(/images/jeweler/default-cursor.png), auto',
+    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
   },
   '@media(max-width: 768px)': {
     '.bordered-box-thin': {
