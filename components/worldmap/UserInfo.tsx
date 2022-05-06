@@ -1,7 +1,12 @@
 import { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
 
-export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
+export default function Menu({
+  setIsOpenUserInfo,
+  isOpenUserInfo,
+  setIsOpenCreateProfile,
+  profile,
+}) {
   const [isOpenUserDetail, setIsOpenUserDetail] = useState(false)
   const [isOpenSearchOption, setIsOpenSearchOption] = useState(true)
   const handleCloseModalUserInfo = useCallback(
@@ -48,6 +53,19 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
           </div>
           <div className="modal-content-user-info-body">
             <div>
+              {!profile && (
+                <button
+                  css={{
+                    marginBottom: '10px',
+                  }}
+                  onClick={(e) => {
+                    setIsOpenCreateProfile(true)
+                    setIsOpenUserInfo(false)
+                  }}
+                >
+                  CREATE PROFILE
+                </button>
+              )}
               <button
                 onClick={(e) => {
                   setIsOpenUserDetail(true)
@@ -110,7 +128,10 @@ export default function Menu({ setIsOpenUserInfo, isOpenUserInfo }) {
             </div>
             <div>
               <div>Account Details</div>
-              <button>0x63BB...2461</button>
+              <button>{`${profile?._owner.slice(
+                0,
+                6
+              )} ... ${profile?._owner.slice(-4)}`}</button>
             </div>
           </div>
           {isOpenUserDetail && (
@@ -588,15 +609,15 @@ const UserInfoCSS = styled.div({
           },
         },
         '> div:nth-child(3), > div:nth-child(4), > div:nth-child(5), > div:nth-child(6)':
-          {
-            padding: '8px 20px',
-            borderBottom: '1px solid rgb(55,55,55)',
-            '> div': {
-              display: 'flex',
-              justifyContent: 'space-between',
-              margin: '10px 0',
-            },
+        {
+          padding: '8px 20px',
+          borderBottom: '1px solid rgb(55,55,55)',
+          '> div': {
+            display: 'flex',
+            justifyContent: 'space-between',
+            margin: '10px 0',
           },
+        },
         '> div:nth-child(7)': {
           padding: '8px 20px',
           paddingBottom: '30px',
