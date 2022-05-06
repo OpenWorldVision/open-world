@@ -10,15 +10,15 @@
 }
 
 .marketWrap {
-  top: 50%;
-  left: 850px;
+  top: 56%;
+  left: 913px;
   width: 110px;
-  height: 110px;
+  height: 56px;
 }
 
 .workShopWrap {
   top: 56%;
-  left: 961px;
+  left: 960px;
   width: 79px;
   height: 100px;
 }
@@ -52,6 +52,10 @@
   height: 100% !important;
   z-index: 2;
   background-color: transparent !important;
+}
+
+.marketWrap .showLinkBtn {
+  width: 42% !important;
 }
 
 .navigateLink {
