@@ -17,13 +17,17 @@ export default function Layout({ children, home }) {
   const [connected, setConnected] = useState(false)
   const [nameOfChain, setNameOfChain] = useState('Binance Smart Chain')
   const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
-  const [test, setTest] = useState(false)
+  const [isEntry, setIsEntry] = useState(false)
 
-  console.log(connected)
+  console.log(isEntry)
   const [currentURL, setCurentURL] = useState('')
   useEffect(() => {
     setCurentURL(window.location.href)
   }, [])
+
+  const handleBackToWorldMap = () => {
+    setCurentURL('')
+  }
 
   const checkCurrentPage = () => {
     const isArena = currentURL.includes('battleArena')
@@ -33,14 +37,14 @@ export default function Layout({ children, home }) {
     const isProfessions = currentURL.includes('professions')
     const isWorkshop = currentURL.includes('workshop')
     if (
-      isArena ||
-      isFoodCourt ||
+      // isArena ||
+      // isFoodCourt ||
+      // isMarketPlace ||
       isCastle ||
-      isMarketPlace ||
-      isProfessions ||
-      isWorkshop
+      isProfessions
+      // isWorkshop
     ) {
-      return <BtnWorldMap />
+      return <BtnWorldMap backToWorldMap={handleBackToWorldMap} />
     }
   }
   //deploy cloudfare 2
@@ -59,12 +63,12 @@ export default function Layout({ children, home }) {
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
                 setConnected(true)
-                setTest(false)
+                setIsEntry(false)
                 localStorage.setItem('checkConnect', 'true')
               })
               .catch(() => {
                 setConnected(false)
-                setTest(true)
+                setIsEntry(true)
                 localStorage.setItem('checkConnect', 'false')
               })
           } else {
@@ -72,7 +76,7 @@ export default function Layout({ children, home }) {
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
                 setConnected(true)
-                setTest(false)
+                setIsEntry(false)
                 localStorage.setItem('checkConnect', 'true')
                 window.ethereum
                   .request({
@@ -81,7 +85,7 @@ export default function Layout({ children, home }) {
                   })
                   .then(() => {
                     setConnected(true)
-                    setTest(false)
+                    setIsEntry(false)
                     localStorage.setItem('checkConnect', 'true')
                   })
                   .catch((error) => {
@@ -104,7 +108,7 @@ export default function Layout({ children, home }) {
               })
               .catch(() => {
                 setConnected(false)
-                setTest(true)
+                setIsEntry(true)
                 localStorage.setItem('checkConnect', 'false')
               })
           }
@@ -171,7 +175,7 @@ export default function Layout({ children, home }) {
 
   return (
     <div
-      style={{ cursor: 'url(/images/default-cursor.png), auto' }}
+      // style={{ cursor: 'url(/images/default-cursor.png), auto' }}
       className={styles.container}
     >
       <Head>
@@ -182,21 +186,26 @@ export default function Layout({ children, home }) {
           integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
           crossOrigin="anonymous"
         />
-        <meta
+        {/* <meta
           name="description"
           content="Learn how to build a personal website using Next.js"
-        />
+        /> */}
         <meta
           property="og:image"
-          content={`https://og-image.vercel.app/${encodeURI(
-            siteTitle
-          )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
+          // content={`https://og-image.vercel.app/${encodeURI(
+          //   siteTitle
+          // )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
+
+          // content={`/images/favicon-3${encodeURI(siteTitle)}.png`}
+          content="/images/worldmap/OW-logo.png"
         />
+        <meta property="og:image:width" content="200" />
+
+        <meta property="og:image:height" content="200" />
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-
-      {test && (
+      {isEntry && (
         <Entry nameOfChain={nameOfChain} openModalAddWalletProp={openModalAddWallet} />
       )}
       {connected && (

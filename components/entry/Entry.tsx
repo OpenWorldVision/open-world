@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import {
   Button,
+  Divider,
   Modal,
   ModalCloseButton,
   ModalContent,
@@ -26,7 +27,7 @@ export default function Entry(props: Props) {
   const [playMusic, setPlayMusic] = useState(false)
   const [playSound, setPlaySound] = useState(false)
   const [openModalAddWallet, setOpenModalAddWallet] = useState(openModalAddWalletProp)
-  
+  //deploy cloudfare 2
   const onCloseModal = () => {
     setOpenModalAddWallet(false)
   }
@@ -44,6 +45,8 @@ export default function Entry(props: Props) {
       setPlayMusic(!playMusic)
     }
   }
+
+
   return (
     <div className={styles.main}>
       <img src={'/images/common/gameLogo.png'} alt={'logo'} />
