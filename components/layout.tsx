@@ -10,6 +10,7 @@ import BtnWorldMap from './worldmap/BtnWorldMap'
 import { chainName } from 'utils/chainName'
 import { getBalanceOfOpen } from '../utils/checkBalanceOpen'
 import { getWeb3Client } from '@lib/web3'
+import { faTruckField } from '@fortawesome/free-solid-svg-icons'
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -142,6 +143,7 @@ export default function Layout({ children, home }) {
         }
       }
     } catch (error: unknown) {
+      setIsEntry(true)
       setOpenModalAddWallet(true)
     }
   }, [])
