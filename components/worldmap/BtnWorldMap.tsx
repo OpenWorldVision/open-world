@@ -1,14 +1,20 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { PropsWithChildren, useState } from 'react'
 import styled from '@emotion/styled'
+import { type } from 'os'
 
-export default function BtnWorldMap() {
+type Props = {
+  backToWorldMap: () => void
+}
+
+export default function BtnWorldMap(props: PropsWithChildren<Props>) {
+  const { backToWorldMap } = props
   return (
     <BtnWorldMapStyle>
       <div>
         <div className="bordered-box-thin">
           <Link href="/">
-            <a>World Map</a>
+            <a onClick={backToWorldMap}>World Map</a>
           </Link>
         </div>
       </div>
@@ -32,6 +38,7 @@ const BtnWorldMapStyle = styled.div({
     padding: '1rem',
     backgroundImage:
       'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5))',
+    zIndex: '9000',
     // cursor: 'url(/images/jeweler/default-cursor.png), auto',
   },
   '@media(max-width: 768px)': {

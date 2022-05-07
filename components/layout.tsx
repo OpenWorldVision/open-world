@@ -22,6 +22,10 @@ export default function Layout({ children, home }) {
     setCurentURL(window.location.href)
   }, [])
 
+  const handleBackToWorldMap = () => {
+    setCurentURL('')
+  }
+
   const checkCurrentPage = () => {
     const isArena = currentURL.includes('battleArena')
     const isCastle = currentURL.includes('castle')
@@ -30,14 +34,14 @@ export default function Layout({ children, home }) {
     const isProfessions = currentURL.includes('professions')
     const isWorkshop = currentURL.includes('workshop')
     if (
-      isArena ||
-      isFoodCourt ||
+      // isArena ||
+      // isFoodCourt ||
+      // isMarketPlace ||
       isCastle ||
-      isMarketPlace ||
-      isProfessions ||
-      isWorkshop
+      isProfessions
+      // isWorkshop
     ) {
-      return <BtnWorldMap />
+      return <BtnWorldMap backToWorldMap={handleBackToWorldMap} />
     }
   }
 
@@ -73,7 +77,6 @@ export default function Layout({ children, home }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-
       {!connected && (
         <Entry checkIsConnected={(status) => checkIsConnected(status)} />
       )}

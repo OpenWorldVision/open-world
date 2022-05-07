@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import {
   Button,
+  Divider,
   Modal,
   ModalCloseButton,
   ModalContent,
@@ -86,6 +87,7 @@ export default function Entry(props: Props) {
           }
         }
       }
+
       connectWallet()
       checkTokenWasAdded()
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -161,6 +163,8 @@ export default function Entry(props: Props) {
       setPlayMusic(!playMusic)
     }
   }
+
+
   return (
     <div className={styles.main}>
       <img src={'/images/common/gameLogo.png'} alt={'logo'} />
