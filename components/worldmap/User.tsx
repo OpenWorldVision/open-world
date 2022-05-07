@@ -16,20 +16,11 @@ export default function User() {
     const accounts = await web3Client?.web3Client.eth.getAccounts()
     const contract = await proFilesContract(web3Client.web3Client)
 
-    try {
-      const profileExist = await contract.methods
-        .profileExists(accounts[0])
+    setProfile(
+      await contract.methods
+        .getProfileByAddress(accounts[0])
         .call({ from: accounts[0] })
-      if (profileExist) {
-        setProfile(
-          await contract.methods
-            .getProfileByAddress(accounts[0])
-            .call({ from: accounts[0] })
-        )
-      }
-    } catch (e) {
-      console.log(e)
-    }
+    )
   }
 
   useEffect(() => {

@@ -30,18 +30,12 @@ export default function CreateProfile({
       const accounts = await web3Client?.web3Client.eth.getAccounts()
       const contract = await proFilesContract(web3Client.web3Client)
       try {
-        const profileIvalid = await contract.methods
-          .nameTaken(nameValue)
+        await contract.methods
+          .createProfile(nameValue, heroSelector)
           .send({ from: accounts[0] })
-        if (profileIvalid) {
-          await contract.methods
-            .createProfile(nameValue, heroSelector)
-            .send({ from: accounts[0] })
-          window.location.href = '/'
-        }
-        setIsNameValid(profileIvalid)
-      } catch (e) {
-        console.log(e)
+        window.location.href = '/'
+      } catch {
+        setIsNameValid(false)
       }
     }
   }
