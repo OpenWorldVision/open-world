@@ -13,137 +13,20 @@ import {
 
 import styles from '@components/entry/entry.module.css'
 import Link from 'next/link'
-import { chainName } from 'utils/chainName'
-import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
-import { getWeb3Client } from '@lib/web3'
 // import ModalAddWallet from './components/ModalAddWallet'
 
 type Props = {
-  checkIsConnected: (boolean) => void
+  nameOfChain: string
+  openModalAddWalletProp: boolean
 }
 
 export default function Entry(props: Props) {
-  const { checkIsConnected } = props
+  const { nameOfChain, openModalAddWalletProp } = props
 
   const [playMusic, setPlayMusic] = useState(false)
   const [playSound, setPlaySound] = useState(false)
-  const [nameOfChain, setNameOfChain] = useState('Binance Smart Chain')
-  const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
-  //deploy cloudfare 2
-  useEffect(() => {
-    try {
-      const connectWallet = async () => {
-        if (window.ethereum) {
-          const chainId = window?.ethereum?.chainId
-          setNameOfChain(chainName[chainId] || '')
-          if (
-            chainId === '0x63564c40' ||
-            chainId === '0x6357d2e0' ||
-            chainId === '0x61'
-          ) {
-            window.ethereum
-              .request({ method: 'eth_requestAccounts' })
-              .then(() => {
-                checkIsConnected(true)
-              })
-              .catch(() => {
-                checkIsConnected(false)
-              })
-          } else {
-            window.ethereum
-              .request({ method: 'eth_requestAccounts' })
-              .then(() => {
-                checkIsConnected(true)
-                window.ethereum
-                  .request({
-                    method: 'wallet_switchEthereumChain',
-                    params: [{ chainId: '0x63564c40' }],
-                  })
-                  .then(() => {
-                    checkIsConnected(true)
-                  })
-                  .catch((error) => {
-                    window.ethereum.request({
-                      method: 'wallet_addEthereumChain',
-                      params: [
-                        {
-                          chainId: '0x63564c40',
-                          chainName: 'Harmony Mainnet',
-                          rpcUrls: ['https://api.harmony.one'],
-                          nativeCurrency: {
-                            name: 'ONE',
-                            symbol: 'ONE',
-                            decimals: 18,
-                          },
-                        },
-                      ],
-                    })
-                  })
-              })
-              .catch(() => {
-                checkIsConnected(false)
-              })
-          }
-        }
-      }
-      connectWallet()
-      checkTokenWasAdded()
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      const subscribeChainChanged = window.ethereum.on(
-        'chainChanged',
-        async () => {
-          setTimeout(async () => {
-            await connectWallet()
-          }, 1000)
-        }
-      )
-      const subscribeWalletChanged = window.ethereum.on(
-        'accountsChanged',
-        async () => {
-          setTimeout(async () => {
-            await checkTokenWasAdded()
-          }, 1000)
-        }
-      )
-      return () => {
-        if (typeof subscribeChainChanged === 'function') {
-          subscribeChainChanged()
-        }
-        if (typeof subscribeWalletChanged === 'function') {
-          subscribeWalletChanged()
-        }
-      }
-    } catch (error: unknown) {
-      setOpenModalAddWallet(true)
-    }
-  }, [])
-  const checkTokenWasAdded = async () => {
-    const web3Client = await getWeb3Client()
-    const balance = await getBalanceOfOpen(web3Client)
-    if (balance === 0) {
-      const tokenAddress = '0x27a339d9B59b21390d7209b78a839868E319301B'
-      const tokenSymbol = 'OPEN'
-      const tokenDecimals = 18
-      const tokenImage =
-        'https://nomics.com/imgpr/https%3A%2F%2Fs3.us-east-2.amazonaws.com%2Fnomics-api%2Fstatic%2Fimages%2Fcurrencies%2FXBLADE.jpeg?width=96'
-      if (window.ethereum) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_watchAsset',
-            params: {
-              type: 'ERC20',
-              options: {
-                address: tokenAddress,
-                symbol: tokenSymbol,
-                decimals: tokenDecimals,
-                image: tokenImage,
-              },
-            },
-          })
-        } catch (error: unknown) {}
-      }
-    }
-  }
+  const [openModalAddWallet, setOpenModalAddWallet] = useState(openModalAddWalletProp)
+  
   const onCloseModal = () => {
     setOpenModalAddWallet(false)
   }

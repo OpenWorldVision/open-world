@@ -7,16 +7,19 @@ import Entry from '@components/entry/Entry'
 import { useCallback, useState, useEffect } from 'react'
 import BtnWorldMap from './worldmap/BtnWorldMap'
 
+import { chainName } from 'utils/chainName'
+import { getBalanceOfOpen } from '../utils/checkBalanceOpen'
+import { getWeb3Client } from '@lib/web3'
+
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
   const [connected, setConnected] = useState(false)
+  const [nameOfChain, setNameOfChain] = useState('Binance Smart Chain')
+  const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
+  const [test, setTest] = useState(false)
 
-  const checkIsConnected = useCallback((status) => {
-    console.log(`Connected change from ${connected} to ${status}`)
-    setConnected(status)
-  }, [])
-
+  console.log(connected)
   const [currentURL, setCurentURL] = useState('')
   useEffect(() => {
     setCurentURL(window.location.href)
@@ -38,6 +41,131 @@ export default function Layout({ children, home }) {
       isWorkshop
     ) {
       return <BtnWorldMap />
+    }
+  }
+  //deploy cloudfare 2
+  useEffect(() => {
+    try {
+      const connectWallet = async () => {
+        if (window.ethereum) {
+          const chainId = window?.ethereum?.chainId
+          setNameOfChain(chainName[chainId] || '')
+          if (
+            chainId === '0x63564c40' ||
+            chainId === '0x6357d2e0' ||
+            chainId === '0x61'
+          ) {
+            window.ethereum
+              .request({ method: 'eth_requestAccounts' })
+              .then(() => {
+                setConnected(true)
+                setTest(false)
+                localStorage.setItem('checkConnect', 'true')
+              })
+              .catch(() => {
+                setConnected(false)
+                setTest(true)
+                localStorage.setItem('checkConnect', 'false')
+              })
+          } else {
+            window.ethereum
+              .request({ method: 'eth_requestAccounts' })
+              .then(() => {
+                setConnected(true)
+                setTest(false)
+                localStorage.setItem('checkConnect', 'true')
+                window.ethereum
+                  .request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x63564c40' }],
+                  })
+                  .then(() => {
+                    setConnected(true)
+                    setTest(false)
+                    localStorage.setItem('checkConnect', 'true')
+                  })
+                  .catch((error) => {
+                    window.ethereum.request({
+                      method: 'wallet_addEthereumChain',
+                      params: [
+                        {
+                          chainId: '0x63564c40',
+                          chainName: 'Harmony Mainnet',
+                          rpcUrls: ['https://api.harmony.one'],
+                          nativeCurrency: {
+                            name: 'ONE',
+                            symbol: 'ONE',
+                            decimals: 18,
+                          },
+                        },
+                      ],
+                    })
+                  })
+              })
+              .catch(() => {
+                setConnected(false)
+                setTest(true)
+                localStorage.setItem('checkConnect', 'false')
+              })
+          }
+        }
+      }
+      connectWallet()
+      checkTokenWasAdded()
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      const subscribeChainChanged = window.ethereum.on(
+        'chainChanged',
+        async () => {
+          setTimeout(async () => {
+            await connectWallet()
+          }, 1000)
+        }
+      )
+      const subscribeWalletChanged = window.ethereum.on(
+        'accountsChanged',
+        async () => {
+          setTimeout(async () => {
+            await checkTokenWasAdded()
+          }, 1000)
+        }
+      )
+      return () => {
+        if (typeof subscribeChainChanged === 'function') {
+          subscribeChainChanged()
+        }
+        if (typeof subscribeWalletChanged === 'function') {
+          subscribeWalletChanged()
+        }
+      }
+    } catch (error: unknown) {
+      setOpenModalAddWallet(true)
+    }
+  }, [])
+  const checkTokenWasAdded = async () => {
+    const web3Client = await getWeb3Client()
+    const balance = await getBalanceOfOpen(web3Client)
+    if (balance === 0) {
+      const tokenAddress = '0x27a339d9B59b21390d7209b78a839868E319301B'
+      const tokenSymbol = 'OPEN'
+      const tokenDecimals = 18
+      const tokenImage =
+        'https://nomics.com/imgpr/https%3A%2F%2Fs3.us-east-2.amazonaws.com%2Fnomics-api%2Fstatic%2Fimages%2Fcurrencies%2FXBLADE.jpeg?width=96'
+      if (window.ethereum) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_watchAsset',
+            params: {
+              type: 'ERC20',
+              options: {
+                address: tokenAddress,
+                symbol: tokenSymbol,
+                decimals: tokenDecimals,
+                image: tokenImage,
+              },
+            },
+          })
+        } catch (error: unknown) {}
+      }
     }
   }
 
@@ -68,8 +196,8 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      {!connected && (
-        <Entry checkIsConnected={(status) => checkIsConnected(status)} />
+      {test && (
+        <Entry nameOfChain={nameOfChain} openModalAddWalletProp={openModalAddWallet} />
       )}
       {connected && (
         <main>
