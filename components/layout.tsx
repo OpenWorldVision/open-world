@@ -6,12 +6,15 @@ import User from '@components/worldmap/User'
 import Entry from '@components/entry/Entry'
 import { useCallback, useState, useEffect } from 'react'
 import BtnWorldMap from './worldmap/BtnWorldMap'
+import { useSelector } from 'react-redux'
 
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
   const [connected, setConnected] = useState(false)
 
+  const isConnected = useSelector(state => state.IsConnectedStore.isConnected)
+  
   const checkIsConnected = useCallback((status) => {
     console.log(`Connected change from ${connected} to ${status}`)
     setConnected(status)
@@ -77,10 +80,10 @@ export default function Layout({ children, home }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      {!connected && (
+      {!isConnected && (
         <Entry checkIsConnected={(status) => checkIsConnected(status)} />
       )}
-      {connected && (
+      {isConnected && (
         <main>
           {children}
           <Menu />
