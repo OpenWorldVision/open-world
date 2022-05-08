@@ -13,7 +13,7 @@ export const siteTitle = 'Open World #Metaverse'
 export default function Layout({ children, home }) {
   const [connected, setConnected] = useState(false)
 
-  const isConnected = useSelector(state => state.IsConnectedStore.isConnected)
+  const isConnected = useSelector((state: any) => { return state.IsConnectedStore.isConnected })
   
   const checkIsConnected = useCallback((status) => {
     console.log(`Connected change from ${connected} to ${status}`)

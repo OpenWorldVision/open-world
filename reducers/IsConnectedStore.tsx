@@ -1,4 +1,4 @@
-export const initState = {
+export const initState: any = {
   isConnected: false
 }
 
