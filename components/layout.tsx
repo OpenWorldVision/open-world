@@ -6,13 +6,16 @@ import User from '@components/worldmap/User'
 import Entry from '@components/entry/Entry'
 import { useCallback, useState, useEffect } from 'react'
 import BtnWorldMap from './worldmap/BtnWorldMap'
-import { useSelector } from 'react-redux'
+import { getWeb3Client } from '@lib/web3'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateIsConnected } from 'reduxActions/isConnectedAction'
 
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
   const [connected, setConnected] = useState(false)
 
+  const dispatch = useDispatch()
   const isConnected = useSelector((state: any) => { return state.IsConnectedStore.isConnected })
   
   const checkIsConnected = useCallback((status) => {
@@ -21,8 +24,12 @@ export default function Layout({ children, home }) {
   }, [])
 
   const [currentURL, setCurentURL] = useState('')
-  useEffect(() => {
+  useEffect(async () => {
     setCurentURL(window.location.href)
+    const web3Client = await getWeb3Client()
+    if (!web3Client) {
+      dispatch(updateIsConnected({isConnected: false}))
+    }
   }, [])
 
   const handleBackToWorldMap = () => {
