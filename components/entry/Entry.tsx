@@ -21,12 +21,8 @@ import { useDispatch } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 // import ModalAddWallet from './components/ModalAddWallet'
 
-type Props = {
-  checkIsConnected: (boolean) => void
-}
 
-export default function Entry(props: Props) {
-  const { checkIsConnected } = props
+export default function Entry() {
 
   const [playMusic, setPlayMusic] = useState(false)
   const [playSound, setPlaySound] = useState(false)
@@ -34,7 +30,7 @@ export default function Entry(props: Props) {
   const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
 
   const dispatch = useDispatch()
-  
+
   //deploy cloudfare 2
   useEffect(() => {
     try {
@@ -50,18 +46,15 @@ export default function Entry(props: Props) {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
-                checkIsConnected(true)
                 dispatch(updateIsConnected({isConnected: true}))
               })
               .catch(() => {
-                checkIsConnected(false)
                 dispatch(updateIsConnected({isConnected: false}))
               })
           } else {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
-                checkIsConnected(true)
                 dispatch(updateIsConnected({isConnected: true}))
                 window.ethereum
                   .request({
@@ -69,7 +62,6 @@ export default function Entry(props: Props) {
                     params: [{ chainId: '0x63564c40' }],
                   })
                   .then(() => {
-                    checkIsConnected(true)
                     dispatch(updateIsConnected({isConnected: true}))
                   })
                   .catch((error) => {
@@ -91,7 +83,6 @@ export default function Entry(props: Props) {
                   })
               })
               .catch(() => {
-                checkIsConnected(false)
                 dispatch(updateIsConnected({isConnected: false}))
               })
           }
