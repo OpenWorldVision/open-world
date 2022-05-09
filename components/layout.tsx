@@ -17,19 +17,22 @@ export default function Layout({ children, home }) {
 
   const dispatch = useDispatch()
   const isConnected = useSelector((state: any) => { return state.IsConnectedStore.isConnected })
-  
+
   const checkIsConnected = useCallback((status) => {
     console.log(`Connected change from ${connected} to ${status}`)
     setConnected(status)
   }, [])
 
   const [currentURL, setCurentURL] = useState('')
-  useEffect(async () => {
-    setCurentURL(window.location.href)
-    const web3Client = await getWeb3Client()
-    if (!web3Client) {
-      dispatch(updateIsConnected({isConnected: false}))
+  useEffect(() => {
+    const checkConnect = async () => {
+      setCurentURL(window.location.href)
+      const web3Client = await getWeb3Client()
+      if (!web3Client) {
+        dispatch(updateIsConnected({ isConnected: false }))
+      }
     }
+    checkConnect()
   }, [])
 
   const handleBackToWorldMap = () => {
