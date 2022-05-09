@@ -17,6 +17,8 @@ import Link from 'next/link'
 import { chainName } from 'utils/chainName'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 import { getWeb3Client } from '@lib/web3'
+import { useDispatch } from 'react-redux'
+import { updateIsConnected } from 'reduxActions/isConnectedAction'
 // import ModalAddWallet from './components/ModalAddWallet'
 
 type Props = {
@@ -30,6 +32,9 @@ export default function Entry(props: Props) {
   const [playSound, setPlaySound] = useState(false)
   const [nameOfChain, setNameOfChain] = useState('Binance Smart Chain')
   const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
+
+  const dispatch = useDispatch()
+  
   //deploy cloudfare 2
   useEffect(() => {
     try {
@@ -46,15 +51,18 @@ export default function Entry(props: Props) {
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
                 checkIsConnected(true)
+                dispatch(updateIsConnected({isConnected: true}))
               })
               .catch(() => {
                 checkIsConnected(false)
+                dispatch(updateIsConnected({isConnected: false}))
               })
           } else {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
                 checkIsConnected(true)
+                dispatch(updateIsConnected({isConnected: true}))
                 window.ethereum
                   .request({
                     method: 'wallet_switchEthereumChain',
@@ -62,6 +70,7 @@ export default function Entry(props: Props) {
                   })
                   .then(() => {
                     checkIsConnected(true)
+                    dispatch(updateIsConnected({isConnected: true}))
                   })
                   .catch((error) => {
                     window.ethereum.request({
@@ -83,6 +92,7 @@ export default function Entry(props: Props) {
               })
               .catch(() => {
                 checkIsConnected(false)
+                dispatch(updateIsConnected({isConnected: false}))
               })
           }
         }
