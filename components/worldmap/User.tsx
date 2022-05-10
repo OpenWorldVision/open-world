@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import { getWeb3Client } from '@lib/web3'
 import CreateProfile from '@components/worldmap/CreateProfile'
-import { proFilesContract } from 'utils/profileContract'
+import { profilesContract } from 'utils/profileContract'
 
 export default function User() {
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
@@ -14,7 +14,7 @@ export default function User() {
   const getContractProfile = async () => {
     const web3Client = await getWeb3Client()
     const accounts = await web3Client?.web3Client.eth.getAccounts()
-    const contract = await proFilesContract(web3Client.web3Client)
+    const contract = await profilesContract(web3Client.web3Client)
 
     setProfile(
       await contract.methods

@@ -8,7 +8,7 @@ const profilesContractBSC = {
 }
 
 const GasLimit = 800000
-export const proFilesContract = async (web3Client: any) => {
+export const profilesContract = async (web3Client: any) => {
   const accounts = await web3Client.eth.getAccounts()
   const idNet = await web3Client.eth.getChainId()
   if(idNet === 97){

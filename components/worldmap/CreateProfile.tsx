@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
-import { proFilesContract } from 'utils/profileContract'
+import { profilesContract } from 'utils/profileContract'
 import { getWeb3Client } from '@lib/web3'
 
 const imagesIndex = [
@@ -28,7 +28,7 @@ export default function CreateProfile({
     if (heroSelector && nameValue && heroSelector) {
       const web3Client = await getWeb3Client()
       const accounts = await web3Client?.web3Client.eth.getAccounts()
-      const contract = await proFilesContract(web3Client.web3Client)
+      const contract = await profilesContract(web3Client.web3Client)
       try {
         await contract.methods
           .createProfile(nameValue, heroSelector)
@@ -107,7 +107,7 @@ export default function CreateProfile({
                       marginTop: '5px',
                     }}
                   >
-                    Tên đã được sử dụng
+                    Name invalid
                   </div>
                 )}
                 <button
