@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Menu from '@components/worldmap/Menu'
 import User from '@components/worldmap/User'
 import Entry from '@components/entry/Entry'
+import { useRouter } from 'next/router'
 import { useCallback, useState, useEffect } from 'react'
 import BtnWorldMap from './worldmap/BtnWorldMap'
 import { getWeb3Client } from '@lib/web3'
@@ -13,14 +14,19 @@ import { updateIsConnected } from 'reduxActions/isConnectedAction'
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(true)
   const [connected, setConnected] = useState(false)
 
   const dispatch = useDispatch()
   const isConnected = useSelector((state: any) => { return state.IsConnectedStore.isConnected })
 
   const checkIsConnected = useCallback((status) => {
-    console.log(`Connected change from ${connected} to ${status}`)
     setConnected(status)
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 4000)
   }, [])
 
   const [currentURL, setCurentURL] = useState('')
@@ -33,6 +39,24 @@ export default function Layout({ children, home }) {
       }
     }
     checkConnect()
+    setCurentURL(window.location.href)
+
+    if (!connected) {
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000)
+    }
+
+    router.events.on("routeChangeStart", (url) => {
+      setIsLoading(true);
+    })
+
+    router.events.on("routeChangeComplete", () => {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000)
+    })
   }, [])
 
   const handleBackToWorldMap = () => {
@@ -61,7 +85,7 @@ export default function Layout({ children, home }) {
   return (
     <div
       // style={{ cursor: 'url(/images/default-cursor.png), auto' }}
-      className={styles.container}
+      className={`${styles.container} ${!isLoading && styles.loaded}`}
     >
       <Head>
         <link rel="icon" href="/favicon.ico" />
@@ -90,8 +114,18 @@ export default function Layout({ children, home }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+
+      <div className={`overlay ${styles.preLoader}`}>
+        <div className={styles.preloaderFoldingCube}>
+          <div className={`${styles.preloaderCube1} ${styles.preloaderCube}`}></div>
+          <div className={`${styles.preloaderCube2} ${styles.preloaderCube}`}></div>
+          <div className={`${styles.preloaderCube4} ${styles.preloaderCube}`}></div>
+          <div className={`${styles.preloaderCube3} ${styles.preloaderCube}`}></div>
+        </div>
+      </div>
+
       {!isConnected && (
-        <Entry checkIsConnected={(status) => checkIsConnected(status)} />
+        <Entry />
       )}
       {isConnected && (
         <main>
