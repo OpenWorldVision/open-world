@@ -121,9 +121,8 @@ export default function Entry() {
     }
   }, [])
   const checkTokenWasAdded = async () => {
-    const web3Client = await getWeb3Client()
-    const balance = await getBalanceOfOpen(web3Client)
-    if (balance === 0) {
+    const balance = await getBalanceOfOpen()
+    if (parseFloat(balance) === 0) {
       const tokenAddress = '0x27a339d9B59b21390d7209b78a839868E319301B'
       const tokenSymbol = 'OPEN'
       const tokenDecimals = 18
