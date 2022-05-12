@@ -5,6 +5,9 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 import IsConnectedStore from './IsConnectedStore'
+import IsLoadingStore from './IsLoadingStore'
+import ProfileStore from './ProfileStore'
+
 
 const persistConfig = {
   key: 'root',
@@ -12,7 +15,9 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-  IsConnectedStore
+  IsConnectedStore,
+  IsLoadingStore,
+  ProfileStore,
 })
 
 

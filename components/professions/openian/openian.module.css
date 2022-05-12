@@ -6,7 +6,7 @@
 
 .openianContainer {
   position: relative;
-  width: 1858px;
+  width: 100vw;
   height: 100vh;
   min-width: 1568px;
   background-color: #131313;
@@ -19,8 +19,8 @@
   background-image: url('/images/professions/openian/openian-bg.png');
   background-repeat: no-repeat;
   background-position: top center;
-  width: 1858px;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: 1000;
   background-size: 100% 100%;
   -ms-interpolation-mode: nearest-neighbor;
@@ -38,6 +38,21 @@
   background-image: url('/images/professions/back-btn.png');
   background-repeat: no-repeat;
   background-size: 100%;
+}
+
+.openianSellBtn {
+  position: absolute;
+  top: 260px;
+  left: 670px;
+  width: 585px;
+  height: 385px;
+  cursor: pointer;
+}
+
+@media (max-width: 1857px) {
+  .openianContainer {
+    width: 1858px;
+  }
 }
 
 @media (max-width: 767px) {

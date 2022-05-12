@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
-
 .professionsOverlay {
   background-image: url('/images/background/game-bg.jpg');
   background-size: 100% 100%;
@@ -27,112 +25,15 @@
   padding: 120px 15px 0;
 }
 
-.npcCard {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center center;
-}
-
-.npcCard.openianNPC {
-  background-image: url('/images/professions/npc/openianNPC.png');
-}
-
-.npcCard.supplierNPC {
-  background-image: url('/images/professions/npc/supplierNPC.png');
-}
-
-.npcCard.smithNPC {
-  background-image: url('/images/professions/npc/smithNPC.png');
-}
-
-.professionsText {
-  position: relative;
-  margin-top: 40px;
-  min-height: 170px;
-  height: fit-content;
-  background-image: url('/images/professions/borders/border-left.png'),
-    url('/images/professions/borders/border-right.png');
-  background-position: center left, center right;
-  background-repeat: no-repeat;
-  background-size: 30px 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.professionsText::before,
-.professionsText::after {
-  position: absolute;
-  content: '';
-}
-
-.professionsText::before {
-  top: 0;
-  left: 12px;
-  right: 12px;
-  height: calc(100% + 12px);
-  background-position: center top, center bottom;
-  background-repeat: no-repeat;
-  background-size: calc(100% - 111px) 26px;
-  background-image: url('/images/professions/borders/border-top.png'),
-    url('/images/professions/borders/border-bottom.png');
-}
-
-.professionsText::after {
-  top: 0;
-  left: 0px;
-  width: 100%;
-  height: calc(100% + 12px);
-  background-position: left top, right top, left bottom, right bottom;
-  background-repeat: no-repeat;
-  background-size: 68px;
-  background-image: url('/images/professions/borders/border-top-left.png'),
-    url('/images/professions/borders/border-top-right.png'),
-    url('/images/professions/borders/border-bottom-left.png'),
-    url('/images/professions/borders/border-bottom-right.png');
-}
-
-.professionsText span {
-  color: #fff;
-  font-family: 'Merriweather', serif;
-  font-size: 36px;
-}
-
-.backBtn {
-  display: block;
-  position: absolute;
-  top: 30px;
-  left: 35px;
-  width: 235px;
-  height: 75px;
-  background-image: url('/images/professions/back-btn.png');
-  background-repeat: no-repeat;
-  background-size: 100%;
-}
 
 @media (max-width: 1500px) {
   .professionsContainer {
     padding-bottom: 120px;
-  }
-  .professionsText span {
-    font-size: 28px;
-    padding: 20px;
-    text-align: center;
   }
 }
 
 @media (max-width: 767px) {
   .professionsContainer {
     padding-top: 100px;
-  }
-  .professionsText span {
-    padding: 50px 20px;
-  }
-  .backBtn {
-    width: 140px;
-    height: 75px;
   }
 }
