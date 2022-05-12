@@ -16,7 +16,7 @@ module.exports = async function (deployer, network) {
   }
   if (network === 'bsctestnet') {
     govToken = '0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B'
-    profileAddress = ''
+    profileAddress = '0xE6046d1363F7Bebff6cB98c72094c89fF8ee500D'
   }
   const item = await deployProxy(Item, [govToken], {
     deployer,
