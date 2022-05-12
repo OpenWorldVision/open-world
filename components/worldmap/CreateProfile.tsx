@@ -11,7 +11,7 @@ export default function CreateProfile({
   isOpenCreateProfile,
   setIsOpenCreateProfile,
 }) {
-  const [heroSelector, setHeroSelector] = useState(null)
+  const [heroSelector, setHeroSelector] = useState(1)
   const [nameValue, setNameValue] = useState('')
   const [isNameValid, setIsNameValid] = useState(true)
 
@@ -43,20 +43,22 @@ export default function CreateProfile({
         <div className="modal-content">
           <div className="body">
             <div className="body-top">
-              {imagesIndex.map((value) => (
-                <button
-                  className={value === heroSelector && 'select'}
-                  onClick={() => {
-                    setHeroSelector(value)
-                  }}
-                  key={value}
-                >
-                  <img
-                    src={`./images/profile/hero/hero-${value}.png`}
-                    alt="img"
-                  />
-                </button>
-              ))}
+              <div className="container-items">
+                {imagesIndex.map((value) => (
+                  <button
+                    className={value === heroSelector && 'select'}
+                    onClick={() => {
+                      setHeroSelector(value)
+                    }}
+                    key={value}
+                  >
+                    <img
+                      src={`./images/profile/hero/hero-${value}.png`}
+                      alt="img"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="body-bottom">
               <div className="avatar-selected">
@@ -86,13 +88,17 @@ export default function CreateProfile({
                 </div>
               )}
               {console.log(heroSelector && nameValue && 'invalid')}
-              <button
-                onClick={() => {
-                  handleCreateProfile()
-                }}
-                className={`complete-profile ${heroSelector && nameValue && 'valid'}`}
-              />
-              <button className="doc"></button>
+              <div className='complete-profile'>
+                <button
+                  onClick={() => {
+                    handleCreateProfile()
+                  }}
+                  className={heroSelector && nameValue && 'valid'}
+                />
+              </div>
+              <div className="doc">
+                <button />
+              </div>
             </div>
           </div>
         </div>
@@ -112,91 +118,141 @@ const CreateProfileCSS = styled.div({
     backgroundColor: 'rgba(0,0,0,0.4)',
     color: 'white',
     padding: '0 15px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     overflow: 'auto',
     '::-webkit-scrollbar': {
-      display: 'none',
+      // display: 'none',
     },
     '.modal-content': {
       '.body': {
         display: 'flex',
-        flexWrap: 'wrap',
-        overflow: 'auto',
-        paddingTop: '500px',
+        '@media(max-width: 1395px)': {
+          flexDirection: 'column',
+          alignItems: 'center',
+        },
+        paddingBottom: '100px',
+        justifyContent: 'center',
         '.body-top': {
-          width: '900px',
-          height: '730px',
-          backgroundImage: 'url(./images/profile/frame1.png)',
+          flex: 1,
+          maxWidth: '900px',
+          backgroundImage: 'url(./images/profile/frame.png)',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain',
+          backgroundSize: '100% 100%',
           position: 'relative',
-          padding: '100px 80px',
           display: 'flex',
           flexWrap: 'wrap',
+          marginTop: '100px',
+          padding: '100px 40px',
+          '@media(max-width: 720px)': {
+            padding: '40px 20px',
+          },
           '::before': {
             content: '""',
             position: 'absolute',
             top: '-50px',
-            left: '5px',
-            width: '875px',
+            left: 0,
+            width: '100%',
             height: '15px',
-            backgroundImage: 'url(./images/profile/top-frame-1.png)',
+            backgroundImage: 'url(./images/profile/top-frame-profile-image.png)',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain'
           },
-          button: {
-            width: '100px',
-            height: '100px',
-            margin: '8px',
-            backgroundImage: 'url(./images/profile/frame-avatar.png)',
+          '::after': {
+            content: '""',
+            position: 'absolute',
+            top: '-68px',
+            left: 0,
+            right: 0,
+            margin: 'auto',
+            width: '300px',
+            height: '135px',
+            backgroundImage: 'url(./images/profile/title-frame-profile-image.png)',
             backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            ':hover': {
-              cursor: 'pointer'
-            },
-            img: {
-              width: '100%',
-              height: '100%',
-              padding: '2px',
-              borderRadius: '12px'
+            backgroundSize: 'contain'
+          },
+          '.container-items': {
+            overflow: 'auto',
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '530px',
+            button: {
+              width: '100px',
+              height: '100px',
+              margin: '8px',
+              backgroundImage: 'url(./images/profile/frame-avatar.png)',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              ':hover': {
+                cursor: 'pointer'
+              },
+              img: {
+                width: '100%',
+                height: '100%',
+                padding: '2px',
+                borderRadius: '12px'
+              }
             }
           }
         },
         '.body-bottom': {
-          width: '495px',
-          height: '730px',
-          backgroundImage: 'url(./images/profile/frame2.png)',
+          flex: 1,
+          maxWidth: '495px',
+          backgroundImage: 'url(./images/profile/frame.png)',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain',
+          backgroundSize: '100% 100%',
           position: 'relative',
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
+          flexWrap: 'wrap',
+          marginTop: '100px',
+          padding: '80px 40px',
+          '@media(min-width: 1396px)': {
+            marginLeft: '50px'
+          },
+          '@media(max-width: 1395px)': {
+            maxWidth: '900px',
+          },
           '::before': {
             content: '""',
             position: 'absolute',
             top: '-50px',
-            left: '12px',
-            width: '470px',
+            left: '0',
+            width: '100%',
             height: '15px',
-            backgroundImage: 'url(./images/profile/top-frame-2.png)',
+            backgroundImage: 'url(./images/profile/top-frame-profile-detail.png)',
+            '@media(max-width: 1395px)': {
+              backgroundImage: 'url(./images/profile/top-frame-1.png)',
+            },
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
+          },
+          '::after': {
+            content: '""',
+            position: 'absolute',
+            top: '-68px',
+            left: 0,
+            right: 0,
+            margin: 'auto',
+            width: '300px',
+            height: '135px',
+            backgroundImage: 'url(./images/profile/title-frame-profile-detail.png)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain'
           },
           '.avatar-selected': {
             background: 'url(./images/profile/frame-avatar.png)',
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
-            width: '150px',
+            backgroundPosition: 'center',
+            width: '100%',
             height: '150px',
             img: {
-              width: '100%',
-              height: '100%',
+              width: '150px',
+              height: '150px',
               borderRadius: '18px',
-              padding: '4px'
+              padding: '4px',
+              display: 'block',
+              margin: 'auto'
             },
           },
           '.input-name': {
@@ -212,7 +268,7 @@ const CreateProfileCSS = styled.div({
             textOverflow: 'ellipsis',
             padding: '0px 30px',
             height: '58px',
-            width: '80%',
+            width: '100%',
             appearance: 'textfield',
             borderRadius: '5px',
             '::placeholder': {
@@ -221,25 +277,33 @@ const CreateProfileCSS = styled.div({
             marginTop: '100px',
           },
           '.complete-profile': {
-            background: 'url(./images/profile/btn-complete-invalid.png)',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            width: '300px',
-            height: '160px',
-            marginTop: '50px'
-          },
-          '.complete-profile.valid': {
-            background: 'url(./images/profile/btn-complete.png)',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat'
+            width: '100%',
+            textAlign: 'center',
+            button: {
+              background: 'url(./images/profile/btn-complete-invalid.png)',
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              width: '300px',
+              height: '160px',
+              marginTop: '50px'
+            },
+            'button.valid': {
+              background: 'url(./images/profile/btn-complete.png)',
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat'
+            }
           },
           '.doc': {
-            background: 'url(./images/profile/doc-tutorial.png)',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
-            width: '200px',
-            height: '16px',
+            width: '100%',
+            textAlign: 'center',
+            button: {
+              background: 'url(./images/profile/doc-tutorial.png)',
+              backgroundSize: 'contain',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+              width: '200px',
+              height: '16px'
+            }
           }
         }
       }
