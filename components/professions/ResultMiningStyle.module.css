@@ -1,0 +1,65 @@
+.frameFinished {
+  background-image: url('/images/professions/npc/openian/mining/frame-finished.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  max-width: 798px;
+  max-height: 570px;
+  width: 580px;
+  height: 400px;
+  position: relative;
+  margin: auto 10px;
+  color: #FFFFFF;
+  font-family: 'Montserrat';
+  font-style: normal;
+}
+
+.resultMining {
+  /* position: absolute;
+    top: 150px; */
+  padding: 120px 0 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 49px;
+}
+
+.items {
+  background-image: url('/images/professions/npc/openian/mining/ore1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 40px -5px;
+  width: 80px;
+  height: 50px;
+}
+
+.items span {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 44px;
+}
+
+.helpText {
+  text-align: center;
+  padding: 0 10px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 29px;
+}
+
+.confirmBtn {
+  background-image: url('/images/professions/npc/openian/mining/confirm.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+  width: 180px !important;
+  height: 50px !important;
+  background-color: transparent !important;
+  margin: 30px auto;
+  display: block !important;
+}
