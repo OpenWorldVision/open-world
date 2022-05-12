@@ -16,7 +16,7 @@
 .resultMining {
   /* position: absolute;
     top: 150px; */
-  padding: 120px 0 60px;
+  padding: 100px 0 60px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -60,6 +60,8 @@
   width: 180px !important;
   height: 50px !important;
   background-color: transparent !important;
-  margin: 30px auto;
+  margin: 0 auto;
+  margin-top: 20px;
   display: block !important;
+  position: absolute;
 }
