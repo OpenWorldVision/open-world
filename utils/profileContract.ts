@@ -30,11 +30,15 @@ export const getProfile = async () => {
   const contract = await getProfileContract()
   const accounts = await web3.eth.getAccounts()
 
-  return(
-    await contract.methods
+  try {
+    return await contract.methods
       .getProfileByAddress(accounts[0])
       .call({ from: accounts[0] })
-  )
+  } catch {
+    return null
+  }
+
+  
 }
 
 export const crateProfile = async (nameStr: string, heroId: number) => {
