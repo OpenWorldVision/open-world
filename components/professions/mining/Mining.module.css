@@ -4,7 +4,7 @@
   background-size: 100% 100%;
   background-position: center center;
   height: 100vh;
-  z-index: 2001;
+  z-index: 999999;
   position: relative;
   display: flex;
   justify-content: center;
@@ -36,8 +36,8 @@
   background-repeat: no-repeat !important;
   background-size: contain !important;
   background-position: center center !important;
-  width: 30px !important;
-  height: 30px !important;
+  width: 25px !important;
+  height: 25px !important;
   background-color: transparent !important;
 }
 
@@ -46,8 +46,8 @@
   background-repeat: no-repeat !important;
   background-size: contain !important;
   background-position: center center !important;
-  width: 30px !important;
-  height: 30px !important;
+  width: 25px !important;
+  height: 25px !important;
   background-color: transparent !important;
   padding: 0 23px;
 }
@@ -63,8 +63,8 @@
 .artItem {
   background-image: url('/images/professions/npc/openian/mining/art-item.png');
   background-repeat: no-repeat;
-  background-size: 100% 100%;
-  width: 290px;
+  background-size: contain;
+  width: 285px;
   height: 150px;
 }
 
@@ -127,7 +127,22 @@
 .finishBtn{
   background-image: url('/images/professions/npc/openian/mining/finish-btn.png') !important;
   background-repeat: no-repeat !important;
-  background-size: 100% 100% !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  width: 120px !important;
+  height: 35px !important;
+  background-color: transparent !important;
+  position: absolute !important;
+  bottom: -170px;
+  left: 70px;
+  margin: 0 auto;
+  display: block !important;
+}
+
+.finishBtnDisable{
+  background-image: url('/images/professions/npc/openian/mining/finish-disable-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
   background-position: center center !important;
   width: 120px !important;
   height: 35px !important;

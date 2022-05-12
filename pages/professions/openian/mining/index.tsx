@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import style from '@components/professions/Mining.module.css'
+import style from '@components/professions/mining/Mining.module.css'
 import { Button } from '@chakra-ui/react'
 import Link from 'next/link'
 
-import ResultMining from '@components/professions/ResultMining'
+import ResultMining from '@components/professions/mining/ResultMining'
+import MiningWait from '@components/professions/mining/MiningWait'
+import MiningQuest from '@components/professions/mining/MiningQuest'
 
 export default function Mining() {
   const [isStartQuest, setIsStartQuest] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
-
-  const [harmer, setHarmer] = useState(1) 
 
   const startQuest = () => {
     setIsStartQuest(true)
@@ -18,15 +18,13 @@ export default function Mining() {
   const handleFinish = () => {
     setIsFinished(true)
   }
-  console.log(harmer > 0);
-  
+
   return (
     <div className={style.miningOverlay}>
       {!isFinished ? <div className={style.frameMining}>
         <div className={style.frameHead}>
           <Button className={style.infoBtn}></Button>
-          {/* <Button className={style.exitBtn}></Button> */}
-          <Link href="/professions/openian">
+          <Link href="/professions/openian/main">
             <a className={style.exitBtn}></a>
           </Link>
         </div>
@@ -34,61 +32,8 @@ export default function Mining() {
           <div className={style.artItem}></div>
         </div>
         <div className={style.miningFooter}>
-          {!isStartQuest ? <div className={style.miningQuestDetail}>
-            <div>
-              <div className={style.title}>
-                Description
-              </div>
-              <div className={style.detail}>
-                Ore is main material to make Hammer and BlackSmiths are paying good money for them. Let&apos;s go mine some !!!
-              </div>
-            </div>
-            <div>
-              <div className={style.title}>
-                Base Duration
-              </div>
-              <div className={style.detail}>
-                20 seccond
-              </div>
-            </div>
-            <div>
-              <div className={style.title}>
-                Description
-              </div>
-              <div className={style.detail}>
-                20 seccond
-              </div>
-            </div>
-            <div>
-              <div className={style.title}>
-                Required
-              </div>
-              <div className={style.detail}>
-                1 Hammer
-                <div className={style.harmer}></div>
-              </div>
-            </div>
-            <Button disabled={harmer === 0} onClick={startQuest} className={style.startQuestBtn}></Button>
-          </div>
-            : <div className={style.miningWaitDetail}>
-              <div>
-                <div className={style.title}>
-                  Active Quest
-                </div>
-                <div className={style.detail}>
-                  Openian is on Mining Quest. Be patient !
-                </div>
-              </div>
-              <div>
-                <div className={style.title}>
-                  Time Left
-                </div>
-                <div className={style.detail}>
-                  20 seccond
-                </div>
-                <Button onClick={handleFinish} className={style.finishBtn}></Button>
-              </div>
-            </div>}
+          {!isStartQuest ? <MiningQuest startQuest={startQuest}/>
+            : <MiningWait isStartQuest={isStartQuest} handleFinish={handleFinish}/>}
         </div>
       </div> : <ResultMining />}
     </div>

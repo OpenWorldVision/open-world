@@ -1,4 +1,5 @@
 import { Button } from '@chakra-ui/react'
+import Link from 'next/link'
 import style from './ResultMiningStyle.module.css'
 
 export default function ResultMining() {
@@ -11,7 +12,9 @@ export default function ResultMining() {
         </div>
       </div>
       <div className={style.helpText}>All the Ores you mine will be stored at your Inventory</div>
-      <Button className={style.confirmBtn}></Button>
+      <Link className={style.linkContainer} href="/professions/openian/main">
+        <a className={style.confirmBtn}></a>
+      </Link>
     </div>
   )
 }
