@@ -1,34 +1,55 @@
-const profilesContractHamony = {
-  address: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
-  jsonInterface: require('../contracts/Profiles.json'),
-}
-const profilesContractBSC = {
-  address: '0x276EA94F4093B09abF99d7393B6642F361572035',
-  jsonInterface: require('../contracts/Profiles.json'),
+import Web3 from "web3"
+
+const web3 = new Web3(Web3.givenProvider)
+
+const profilesContract = {
+  addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
+  addressBSC: '0x276EA94F4093B09abF99d7393B6642F361572035',
+  jsonInterface: require('../build/contracts/Profiles.json'),
 }
 
-const GasLimit = 800000
-export const profilesContract = async (web3Client: any) => {
-  const accounts = await web3Client.eth.getAccounts()
-  const idNet = await web3Client.eth.getChainId()
-  if(idNet === 97){
-    return new web3Client.eth.Contract(
-      profilesContractBSC.jsonInterface.abi,
-      profilesContractBSC.address,
-      {
-        gas: GasLimit,
-        from: accounts[0],
-      }
+const getProfileContract = async () => {
+  const chainId = await web3.eth.getChainId()
+  
+  if(chainId === 97){
+    return new web3.eth.Contract(
+      profilesContract.jsonInterface.abi,
+      profilesContract.addressBSC
     )
   }
-  else {
-    return new web3Client.eth.Contract(
-      profilesContractHamony.jsonInterface.abi,
-      profilesContractHamony.address,
-      {
-        gas: GasLimit,
-        from: accounts[0],
-      }
+  else if(chainId === 1666700000){
+    return new web3.eth.Contract(
+      profilesContract.jsonInterface.abi,
+      profilesContract.addressHarmony
     )
+  }
+}
+
+
+export const getProfile = async () => {
+  const contract = await getProfileContract()
+  const accounts = await web3.eth.getAccounts()
+
+  try {
+    return await contract.methods
+      .getProfileByAddress(accounts[0])
+      .call({ from: accounts[0] })
+  } catch {
+    return null
+  }
+
+  
+}
+
+export const crateProfile = async (nameStr: string, heroId: number) => {
+  const contract = await getProfileContract()
+  const accounts = await web3.eth.getAccounts()
+  try {
+    await contract.methods
+      .createProfile(nameStr, heroId)
+      .send({ from: accounts[0] })
+    return true
+  } catch {
+    return false
   }
 }
