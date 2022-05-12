@@ -5,7 +5,7 @@ const web3 = new Web3(Web3.givenProvider)
 const profilesContract = {
   addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
   addressBSC: '0x276EA94F4093B09abF99d7393B6642F361572035',
-  jsonInterface: require('../contracts/Profiles.json'),
+  jsonInterface: require('../build/contracts/Profiles.json'),
 }
 
 const getProfileContract = async () => {
