@@ -102,10 +102,6 @@ export default function User() {
             isOpenCreateProfile={isOpenCreateProfile}
           />
         )}
-        <CreateProfile
-          setIsOpenCreateProfile={setIsOpenCreateProfile}
-          isOpenCreateProfile={isOpenCreateProfile}
-        />
       </div>
     </UserCSS>
   )
