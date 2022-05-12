@@ -7,8 +7,8 @@ import {
   fetchRequireBalanceProfession,
   mintProfessionNFT,
   fetchUserProfessionNFT,
-} from '../../../utils/professions'
-import { getBalanceOfOpen } from '../../../utils/checkBalanceOpen'
+} from '../../utils/professions'
+import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 
 const npcs = ['openian', 'supplier', 'blacksmith']
 
