@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
-import { getWeb3Client } from '@lib/web3'
 import CreateProfile from '@components/worldmap/CreateProfile'
-import { profilesContract } from 'utils/profileContract'
+import { getProfile } from 'utils/profileContract'
 
 export default function User() {
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
@@ -12,15 +11,7 @@ export default function User() {
   const [profile, setProfile] = useState(null)
 
   const getContractProfile = async () => {
-    const web3Client = await getWeb3Client()
-    const accounts = await web3Client?.web3Client.eth.getAccounts()
-    const contract = await profilesContract(web3Client.web3Client)
-
-    setProfile(
-      await contract.methods
-        .getProfileByAddress(accounts[0])
-        .call({ from: accounts[0] })
-    )
+    setProfile(await getProfile())
   }
 
   useEffect(() => {
