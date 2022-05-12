@@ -53,19 +53,17 @@ export default function Menu({
           </div>
           <div className="modal-content-user-info-body">
             <div>
-              {!profile && (
-                <button
-                  css={{
-                    marginBottom: '10px',
-                  }}
-                  onClick={(e) => {
-                    setIsOpenCreateProfile(true)
-                    setIsOpenUserInfo(false)
-                  }}
-                >
-                  CREATE PROFILE
-                </button>
-              )}
+              <button
+                css={{
+                  marginBottom: '10px',
+                }}
+                onClick={(e) => {
+                  setIsOpenCreateProfile(true)
+                  setIsOpenUserInfo(false)
+                }}
+              >
+                EDIT PROFILE
+              </button>
               <button
                 onClick={(e) => {
                   setIsOpenUserDetail(true)
