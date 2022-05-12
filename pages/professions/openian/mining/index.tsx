@@ -9,6 +9,8 @@ export default function Mining() {
   const [isStartQuest, setIsStartQuest] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
 
+  const [harmer, setHarmer] = useState(1) 
+
   const startQuest = () => {
     setIsStartQuest(true)
   }
@@ -16,7 +18,8 @@ export default function Mining() {
   const handleFinish = () => {
     setIsFinished(true)
   }
-
+  console.log(harmer > 0);
+  
   return (
     <div className={style.miningOverlay}>
       {!isFinished ? <div className={style.frameMining}>
@@ -65,7 +68,7 @@ export default function Mining() {
                 <div className={style.harmer}></div>
               </div>
             </div>
-            <Button onClick={startQuest} className={style.startQuestBtn}></Button>
+            <Button disabled={harmer === 0} onClick={startQuest} className={style.startQuestBtn}></Button>
           </div>
             : <div className={style.miningWaitDetail}>
               <div>
