@@ -40,6 +40,15 @@
   background-size: 100%;
 }
 
+.openianSellBtn {
+  position: absolute;
+  top: 260px;
+  left: 670px;
+  width: 585px;
+  height: 385px;
+  cursor: pointer;
+}
+
 @media (max-width: 767px) {
   .backBtn {
     width: 140px;

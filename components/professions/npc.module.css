@@ -57,22 +57,6 @@
   text-align: center;
 }
 
-.btnGroup {
-  display: flex;
-  flex-direction: column;
-}
-
-.btn {
-  outline: none !important;
-  background-color: transparent !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-}
-
-.btn:focus {
-  box-shadow: none !important;
-}
-
 .acceptBtn {
   background-image: url('/images/professions/accept-btn.png') !important;
   width: 473px !important;

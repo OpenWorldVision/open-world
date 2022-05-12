@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styles from '@components/professions/openian.module.css'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
-import Link from 'next/link';
+import Link from 'next/link'
+import SellModal from '@components/professions/openian/SellModal'
 
 function Openian() {
-	const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [isOpenStore, setIsOpenStore] = useState(false)
 
   useEffect(() => {
     const checkWindowWidth = () => {
-      setWindowWidth(window.innerWidth);
+      setWindowWidth(window.innerWidth)
     }
 
     checkWindowWidth()
@@ -20,35 +22,46 @@ function Openian() {
     }
   }, [])
 
+  const toggleSellModal = useCallback((state) => {
+    setIsOpenStore(state)
+  }, [])
+
   return (
     <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
       <TransformWrapper
         initialPositionX={0}
         initialPositionY={0}
         centerOnInit={true}
-				wheel={{
-					disabled: true
-				}}
-				panning={{
-					disabled: windowWidth >= 1858
-				}}
+        wheel={{
+          disabled: true,
+        }}
+        doubleClick={{
+          disabled: true,
+        }}
+        panning={{
+          disabled: windowWidth >= 1858,
+        }}
       >
-        <TransformComponent
-          wrapperStyle={{ height: '100vh', width: '100vw' }}
-        >
-					<div
-            className={`${styles.openianContainer} overlay`}
-          >
-						<div className={styles.openianBg}>
-
-						</div>
-					</div>
-				</TransformComponent>
+        <TransformComponent wrapperStyle={{ height: '100vh', width: '100vw' }}>
+          <div className={`${styles.openianContainer} overlay`}>
+            <div className={styles.openianBg}>
+              <div
+                className={styles.openianSellBtn}
+                onClick={() => toggleSellModal(true)}
+              ></div>
+            </div>
+          </div>
+        </TransformComponent>
       </TransformWrapper>
 
-			<Link href="/">
-				<a className={`${styles.backBtn} click-cursor`}></a>
-			</Link>
+      <Link href="/">
+        <a className={`${styles.backBtn} click-cursor`}></a>
+      </Link>
+
+      <SellModal
+        isOpen={isOpenStore}
+        toggleModal={() => toggleSellModal(false)}
+      />
     </div>
   )
 }

@@ -49,7 +49,7 @@ function ProfessionsModal(props) {
   const getUserBalance = async () => {
     const balance = await getBalanceOfOpen()
     setCurrentOPEN(parseFloat(balance))
-    return parseFloat(balance);
+    return parseFloat(balance)
   }
 
   // @test mint heroCore
@@ -66,7 +66,7 @@ function ProfessionsModal(props) {
     const nftList = await fetchUserProfessionNFT()
     const check = nftList.includes(npcs.indexOf(params.npc) + 1)
     setHaveNFT(check)
-    return check;
+    return check
   }
 
   const getCurrentNpcText = () => {
@@ -78,8 +78,7 @@ function ProfessionsModal(props) {
     const checkBalance = await getUserBalance()
     if (params.npc === 'openian') {
       setCanActivate(checkNFT)
-    }
-    else {
+    } else {
       setCanActivate(checkNFT && checkBalance >= requireBalance)
     }
   }, [haveNFT, currentOPEN])
@@ -163,7 +162,7 @@ function ProfessionsModal(props) {
           </GridItem>
           <GridItem colSpan={2} className={style.activateWrap}>
             <Button
-              className={`${style.btn} ${style.activateBtn} ${
+              className={`btn-chaka ${style.activateBtn} ${
                 canActivate && style.active
               } click-cursor`}
             ></Button>

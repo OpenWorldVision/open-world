@@ -1,0 +1,171 @@
+.modalOverlay {
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity;
+  transition: all 0.5s linear;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: transparent;
+}
+
+.modalOverlay.active {
+  z-index: 2002;
+  opacity: 1;
+  visibility: visible;
+  will-change: opacity;
+  transition: all 0.5s linear;
+}
+
+.modal {
+  padding: 40px 50px 10px;
+  position: relative;
+  min-height: 170px;
+  width: 700px;
+  height: fit-content;
+  background-image: url('/images/professions/borders/SellBorder-left.png'),
+    url('/images/professions/borders/SellBorder-right.png');
+  background-position: center left, center right;
+  background-repeat: no-repeat;
+  background-size: 18px 100%;
+  background-color: #3d2316;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+}
+
+.modal img {
+  width: 100%;
+}
+
+.modal::before,
+.modal::after {
+  position: absolute;
+  content: '';
+}
+
+.modal::before {
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: calc(100% + 12px);
+  background-position: center top, center bottom;
+  background-repeat: no-repeat;
+  background-size: calc(100% - 111px) 19px;
+  background-image: url('/images/professions/borders/SellBorder-top.png'),
+    url('/images/professions/borders/SellBorder-bottom.png');
+}
+
+.modal::after {
+  top: 0;
+  left: 0px;
+  width: 100%;
+  height: calc(100% + 12px);
+  background-position: left top, right top, left bottom, right bottom;
+  background-repeat: no-repeat;
+  background-size: 68px;
+  background-image: url('/images/professions/borders/SellBorder-top-left.png'),
+    url('/images/professions/borders/SellBorder-top-right.png'),
+    url('/images/professions/borders/SellBorder-bottom-left.png'),
+    url('/images/professions/borders/SellBorder-bottom-right.png');
+}
+
+.boardContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sellBoard {
+  width: 220px;
+  position: absolute;
+  top: -20px;
+}
+
+.boardContent h4,
+.setPrice {
+  font-size: 30px;
+}
+
+.sellingAmount,
+.totalAmount {
+  font-size: 20px;
+}
+
+.selectedItemBtn {
+  width: 140px !important;
+  height: fit-content !important;
+  padding: 0 !important;
+  margin: 20px 0;
+}
+
+.setPrice {
+  margin: 20px 0;
+}
+
+.sellingAmount {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sellInput {
+  padding: 0 10px;
+  font-size: 24px;
+  background-color: transparent;
+  text-align: center;
+  color: #fff;
+  border: none;
+  outline: none;
+  background-image: url('/images/professions/openian/sellboard-input.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: left center;
+}
+
+.setPrice .sellInput {
+  margin-right: 20px;
+  width: 140px;
+}
+
+.sellingAmount .sellInput {
+  width: 230px;
+}
+
+.confirmBtn {
+  width: 200px !important;
+  height: fit-content !important;
+  margin-top: 30px;
+}
+
+@media (max-width: 767px) {
+  .modal {
+    width: 95vw;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .boardContent h4,
+  .setPrice {
+    font-size: 20px;
+  }
+
+  .sellingAmount,
+  .totalAmount {
+    font-size: 16px;
+  }
+
+  .selectedItemBtn,
+  .setPrice .sellInput {
+    width: 100px !important;
+  }
+
+  .sellingAmount .sellInput {
+    width: 130px;
+  }
+}
