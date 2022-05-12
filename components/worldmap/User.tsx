@@ -90,8 +90,16 @@ export default function User() {
             profile={profile}
           />
         )}
+        {profile === false && (
+          <CreateProfile
+            setIsOpenCreateProfile={setIsOpenCreateProfile}
+            isOpenCreateProfile={isOpenCreateProfile}
+          />
+        )}
         {isOpenCreateProfile && (
           <CreateProfile
+            profile={profile}
+            isEdit={true}
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             isOpenCreateProfile={isOpenCreateProfile}
           />

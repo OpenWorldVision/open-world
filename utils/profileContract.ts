@@ -35,18 +35,31 @@ export const getProfile = async () => {
       .getProfileByAddress(accounts[0])
       .call({ from: accounts[0] })
   } catch {
-    return null
+    return false
   }
 
   
 }
 
-export const crateProfile = async (nameStr: string, heroId: number) => {
+export const crateProfile = async (nameStr: string, pictureId: number) => {
   const contract = await getProfileContract()
   const accounts = await web3.eth.getAccounts()
   try {
     await contract.methods
-      .createProfile(nameStr, heroId)
+      .createProfile(nameStr, pictureId)
+      .send({ from: accounts[0] })
+    return true
+  } catch {
+    return false
+  }
+}
+
+export const changePictureProfile = async (profileId: number, pictureId: number) => {
+  const contract = await getProfileContract()
+  const accounts = await web3.eth.getAccounts()
+  try {
+    await contract.methods
+      .changePic(profileId, pictureId)
       .send({ from: accounts[0] })
     return true
   } catch {

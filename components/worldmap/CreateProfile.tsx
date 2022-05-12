@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
-import { crateProfile } from 'utils/profileContract'
+import { changePictureProfile, crateProfile } from 'utils/profileContract'
 
 const imagesIndex = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -10,6 +10,8 @@ const imagesIndex = [
 export default function CreateProfile({
   isOpenCreateProfile,
   setIsOpenCreateProfile,
+  isEdit=false,
+  profile=null
 }) {
   const [heroSelector, setHeroSelector] = useState(1)
   const [nameValue, setNameValue] = useState('')
@@ -24,24 +26,34 @@ export default function CreateProfile({
   )
 
   const handleCreateProfile = async () => {
-    if (heroSelector && nameValue && heroSelector) {
-      const isCreateProfile = await crateProfile(nameValue, heroSelector)
-      if (!isCreateProfile){
-        setIsNameValid(false)
+    if(isEdit && profile) {
+      if (heroSelector) {
+        const isCreateProfile = await changePictureProfile(Number(profile._id), heroSelector)
+        if (isCreateProfile){
+          window.location.href = '/'
+        }
+      }
+    } else {
+      if (heroSelector && nameValue && isNameValid) {
+        const isCreateProfile = await crateProfile(nameValue, heroSelector)
+        if (isCreateProfile){
+          window.location.href = '/'
+        } else {
+          setIsNameValid(false)
+        }
       }
     }
   }
 
   return (
     <CreateProfileCSS>
-      <div
-        onClick={(e) => {
-          handleCloseModalCreateProfile(e)
-        }}
-        className="modal-create-profile"
-      >
+      <div className="modal-create-profile">
         <div className="modal-content">
-          <div className="body">
+          <div className="body"
+            onClick={(e) => {
+              handleCloseModalCreateProfile(e)
+            }}
+          >
             <div className="body-top">
               <div className="container-items">
                 {imagesIndex.map((value) => (
@@ -67,19 +79,22 @@ export default function CreateProfile({
                   alt="img"
                 />
               </div>
-              <input
-                onChange={(e) => {
-                  setNameValue(e.target.value)
-                }}
-                value={nameValue}
-                className="input-name"
-                type="text"
-                placeholder="Enter Name Here"
-              />
-
+              {!isEdit && (
+                <input
+                  onChange={(e) => {
+                    setNameValue(e.target.value)
+                  }}
+                  value={nameValue}
+                  className="input-name"
+                  type="text"
+                  placeholder="Enter Name Here"
+                />
+              )}
               {!isNameValid && (
                 <div
                   css={{
+                    width: '100%',
+                    textAlign: 'center',
                     color: 'red',
                     marginTop: '5px',
                   }}
@@ -87,13 +102,12 @@ export default function CreateProfile({
                   Name invalid
                 </div>
               )}
-              {console.log(heroSelector && nameValue && 'invalid')}
               <div className='complete-profile'>
                 <button
                   onClick={() => {
                     handleCreateProfile()
                   }}
-                  className={heroSelector && nameValue && 'valid'}
+                  className={((heroSelector && nameValue) || isEdit) && 'valid'}
                 />
               </div>
               <div className="doc">
