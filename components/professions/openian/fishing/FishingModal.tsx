@@ -71,6 +71,7 @@ function FishingModal(props: Props) {
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
               onClick={() => {
                 toggleModal()
+                setTypeOfModal(TYPE_OF_MODAL.START)
               }}
             >
               <img
@@ -144,12 +145,18 @@ function FishingModal(props: Props) {
             : styles.modalFinish
         }
       >
-        {/* <h3 className={styles.sellBoard}>
-          <img
-            src="/images/professions/openian/fishBoard.png"
-            alt="Fish board"
-          />
-        </h3> */}
+        {typeofModal !== TYPE_OF_MODAL.FINISH && (
+          <h3 className={styles.sellBoard}>
+            <img
+              src={`/images/professions/openian/${
+                typeofModal === TYPE_OF_MODAL.START
+                  ? `fishBoard`
+                  : `questFinish`
+              }.png`}
+              alt="Fish board"
+            />
+          </h3>
+        )}
 
         <div
           className={
