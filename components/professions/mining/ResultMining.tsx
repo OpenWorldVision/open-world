@@ -7,10 +7,8 @@ import { useEffect, useState } from 'react'
 
 export default function ResultMining() {
   const [isLoading, setIsLoading] = useState(true)
-  console.log(isLoading)
   useEffect(() => {
     setTimeout(() => {
-      console.log(isLoading)
       setIsLoading(false)
     }, 2000)
   }, [])
