@@ -29,6 +29,8 @@ export default function ResultMining() {
       </div>
 
       <div className={`${style.frameFinished}`}>
+        <div className={style.questFinish}></div>
+        <div></div>
         <div className={style.resultMining}>
           <div className={style.title}>You Get</div>
           <div className={style.items}>
