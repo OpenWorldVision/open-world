@@ -10,33 +10,8 @@ type Props = {
 function FishingModal(props: Props) {
   const { isOpen, toggleModal } = props
 
-  const [price, setPrice] = useState(0)
-  const [sellingAmount, setSellingAmount] = useState(0)
-  const [totalAmount, setTotalAmount] = useState(0)
-
-  const calcTotalAmount = (_price = 1, _setTotalAmount = 1) => {
-    setTotalAmount(_price * _setTotalAmount)
-  }
-
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value)
-    calcTotalAmount(e.target.value, sellingAmount)
-  }
-
-  const increaseSellingAmount = () => {
-    setSellingAmount(sellingAmount + 1)
-    calcTotalAmount(price, sellingAmount + 1)
-  }
-
-  const decreaseSellingAmount = () => {
-    if (sellingAmount > 0) {
-      setSellingAmount(sellingAmount - 1)
-      calcTotalAmount(price, sellingAmount - 1)
-    }
-  }
-
   const startFishing = useCallback(() => {
-    console.log('1')
+    //
   }, [])
 
   return (
