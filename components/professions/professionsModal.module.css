@@ -60,21 +60,13 @@
 .btnGroup {
   display: flex;
   flex-direction: column;
-}
-
-.btn {
-  outline: none !important;
-  background-color: transparent !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-}
-
-.btn:focus {
-  box-shadow: none !important;
+  align-items: center;
 }
 
 .acceptBtn {
   background-image: url('/images/professions/accept-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
   width: 473px !important;
   height: 105px !important;
   margin: 8px 0;

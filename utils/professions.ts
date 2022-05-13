@@ -70,3 +70,9 @@ export const fetchUserProfessionNFT = async () => {
 
   return nftList
 }
+
+export const activateProfession = async (profession) => {
+  const contract = await getProfessionsContract()
+  const checkSuccess = await contract.setProfession(profession)
+  return checkSuccess
+}
