@@ -161,11 +161,21 @@ function ProfessionsModal(props) {
             </div>
           </GridItem>
           <GridItem colSpan={2} className={style.activateWrap}>
-            <Button
-              className={`btn-chaka ${style.activateBtn} ${
-                canActivate && style.active
-              } click-cursor`}
-            ></Button>
+            {canActivate ? (
+              <Link href={'/professions/openian/main'}>
+                <Button
+                  className={`btn-chaka ${style.activateBtn} ${
+                    canActivate && style.active
+                  } click-cursor`}
+                ></Button>
+              </Link>
+            ) : (
+              <Button
+                className={`btn-chaka ${style.activateBtn} ${
+                  canActivate && style.active
+                } click-cursor`}
+              ></Button>
+            )}
           </GridItem>
         </Grid>
       </div>

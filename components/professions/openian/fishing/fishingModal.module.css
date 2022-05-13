@@ -37,6 +37,23 @@
   color: #fff;
   z-index: 2;
 }
+.modalFinish {
+  padding: 40px 50px 10px;
+  position: relative;
+  height: 500px;
+  width: 700px;
+  background-image: url('/images/professions/openian/claimFish.png');
+
+  background-position: center left, center right;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* background-color: #3d2314; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+}
 
 .modal img {
   width: 100%;
@@ -157,6 +174,19 @@
   padding-right: 1rem;
   padding-top: 1rem;
 }
+.descriptionFinish {
+  width: 500px;
+  height: 300px;
+  border-radius: 24px;
+
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+}
 .titleText {
   font-weight: 700;
   color: '#fff';
@@ -168,6 +198,37 @@
   color: '#fff';
   font-size: 20px;
   line-height: 24px;
+}
+
+.titleTextFinish {
+  font-weight: 500;
+  color: '#fff';
+  font-size: 40px;
+  line-height: 49px;
+}
+.valueTextFinish {
+  font-weight: 500;
+  color: '#fff';
+  font-size: 36px;
+  line-height: 44px;
+}
+.rowView {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.fishNFT {
+  width: 36px;
+  height: 63px;
+  margin-left: 23px;
+}
+.noteText {
+  font-weight: 500;
+  color: '#fff';
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  margin-top: 60px;
 }
 
 @media (max-width: 767px) {

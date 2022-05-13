@@ -38,15 +38,36 @@ export const startFishing = async () => {
   }
 }
 
-// export const crateProfile = async (nameStr: string, heroId: number) => {
-//   const contract = await getProfileContract()
-//   const accounts = await web3.eth.getAccounts()
-//   try {
-//     await contract.methods
-//       .createProfile(nameStr, heroId)
-//       .send({ from: accounts[0] })
-//     return true
-//   } catch {
-//     return false
-//   }
-// }
+export const getFinishFishingQuest = async () => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+
+  try {
+    const duration = await contract.methods
+      .fishingDuration()
+      .call({ from: accounts[0] })
+    // console.log('haha', duration)
+    const data = await contract.methods
+      .getFishingQuest(accounts[0])
+      .call({ from: accounts[0] })
+    // console.log('gi z', data)
+    const fishingQuest = {
+      ...data,
+      duration: parseInt(duration),
+    }
+    return fishingQuest
+  } catch {
+    return false
+  }
+}
+
+export const finishFishing = async () => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+  try {
+    const data = await contract.methods
+      .finishFishing()
+      .send({ from: accounts[0] })
+    return data
+  } catch (error) {}
+}
