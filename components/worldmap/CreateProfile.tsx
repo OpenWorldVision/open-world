@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
-import { changePictureProfile, crateProfile } from 'utils/profileContract'
+import { changePictureProfile, crateProfile, checkNameTaken } from 'utils/profileContract'
 
 const imagesIndex = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -35,11 +35,14 @@ export default function CreateProfile({
       }
     } else {
       if (heroSelector && nameValue && isNameValid) {
-        const isCreateProfile = await crateProfile(nameValue, heroSelector)
-        if (isCreateProfile){
-          window.location.href = '/'
-        } else {
+        const isNameTaken = await checkNameTaken(nameValue)
+        if(isNameTaken){
           setIsNameValid(false)
+        } else {
+          const isCreateProfile = await crateProfile(nameValue, heroSelector)
+          if (isCreateProfile){
+            window.location.href = '/'
+          }
         }
       }
     }
@@ -83,6 +86,7 @@ export default function CreateProfile({
                 <input
                   onChange={(e) => {
                     setNameValue(e.target.value)
+                    setIsNameValid(true)
                   }}
                   value={nameValue}
                   className="input-name"
@@ -95,8 +99,11 @@ export default function CreateProfile({
                   css={{
                     width: '100%',
                     textAlign: 'center',
-                    color: 'red',
-                    marginTop: '5px',
+                    color: 'white',
+                    marginTop: '20px',
+                    fontSize: '25px',
+                    fontWeight: 'bold',
+                    textShadow: '0 0 10px #FF0000',
                   }}
                 >
                   Name invalid
@@ -129,7 +136,7 @@ const CreateProfileCSS = styled.div({
     top: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.9)',
     color: 'white',
     padding: '0 15px',
     overflow: 'auto',
@@ -189,7 +196,7 @@ const CreateProfileCSS = styled.div({
             flexWrap: 'wrap',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '530px',
+            height: '500px',
             button: {
               width: '100px',
               height: '100px',
@@ -206,6 +213,10 @@ const CreateProfileCSS = styled.div({
                 padding: '2px',
                 borderRadius: '12px'
               }
+            },
+            'button.select': {
+              outline: '4px solid yellow',
+              borderRadius: '12px'
             }
           }
         },
@@ -219,7 +230,7 @@ const CreateProfileCSS = styled.div({
           display: 'flex',
           flexWrap: 'wrap',
           marginTop: '100px',
-          padding: '80px 40px',
+          padding: '80px 20px',
           '@media(min-width: 1396px)': {
             marginLeft: '50px'
           },
@@ -299,7 +310,6 @@ const CreateProfileCSS = styled.div({
               backgroundRepeat: 'no-repeat',
               width: '300px',
               height: '160px',
-              marginTop: '50px'
             },
             'button.valid': {
               background: 'url(./images/profile/btn-complete.png)',
