@@ -16,7 +16,7 @@ contract Item is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
   OWItem[] private tokens;
 
   function initialize(address _token) public initializer {
-    __ERC721_init('OpenWorld Hero', 'OWH');
+    __ERC721_init('OpenWorld Item', 'OWITEM');
     __AccessControl_init();
     _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
 
