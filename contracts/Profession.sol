@@ -36,8 +36,8 @@ contract Profession is AccessControlUpgradeable {
   }
 
   function startFishing() public returns (bool) {
-    (, bool finish) = getFishingQuest(msg.sender);
-    require(finish, 'Not finish last quest');
+    (uint256 startTime, ) = getFishingQuest(msg.sender);
+    require(startTime == 0, 'Not finish last quest');
     uint256 oldStamina = profiles.getStaminaByAddress(msg.sender);
     require(oldStamina >= fishingStaminaRequire, 'Not enough stamina');
     openianFishingQuest[msg.sender] = Quest(block.timestamp, false);
@@ -50,13 +50,14 @@ contract Profession is AccessControlUpgradeable {
     require(!finish, 'This quest is finish');
     require(startTime.add(fishingDuration) >= block.timestamp, 'Wait more');
     item.mint(msg.sender, 1);
-    openianFishingQuest[msg.sender] = Quest(startTime, true);
+    item.mint(msg.sender, 1);
+    openianFishingQuest[msg.sender] = Quest(0, true);
     return true;
   }
 
   function startMining() public returns (bool) {
-    (, bool finish) = getMiningQuest(msg.sender);
-    require(finish, 'Not finish last quest');
+    (uint256 startTime, ) = getMiningQuest(msg.sender);
+    require(startTime == 0, 'Not finish last quest');
     uint256 oldStamina = profiles.getStaminaByAddress(msg.sender);
     require(oldStamina >= miningStaminaRequire, 'Not enough stamina');
     openianMiningQuest[msg.sender] = Quest(block.timestamp, false);
@@ -69,7 +70,8 @@ contract Profession is AccessControlUpgradeable {
     require(!finish, 'This quest is finish');
     require(startTime.add(fishingDuration) >= block.timestamp, 'Wait more');
     item.mint(msg.sender, 2);
-    openianMiningQuest[msg.sender] = Quest(startTime, true);
+    item.mint(msg.sender, 2);
+    openianMiningQuest[msg.sender] = Quest(0, true);
     return true;
   }
 
