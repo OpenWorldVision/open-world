@@ -3,10 +3,12 @@ import styles from '@components/professions/openian.module.css'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import Link from 'next/link'
 import SellModal from '@components/professions/openian/SellModal'
+import FishingModal from '@components/professions/openian/fishing/FishingModal'
 
 function Openian() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [isOpenStore, setIsOpenStore] = useState(false)
+  const [isFishing, setIsFishing] = useState(false)
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -25,6 +27,10 @@ function Openian() {
   const toggleSellModal = useCallback((state) => {
     setIsOpenStore(state)
   }, [])
+
+  const toggleFishingModal = useCallback(() => {
+    setIsFishing(!isFishing)
+  }, [isFishing])
 
   return (
     <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
@@ -46,6 +52,10 @@ function Openian() {
           <div className={`${styles.openianContainer} overlay`}>
             <div className={styles.openianBg}>
               <div
+                className={styles.openianFishBtn}
+                onClick={() => toggleFishingModal()}
+              ></div>
+              <div
                 className={styles.openianSellBtn}
                 onClick={() => toggleSellModal(true)}
               ></div>
@@ -61,6 +71,10 @@ function Openian() {
       <SellModal
         isOpen={isOpenStore}
         toggleModal={() => toggleSellModal(false)}
+      />
+      <FishingModal
+        isOpen={isFishing}
+        toggleModal={() => toggleFishingModal()}
       />
     </div>
   )

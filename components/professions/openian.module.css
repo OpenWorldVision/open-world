@@ -49,6 +49,15 @@
   cursor: pointer;
 }
 
+.openianFishBtn {
+  position: absolute;
+  top: 450px;
+  left: 240px;
+  width: 400px;
+  height: 385px;
+  cursor: pointer;
+}
+
 @media (max-width: 767px) {
   .backBtn {
     width: 140px;
