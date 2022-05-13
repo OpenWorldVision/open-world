@@ -13,7 +13,6 @@ import {
 } from '../../utils/professions'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 
-
 const npcs = ['openian', 'supplier', 'blacksmith']
 
 const npcText = [
@@ -74,10 +73,10 @@ function ProfessionsModal(props: Props) {
 
   const onActivateProfession = async () => {
     if (canActivate) {
-			dispatch(updateIsLoading({ isLoading: true }))
+      dispatch(updateIsLoading({ isLoading: true }))
       const professionNft = npcs.indexOf(npc) + 1
       const check = await activateProfession(professionNft)
-			dispatch(updateIsLoading({ isLoading: false }))
+      dispatch(updateIsLoading({ isLoading: false }))
       return check
     }
     return null
@@ -190,9 +189,9 @@ function ProfessionsModal(props: Props) {
       </div>
 
       <div
-				className={`${inheritStyle.backBtn} click-cursor`}
-				onClick={closeModal}
-			></div>
+        className={`${inheritStyle.backBtn} click-cursor`}
+        onClick={closeModal}
+      ></div>
     </div>
   )
 }

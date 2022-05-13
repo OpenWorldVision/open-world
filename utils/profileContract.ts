@@ -4,7 +4,7 @@ const web3 = new Web3(Web3.givenProvider)
 
 const profilesContract = {
   addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
-  addressBSC: '0x276EA94F4093B09abF99d7393B6642F361572035',
+  addressBSC: '0xe6046d1363f7bebff6cb98c72094c89ff8ee500d',
   jsonInterface: require('../build/contracts/Profiles.json'),
 }
 
@@ -44,6 +44,7 @@ export const crateProfile = async (nameStr: string, heroId: number) => {
     await contract.methods
       .createProfile(nameStr, heroId)
       .send({ from: accounts[0] })
+    console.log('11111')
     return true
   } catch {
     return false

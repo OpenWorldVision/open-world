@@ -32,8 +32,8 @@ function SellModal(props: Props) {
     } else {
       let _price = parseInt(priceRef.current.value, 10)
 
-      if (priceRef.current.value === "") {
-        _price = 0;
+      if (priceRef.current.value === '') {
+        _price = 0
       }
 
       setPrice(_price)
@@ -42,8 +42,8 @@ function SellModal(props: Props) {
   }
 
   const checkIfEmpty = () => {
-    if (priceRef.current.value === "") {
-      priceRef.current.value = '0';
+    if (priceRef.current.value === '') {
+      priceRef.current.value = '0'
     }
 
     const _price = parseInt(priceRef.current.value, 10)
@@ -75,10 +75,7 @@ function SellModal(props: Props) {
           />
         </h3>
 
-        <Button
-          className={styles.closeBtn}
-          onClick={() => toggleModal()}
-        >
+        <Button className={styles.closeBtn} onClick={() => toggleModal()}>
           <FontAwesomeIcon icon={faTimesCircle} />
         </Button>
 
@@ -102,7 +99,7 @@ function SellModal(props: Props) {
               name="price"
               defaultValue="0"
               onKeyUp={(e) => checkPriceInput(e)}
-              onBlur ={() => checkIfEmpty()}
+              onBlur={() => checkIfEmpty()}
             />
             <span>OPEN</span>
           </div>
@@ -122,11 +119,7 @@ function SellModal(props: Props) {
               >
                 +
               </Button>
-              <Button
-                className="btn-chaka click-cursor"
-              >
-                All
-              </Button>
+              <Button className="btn-chaka click-cursor">All</Button>
             </div>
           </div>
           <div className={styles.totalAmount}>

@@ -1,0 +1,66 @@
+.openianOverlay {
+  background-color: #131313;
+  height: 100vh;
+  z-index: 2001;
+}
+
+.openianContainer {
+  position: relative;
+  width: 1858px;
+  height: 100vh;
+  min-width: 1568px;
+  background-color: #131313;
+}
+
+.openianBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url('/images/professions/openian/openian-bg.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  width: 1858px;
+  height: 100vh;
+  z-index: 1000;
+  background-size: 100% 100%;
+  -ms-interpolation-mode: nearest-neighbor;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: pixelated;
+}
+
+.backBtn {
+  display: block;
+  position: absolute;
+  top: 30px;
+  left: 35px;
+  width: 235px;
+  height: 75px;
+  background-image: url('/images/professions/back-btn.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.openianSellBtn {
+  position: absolute;
+  top: 260px;
+  left: 670px;
+  width: 585px;
+  height: 385px;
+  cursor: pointer;
+}
+
+.openianFishBtn {
+  position: absolute;
+  top: 450px;
+  left: 240px;
+  width: 400px;
+  height: 385px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .backBtn {
+    width: 140px;
+    height: 75px;
+  }
+}

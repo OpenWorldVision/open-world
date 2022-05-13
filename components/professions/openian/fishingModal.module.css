@@ -22,14 +22,45 @@
 .modal {
   padding: 40px 50px 10px;
   position: relative;
-  width: 700px;
+  width: 600px;
   height: fit-content;
   background-image: url('/images/professions/borders/sellBorder-left.png'),
     url('/images/professions/borders/sellBorder-right.png');
   background-position: 0, 100%;
   background-repeat: no-repeat;
   background-size: 18px 100%;
+  /* background-color: #3d2316; */
   background-color: #3d2316;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+}
+.closeBtn {
+  position: absolute !important;
+  z-index: 1;
+  top: 15px;
+  right: 30px;
+  text-align: center;
+  border: none;
+  outline: none !important;
+  background-color: transparent !important;
+  color: #f6e691;
+  font-size: 35px !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+}
+.modalFinish {
+  padding: 40px 50px 10px;
+  position: relative;
+  height: 500px;
+  width: 600px;
+  background-image: url('/images/professions/openian/claimFish.png');
+  background-position: center left, center right;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* background-color: #3d2314; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,8 +86,8 @@
   background-position: center top, center bottom;
   background-repeat: no-repeat;
   background-size: calc(100% - 111px) 19px;
-  background-image: url('/images/professions/borders/sellBorder-top.png'),
-    url('/images/professions/borders/sellBorder-bottom.png');
+  background-image: url('/images/professions/borders/SellBorder-top.png'),
+    url('/images/professions/borders/SellBorder-bottom.png');
 }
 
 .modal::after {
@@ -67,10 +98,10 @@
   background-position: left top, right top, left bottom, right bottom;
   background-repeat: no-repeat;
   background-size: 68px;
-  background-image: url('/images/professions/borders/sellBorder-top-left.png'),
-    url('/images/professions/borders/sellBorder-top-right.png'),
-    url('/images/professions/borders/sellBorder-bottom-left.png'),
-    url('/images/professions/borders/sellBorder-bottom-right.png');
+  background-image: url('/images/professions/borders/SellBorder-top-left.png'),
+    url('/images/professions/borders/SellBorder-top-right.png'),
+    url('/images/professions/borders/SellBorder-bottom-left.png'),
+    url('/images/professions/borders/SellBorder-bottom-right.png');
 }
 
 .boardContent {
@@ -79,27 +110,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 24px;
 }
 
 .sellBoard {
-  width: 220px;
+  width: 250px;
+  height: 50px;
   position: absolute;
-  top: -20px;
-}
-
-.closeBtn {
-  position: absolute !important;
-  z-index: 1;
-  top: 15px;
-  right: 30px;
-  text-align: center;
-  border: none;
-  outline: none !important;
-  background-color: transparent !important;
-  color: #f6e691;
-  font-size: 35px !important;
-  cursor: pointer !important;
-  box-shadow: none !important;
+  top: -60px;
 }
 
 .boardContent h4,
@@ -132,7 +150,7 @@
 .sellInput {
   padding: 0 10px;
   font-size: 24px;
-  background-color: transparent !important;
+  background-color: transparent;
   text-align: center;
   color: #fff;
   border: none;
@@ -150,25 +168,80 @@
 
 .sellingAmount .sellInput {
   width: 230px;
-  margin-left: 20px;
-}
-
-.amountBtnGroup {
-  display: flex;
-}
-
-.sellingAmount button {
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
-  margin: 0 5px;
-  width: 20px !important;
-  height: 40px !important;
-  border: 1px solid #f6e691;
 }
 
 .confirmBtn {
   width: 200px !important;
   height: fit-content !important;
   margin-top: 30px;
+}
+.description {
+  width: 500px;
+  height: 300px;
+  border-radius: 24px;
+  background-color: #30311b;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+}
+.descriptionFinish {
+  width: 500px;
+  height: 300px;
+  border-radius: 24px;
+
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+}
+.titleText {
+  font-weight: 700;
+  color: '#fff';
+  font-size: 20px;
+  line-height: 24px;
+}
+.valueText {
+  font-weight: 400;
+  color: '#fff';
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.titleTextFinish {
+  font-weight: 500;
+  color: '#fff';
+  font-size: 40px;
+  line-height: 49px;
+}
+.valueTextFinish {
+  font-weight: 500;
+  color: '#fff';
+  font-size: 36px;
+  line-height: 44px;
+}
+.rowView {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.fishNFT {
+  width: 36px;
+  height: 63px;
+  margin-left: 23px;
+}
+.noteText {
+  font-weight: 500;
+  color: '#fff';
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  margin-top: 60px;
 }
 
 @media (max-width: 767px) {
@@ -187,21 +260,12 @@
     font-size: 16px;
   }
 
-  .sellingAmount {
-    flex-direction: column;
-  }
-
   .selectedItemBtn,
   .setPrice .sellInput {
     width: 100px !important;
   }
 
-  .sellingAmount span {
-    font-size: 24px;
-  }
-
   .sellingAmount .sellInput {
     width: 130px;
-    margin: 10px 0;
   }
 }
