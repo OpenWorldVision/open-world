@@ -1,8 +1,9 @@
 import { Button } from '@chakra-ui/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useState } from 'react'
 import { finishFishing, startFishing } from 'utils/professionContract'
 import styles from './fishingModal.module.css'
-import layoutStyle from '../../../layout.module.css'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   isOpen: boolean
@@ -157,6 +158,10 @@ function FishingModal(props: Props) {
             />
           </h3>
         )}
+
+        <Button className={styles.closeBtn} onClick={() => toggleModal()}>
+          <FontAwesomeIcon icon={faTimesCircle} />
+        </Button>
 
         <div
           className={

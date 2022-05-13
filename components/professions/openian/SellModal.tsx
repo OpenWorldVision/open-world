@@ -1,6 +1,8 @@
 import { Button } from '@chakra-ui/react'
-import { useCallback, useState } from 'react'
+import { useRef, useState } from 'react'
 import styles from './sellModal.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   isOpen: boolean
@@ -10,6 +12,7 @@ type Props = {
 function SellModal(props: Props) {
   const { isOpen, toggleModal } = props
 
+  const priceRef = useRef<HTMLInputElement>()
   const [price, setPrice] = useState(0)
   const [sellingAmount, setSellingAmount] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
@@ -18,9 +21,34 @@ function SellModal(props: Props) {
     setTotalAmount(_price * _setTotalAmount)
   }
 
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value)
-    calcTotalAmount(e.target.value, sellingAmount)
+  const checkPriceInput = (e) => {
+    const regex = new RegExp('^[0-9]+$')
+    if (
+      !regex.test(e.target.value) &&
+      (e.keyCode === 69 || e.keyCode === 189)
+    ) {
+      // eslint-disable-next-line eqeqeq
+      priceRef.current.value = priceRef.current.value
+    } else {
+      let _price = parseInt(priceRef.current.value, 10)
+
+      if (priceRef.current.value === '') {
+        _price = 0
+      }
+
+      setPrice(_price)
+      calcTotalAmount(_price, sellingAmount)
+    }
+  }
+
+  const checkIfEmpty = () => {
+    if (priceRef.current.value === '') {
+      priceRef.current.value = '0'
+    }
+
+    const _price = parseInt(priceRef.current.value, 10)
+    setPrice(_price)
+    calcTotalAmount(_price, sellingAmount)
   }
 
   const increaseSellingAmount = () => {
@@ -42,10 +70,14 @@ function SellModal(props: Props) {
       <div className={styles.modal}>
         <h3 className={styles.sellBoard}>
           <img
-            src="/images/professions/openian/sellBoard.png"
+            src="/images/professions/openian/sellboard.png"
             alt="Sell board"
           />
         </h3>
+
+        <Button className={styles.closeBtn} onClick={() => toggleModal()}>
+          <FontAwesomeIcon icon={faTimesCircle} />
+        </Button>
 
         <div className={styles.boardContent}>
           <h4>SELECTED ITEM:</h4>
@@ -60,29 +92,35 @@ function SellModal(props: Props) {
           <div className={styles.setPrice}>
             <span>PRICE: </span>
             <input
+              ref={priceRef}
               className={styles.sellInput}
-              type="text"
+              type="number"
+              min="0"
               name="price"
-              defaultValue={price}
-              onChange={(e) => handlePriceChange(e)}
+              defaultValue="0"
+              onKeyUp={(e) => checkPriceInput(e)}
+              onBlur={() => checkIfEmpty()}
             />
             <span>OPEN</span>
           </div>
           <div className={styles.sellingAmount}>
-            <span>Selling Amount: </span>
-            <Button
-              className="btn-chaka click-cursor"
-              onClick={decreaseSellingAmount}
-            >
-              -
-            </Button>
+            <span>Amount: </span>
             <div className={styles.sellInput}>{sellingAmount}</div>
-            <Button
-              className="btn-chaka click-cursor"
-              onClick={increaseSellingAmount}
-            >
-              +
-            </Button>
+            <div className={styles.amountBtnGroup}>
+              <Button
+                className="btn-chaka click-cursor"
+                onClick={decreaseSellingAmount}
+              >
+                -
+              </Button>
+              <Button
+                className="btn-chaka click-cursor"
+                onClick={increaseSellingAmount}
+              >
+                +
+              </Button>
+              <Button className="btn-chaka click-cursor">All</Button>
+            </div>
           </div>
           <div className={styles.totalAmount}>
             <span>Total Amount: </span>

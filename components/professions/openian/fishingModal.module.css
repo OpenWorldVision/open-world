@@ -22,28 +22,41 @@
 .modal {
   padding: 40px 50px 10px;
   position: relative;
-  min-height: 170px;
-  width: 700px;
+  width: 600px;
   height: fit-content;
-  background-image: url('/images/professions/borders/SellBorder-left.png'),
-    url('/images/professions/borders/SellBorder-right.png');
-  background-position: center left, center right;
+  background-image: url('/images/professions/borders/sellBorder-left.png'),
+    url('/images/professions/borders/sellBorder-right.png');
+  background-position: 0, 100%;
   background-repeat: no-repeat;
   background-size: 18px 100%;
-  background-color: #454729;
+  /* background-color: #3d2316; */
+  background-color: #3d2316;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
   z-index: 2;
 }
+.closeBtn {
+  position: absolute !important;
+  z-index: 1;
+  top: 15px;
+  right: 30px;
+  text-align: center;
+  border: none;
+  outline: none !important;
+  background-color: transparent !important;
+  color: #f6e691;
+  font-size: 35px !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
+}
 .modalFinish {
   padding: 40px 50px 10px;
   position: relative;
   height: 500px;
-  width: 700px;
+  width: 600px;
   background-image: url('/images/professions/openian/claimFish.png');
-
   background-position: center left, center right;
   background-repeat: no-repeat;
   background-size: 100% 100%;

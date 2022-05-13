@@ -3,15 +3,21 @@ import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
 import { getProfile } from 'utils/profileContract'
+import { useDispatch, useSelector } from 'react-redux'
+import { setProfile } from 'reduxActions/profileAction'
 
 export default function User() {
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
-  const [profile, setProfile] = useState(null)
+  const profile = useSelector((state: any) => { return state.ProfileStore.profile })
+  const dispatch = useDispatch()
+
 
   const getContractProfile = async () => {
-    setProfile(await getProfile())
+    const _profile = await getProfile()
+
+    dispatch(setProfile({ profile: _profile }))
   }
 
   useEffect(() => {
