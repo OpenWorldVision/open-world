@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
-import { profilesContract } from 'utils/profileContract'
-import { getWeb3Client } from '@lib/web3'
+import { crateProfile } from 'utils/profileContract'
 
 const imagesIndex = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
@@ -26,15 +25,8 @@ export default function CreateProfile({
 
   const handleCreateProfile = async () => {
     if (heroSelector && nameValue && heroSelector) {
-      const web3Client = await getWeb3Client()
-      const accounts = await web3Client?.web3Client.eth.getAccounts()
-      const contract = await profilesContract(web3Client.web3Client)
-      try {
-        await contract.methods
-          .createProfile(nameValue, heroSelector)
-          .send({ from: accounts[0] })
-        window.location.href = '/'
-      } catch {
+      const isCreateProfile = await crateProfile(nameValue, heroSelector)
+      if (!isCreateProfile){
         setIsNameValid(false)
       }
     }

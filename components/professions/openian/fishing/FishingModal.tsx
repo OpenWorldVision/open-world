@@ -35,63 +35,45 @@ function FishingModal(props: Props) {
     }
   }
 
+  const startFishing = useCallback(() => {
+    console.log('1')
+  }, [])
+
   return (
     <div
       className={`overlay ${styles.modalOverlay} ${isOpen && styles.active}`}
     >
       <div className={styles.modal}>
-        {/* <h3 className={styles.sellBoard}>
+        <h3 className={styles.sellBoard}>
           <img
             src="/images/professions/openian/fishBoard.png"
             alt="Fish board"
           />
-        </h3> */}
+        </h3>
 
         <div className={styles.boardContent}>
-          <h4>SELECTED FISHING:</h4>
-          <Button
-            className={`btn-chaka ${styles.selectedItemBtn} click-cursor`}
-          >
-            <img
-              src="/images/professions/openian/select-item.png"
-              alt="Select Item"
-            />
-          </Button>
-          <div className={styles.setPrice}>
-            <span>PRICE: </span>
-            <input
-              className={styles.sellInput}
-              type="text"
-              name="price"
-              defaultValue={price}
-              onChange={(e) => handlePriceChange(e)}
-            />
-            <span>OPEN</span>
-          </div>
-          <div className={styles.sellingAmount}>
-            <span>Selling Amount: </span>
-            <Button
-              className="btn-chaka click-cursor"
-              onClick={decreaseSellingAmount}
-            >
-              -
-            </Button>
-            <div className={styles.sellInput}>{sellingAmount}</div>
-            <Button
-              className="btn-chaka click-cursor"
-              onClick={increaseSellingAmount}
-            >
-              +
-            </Button>
-          </div>
-          <div className={styles.totalAmount}>
-            <span>Total Amount: </span>
-            <span>{totalAmount}</span>
+          <img
+            src="/images/professions/openian/fishBoardTemplate.png"
+            alt="Fish board"
+          />
+          <div className={styles.description}>
+            <div className={styles.titleText}>Description</div>
+            <div className={styles.valueText}>
+              Fish is main material to make Sushi and Suppliers are paying good
+              money for them. Let’s go catch some !!!
+            </div>
+            <div className={styles.titleText}>Base Duration</div>
+            <div className={styles.valueText}>20 second</div>
+            <div className={styles.titleText}>Stamina Per Attemp</div>
+            <div className={styles.valueText}>7 Stamina</div>
           </div>
 
-          <Button className={`btn-chaka ${styles.confirmBtn} click-cursor`}>
+          <Button
+            className={`btn-chaka ${styles.confirmBtn} click-cursor`}
+            onClick={startFishing}
+          >
             <img
-              src="/images/professions/openian/confirm-btn.png"
+              src="/images/professions/openian/startFishing.png"
               alt="Confirm"
             />
           </Button>
