@@ -22,7 +22,7 @@ export default function MiningWait(props: Props) {
     if (isStartQuest) {
       setTimeout(() => {
         setCheckCanFinish(false)
-      }, 2000)
+      }, 20000)
     }
   }, [])
 
