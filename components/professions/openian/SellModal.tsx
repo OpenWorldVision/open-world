@@ -70,7 +70,7 @@ function SellModal(props: Props) {
       <div className={styles.modal}>
         <h3 className={styles.sellBoard}>
           <img
-            src="/images/professions/openian/sellBoard.png"
+            src="/images/professions/openian/sellboard.png"
             alt="Sell board"
           />
         </h3>
@@ -109,18 +109,25 @@ function SellModal(props: Props) {
           <div className={styles.sellingAmount}>
             <span>Amount: </span>
             <div className={styles.sellInput}>{sellingAmount}</div>
-            <Button
-              className="btn-chaka click-cursor"
-              onClick={decreaseSellingAmount}
-            >
-              -
-            </Button>
-            <Button
-              className="btn-chaka click-cursor"
-              onClick={increaseSellingAmount}
-            >
-              +
-            </Button>
+            <div className={styles.amountBtnGroup}>
+              <Button
+                className="btn-chaka click-cursor"
+                onClick={decreaseSellingAmount}
+              >
+                -
+              </Button>
+              <Button
+                className="btn-chaka click-cursor"
+                onClick={increaseSellingAmount}
+              >
+                +
+              </Button>
+              <Button
+                className="btn-chaka click-cursor"
+              >
+                All
+              </Button>
+            </div>
           </div>
           <div className={styles.totalAmount}>
             <span>Total Amount: </span>

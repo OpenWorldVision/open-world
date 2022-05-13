@@ -24,9 +24,9 @@
   position: relative;
   width: 700px;
   height: fit-content;
-  background-image: url('/images/professions/borders/SellBorder-left.png'),
-    url('/images/professions/borders/SellBorder-right.png');
-  background-position: center left, center right;
+  background-image: url('/images/professions/borders/sellBorder-left.png'),
+    url('/images/professions/borders/sellBorder-right.png');
+  background-position: 0,100%;
   background-repeat: no-repeat;
   background-size: 18px 100%;
   background-color: #3d2316;
@@ -55,8 +55,8 @@
   background-position: center top, center bottom;
   background-repeat: no-repeat;
   background-size: calc(100% - 111px) 19px;
-  background-image: url('/images/professions/borders/SellBorder-top.png'),
-    url('/images/professions/borders/SellBorder-bottom.png');
+  background-image: url('/images/professions/borders/sellBorder-top.png'),
+    url('/images/professions/borders/sellBorder-bottom.png');
 }
 
 .modal::after {
@@ -67,10 +67,10 @@
   background-position: left top, right top, left bottom, right bottom;
   background-repeat: no-repeat;
   background-size: 68px;
-  background-image: url('/images/professions/borders/SellBorder-top-left.png'),
-    url('/images/professions/borders/SellBorder-top-right.png'),
-    url('/images/professions/borders/SellBorder-bottom-left.png'),
-    url('/images/professions/borders/SellBorder-bottom-right.png');
+  background-image: url('/images/professions/borders/sellBorder-top-left.png'),
+    url('/images/professions/borders/sellBorder-top-right.png'),
+    url('/images/professions/borders/sellBorder-bottom-left.png'),
+    url('/images/professions/borders/sellBorder-bottom-right.png');
 }
 
 
@@ -154,6 +154,10 @@
   margin-left: 20px;
 }
 
+.amountBtnGroup {
+  display: flex;
+}
+
 .sellingAmount button {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
   margin: 0 5px;
@@ -184,12 +188,21 @@
     font-size: 16px;
   }
 
+  .sellingAmount {
+    flex-direction: column;
+  }
+
   .selectedItemBtn,
   .setPrice .sellInput {
     width: 100px !important;
   }
 
+  .sellingAmount span {
+    font-size: 24px;
+  }
+
   .sellingAmount .sellInput {
     width: 130px;
+    margin: 10px 0;
   }
 }
