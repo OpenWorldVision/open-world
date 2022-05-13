@@ -1,5 +1,6 @@
 import { Button } from '@chakra-ui/react'
 import { useCallback, useState } from 'react'
+import { startFishing } from 'utils/professionContract'
 import styles from './fishingModal.module.css'
 
 type Props = {
@@ -10,9 +11,11 @@ type Props = {
 function FishingModal(props: Props) {
   const { isOpen, toggleModal } = props
 
-  const startFishing = useCallback(() => {
+  const _startFishing = async () => {
     //
-  }, [])
+    const dataFishing = await startFishing()
+    console.log('hic', dataFishing)
+  }
 
   return (
     <div
@@ -45,7 +48,7 @@ function FishingModal(props: Props) {
 
           <Button
             className={`btn-chaka ${styles.confirmBtn} click-cursor`}
-            onClick={startFishing}
+            onClick={_startFishing}
           >
             <img
               src="/images/professions/openian/startFishing.png"
