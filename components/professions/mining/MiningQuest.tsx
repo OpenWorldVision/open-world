@@ -33,7 +33,8 @@ export default function MiningQuest(props: Props) {
           Stamina Per Attemp
         </div>
         <div className={style.detail}>
-          20 seccond
+          20 
+          <div className={style.iconStamina}></div>
         </div>
       </div>
       <div>

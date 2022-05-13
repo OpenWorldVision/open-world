@@ -124,7 +124,7 @@
   width: 75%;
 }
 
-.finishBtn{
+.finishBtn, .finishBtnDisable{
   background-image: url('/images/professions/npc/openian/mining/finish-btn.png') !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
@@ -141,15 +141,81 @@
 
 .finishBtnDisable{
   background-image: url('/images/professions/npc/openian/mining/finish-disable-btn.png') !important;
+}
+
+.iconStamina{
+  background-image: url('/images/professions/npc/openian/mining/stamina.png') !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center center !important;
-  width: 120px !important;
-  height: 35px !important;
-  background-color: transparent !important;
-  position: absolute !important;
-  bottom: -170px;
-  left: 70px;
-  margin: 0 auto;
-  display: block !important;
+  width: 10px !important;
+  height: 15px !important;
+  margin: 4px 0 0 3px;
+}
+
+@media only screen and (min-width: 1200px) {
+  .frameMining {
+    max-width: 450px;
+    max-height: 650px;
+    width: 450px;
+    height: 650px;
+  }
+
+  .frameHead {
+    position: absolute;
+    top: 40px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .artItem {
+    background-size: 100% 100%;
+    width: 380px;
+    height: 200px;
+    margin-top: 10px;
+  }
+
+  .miningQuestDetail{
+    bottom: 100px;
+    left: 50px;
+    width: 75%;
+  }
+
+  .title {
+    font-size: 18px;
+    color: #FFFFFF;
+  }
+  
+  .detail {
+    font-size: 14px;
+    color: #FFFFFF;
+    display: flex;
+  }
+
+  .startQuestBtn{
+    background-size: 100% 100% !important;
+    background-position: center center !important;
+    width: 130px !important;
+    height: 40px !important;
+    bottom: -50px;
+    left: 35%;
+    /* display: block !important;
+    margin: 0 auto; */
+  }
+
+  .harmer{
+    width: 35px;
+    height: 35px;
+    left: 70px;
+    bottom: -15px;
+  }
+
+  .finishBtn, .finishBtnDisable{
+    width: 130px !important;
+    height: 40px !important;
+    bottom: -150px;
+    left: 35%;
+  }
 }
