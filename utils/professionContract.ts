@@ -32,7 +32,6 @@ export const startFishing = async () => {
     const data = await contract.methods
       .startFishing()
       .send({ from: accounts[0] })
-    // console.log('data nhan dc', data)
     return data
   } catch {
     return null

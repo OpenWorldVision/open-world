@@ -1,4 +1,4 @@
-import Web3 from "web3"
+import Web3 from 'web3'
 
 const web3 = new Web3(Web3.givenProvider)
 
@@ -10,21 +10,19 @@ const profilesContract = {
 
 const getProfileContract = async () => {
   const chainId = await web3.eth.getChainId()
-  
-  if(chainId === 97){
+
+  if (chainId === 97) {
     return new web3.eth.Contract(
       profilesContract.jsonInterface.abi,
       profilesContract.addressBSC
     )
-  }
-  else if(chainId === 1666700000){
+  } else if (chainId === 1666700000) {
     return new web3.eth.Contract(
       profilesContract.jsonInterface.abi,
       profilesContract.addressHarmony
     )
   }
 }
-
 
 export const getProfile = async () => {
   const contract = await getProfileContract()
@@ -37,8 +35,6 @@ export const getProfile = async () => {
   } catch {
     return null
   }
-
-  
 }
 
 export const crateProfile = async (nameStr: string, heroId: number) => {
@@ -48,6 +44,7 @@ export const crateProfile = async (nameStr: string, heroId: number) => {
     await contract.methods
       .createProfile(nameStr, heroId)
       .send({ from: accounts[0] })
+    console.log('11111')
     return true
   } catch {
     return false
