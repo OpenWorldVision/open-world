@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "truffle compile —all && next build && next export",
+    "build": "truffle compile --all && next build && next export",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
