@@ -29,6 +29,7 @@
     "gray-matter": "^4.0.2",
     "next": "^12.1.5",
     "react": "17.0.2",
+    "react-countdown": "^2.3.2",
     "react-dom": "17.0.2",
     "react-map-interaction": "^2.1.0",
     "react-redux": "^8.0.1",
@@ -66,5 +67,5 @@
   "resolutions": {
     "@types/react": "17.0.2",
     "@types/react-dom": "17.0.2"
- }
+  }
 }
