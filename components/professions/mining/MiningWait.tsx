@@ -41,7 +41,7 @@ export default function MiningWait(props: Props) {
           Time Left
         </div>
         <div className={style.detail}>
-          20 seccond
+          20 secconds
         </div>
         <Button onClick={handleCheckCanFinish} className={`${!checkCanFinish && style.finishBtn} ${checkCanFinish && style.finishBtnDisable}`}></Button>
       </div>

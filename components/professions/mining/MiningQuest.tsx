@@ -25,7 +25,7 @@ export default function MiningQuest(props: Props) {
           Base Duration
         </div>
         <div className={style.detail}>
-          20 seccond
+          20 secconds
         </div>
       </div>
       <div>
