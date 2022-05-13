@@ -5,6 +5,8 @@ import mainStyle from './professions.module.css'
 import inheritStyle from './professionsSelection.module.css'
 import style from './professionsModal.module.css'
 import { useCallback, useEffect, useState } from 'react'
+import { getProfile } from 'utils/profileContract'
+import { setProfile } from 'reduxActions/profileAction'
 import {
   fetchRequireBalanceProfession,
   mintProfessionNFT,
@@ -50,6 +52,13 @@ function ProfessionsModal(props: Props) {
   const [requireBalance, setRequireBalance] = useState(0)
   const dispatch = useDispatch()
 
+
+  const getContractProfile = async () => {
+    const _profile = await getProfile()
+
+    dispatch(setProfile({ profile: _profile }))
+  }
+
   const getRequireBalanceProfession = async () => {
     const balance = await fetchRequireBalanceProfession()
     setRequireBalance(balance)
@@ -76,6 +85,7 @@ function ProfessionsModal(props: Props) {
       dispatch(updateIsLoading({ isLoading: true }))
       const professionNft = npcs.indexOf(npc) + 1
       const check = await activateProfession(professionNft)
+      await getContractProfile();
       dispatch(updateIsLoading({ isLoading: false }))
       return check
     }
