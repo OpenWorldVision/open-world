@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { siteTitle } from '@components/layout'
 import { useCallback, useRef, useState } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import style from '@components/worldmap/worldMap.module.css'
@@ -15,7 +14,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>{siteTitle}</title>
+        <title>World Map</title>
       </Head>
 
       <div className={`${style.worldMapOverlay} overlay`}>

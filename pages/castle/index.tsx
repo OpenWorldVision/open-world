@@ -5,7 +5,7 @@ import CastleBtn from '../../components/castle/CastleBtn'
 import CastleModal from './../../components/castle/CastleModal'
 import LandAuction from './../../components/castle/LandAuction'
 import { ButtonGroup, Button, Flex, VStack } from '@chakra-ui/react'
-import Layout, { siteTitle } from '@components/layout'
+import Layout from '@components/layout'
 import Head from 'next/head'
 
 export default function Castle() {
@@ -29,7 +29,7 @@ export default function Castle() {
     <div className={`${style.castleOverlay} overlay`}>
       <Layout home>
         <Head>
-          <title>{siteTitle}</title>
+          <title>Castle</title>
         </Head>
         <VStack>
           <TransformWrapper
