@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { MapInteractionCSS } from 'react-map-interaction'
 import { keyframes } from '@emotion/react'
 import Link from 'next/link'
+import Head from 'next/head'
 
 const valueDefaultInitial = {
   scale: 1.2,
@@ -13,21 +14,26 @@ const valueDefaultInitial = {
 }
 export default function Home({ allPostsData }) {
   return (
-    <NotFoundPage>
-      <div className="containerWorldMap">
-        <div className="modal">
-          <div className="modal-content">
-            <img src="/images/worldmap/OW-logo.png" alt="logo" />
-            <div>Coming Soon</div>
-            <Link href="/">
-              <button>
-                <a>BACK TO WORLD MAP</a>
-              </button>
-            </Link>
+    <>
+      <Head>
+        <title>Open World</title>
+      </Head>
+      <NotFoundPage>
+        <div className="containerWorldMap">
+          <div className="modal">
+            <div className="modal-content">
+              <img src="/images/worldmap/OW-logo.png" alt="logo" />
+              <div>Coming Soon</div>
+              <Link href="/">
+                <button>
+                  <a>BACK TO WORLD MAP</a>
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </NotFoundPage>
+      </NotFoundPage>
+    </>
   )
 }
 const wordMap_kf = keyframes`
