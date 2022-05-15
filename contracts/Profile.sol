@@ -5,6 +5,8 @@ import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import './HeroCore.sol';
 
 contract Profiles is AccessControlUpgradeable {
+  uint256 public constant MAX_STAMINA = 100;
+
   mapping(address => uint256) public addressToIndex;
   mapping(string => uint256) public nameToIndex;
   address[] public addresses;
@@ -41,6 +43,7 @@ contract Profiles is AccessControlUpgradeable {
     // If this is a real profile or not.
     bool set;
     Profession profession;
+    uint256 stamina;
   }
 
   mapping(uint256 => Profile) public profiles;
@@ -49,6 +52,8 @@ contract Profiles is AccessControlUpgradeable {
 
   bytes32 public constant MODERATOR_ROLE = keccak256('MODERATOR_ROLE');
   bytes32 public constant POINTS_ROLE = keccak256('POINTS_ROLE');
+  bytes32 public constant PROFESSION_OPERATOR =
+    keccak256('PROFESSION_OPERATOR');
 
   event ProfileCreated(
     uint256 profileId,
@@ -89,7 +94,8 @@ contract Profiles is AccessControlUpgradeable {
       0,
       0,
       false,
-      Profession.UNKNOWN
+      Profession.UNKNOWN,
+      0
     );
 
     profiles[0] = profile;
@@ -135,7 +141,8 @@ contract Profiles is AccessControlUpgradeable {
       _picId,
       0,
       true,
-      Profession.UNKNOWN
+      Profession.UNKNOWN,
+      MAX_STAMINA
     );
 
     profiles[profileId] = profile;
@@ -295,6 +302,13 @@ contract Profiles is AccessControlUpgradeable {
     return true;
   }
 
+  function setStamina(address profileAddress, uint256 newStamina) public {
+    require(hasRole(PROFESSION_OPERATOR, msg.sender), 'Access denied');
+    require(newStamina <= MAX_STAMINA, 'Wrong sta');
+    Profile storage _profile = profiles[addressToIndex[profileAddress]];
+    _profile.stamina = newStamina;
+  }
+
   /// @dev Gets the total number of profiles.
   function getProfileCount() public view returns (uint256 count) {
     return addresses.length;
@@ -312,7 +326,8 @@ contract Profiles is AccessControlUpgradeable {
       uint8 _picId,
       uint256 _heroId,
       uint256 _points,
-      Profession _profession
+      Profession _profession,
+      uint256 stamina
     )
   {
     require(profileExists(profileAddress), 'no profile found');
@@ -325,8 +340,19 @@ contract Profiles is AccessControlUpgradeable {
       profile.picId,
       profile.heroId,
       points[profile.id],
-      profile.profession
+      profile.profession,
+      profile.stamina
     );
+  }
+
+  function getStaminaByAddress(address profileAddress)
+    public
+    view
+    returns (uint256 stamina)
+  {
+    require(profileExists(profileAddress), 'no profile found');
+    Profile memory profile = profiles[addressToIndex[profileAddress]];
+    return profile.stamina;
   }
 
   /// @dev Gets the Profile by name.
@@ -340,7 +366,8 @@ contract Profiles is AccessControlUpgradeable {
       uint64 _created,
       uint8 _picId,
       uint256 _heroId,
-      uint256 _points
+      uint256 _points,
+      uint256 _stamina
     )
   {
     require(nameTaken(name), 'name not found');
@@ -352,7 +379,8 @@ contract Profiles is AccessControlUpgradeable {
       profile.created,
       profile.picId,
       profile.heroId,
-      points[profile.id]
+      points[profile.id],
+      profile.stamina
     );
   }
 

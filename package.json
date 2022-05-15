@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "truffle compile —all && next build && next export",
+    "build": "truffle compile --all && next build && next export",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
@@ -29,6 +29,7 @@
     "gray-matter": "^4.0.2",
     "next": "^12.1.5",
     "react": "17.0.2",
+    "react-countdown": "^2.3.2",
     "react-dom": "17.0.2",
     "react-map-interaction": "^2.1.0",
     "react-redux": "^8.0.1",
@@ -54,7 +55,7 @@
     "husky": ">=6",
     "lint-staged": "^12.3.6",
     "prettier": "^2.6.0",
-    "truffle": "^5.5.11",
+    "truffle": "^5.2.3",
     "truffle-contract-size": "^2.0.1",
     "truffle-plugin-verify": "^0.5.14",
     "typescript": "^4.6.2"
@@ -66,5 +67,5 @@
   "resolutions": {
     "@types/react": "17.0.2",
     "@types/react-dom": "17.0.2"
- }
+  }
 }

@@ -18,7 +18,7 @@ const getProfessionsContract = async () => {
   let contractAddress = professionsContract.address
 
   if (chainId === '0x61') {
-    contractAddress = '0x276EA94F4093B09abF99d7393B6642F361572035'
+    contractAddress = '0xe6046d1363f7bebff6cb98c72094c89ff8ee500d'
   }
 
   return new ethers.Contract(
@@ -69,4 +69,10 @@ export const fetchUserProfessionNFT = async () => {
   }
 
   return nftList
+}
+
+export const activateProfession = async (profession) => {
+  const contract = await getProfessionsContract()
+  const checkSuccess = await contract.setProfession(profession)
+  return checkSuccess
 }

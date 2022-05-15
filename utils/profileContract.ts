@@ -1,23 +1,22 @@
-import Web3 from "web3"
+import Web3 from 'web3'
 
 const web3 = new Web3(Web3.givenProvider)
 
 const profilesContract = {
   addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
-  addressBSC: '0x276EA94F4093B09abF99d7393B6642F361572035',
+  addressBSC: '0xe6046d1363f7bebff6cb98c72094c89ff8ee500d',
   jsonInterface: require('../build/contracts/Profiles.json'),
 }
 
 const getProfileContract = async () => {
   const chainId = await web3.eth.getChainId()
-  
-  if(chainId === 97){
+
+  if (chainId === 97) {
     return new web3.eth.Contract(
       profilesContract.jsonInterface.abi,
       profilesContract.addressBSC
     )
-  }
-  else if(chainId === 1666700000){
+  } else if (chainId === 1666700000) {
     return new web3.eth.Contract(
       profilesContract.jsonInterface.abi,
       profilesContract.addressHarmony

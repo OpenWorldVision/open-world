@@ -506,7 +506,7 @@ hr {
 
 .click-cursor {
   /* cursor: url('/images/castle/click-cursor.png'), auto !important; */
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .overlay {
@@ -646,4 +646,15 @@ hr {
   border-radius: 16px;
   border: 1px solid #000;
   border-color: transparent #eecba1 transparent #eecba1;
+}
+
+.btn-chaka {
+  outline: none !important;
+  background-color: transparent !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.btn-chaka:focus {
+  box-shadow: none !important;
 }

@@ -1,0 +1,195 @@
+.frameFinished {
+  background-image: url('/images/professions/npc/openian/mining/frame-finished.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  max-width: 798px;
+  max-height: 570px;
+  width: 580px;
+  height: 400px;
+  position: relative;
+  margin: auto 10px;
+  color: #FFFFFF;
+  font-family: 'Montserrat';
+  font-style: normal;
+}
+
+/* .questFinish {
+  background-image: url('/images/professions/npc/openian/mining/quest-finish.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  max-width: 200px;
+  max-height: 120px;
+  width: 580px;
+  height: 400px;
+  top: -45px;
+  left: 75px;
+  position: absolute;
+} */
+
+.resultMining {
+  /* position: absolute;
+    top: 150px; */
+  padding: 100px 0 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 49px;
+}
+
+.items {
+  background-image: url('/images/professions/npc/openian/mining/ore1.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 40px -5px;
+  width: 80px;
+  height: 50px;
+}
+
+.items span {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 44px;
+}
+
+.helpText {
+  text-align: center;
+  padding: 0 10px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 29px;
+}
+
+.confirmBtn {
+  background-image: url('/images/professions/npc/openian/mining/confirm.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+  width: 180px !important;
+  height: 50px !important;
+  background-color: transparent !important;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: block !important;
+  /* position: absolute; */
+}
+
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.backToHome {
+  margin: 3rem 0 0;
+}
+
+.preLoaderMining {
+  background-color: #130e0c;
+  z-index: 999999;
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+}
+
+.loadedMining .preLoaderMining {
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1;
+  transition: all 0.5s;
+}
+
+
+.preloaderFoldingCube {
+  margin: auto;
+  width: 40px;
+  height: 40px;
+  transform: rotate(45deg);
+}
+
+.preloaderFoldingCube .preloaderCube {
+  float: left;
+  width: 50%;
+  height: 50%;
+  position: relative;
+  transform: scale(1.1);
+}
+
+.preloaderFoldingCube .preloaderCube:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(-315deg, #716efc 0%, #f8585d 100%);
+  animation: preloader-foldCubeAngle 2.4s infinite linear both;
+  transform-origin: 100% 100%;
+}
+
+.preloaderFoldingCube .preloaderCube2 {
+  transform: scale(1.1) rotateZ(90deg);
+}
+
+.preloaderFoldingCube .preloaderCube3 {
+  transform: scale(1.1) rotateZ(180deg);
+}
+
+.preloaderFoldingCube .preloaderCube4 {
+  transform: scale(1.1) rotateZ(270deg);
+}
+
+.preloaderFoldingCube .preloaderCube2:before {
+  animation-delay: 0.3s;
+}
+
+.preloaderFoldingCube .preloaderCube3:before {
+  animation-delay: 0.6s;
+}
+
+.preloaderFoldingCube .preloaderCube4:before {
+  animation-delay: 0.9s;
+}
+
+
+@keyframes preloader-foldCubeAngle {
+
+  0%,
+  10% {
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  }
+
+  25%,
+  75% {
+    transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  }
+
+  90%,
+  100% {
+    transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .questFinish {
+    background-image: url('/images/professions/npc/openian/mining/quest-finish.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    max-width: 200px;
+    max-height: 120px;
+    width: 580px;
+    height: 400px;
+    top: -45px;
+    left: 75px;
+    position: absolute;
+  }
+}

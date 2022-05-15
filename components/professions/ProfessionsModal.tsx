@@ -1,12 +1,17 @@
 import { Button, Grid, GridItem } from '@chakra-ui/react'
-import mainStyle from '@components/professions/professions.module.css'
-import style from '@components/professions/npc.module.css'
-import Link from 'next/link'
+import { useDispatch } from 'react-redux'
+import { updateIsLoading } from 'reduxActions/isLoadingAction'
+import mainStyle from './professions.module.css'
+import inheritStyle from './professionsSelection.module.css'
+import style from './professionsModal.module.css'
 import { useCallback, useEffect, useState } from 'react'
+import { getProfile } from 'utils/profileContract'
+import { setProfile } from 'reduxActions/profileAction'
 import {
   fetchRequireBalanceProfession,
   mintProfessionNFT,
   fetchUserProfessionNFT,
+  activateProfession,
 } from '../../utils/professions'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 
@@ -33,13 +38,26 @@ const npcText = [
   ],
 ]
 
-function ProfessionsModal(props) {
-  const { params } = props
+type Props = {
+  npc: string
+  closeModal: () => void
+}
+
+function ProfessionsModal(props: Props) {
+  const { npc, closeModal } = props
   const [currentNpcText, setCurrentNpcText] = useState([])
   const [haveNFT, setHaveNFT] = useState(false)
   const [canActivate, setCanActivate] = useState(false)
   const [currentOPEN, setCurrentOPEN] = useState(0)
   const [requireBalance, setRequireBalance] = useState(0)
+  const dispatch = useDispatch()
+
+
+  const getContractProfile = async () => {
+    const _profile = await getProfile()
+
+    dispatch(setProfile({ profile: _profile }))
+  }
 
   const getRequireBalanceProfession = async () => {
     const balance = await fetchRequireBalanceProfession()
@@ -49,7 +67,7 @@ function ProfessionsModal(props) {
   const getUserBalance = async () => {
     const balance = await getBalanceOfOpen()
     setCurrentOPEN(parseFloat(balance))
-    return parseFloat(balance);
+    return parseFloat(balance)
   }
 
   // @test mint heroCore
@@ -62,24 +80,35 @@ function ProfessionsModal(props) {
     }
   }
 
+  const onActivateProfession = async () => {
+    if (canActivate) {
+      dispatch(updateIsLoading({ isLoading: true }))
+      const professionNft = npcs.indexOf(npc) + 1
+      const check = await activateProfession(professionNft)
+      await getContractProfile();
+      dispatch(updateIsLoading({ isLoading: false }))
+      return check
+    }
+    return null
+  }
+
   const checkIfHasNTF = async () => {
     const nftList = await fetchUserProfessionNFT()
-    const check = nftList.includes(npcs.indexOf(params.npc) + 1)
+    const check = nftList.includes(npcs.indexOf(npc) + 1)
     setHaveNFT(check)
-    return check;
+    return check
   }
 
   const getCurrentNpcText = () => {
-    setCurrentNpcText(npcText[npcs.indexOf(params.npc)])
+    setCurrentNpcText(npcText[npcs.indexOf(npc)])
   }
 
   const checkIfCanActive = useCallback(async () => {
     const checkNFT = await checkIfHasNTF()
     const checkBalance = await getUserBalance()
-    if (params.npc === 'openian') {
+    if (npc === 'openian') {
       setCanActivate(checkNFT)
-    }
-    else {
+    } else {
       setCanActivate(checkNFT && checkBalance >= requireBalance)
     }
   }, [haveNFT, currentOPEN])
@@ -87,7 +116,8 @@ function ProfessionsModal(props) {
   const initialize = async () => {
     await mintHeroNFT()
     await getRequireBalanceProfession()
-    checkIfCanActive()
+    await checkIfCanActive()
+    dispatch(updateIsLoading({ isLoading: false }))
   }
 
   useEffect(() => {
@@ -123,12 +153,10 @@ function ProfessionsModal(props) {
               xl: 430,
             }}
           >
-            <div
-              className={`${style.npcCard} ${style[`${params.npc}NPC`]}`}
-            ></div>
+            <div className={`${style.npcCard} ${style[`${npc}NPC`]}`}></div>
           </GridItem>
           <GridItem rowSpan={3} colSpan={2}>
-            <div className={`${mainStyle.professionsText} ${style.npcText}`}>
+            <div className={`${inheritStyle.professionsText} ${style.npcText}`}>
               <span>
                 {currentNpcText.map((line) => (
                   <>
@@ -144,12 +172,10 @@ function ProfessionsModal(props) {
                   } click-cursor`}
                 >
                   <span>
-                    Have an{' '}
-                    {params.npc.charAt(0).toUpperCase() + params.npc.slice(1)}{' '}
-                    NFT
+                    Have an {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
                   </span>
                 </Button>
-                {params.npc !== 'openian' && (
+                {npc !== 'openian' && (
                   <Button
                     className={`${style.btn} ${style.acceptBtn} ${
                       currentOPEN >= requireBalance && style.active
@@ -163,31 +189,21 @@ function ProfessionsModal(props) {
           </GridItem>
           <GridItem colSpan={2} className={style.activateWrap}>
             <Button
-              className={`${style.btn} ${style.activateBtn} ${
+              className={`btn-chaka ${style.activateBtn} ${
                 canActivate && style.active
               } click-cursor`}
+              onClick={onActivateProfession}
             ></Button>
           </GridItem>
         </Grid>
       </div>
 
-      <Link href="/professions">
-        <a className={`${mainStyle.backBtn} click-cursor`}></a>
-      </Link>
+      <div
+        className={`${inheritStyle.backBtn} click-cursor`}
+        onClick={closeModal}
+      ></div>
     </div>
   )
-}
-
-export async function getStaticPaths() {
-  const paths = npcs.map((npc) => ({
-    params: { npc: npc },
-  }))
-
-  return { paths, fallback: false }
-}
-
-export async function getStaticProps({ params }) {
-  return { props: { params } }
 }
 
 export default ProfessionsModal

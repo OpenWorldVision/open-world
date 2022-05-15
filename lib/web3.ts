@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Web3 from 'web3'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'

@@ -9,5 +9,8 @@
     "truffle-config.js",
     "**/migrations/*.js",
     "hardhat.config.js"
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": 0
+  }
 }
