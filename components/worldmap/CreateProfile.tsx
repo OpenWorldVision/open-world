@@ -36,7 +36,9 @@ export default function CreateProfile({
     } else {
       if (heroSelector && nameValue && isNameValid) {
         const isNameTaken = await checkNameTaken(nameValue)
-        if(isNameTaken){
+        if (nameValue.length <= 3 || nameValue.length >= 16) {
+          setIsNameValid(false)
+        } else if(isNameTaken){
           setIsNameValid(false)
         } else {
           const isCreateProfile = await crateProfile(nameValue, heroSelector)
@@ -108,7 +110,7 @@ export default function CreateProfile({
                     textShadow: '0 0 10px #FF0000',
                   }}
                 >
-                  Name invalid
+                  {(nameValue.length <= 3 || nameValue.length >= 16 ? 'Name must be between 4 and 15' : 'User name has been used. Try other name')}
                 </div>
               )}
               <div className='complete-profile'>
@@ -118,9 +120,6 @@ export default function CreateProfile({
                   }}
                   className={((heroSelector && nameValue) || isEdit) && 'valid'}
                 />
-              </div>
-              <div className="doc">
-                <button />
               </div>
             </div>
           </div>
@@ -317,18 +316,6 @@ const CreateProfileCSS = styled.div({
               background: 'url(./images/profile/btn-complete.png)',
               backgroundSize: 'contain',
               backgroundRepeat: 'no-repeat'
-            }
-          },
-          '.doc': {
-            width: '100%',
-            textAlign: 'center',
-            button: {
-              background: 'url(./images/profile/doc-tutorial.png)',
-              backgroundSize: 'contain',
-              backgroundRepeat: 'no-repeat',
-              backgroundPosition: 'center',
-              width: '200px',
-              height: '16px'
             }
           }
         }
