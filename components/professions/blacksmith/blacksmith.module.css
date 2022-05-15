@@ -1,0 +1,77 @@
+.blackSmithContainer{
+  height: 100%;
+  z-index: 999999;
+  background-color: #fff;
+  position: relative;
+}
+
+.blackSmithBg {
+  background-image: url('/images/professions/blacksmith/blacksmith-bg.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  height: 100vh;
+  z-index: 999999;
+  position: relative;
+  width: 100vw;
+}
+
+.backBtn {
+  display: block;
+  position: absolute;
+  top: 30px;
+  left: 35px;
+  width: 160px;
+  height: 50px;
+  background-image: url('/images/professions/back-btn.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.sellHammer{
+  background-image: url('/images/professions/blacksmith/sell-hammer.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* background-position: center center; */
+  height: 40px;
+  width: 160px;
+  /* left: 330px; */
+  left: 30%;
+  bottom: 23%;
+  /* bottom: 160px; */
+  position: absolute;
+}
+
+.forgeHammer{
+  background-image: url('/images/professions/blacksmith/forge-hammer.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* background-position: center center; */
+  height: 40px;
+  width: 160px;
+  left: 69%;
+  /* left: 780px; */
+  /* bottom: 240px; */
+  bottom: 36%;
+  position: absolute;
+}
+
+@media only screen and (max-width: 975px) {
+  .blackSmithBg{
+    max-width: 1500px;
+    width: 1000px;
+  }
+  .sellHammer{
+    left: 270px;
+    /* bottom: 170px; */
+    bottom: 25%;
+    height: 40px;
+    width: 150px;
+  }
+  .forgeHammer{
+    left: 640px;
+    bottom: 36%;
+    height: 40px;
+    width: 150px;
+  }
+}
