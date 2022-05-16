@@ -50,3 +50,16 @@ export const crateProfile = async (nameStr: string, heroId: number) => {
     return false
   }
 }
+
+export const isProfessionExist = async () => {
+  const contract = await getProfileContract()
+  const accounts = await web3.eth.getAccounts()
+
+  try {
+    return await contract.methods
+      .canSetProfession(accounts[0])
+      .call({ from: accounts[0] })
+  } catch {
+    return false
+  }
+}
