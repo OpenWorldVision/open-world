@@ -13,9 +13,12 @@ export default function CreateProfile({
   isEdit=false,
   profile=null
 }) {
-  const [heroSelector, setHeroSelector] = useState(1)
+  const [heroSelector, setHeroSelector] = useState(profile?._picId || 1)
   const [nameValue, setNameValue] = useState('')
   const [isNameValid, setIsNameValid] = useState(true)
+
+  console.log(profile);
+  
 
   const handleCloseModalCreateProfile = useCallback(
     (e: any) => {
@@ -26,7 +29,7 @@ export default function CreateProfile({
   )
 
   const handleCreateProfile = async () => {
-    if(isEdit && profile) {
+    if(isEdit && profile._picId != heroSelector) {
       if (heroSelector) {
         const isCreateProfile = await changePictureProfile(Number(profile._id), heroSelector)
         if (isCreateProfile){
@@ -118,7 +121,7 @@ export default function CreateProfile({
                   onClick={() => {
                     handleCreateProfile()
                   }}
-                  className={((heroSelector && nameValue) || isEdit) && 'valid'}
+                  className={((heroSelector && nameValue) || (isEdit && profile._picId != heroSelector)) && 'valid'}
                 />
               </div>
             </div>
