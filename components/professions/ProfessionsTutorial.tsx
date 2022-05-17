@@ -45,7 +45,7 @@ const ProfessionsTutorialCSS = styled.div({
     top: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
     color: 'white',
     padding: '0 15px',
     display: 'flex',
@@ -56,47 +56,48 @@ const ProfessionsTutorialCSS = styled.div({
       display: 'none',
     },
     '.modal-content': {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '90%',
-      padding: '8px',
-      width: '910px',
-      '.main': {
-        paddingBottom: '50px',
-        width: '100%',
-        height: '100%',
-        '.container': {
-            backgroundImage: 'url(./images/professions/tutorial-frame.png)',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '100% 100%',
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            '.header': {
-                width: '40%',
-                textAlign: 'center',
-                fontSize: '15px',
-                marginTop: '60px'
-            },
-            '.body': {
-                width: '40%',
-                textAlign: 'center',
-                fontSize: '11px',
-                marginTop: '30px'
-            },
-            '.btn-go-professions': {
-                backgroundImage: 'url(./images/professions/go-tutorial.png)',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '90%',
+        width: '700px',
+        '.main': {
+            '.container': {
+                backgroundImage: 'url(./images/professions/tutorial-frame.png)',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: '100% 100%',
-                width: '160px',
-                height: '15%',
-                marginTop: '10px'
+                padding: '50px',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                '@media(max-width: 720px)': {
+                    padding: '10px',
+                },
+                '.header': {
+                    textAlign: 'center',
+                    fontSize: '25px',
+                    marginTop: '80px',
+                },
+                '.body': {
+                    marginTop: '50px',
+                    textAlign: 'center',
+                    fontSize: '16px',
+                },
+                '.btn-go-professions': {
+                    backgroundImage: 'url(./images/professions/go-tutorial.png)',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '100% 100%',
+                    width: '300px',
+                    height: '120px',
+                    '@media(max-width: 720px)': {
+                        width: '280px',
+                        height: '100px',
+                        marginBottom: '20px'
+                    },
+                }
             }
         }
-      },
     },
   },
 })
