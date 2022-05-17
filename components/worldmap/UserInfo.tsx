@@ -64,13 +64,13 @@ export default function Menu({
               >
                 EDIT PROFILE
               </button>
-              <button
+              {/* <button
                 onClick={(e) => {
                   setIsOpenUserDetail(true)
                 }}
               >
                 MY HEROES
-              </button>
+              </button> */}
             </div>
             <div>
               <img src="/images/worldmap/Hope2.png" alt="img" />
