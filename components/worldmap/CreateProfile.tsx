@@ -17,9 +17,6 @@ export default function CreateProfile({
   const [nameValue, setNameValue] = useState('')
   const [isNameValid, setIsNameValid] = useState(true)
 
-  console.log(profile);
-  
-
   const handleCloseModalCreateProfile = useCallback(
     (e: any) => {
       if (e.target !== e.currentTarget) return
