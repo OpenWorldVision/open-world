@@ -17,15 +17,21 @@ export default function ProfessionsTutorial({
 
     return (
     <ProfessionsTutorialCSS>
-        <div className="modal-professions-tutorial">
+        <div
+            className="modal-professions-tutorial"
+            onClick={(e) => {
+                handleCloseModalProfessionsTutorial(e)
+            }}
+        >
         <div className="modal-content">
             <div className="main">
-                <div
-                    className="container"
-                    onClick={(e) => {
-                        handleCloseModalProfessionsTutorial(e)
-                    }}
-                >
+                <div className="container">   
+                    <button 
+                        className='close'
+                        onClick={() => {setIsOpenTutorial(false)}}
+                    >
+                        X
+                    </button>
                     <div className="header">THE VERY FIRST THING YOU NEED TO DO IN OPENWORLD IS CHOOSE A CAREER FOR YOUR AVATAR.</div>
                     <div className="body">LETS GO CHECK OUT PROFESSIONS BUILDING WHERE YOU CAN SEE ALL THE CAREERS THAT NOW AVAILABLE IN OPENWORLD. SEE ONE FITS YOUR STYLE, DONT BE HESITATE TO CHOOSE IT</div>
                     <button onClick={() => { router.push('/professions') }} className="btn-go-professions"></button>
@@ -71,8 +77,20 @@ const ProfessionsTutorialCSS = styled.div({
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
+                position: 'relative',
                 '@media(max-width: 720px)': {
                     padding: '10px',
+                },
+                '.close': {
+                    position: 'absolute',
+                    top: '80px',
+                    right: '40px',
+                    backgroundColor: 'white',
+                    borderRadius: '50%',
+                    color: 'black',
+                    width: '30px',
+                    height: '30px',
+                    fontWeight: 'bold'
                 },
                 '.header': {
                     textAlign: 'center',
