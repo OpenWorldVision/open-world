@@ -27,6 +27,10 @@ contract HeroCore is
 
   Hero[] private tokens;
 
+  uint256 public openianPrice;
+  uint256 public supplierPrice;
+  uint256 public blacksmithPrice;
+
   function initialize(address _token) public initializer {
     __ERC721_init('OpenWorld Hero', 'OWH');
     __AccessControl_init();
@@ -71,18 +75,29 @@ contract HeroCore is
 
   function mint(address minter, uint8 trait) public {
     require(trait > 0 && trait < 4, 'Wrong trait');
+    uint256 purchasedToken;
     if (trait == 1) {
       require(openianAmount > 0, 'No more openian');
       openianAmount = openianAmount.sub(1);
+      purchasedToken = openianPrice;
     }
     if (trait == 2) {
       require(supplierAmount > 0, 'No more supplier');
       supplierAmount = supplierAmount.sub(1);
+      purchasedToken = supplierPrice;
     }
     if (trait == 3) {
       require(blacksmithAmount > 0, 'No more blacksmith');
       blacksmithAmount = blacksmithAmount.sub(1);
+      purchasedToken = blacksmithPrice;
     }
+
+    require(
+      govToken.balanceOf(msg.sender) >= purchasedToken,
+      'Not enough token'
+    );
+    govToken.transferFrom(msg.sender, address(this), purchasedToken);
+
     uint256 tokenId = tokens.length;
     uint16 xp = 0;
     uint8 level = 0; // 1
@@ -104,6 +119,18 @@ contract HeroCore is
     }
     if (trait == 3) {
       blacksmithAmount = amount;
+    }
+  }
+
+  function setHeroPrice(uint8 trait, uint256 price) public restricted {
+    if (trait == 1) {
+      openianPrice = price;
+    }
+    if (trait == 2) {
+      supplierPrice = price;
+    }
+    if (trait == 3) {
+      blacksmithPrice = price;
     }
   }
 }
