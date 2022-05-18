@@ -2,12 +2,14 @@ pragma solidity 0.7.5;
 import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
 import '@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
+import '@openzeppelin/contracts/math/SafeMath.sol';
 
 contract HeroCore is
   Initializable,
   ERC721Upgradeable,
   AccessControlUpgradeable
 {
+  using SafeMath for uint256;
   struct Hero {
     uint16 xp; // xp to next level
     uint8 level; // up to 256 cap
@@ -19,6 +21,9 @@ contract HeroCore is
   address public ceoAddress;
   IERC20 public govToken;
   mapping(uint256 => address) private indexToOwner;
+  uint256 public openianAmount;
+  uint256 public supplierAmount;
+  uint256 public blacksmithAmount;
 
   Hero[] private tokens;
 
@@ -65,6 +70,19 @@ contract HeroCore is
   }
 
   function mint(address minter, uint8 trait) public {
+    require(trait > 0 && trait < 4, 'Wrong trait');
+    if (trait == 1) {
+      require(openianAmount > 0, 'No more openian');
+      openianAmount = openianAmount.sub(1);
+    }
+    if (trait == 2) {
+      require(supplierAmount > 0, 'No more supplier');
+      supplierAmount = supplierAmount.sub(1);
+    }
+    if (trait == 3) {
+      require(blacksmithAmount > 0, 'No more blacksmith');
+      blacksmithAmount = blacksmithAmount.sub(1);
+    }
     uint256 tokenId = tokens.length;
     uint16 xp = 0;
     uint8 level = 0; // 1
@@ -75,5 +93,17 @@ contract HeroCore is
 
   function getTrait(uint256 id) public view returns (uint8) {
     return tokens[id].trait;
+  }
+
+  function setTraitAmount(uint8 trait, uint256 amount) public restricted {
+    if (trait == 1) {
+      openianAmount = amount;
+    }
+    if (trait == 2) {
+      supplierAmount = amount;
+    }
+    if (trait == 3) {
+      blacksmithAmount = amount;
+    }
   }
 }
