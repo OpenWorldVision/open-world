@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useEffect } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import style from '../../components/castle/castle.module.css'
 import CastleBtn from '../../components/castle/CastleBtn'
@@ -10,7 +10,6 @@ import Head from 'next/head'
 
 export default function Castle() {
   // Ref
-  const transformWrapper = useRef(null)
   const castleOverlay = useRef(null)
   const castle = useRef(null)
 
@@ -19,6 +18,22 @@ export default function Castle() {
   const [isLandAuctionOpen, setIsLandAuctionOpen] = useState(false)
   const [isJesterModalOpen, setIsJesterModalOpen] = useState(false)
   const [action, setAction] = useState(0)
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    const checkWindowWidth = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    checkWindowWidth()
+
+    window.addEventListener('resize', checkWindowWidth)
+
+    return () => {
+      window.removeEventListener('resize', checkWindowWidth)
+    }
+  }, [])
 
   const openLandAuctionModal = useCallback((action) => {
     setAction(action)
@@ -33,15 +48,18 @@ export default function Castle() {
         </Head>
         <VStack>
           <TransformWrapper
-            ref={transformWrapper}
-            maxScale={2}
-            minScale={0.25}
-            initialScale={0.8}
-            centerZoomedOut={true}
             initialPositionX={0}
             initialPositionY={0}
             centerOnInit={true}
-            // onZoomStop={() => {transformWrapper.current.centerView()}}
+            wheel={{
+              disabled: true,
+            }}
+            doubleClick={{
+              disabled: true,
+            }}
+            panning={{
+              disabled: windowWidth >= 1858,
+            }}
           >
             <TransformComponent
               wrapperStyle={{ height: '100vh', width: '100vw' }}
@@ -51,79 +69,19 @@ export default function Castle() {
                 className={`${style.castleContainer} overlay`}
               >
                 <div ref={castle} className={style.castleBg}>
-                  {/* fire */}
-                  <div className={`${style.fireWrap} ${style.fireWrap1}`}>
-                    <div className={style.fire}></div>
-                  </div>
-                  <div className={`${style.fireWrap} ${style.fireWrap2}`}>
-                    <div className={style.fire}></div>
-                  </div>
-                  <div className={`${style.fireWrap} ${style.fireWrap3}`}>
-                    <div className={style.fire}></div>
-                  </div>
-
-                  {/* hall light  */}
                   <div
-                    className={`${style.hallLightWrap} ${style.hallLightWrap1}`}
-                  >
-                    <div className={style.hallLight}></div>
-                  </div>
-
+                    className={`${style.castleBtn} ${style.bankBtn} click-cursor`}
+                  ></div>
                   <div
-                    className={`${style.hallLightWrap} ${style.hallLightWrap2}`}
-                  >
-                    <div className={style.hallLigh}></div>
-                  </div>
-
+                    className={`${style.castleBtn} ${style.wowBtn} click-cursor`}
+                  ></div>
                   <div
-                    className={`${style.hallLightWrap} ${style.hallLightWrap3}`}
-                  >
-                    <div className={style.hallLight}></div>
-                  </div>
-
-                  {/* torch  */}
-                  <div className={`${style.torchWrap} ${style.torchWrap1}`}>
-                    <div className={style.torch}></div>
-                  </div>
-                  <div className={`${style.torchWrap} ${style.torchWrap2}`}>
-                    <div className={style.torch}></div>
-                  </div>
-
-                  {/* beast  */}
-                  <div className={`${style.beastWrap} ${style.beastWrap1}`}>
-                    <div className={style.beast1}></div>
-                  </div>
-
-                  <div className={`${style.beastWrap} ${style.beastWrap2}`}>
-                    <div className={style.beast2}></div>
-                  </div>
-
-                  {/* throne light  */}
-                  <div
-                    className={`${style.throneLightWrap} ${style.throneLightWrap}`}
-                  >
-                    <div className={style.throneLight}></div>
-                  </div>
-
-                  {/* Jester */}
-                  <div className={style.jesterContainer}>
-                    <div className={style.jester}></div>
-                  </div>
-
-                  <div
-                    className={`${style.jesterGrandleBtn} click-cursor`}
-                    onClick={() => setIsJesterModalOpen(true)}
-                  >
-                    <CastleBtn title="Jester Grandle" />
-                  </div>
-
-                  {/* Land aution */}
-                  <div
-                    className={`${style.landAuctionBtn} click-cursor`}
+                    className={`${style.castleBtn} ${style.landAuctionBtn} click-cursor`}
                     onClick={() => setIsLandAuctionModalOpen(true)}
-                  >
-                    <CastleBtn title="Land Auction" />
-                  </div>
+                  ></div>
+                  <div
+                    className={`${style.castleBtn} ${style.shopBtn} click-cursor`}
+                  ></div>
                 </div>
               </div>
             </TransformComponent>
@@ -164,17 +122,6 @@ export default function Castle() {
             isOpen={isLandAuctionOpen}
             toggleLandAuction={() => setIsLandAuctionOpen(false)}
             key={action}
-          />
-
-          <CastleModal
-            isOpen={isJesterModalOpen}
-            toggleModal={() => setIsJesterModalOpen(false)}
-            fancyTitle="The Jester"
-            height={264}
-            width={700}
-            disabled={true}
-            npcDialogue="Ho there! Looking for adventure, fun, or a bit of both? I know a place not far from here. It's not quite ready yet, but be sure to come back in a few weeks, I'm sure it'll be an interesting place for you to visit, hehehe!"
-            npcName="Jester Grandle"
           />
         </VStack>
       </Layout>
