@@ -36,7 +36,7 @@ export default function Menu() {
               </Link>
             </li>
             <li>
-              <Link href="/foodCourt">
+              <Link href="/foodcourt">
                 <a>Food Court</a>
               </Link>
             </li>

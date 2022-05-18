@@ -1,0 +1,80 @@
+.foodCourtContainer {
+  background-image: url('/images/foodcourt/background.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  z-index: 999999;
+  padding: 50px 100px;
+}
+
+.foodCourtTitle {
+  position: relative;
+  background-image: url('/images/foodcourt/name.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 350px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.foodCourtTitle::after,
+.foodCourtTitle::before {
+  content: '';
+  position: absolute;
+  background-image: url('/images/foodcourt/decorate.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 400px;
+  height: 15px;
+  top: 25px;
+}
+
+.foodCourtTitle::after{
+  left: -584px;
+}
+
+.foodCourtTitle::before{
+  left: 534px;
+}
+
+.buyBtn, 
+.sushiBtn,
+.fishBtn,
+.foodBtn{
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+.buyBtn{
+  background-image: url('/images/foodcourt/buy-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 105px !important;
+  height: 62px !important;
+}
+
+.foodBtn{
+  background-image: url('/images/foodcourt/none-select.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 60px !important;
+  height: 65px !important;
+}
+
+.sushiBtn{
+  background-image: url('/images/foodcourt/sushi.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 45px !important;
+  height: 35px !important;
+}
+
+.fishBtn{
+  background-image: url('/images/foodcourt/fish.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 45px !important;
+  height: 35px !important;
+}
