@@ -9,7 +9,6 @@ import { getProfile } from 'utils/profileContract'
 import { setProfile } from 'reduxActions/profileAction'
 import {
   fetchRequireBalanceProfession,
-  mintProfessionNFT,
   fetchUserProfessionNFT,
   activateProfession,
 } from '../../utils/professions'
@@ -70,15 +69,6 @@ function ProfessionsModal(props: Props) {
     return parseFloat(balance)
   }
 
-  // @test mint heroCore
-  const mintHeroNFT = async () => {
-    const trait = prompt('Enter trait (1-3) to mint NFT, enter 0 for cancel')
-    if (trait !== '0') {
-      await mintProfessionNFT(trait)
-      await checkIfHasNTF()
-      await checkIfCanActive()
-    }
-  }
 
   const onActivateProfession = async () => {
     if (canActivate) {
@@ -114,7 +104,6 @@ function ProfessionsModal(props: Props) {
   }, [haveNFT, currentOPEN])
 
   const initialize = async () => {
-    await mintHeroNFT()
     await getRequireBalanceProfession()
     await checkIfCanActive()
     dispatch(updateIsLoading({ isLoading: false }))

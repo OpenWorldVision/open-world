@@ -34,7 +34,7 @@ const getHeroCoreContract = async () => {
   let contractAddress = heroCoreContract.address
 
   if (chainId === '0x61') {
-    contractAddress = '0x176A3D8BfA7CC02a44515f2770261030c95e34A7'
+    contractAddress = '0x585ded8E0Dd7DCfad02F13b94571E24cA59A3234'
   }
 
   return new ethers.Contract(
@@ -75,4 +75,17 @@ export const activateProfession = async (profession) => {
   const contract = await getProfessionsContract()
   const checkSuccess = await contract.setProfession(profession)
   return checkSuccess
+}
+
+export const fetchProfessionsNFTAmount = async () => {
+  const contract = await getHeroCoreContract()
+  const openianAmount = await contract.openianAmount()
+  const supplierAmount = await contract.supplierAmount()
+  const blacksmithAmount = await contract.blacksmithAmount()
+
+  return {
+    openianAmount: openianAmount.toNumber(),
+    supplierAmount: supplierAmount.toNumber(),
+    blacksmithAmount: blacksmithAmount.toNumber(),
+  }
 }

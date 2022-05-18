@@ -1,12 +1,12 @@
 import { useRef, useState, useCallback, useEffect } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
-import style from '../../components/castle/castle.module.css'
-import CastleBtn from '../../components/castle/CastleBtn'
-import CastleModal from './../../components/castle/CastleModal'
-import LandAuction from './../../components/castle/LandAuction'
+import style from '@components/castle/castle.module.css'
+import CastleModal from '@components/castle/CastleModal'
+import LandAuction from '@components/castle/LandAuction'
 import { ButtonGroup, Button, Flex, VStack } from '@chakra-ui/react'
 import Layout from '@components/layout'
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function Castle() {
   // Ref
@@ -16,7 +16,6 @@ export default function Castle() {
   // State
   const [isLandAuctionModalOpen, setIsLandAuctionModalOpen] = useState(false)
   const [isLandAuctionOpen, setIsLandAuctionOpen] = useState(false)
-  const [isJesterModalOpen, setIsJesterModalOpen] = useState(false)
   const [action, setAction] = useState(0)
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -79,9 +78,11 @@ export default function Castle() {
                     className={`${style.castleBtn} ${style.landAuctionBtn} click-cursor`}
                     onClick={() => setIsLandAuctionModalOpen(true)}
                   ></div>
-                  <div
-                    className={`${style.castleBtn} ${style.shopBtn} click-cursor`}
-                  ></div>
+                  <Link href="/castle/shop">
+                    <a
+                      className={`${style.castleBtn} ${style.shopBtn} click-cursor`}
+                    ></a>
+                  </Link>
                 </div>
               </div>
             </TransformComponent>
