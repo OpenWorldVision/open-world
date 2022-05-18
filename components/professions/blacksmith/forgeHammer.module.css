@@ -4,7 +4,7 @@
   background-size: 100% 100%;
   background-position: center center;
   height: 100vh;
-  z-index: 999998;
+  z-index: 999999;
   position: relative;
   display: flex;
   justify-content: center;
@@ -17,7 +17,7 @@
   max-width: 498px;
   max-height: 698px;
   width: 350px;
-  height: 570px;
+  height: 510px;
   position: relative;
   margin: auto;
 }
@@ -186,15 +186,15 @@
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   background-color: transparent !important;
-  height: 7px !important;
-  width: 8px !important;
+  height: 10px !important;
+  width: 10px !important;
   padding: 0 !important;
-  margin-top: 2px;
   cursor: pointer;
 }
 
 .prev {
   background-image: url('/images/professions/blacksmith/Triangle-2.png') !important;
+  margin-top: 4px;
 }
 
 .hammer {
@@ -227,6 +227,7 @@
 }
 
 .startQuestBtn {
+  bottom: -60px;
   left: 35%;
 }
 
@@ -326,9 +327,8 @@
 @media only screen and (min-width: 1200px) {
   .frameforgeHammer {
     max-width: 450px;
-    max-height: 650px;
     width: 450px;
-    height: 650px;
+    height: 670px;
   }
 
   .frameHead {
@@ -345,6 +345,11 @@
     width: 380px;
     height: 200px;
     margin-top: 10px;
+  }
+
+  .forgeHammerFooter{
+    bottom: 20%;
+    padding: 0 50px;
   }
 
   .forgeHammerDetail {
@@ -364,12 +369,17 @@
     display: flex;
   }
 
+  .input{
+    width: 90px;
+    height: 20px;
+  }
+
   .startQuestBtn {
     background-size: 100% 100% !important;
     background-position: center center !important;
     width: 130px !important;
     height: 40px !important;
-    bottom: -50px;
+    bottom: -90px;
     left: 35%;
     /* display: block !important;
       margin: 0 auto; */

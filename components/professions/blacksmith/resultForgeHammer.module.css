@@ -57,6 +57,27 @@
   top: -46px;
 }
 
+.frameHead {
+  position: absolute;
+  top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 20px;
+  z-index: 5;
+}
+
+.exitBtn {
+  background-image: url('/images/professions/blacksmith/exit-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-position: center center !important;
+  width: 25px !important;
+  height: 25px !important;
+  background-color: transparent !important;
+  padding: 0 23px;
+}
+
 .title,
 .helpText {
   text-align: center;

@@ -37,15 +37,19 @@ export default function ForgeHammer() {
     }
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
-  }, [])
+  const hiddenNotification = () => {
+    setIsStartQuestFail(false)
+  }
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsLoading(false)
+  //   }, 10000)
+  // }, [])
 
   return (
     <>
-      <div className={`${!isLoading && style.loadedForgeHammer}`}>
+      {/* <div className={`${!isLoading && style.loadedForgeHammer}`}>
         <div className={`overlay ${style.preLoaderForgeHammer}`}>
           <div className={style.preloaderFoldingCube}>
             <div className={`${style.preloaderCube1} ${style.preloaderCube}`}></div>
@@ -54,11 +58,11 @@ export default function ForgeHammer() {
             <div className={`${style.preloaderCube3} ${style.preloaderCube}`}></div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className={style.forgeHammerOverlay}>
         {!isStartQuestSuccess && !isStartQuestFail && <div className={style.frameforgeHammer}>
           <div className={style.frameHead}>
-            <Link href="/professions/openian/main">
+            <Link href="/professions/blacksmith">
               <a className={style.exitBtn}></a>
             </Link>
           </div>
@@ -106,8 +110,8 @@ export default function ForgeHammer() {
           </div>
         </div>}
 
-        {isStartQuestSuccess && <ResultForgeHammer />}
-        {isStartQuestFail && <NotificationForge />}
+        {isStartQuestSuccess && <ResultForgeHammer hammerReceived={numberHammer}/>}
+        {isStartQuestFail && <NotificationForge hiddenNotification={hiddenNotification}/>}
       </div>
     </>
 

@@ -1,13 +1,19 @@
 import { Button } from '@chakra-ui/react'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import style from './resultForgeHammer.module.css'
 
-export default function ResultForgeHammer() {
+type Props = {
+  hammerReceived: number
+}
+
+export default function ResultForgeHammer(props: Props) {
+  const { hammerReceived } = props
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
-    }, 2000)
+    }, 1000)
   }, [])
 
   return (
@@ -29,9 +35,14 @@ export default function ResultForgeHammer() {
             alt="Finished"
           />
         </h3>
+        <div className={style.frameHead}>
+            <Link href="/professions/blacksmith">
+              <a className={style.exitBtn}></a>
+            </Link>
+          </div>
         <div className={style.content}>
           <div className={style.title}>You Get</div>
-          <div className={style.received}>X5 <div className={style.hammer}></div></div>
+          <div className={style.received}>X{hammerReceived} <div className={style.hammer}></div></div>
           <div className={style.helpText}>All the Hammers you make will be stored at your Inventory</div>
           <Button className={style.btnConfirm}></Button>
         </div>
