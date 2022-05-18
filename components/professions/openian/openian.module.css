@@ -40,13 +40,31 @@
   background-size: 100%;
 }
 
+.openianMiningBtn {
+  position: absolute;
+  top: 48%;
+  right: 52px;
+  width: 332px;
+  height: 29vh;
+  cursor: pointer;
+}
+
+.openianFishBtn {
+  position: absolute;
+  top: 60%;
+  left: 300px;
+  width: 235px;
+  height: 24vh;
+  cursor: pointer;
+}
+
 .openianSellBtn {
   position: absolute;
-  top: 260px;
+  top: 20%;
   left: 670px;
   width: 585px;
-  height: 385px;
   cursor: url(/images/worldmap/SelectCursor.png), auto !important;
+  height: 47vh;
 }
 
 @media (max-width: 1857px) {

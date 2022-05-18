@@ -4,10 +4,21 @@
   background-size: 100% 100%;
   background-position: center center;
   height: 100vh;
-  z-index: 999999;
-  position: relative;
   display: flex;
   justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity;
+  transition: all 0.5s linear;
+}
+
+.miningOverlay.active {
+  z-index: 2002;
+  opacity: 1;
+  visibility: visible;
+  will-change: opacity;
+  transition: all 0.5s linear;
 }
 
 .frameMining {
@@ -187,7 +198,7 @@
     font-size: 18px;
     color: #FFFFFF;
   }
-  
+
   .detail {
     font-size: 14px;
     color: #FFFFFF;
