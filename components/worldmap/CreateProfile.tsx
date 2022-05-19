@@ -49,7 +49,7 @@ export default function CreateProfile({
               <div className="body-top-main">
                 {imagesIndex.map((value) => (
                   <div
-                    className={value === heroSelector && 'select'}
+                    className={`${value === heroSelector && 'select'} click-cursor`}
                     onClick={() => {
                       setHeroSelector(value)
                     }}
@@ -68,7 +68,7 @@ export default function CreateProfile({
                 onClick={() => {
                   setIsOpenCreateProfile(false)
                 }}
-                className="close-btn"
+                className="close-btn click-cursor"
               >
                 <img src="./images/profile/close.png" alt="img" />
               </button>
@@ -106,12 +106,12 @@ export default function CreateProfile({
                   onClick={() => {
                     handleCreateProfile()
                   }}
-                  className={`complete-profile ${heroSelector && nameValue && 'invalid'
+                  className={`click-cursor complete-profile ${heroSelector && nameValue && 'invalid'
                     }`}
                 >
                   Complete Profile
                 </button>
-                <button className="doc">READ THE DFK TUTORIAL</button>
+                <button className="doc click-cursor">READ THE DFK TUTORIAL</button>
               </div>
             </div>
           </div>
@@ -253,7 +253,7 @@ const CreateProfileCSS = styled.div({
             padding: 0,
             lineHeight: 0,
             backgroundColor: 'transparent',
-            cursor: 'pointer',
+            cursor: 'cursor: url(/images/worldmap/click-cursor.png), auto !important',
             border: '2px solid transparent',
             outline: 'none',
             img: {

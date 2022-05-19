@@ -36,6 +36,7 @@ export default function User() {
             '@media(max-width: 720px)': {
               left: 0,
             },
+            cursor: 'url(/images/worldmap/SelectCursor.png), auto !important',
           }}
           onClick={() => {
             setIsOpenAvatar((isOpenAvatarPrev) => !isOpenAvatarPrev)
@@ -68,6 +69,7 @@ export default function User() {
             </ul>
             <button
               css={{
+                cursor: 'url(/images/worldmap/SelectCursor.png), auto !important',
                 width: '100%',
                 backgroundColor: '#009C44',
                 borderRadius: '5px',

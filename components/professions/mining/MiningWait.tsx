@@ -43,7 +43,7 @@ export default function MiningWait(props: Props) {
         <div className={style.detail}>
           20 secconds
         </div>
-        <Button onClick={handleCheckCanFinish} className={`${!checkCanFinish && style.finishBtn} ${checkCanFinish && style.finishBtnDisable}`}></Button>
+        <Button onClick={handleCheckCanFinish} className={`${!checkCanFinish && style.finishBtn} ${checkCanFinish && style.finishBtnDisable} click-cursor`}></Button>
       </div>
     </div>
   )

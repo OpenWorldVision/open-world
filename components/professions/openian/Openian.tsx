@@ -46,7 +46,7 @@ function Openian() {
           <div className={`${styles.openianContainer} overlay`}>
             <div className={styles.openianBg}>
               <div
-                className={styles.openianSellBtn}
+                className={`${styles.openianSellBtn} click-cursor`}
                 onClick={() => toggleSellModal(true)}
               ></div>
             </div>

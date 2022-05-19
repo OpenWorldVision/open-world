@@ -9,7 +9,7 @@ export default function CastleBtn(props: Props) {
 
   return (
     <button className={`${style.gameButton} click-cursor`}>
-      <div className={style.title}>{title}</div>
+      <div className={`${style.title} click-cursor`}>{title}</div>
       <img
         className={style.bubbleArrow}
         src="/images/borders/bubble-arrow.png"

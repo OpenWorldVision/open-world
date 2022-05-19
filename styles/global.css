@@ -6,7 +6,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 18px;
-  /* cursor: url('/images/castle/default-cursor.png'), auto !important; */
+  cursor: url('/images/worldmap/CursorDefault.png'), auto !important;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -15,7 +15,7 @@ body {
 }
 
 button {
-  cursor: url('/images/castle/click-cursor.png'), auto !important;
+  cursor: url('/images/worldmap/click-cursor.png'), auto !important;
 }
 
 a {
@@ -33,7 +33,7 @@ img {
 }
 
 .chakra-modal__content-container {
-  /* cursor: url(/images/jeweler/default-cursor.png), auto; */
+  cursor: url(/images/worldmap/default-cursor.png), auto !important;
 }
 
 .modal_body_content {
@@ -436,8 +436,7 @@ img {
 }
 
 .cursor-btn {
-  /* cursor: url(/images/click-cursor-2x.png), auto !important; */
-  cursor: pointer;
+  cursor: url('/images/worldmap/click-cursor.png'), auto !important;
 }
 
 .layout-btn {
@@ -509,8 +508,12 @@ hr {
 }
 
 .click-cursor {
-  /* cursor: url('/images/castle/click-cursor.png'), auto !important; */
-  cursor: pointer !important;
+  cursor: url('/images/worldmap/SelectCursor.png'), auto !important;
+  /* cursor: pointer !important; */
+}
+
+option{
+  cursor: url('/images/worldmap/SelectCursor.png'), auto !important;
 }
 
 .overlay {

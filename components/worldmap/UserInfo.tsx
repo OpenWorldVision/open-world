@@ -36,6 +36,7 @@ export default function Menu({
         <div className="modal-content-user-info">
           <div className="modal-content-user-info-header">
             <button
+              className='click-cursor'
               onClick={() => {
                 setIsOpenUserInfo(false)
               }}
@@ -55,6 +56,7 @@ export default function Menu({
             <div>
               {!profile && (
                 <button
+                  className='click-cursor'
                   css={{
                     marginBottom: '10px',
                   }}
@@ -67,6 +69,7 @@ export default function Menu({
                 </button>
               )}
               <button
+                className='click-cursor'
                 onClick={(e) => {
                   setIsOpenUserDetail(true)
                 }}
@@ -128,7 +131,7 @@ export default function Menu({
             </div>
             <div>
               <div>Account Details</div>
-              <button>{`${profile?._owner.slice(
+              <button className='click-cursor'>{`${profile?._owner.slice(
                 0,
                 6
               )} ... ${profile?._owner.slice(-4)}`}</button>
@@ -145,6 +148,7 @@ export default function Menu({
                 <div>
                   Your Heroes
                   <button
+                    className='click-cursor'
                     onClick={() => {
                       setIsOpenUserDetail(false)
                     }}
@@ -162,7 +166,7 @@ export default function Menu({
                     <div>
                       <div>
                         <div>Filter</div>
-                        <button>
+                        <button className='click-cursor'>
                           <svg
                             onClick={() => {
                               setIsOpenSearchOption(
@@ -180,18 +184,18 @@ export default function Menu({
                         <div>
                           <div>
                             <div className="select">
-                              <button>BASICS</button>
+                              <button className='click-cursor'>BASICS</button>
                             </div>
                             <div>
-                              <button>ATTRIBUTES</button>
+                              <button className='click-cursor'>ATTRIBUTES</button>
                             </div>
                             <div>
-                              <button>STATS</button>
+                              <button className='click-cursor'>STATS</button>
                             </div>
                           </div>
                           <div>
-                            <button>APPLY</button>
-                            <button>RESET</button>
+                            <button className='click-cursor'>APPLY</button>
+                            <button className='click-cursor'>RESET</button>
                           </div>
                         </div>
                         <div>
@@ -200,19 +204,19 @@ export default function Menu({
                             <div>Status</div>
                             <div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 All
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 For Sale
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 For Hire
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 On A Quest
                               </div>
                             </div>
@@ -221,15 +225,15 @@ export default function Menu({
                             <div>Gender</div>
                             <div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 All
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Male
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Female
                               </div>
                             </div>
@@ -238,15 +242,15 @@ export default function Menu({
                             <div>Skiny</div>
                             <div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 All
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Yes
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 No
                               </div>
                             </div>
@@ -255,67 +259,67 @@ export default function Menu({
                             <div>Class</div>
                             <div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 All
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Archer
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Darkknight
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Dragoon
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Dreadknight
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Knight
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Monk
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Ninja
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Paladin
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Pirate
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Priest
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Sage
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Summoner
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Thief
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Warrior
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Wizard
                               </div>
                             </div>
@@ -324,67 +328,67 @@ export default function Menu({
                             <div>Sub Class</div>
                             <div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 All
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Archer
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Darkknight
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Dragoon
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Dreadknight
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Knight
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Monk
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Ninja
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Paladin
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Pirate
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Priest
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Sage
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Summoner
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Thief
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Warrior
                               </div>
                               <div>
-                                <input type="checkbox" />
+                                <input className='click-cursor' type="checkbox" />
                                 Wizard
                               </div>
                             </div>
@@ -392,6 +396,7 @@ export default function Menu({
                           <div>
                             <div>Summons Remainning</div>
                             <input
+                              className='click-cursor'
                               type="range"
                               name="quantity"
                               min="0"
@@ -401,6 +406,7 @@ export default function Menu({
                           <div>
                             <div>Rarity</div>
                             <input
+                              className='click-cursor'
                               type="range"
                               name="quantity"
                               min="0"
@@ -410,6 +416,7 @@ export default function Menu({
                           <div>
                             <div>Generation</div>
                             <input
+                              className='click-cursor'
                               type="range"
                               name="quantity"
                               min="0"
@@ -419,6 +426,7 @@ export default function Menu({
                           <div>
                             <div>Level</div>
                             <input
+                              className='click-cursor'
                               type="range"
                               name="quantity"
                               min="0"
@@ -430,6 +438,7 @@ export default function Menu({
                     </div>
                   ) : (
                     <button
+                      className='click-cursor'
                       onClick={() => {
                         setIsOpenSearchOption(!isOpenSearchOption)
                       }}
@@ -448,8 +457,8 @@ export default function Menu({
                       <div>
                         <div>Showing 0 Heroes</div>
                         <div>
-                          <div>
-                            <button>
+                          <div className='click-cursor'>
+                            <button className='click-cursor'>
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 512 512"
@@ -460,30 +469,30 @@ export default function Menu({
                             Refresh
                           </div>
                           <div>
-                            <input type="checkbox" />
+                            <input className='click-cursor' type="checkbox" />
                             Animations
                           </div>
                           <div>
-                            <input type="checkbox" />
+                            <input className='click-cursor' type="checkbox" />
                             Flip All
                           </div>
                         </div>
                       </div>
                       <div>
                         <div>Sort by:</div>
-                        <select>
-                          <option value="level">Gen</option>
-                          <option value="level">Rarity</option>
-                          <option value="level">Level</option>
-                          <option value="level">Cooldown</option>
-                          <option value="level">ID</option>
-                          <option value="level">Stamina</option>
-                          <option value="level">Summons</option>
-                          <option value="level">Total XP</option>
+                        <select className='click-cursor'>
+                          <option className='click-cursor' value="level">Gen</option>
+                          <option className='click-cursor' value="level">Rarity</option>
+                          <option className='click-cursor' value="level">Level</option>
+                          <option className='click-cursor' value="level">Cooldown</option>
+                          <option className='click-cursor' value="level">ID</option>
+                          <option className='click-cursor' value="level">Stamina</option>
+                          <option className='click-cursor' value="level">Summons</option>
+                          <option className='click-cursor' value="level">Total XP</option>
                         </select>
-                        <select>
-                          <option value="level">Ascending</option>
-                          <option value="level">Descending</option>
+                        <select className='click-cursor'>
+                          <option className='click-cursor' value="level">Ascending</option>
+                          <option className='click-cursor' value="level">Descending</option>
                         </select>
                       </div>
                     </div>
@@ -497,7 +506,7 @@ export default function Menu({
                         (This will open another page, and then display an error
                         message; Not to worry! Thats expected behaviour.)
                       </div>
-                      <button>WHITELIST DFK API</button>
+                      <button className='click-cursor'>WHITELIST DFK API</button>
                     </div>
                   </div>
                 </div>
@@ -816,7 +825,7 @@ const UserInfoCSS = styled.div({
                         height: '15px',
                         borderRadius: '50%',
                         background: 'rgb(20,194,90)',
-                        cursor: 'pointer',
+                        cursor: 'cursor: url(/images/worldmap/click-cursor.png), auto !important',
                       },
                     },
                   },

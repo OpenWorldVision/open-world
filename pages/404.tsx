@@ -25,7 +25,7 @@ export default function Home({ allPostsData }) {
               <img src="/images/worldmap/OW-logo.png" alt="logo" />
               <div>Coming Soon</div>
               <Link href="/">
-                <button>
+                <button className='click-cursor'>
                   <a>BACK TO WORLD MAP</a>
                 </button>
               </Link>
@@ -46,15 +46,15 @@ const wordMap_kf = keyframes`
 `
 const NotFoundPage = styled.div({
   backgroundColor: 'rgb(148,151,168)',
-  // cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+  cursor: 'url(/images/worldmap/CursorDefault.png), auto',
   'button, input, select': {
-    // cursor: 'url(/images/worldmap/SelectCursor.png), auto',
+    cursor: 'url(/images/worldmap/SelectCursor.png), auto',
   },
   '.containerWorldMap': {
     backgroundImage: 'url(/images/background/game-bg.jpg)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    // cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
     width: '100vw',
     height: '100vh',
     overflow: 'hidden',

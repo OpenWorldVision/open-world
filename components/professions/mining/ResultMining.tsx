@@ -30,14 +30,14 @@ export default function ResultMining() {
         <div className={style.questFinish}></div>
         <div></div>
         <div className={style.resultMining}>
-          <div className={style.title}>You Get</div>
+          <div className={style.title}>You Got</div>
           <div className={style.items}>
             <span>X5</span>
           </div>
         </div>
-        <div className={style.helpText}>All the Ores you mine will be stored at your Inventory</div>
+        <div className={style.helpText}>All the Ores you mine will be stored in your inventory</div>
         <Link className={style.linkContainer} href="/professions/openian/main">
-          <a className={style.confirmBtn}></a>
+          <a className={`${style.confirmBtn} click-cursor`}></a>
         </Link>
       </div>
     </>

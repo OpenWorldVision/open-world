@@ -42,11 +42,10 @@
 
 .openianSellBtn {
   position: absolute;
-  top: 260px;
+  top: 220px;
   left: 670px;
   width: 585px;
   height: 385px;
-  cursor: pointer;
 }
 
 .openianFishBtn {
@@ -55,7 +54,6 @@
   left: 240px;
   width: 400px;
   height: 385px;
-  cursor: pointer;
 }
 
 @media (max-width: 767px) {
