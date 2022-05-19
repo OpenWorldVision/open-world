@@ -36,7 +36,7 @@ contract Item is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
     emit NewItem(tokenId, minter);
   }
 
-  function get(uint256 id) public view returns (uint256) {
+  function get(uint256 id) public view returns (uint8) {
     return tokens[id].trait;
   }
 }
