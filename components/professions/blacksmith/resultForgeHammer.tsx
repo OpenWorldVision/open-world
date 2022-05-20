@@ -11,9 +11,10 @@ export default function ResultForgeHammer(props: Props) {
   const { hammerReceived } = props
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsLoading(false)
     }, 1000)
+    return () => { clearTimeout(timer) }
   }, [])
 
   return (

@@ -79,11 +79,7 @@ export default function Layout({ children, home }) {
       // isProfessions
       // isWorkshop
     ) {
-      return (
-        <>
-          <BtnWorldMap backToWorldMap={handleBackToWorldMap} />
-        </>
-      )
+      return <BtnWorldMap backToWorldMap={handleBackToWorldMap} />
     }
   }
 

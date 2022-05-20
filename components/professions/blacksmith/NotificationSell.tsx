@@ -10,9 +10,10 @@ export default function NotificationSell(props: Props) {
   const { hiddenNotification } = props
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsLoading(false)
     }, 1000)
+    return () => { clearTimeout(timer) }
   }, [])
 
   const handleConfirm = () => {
