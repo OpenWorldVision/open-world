@@ -3,8 +3,7 @@ import styled from '@emotion/styled'
 import { changePictureProfile, crateProfile, checkNameTaken } from 'utils/profileContract'
 
 const imagesIndex = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-  23, 24, 25,
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
 ]
 
 export default function CreateProfile({
@@ -70,7 +69,7 @@ export default function CreateProfile({
                     key={value}
                   >
                     <img
-                      src={`./images/profile/hero/hero-${value}.png`}
+                      src={`./images/profile/hero/${value}.png`}
                       alt="img"
                     />
                   </button>
@@ -80,7 +79,7 @@ export default function CreateProfile({
             <div className="body-bottom">
               <div className="avatar-selected">
                 <img
-                  src={`./images/profile/hero/hero-${heroSelector || 1}.png`}
+                  src={`./images/profile/hero/${heroSelector || 1}.png`}
                   alt="img"
                 />
               </div>

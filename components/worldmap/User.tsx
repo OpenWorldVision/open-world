@@ -16,7 +16,6 @@ export default function User() {
 
   const getContractProfile = async () => {
     const _profile = await getProfile()
-
     dispatch(setProfile({ profile: _profile }))
   }
 
@@ -28,22 +27,15 @@ export default function User() {
     <UserCSS>
       <div className="user-avatar">
         <button
-          css={{
-            left: '55px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            '@media(max-width: 720px)': {
-              left: 0,
-            },
+          css={isOpenAvatar && {
+            margin: 'auto'
           }}
           onClick={() => {
             setIsOpenAvatar((isOpenAvatarPrev) => !isOpenAvatarPrev)
           }}
         >
-          <img src="/images/worldmap/Frame.png" alt="img" />
           <img
-            src={`./images/profile/hero/hero-${profile?._picId || 'none'}.png`}
+            src={`./images/profile/hero/${profile?._picId || 'none'}.png`}
             alt="img"
           />
         </button>
@@ -51,18 +43,51 @@ export default function User() {
           <div className="user-info">
             <div>{profile?._name}</div>
             <ul>
-              <li>0.00 OPEN</li>
+              <li css={{
+                display: 'flex',
+              }}>
+                <div style={{ width: '30px' }}>
+                  <img src='./favicon.ico' alt='img' width={25} height={25} />
+                </div>
+                0.00 OPEN 
+              </li>
               {/* Career : Openian or Supplier or BlackSmith */}
-              <li>Career: Openian</li>
-              <li>Inventory</li>
+              <li>
+                Career: None
+              </li>
+              <li css={{
+                display: 'flex',
+                marginTop: '10px'
+              }}>
+                <div style={{ width: '30px' }}>
+                  <img src='./images/icons/inventory.png' alt='img' width={25} height={25} />
+                </div>
+                Inventory
+              </li>
             </ul>
             <ul>
               <li>
-                <div>Stamina Point:</div>
+                <div css={{
+                  display: 'flex',
+                }}>
+                  <div style={{ width: '30px' }}>
+                    <img src='./images/icons/stamina-point.png' alt='img' width={15} height={15} />
+                  </div>
+                  Stamina Point:
+                </div>
                 <div>100/100</div>
               </li>
-              <li>
-                <div>Health Point:</div>
+              <li css={{
+                marginTop: '10px'
+              }}>
+                <div css={{
+                  display: 'flex',
+                }}>
+                  <div style={{ width: '30px' }}>
+                    <img src='./images/icons/health-point.png' alt='img' width={25} height={25} />
+                  </div>
+                  Health Point:
+                </div>
                 <div>100/100</div>
               </li>
             </ul>
@@ -121,28 +146,27 @@ const UserCSS = styled.div({
     top: '30px',
     left: '30px',
     zIndex: '2000',
+    width: '200px',
     '@media(max-width: 720px)': {
       top: '10px',
       left: '10px',
     },
     '> button': {
-      width: '90px',
-      height: '90px',
-      position: 'relative',
-      'img:first-child': {
-        position: 'absolute',
-        top: '-2px',
-        left: '-2px',
-      },
-      'img:nth-child(2)': {
-        position: 'absolute',
-        width: '80%',
-        top: '14px',
-        left: '8px',
-        color: 'rgb(247,183,95)',
-        fontSize: '15px',
-        zIndex: 1,
-        borderRadius: '50%',
+      width: '100px',
+      height: '110px',
+      // '@media(max-width: 720px)': {
+      //   width: '80px',
+      //   height: '80px',
+      // },
+      display: 'block',
+      backgroundImage: 'url(./images/worldmap/Frame.png)',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'contain',
+      padding: '10px',
+      img: {
+        width: '76px',
+        height: '76px',
+        borderRadius: '50%'
       },
     },
     '.user-info': {
@@ -150,8 +174,9 @@ const UserCSS = styled.div({
       top: '70px',
       left: 0,
       width: '200px',
-      backgroundImage:
-        'linear-gradient(to right, rgb(1,1,1), rgba(1,1,1, 0.6))',
+      backgroundImage: 'url(./images/profile/frame.png)',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: '100% 100%',
       fontSize: '14px',
       color: 'white',
       padding: '35px 20px 10px 20px',
@@ -159,9 +184,6 @@ const UserCSS = styled.div({
       '> div': {
         fontSize: '20px',
         textAlign: 'center',
-        '@media(max-width: 720px)': {
-          fontSize: '14px',
-        },
       },
       ul: {
         padding: '14px 0',
