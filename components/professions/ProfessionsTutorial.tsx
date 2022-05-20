@@ -30,7 +30,7 @@ export default function ProfessionsTutorial({
                         className='close'
                         onClick={() => {setIsOpenTutorial(false)}}
                     >
-                        X
+                        <img src="./images/icons/close.png" alt="img" />
                     </button>
                     <div className="header">THE VERY FIRST THING YOU NEED TO DO IN OPENWORLD IS CHOOSE A CAREER FOR YOUR AVATAR.</div>
                     <div className="body">LETS GO CHECK OUT PROFESSIONS BUILDING WHERE YOU CAN SEE ALL THE CAREERS THAT NOW AVAILABLE IN OPENWORLD. SEE ONE FITS YOUR STYLE, DONT BE HESITATE TO CHOOSE IT</div>
@@ -80,17 +80,18 @@ const ProfessionsTutorialCSS = styled.div({
                 position: 'relative',
                 '@media(max-width: 720px)': {
                     padding: '10px',
+                    paddingTop: '50px'
                 },
                 '.close': {
                     position: 'absolute',
+                    '@media(max-width: 720px)': {
+                        top: '85px',
+                        right: '25px',
+                    },
                     top: '80px',
                     right: '40px',
-                    backgroundColor: 'white',
-                    borderRadius: '50%',
-                    color: 'black',
                     width: '30px',
                     height: '30px',
-                    fontWeight: 'bold'
                 },
                 '.header': {
                     textAlign: 'center',
