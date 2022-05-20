@@ -92,22 +92,10 @@ export default function User() {
               </li>
             </ul>
             <button
-              css={{
-                width: '100%',
-                backgroundColor: '#009C44',
-                borderRadius: '5px',
-                height: '40px',
-                fontSize: '16px',
-                fontWeight: 'bold',
-                marginBottom: '6px',
-                ':hover': {
-                  backgroundColor: '#fbeb74',
-                  color: 'black',
-                },
-              }}
               onClick={() => {
                 setIsOpenUserInfo(true)
               }}
+              className='btn-profile'
             >
               Profile
             </button>
@@ -144,7 +132,7 @@ const UserCSS = styled.div({
   '.user-avatar': {
     position: 'fixed',
     top: '30px',
-    left: '30px',
+    left: '50px',
     zIndex: '2000',
     width: '200px',
     '@media(max-width: 720px)': {
@@ -154,10 +142,6 @@ const UserCSS = styled.div({
     '> button': {
       width: '100px',
       height: '110px',
-      // '@media(max-width: 720px)': {
-      //   width: '80px',
-      //   height: '80px',
-      // },
       display: 'block',
       backgroundImage: 'url(./images/worldmap/Frame.png)',
       backgroundRepeat: 'no-repeat',
@@ -184,6 +168,10 @@ const UserCSS = styled.div({
       '> div': {
         fontSize: '20px',
         textAlign: 'center',
+        backgroundImage: 'url(./images/profile/frame.png)',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '100% 100%',
+        marginTop: '10px'
       },
       ul: {
         padding: '14px 0',
@@ -203,6 +191,21 @@ const UserCSS = styled.div({
           },
         },
       },
+      '.btn-profile': {
+        width: '100%',
+        backgroundImage: 'url(./images/profile/frame.png)',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '100% 100%',
+        border: '1px solid #fbeb74',
+        height: '40px',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        marginBottom: '6px',
+        ':hover': {
+          backgroundColor: '#fbeb74',
+          color: 'black',
+        },
+      }
     },
   },
 })
