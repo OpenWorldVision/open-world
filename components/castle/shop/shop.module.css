@@ -117,6 +117,11 @@
 }
 
 @media (max-width: 767px) {
+  .shopBoard {
+    width: 150px;
+    height: 45px;
+    top: 45px;
+  }
   .shopContainer {
     padding-top: 100px;
   }
@@ -124,7 +129,9 @@
     background-size: cover;
   }
   .backBtn {
-    width: 140px !important;
+    width: 100px !important;
     height: 75px !important;
+    top: 15px;
+    left: 15px;
   }
 }
