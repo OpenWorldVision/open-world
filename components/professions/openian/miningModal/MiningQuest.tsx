@@ -1,6 +1,7 @@
 import { Button } from '@chakra-ui/button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import style from './Mining.module.css'
+import { fetchMiningQuestData } from 'utils/professionContract'
 
 type Props = {
   startQuest: () => void
@@ -9,6 +10,18 @@ type Props = {
 export default function MiningQuest(props: Props) {
   const { startQuest } = props
   const [harmer, setHarmer] = useState(1)
+  const [duration, setDuration] = useState(0)
+  const [requireStamina, setRequireStamina] = useState(0)
+
+  const initialize = async () => {
+    const data = await fetchMiningQuestData()
+    setDuration(data.duration)
+    setRequireStamina(data.requireStamina)
+  }
+
+  useEffect(() => {
+    initialize();
+  }, [])
 
   return (
     <div className={style.miningQuestDetail}>
@@ -25,7 +38,7 @@ export default function MiningQuest(props: Props) {
           Base Duration
         </div>
         <div className={style.detail}>
-          20 secconds
+          {duration} secconds
         </div>
       </div>
       <div>
@@ -33,7 +46,7 @@ export default function MiningQuest(props: Props) {
           Stamina Per Attemp
         </div>
         <div className={style.detail}>
-          20
+          {requireStamina}
           <div className={style.iconStamina}></div>
         </div>
       </div>
