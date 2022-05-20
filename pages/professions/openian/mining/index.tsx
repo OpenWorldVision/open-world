@@ -20,7 +20,7 @@ export default function Mining() {
   }
 
   return (
-    <div className={style.miningOverlay}>
+      <div className={style.miningOverlay}>
       {!isFinished ? <div className={style.frameMining}>
         <div className={style.frameHead}>
           <Button className={style.infoBtn}></Button>

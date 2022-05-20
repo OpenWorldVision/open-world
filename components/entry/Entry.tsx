@@ -19,6 +19,7 @@ import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 import { getWeb3Client } from '@lib/web3'
 import { useDispatch } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
+import Head from 'next/head'
 // import ModalAddWallet from './components/ModalAddWallet'
 
 
@@ -46,23 +47,23 @@ export default function Entry() {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
-                dispatch(updateIsConnected({isConnected: true}))
+                dispatch(updateIsConnected({ isConnected: true }))
               })
               .catch(() => {
-                dispatch(updateIsConnected({isConnected: false}))
+                dispatch(updateIsConnected({ isConnected: false }))
               })
           } else {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
-                dispatch(updateIsConnected({isConnected: true}))
+                dispatch(updateIsConnected({ isConnected: true }))
                 window.ethereum
                   .request({
                     method: 'wallet_switchEthereumChain',
                     params: [{ chainId: '0x63564c40' }],
                   })
                   .then(() => {
-                    dispatch(updateIsConnected({isConnected: true}))
+                    dispatch(updateIsConnected({ isConnected: true }))
                   })
                   .catch((error) => {
                     window.ethereum.request({
@@ -83,7 +84,7 @@ export default function Entry() {
                   })
               })
               .catch(() => {
-                dispatch(updateIsConnected({isConnected: false}))
+                dispatch(updateIsConnected({ isConnected: false }))
               })
           }
         }
@@ -142,7 +143,7 @@ export default function Entry() {
               },
             },
           })
-        } catch (error: unknown) {}
+        } catch (error: unknown) { }
       }
     }
   }
@@ -166,69 +167,74 @@ export default function Entry() {
 
 
   return (
-    <div className={styles.main}>
-      <img src={'/images/common/gameLogo.png'} alt={'logo'} />
-      <Link href={'/'} passHref>
-        <Button
-          style={_styles.buttonStyle}
+    <>
+      <Head>
+        <title>Open World</title>
+      </Head>
+      <div className={styles.main}>
+        <img src={'/images/common/gameLogo.png'} alt={'logo'} />
+        <Link href={'/'} passHref>
+          <Button
+            style={_styles.buttonStyle}
           // onClick={connectWallet}
-        >
-          <Text style={_styles.buttonText}>PLAY</Text>
-        </Button>
-      </Link>
-      <div className={styles.bottomContainer}>
-        <div>
-          <div className={styles.rowView}>
-            <div
-              style={{ marginRight: '1rem' }}
-              onClick={() => setPlay('music')}
-            >
-              <img
-                src={
-                  playMusic
-                    ? '/images/common/play.svg'
-                    : '/images/common/notplay.svg'
-                }
-                alt={'musicPlay'}
-                className={styles.iconStyle}
-              />
-            </div>
-            <div onClick={() => setPlay('sound')}>
-              <img
-                src={
-                  playSound
-                    ? '/images/common/sound.png'
-                    : '/images/common/mute.png'
-                }
-                alt={'soundPlay'}
-                className={styles.iconStyle}
-              />
-            </div>
-          </div>
-          <Text color={'#019C44'} fontSize={12}>
-            {nameOfChain}
-          </Text>
-        </div>
-      </div>
-      <Modal isOpen={openModalAddWallet} onClose={onCloseModal} isCentered>
-        <ModalOverlay>
-          <ModalContent>
-            <ModalHeader>Please add your wallet</ModalHeader>
-            <ModalCloseButton />
-            <ModalFooter>
-              <Button
-                backgroundColor={'#019C44'}
-                variant="ghost"
-                onClick={onAddMetamask}
-                textColor={'#fff'}
+          >
+            <Text style={_styles.buttonText}>PLAY</Text>
+          </Button>
+        </Link>
+        <div className={styles.bottomContainer}>
+          <div>
+            <div className={styles.rowView}>
+              <div
+                style={{ marginRight: '1rem' }}
+                onClick={() => setPlay('music')}
               >
-                Add Metamask
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </ModalOverlay>
-      </Modal>
-    </div>
+                <img
+                  src={
+                    playMusic
+                      ? '/images/common/play.svg'
+                      : '/images/common/notplay.svg'
+                  }
+                  alt={'musicPlay'}
+                  className={styles.iconStyle}
+                />
+              </div>
+              <div onClick={() => setPlay('sound')}>
+                <img
+                  src={
+                    playSound
+                      ? '/images/common/sound.png'
+                      : '/images/common/mute.png'
+                  }
+                  alt={'soundPlay'}
+                  className={styles.iconStyle}
+                />
+              </div>
+            </div>
+            <Text color={'#019C44'} fontSize={12}>
+              {nameOfChain}
+            </Text>
+          </div>
+        </div>
+        <Modal isOpen={openModalAddWallet} onClose={onCloseModal} isCentered>
+          <ModalOverlay>
+            <ModalContent>
+              <ModalHeader>Please add your wallet</ModalHeader>
+              <ModalCloseButton />
+              <ModalFooter>
+                <Button
+                  backgroundColor={'#019C44'}
+                  variant="ghost"
+                  onClick={onAddMetamask}
+                  textColor={'#fff'}
+                >
+                  Add Metamask
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </ModalOverlay>
+        </Modal>
+      </div>
+    </>
   )
 }
 
