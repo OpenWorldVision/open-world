@@ -54,7 +54,7 @@ export default function Menu({
               </button>
             </div>
             <div>
-              <img src="/images/worldmap/Hope2.png" alt="img" />
+              <img src="/favicon.ico" alt="img" />
               0.00
             </div>
             <div>
@@ -137,6 +137,7 @@ const UserInfoCSS = styled.div({
       backgroundImage: 'url(./images/profile/frame.png)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '100% 100%',
+      backgroundColor: 'rgb(0,0,0,.6)',
       display: 'flex',
       flexDirection: 'column',
       height: '90%',
@@ -203,15 +204,13 @@ const UserInfoCSS = styled.div({
           },
         },
         '> div:nth-child(2)': {
-          padding: '30px',
-          paddingBottom: '0',
           textAlign: 'center',
           fontSize: '50px',
           fontWeight: '600',
           img: {
             margin: 'auto',
-            width: '50px',
-            height: '50px',
+            width: '60px',
+            height: '60px',
             fontSize: '14px',
           },
         },
