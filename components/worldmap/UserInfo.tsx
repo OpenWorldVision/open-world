@@ -192,7 +192,10 @@ const UserInfoCSS = styled.div({
         '> div:first-child': {
           padding: '20px',
           button: {
-            backgroundColor: 'rgb(0,156,68)',
+            backgroundImage: 'url(./images/profile/frame.png)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '100% 100%',
+            border: '1px solid #fbeb74',
             borderRadius: '5px',
             width: '100%',
             height: '40px',
@@ -236,10 +239,12 @@ const UserInfoCSS = styled.div({
           },
           button: {
             width: '100%',
-            backgroundColor: 'rgb(44,47,54)',
+            backgroundImage: 'url(./images/profile/frame.png)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '100% 100%',
+            border: '1px solid #fbeb74',
             height: '50px',
             borderRadius: '10px',
-            border: '1px solid rgb(64,68,79)',
             marginTop: '20px',
             ':hover': {
               backgroundColor: 'rgb(251, 235, 116)',

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
@@ -13,14 +13,13 @@ export default function User() {
   const profile = useSelector((state: any) => { return state.ProfileStore.profile })
   const dispatch = useDispatch()
 
-
-  const getContractProfile = async () => {
+  const getDataProfile = useCallback(async () => {
     const _profile = await getProfile()
     dispatch(setProfile({ profile: _profile }))
-  }
+  }, [])
 
   useEffect(() => {
-    getContractProfile()
+    getDataProfile()
   }, [])
 
   return (
@@ -113,6 +112,7 @@ export default function User() {
           <CreateProfile
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             isOpenCreateProfile={isOpenCreateProfile}
+            getDataProfile={getDataProfile}
           />
         )}
         {isOpenCreateProfile && (
@@ -121,6 +121,7 @@ export default function User() {
             isEdit={true}
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             isOpenCreateProfile={isOpenCreateProfile}
+            getDataProfile={getDataProfile}
           />
         )}
       </div>
