@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
-import styles from '@components/professions/openian.module.css'
+import styles from './openian.module.css'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import Link from 'next/link'
 import SellModal from './sellModal/SellModal'
 import FishingModal from './fishingModal/FishingModal'
 import MiningModal from './miningModal/MiningModal'
 import { getFinishFishingQuest } from 'utils/professionContract'
+import LoadingModal from '@components/LoadingModal';
 
 function Openian() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -13,7 +14,7 @@ function Openian() {
   const [isOpenStore, setIsOpenStore] = useState(false)
   const [isOpenFishing, setIsOpenFishing] = useState(false)
   const [haveQuest, setHaveQuest] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(false)
 
 
   useEffect(() => {
@@ -59,68 +60,72 @@ function Openian() {
     setIsOpenMining(!isOpenMining)
   }, [isOpenMining])
 
+  const toggleLoadingModal = useCallback((state) => {
+    setIsLoading(state)
+  }, [isLoading])
+
   return (
-    <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
-      <TransformWrapper
-        initialPositionX={0}
-        initialPositionY={0}
-        centerOnInit={true}
-        wheel={{
-          disabled: true,
-        }}
-        doubleClick={{
-          disabled: true,
-        }}
-        panning={{
-          disabled: windowWidth >= 1858,
-        }}
-      >
-        <TransformComponent wrapperStyle={{ height: '100vh', width: '100vw' }}>
-          <div className={`${styles.openianContainer} overlay`}>
-            <div className={styles.openianBg}>
-              <div
-                className={styles.openianMiningBtn}
-                onClick={() => toggleMiningModal()}
-              ></div>
-              <div
-                className={styles.openianFishBtn}
-                onClick={() => toggleFishingModal()}
-              ></div>
-              <div
-                className={`${styles.openianSellBtn} click-cursor`}
-                onClick={() => toggleSellModal(true)}
-              ></div>
-              <div
-                className={`${styles.openianSellBtn} click-cursor`}
-                onClick={() => toggleSellModal(true)}
-              >
+    <>
+      {isLoading && <LoadingModal />}
+
+      <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
+        <TransformWrapper
+          initialPositionX={0}
+          initialPositionY={0}
+          centerOnInit={true}
+          wheel={{
+            disabled: true,
+          }}
+          doubleClick={{
+            disabled: true,
+          }}
+          panning={{
+            disabled: windowWidth >= 1858,
+          }}
+        >
+          <TransformComponent wrapperStyle={{ height: '100vh', width: '100vw' }}>
+            <div className={`${styles.openianContainer} overlay`}>
+              <div className={styles.openianBg}>
+                <div
+                  className={`${styles.openianMiningBtn} click-cursor`}
+                  onClick={() => toggleMiningModal()}
+                ></div>
+                <div
+                  className={`${styles.openianFishBtn} click-cursor`}
+                  onClick={() => toggleFishingModal()}
+                ></div>
+                <div
+                  className={`${styles.openianSellBtn} click-cursor`}
+                  onClick={() => toggleSellModal(true)}
+                ></div>
               </div>
             </div>
-          </div>
-        </TransformComponent>
-      </TransformWrapper>
+          </TransformComponent>
+        </TransformWrapper>
 
-      <Link href="/">
-        <a className={`${styles.backBtn} click-cursor`}></a>
-      </Link>
+        <Link href="/">
+          <a className={`${styles.backBtn} click-cursor`}></a>
+        </Link>
 
-      <SellModal
-        isOpen={isOpenStore}
-        toggleModal={() => toggleSellModal(false)}
-      />
+        <SellModal
+          isOpen={isOpenStore}
+          toggleModal={() => toggleSellModal(false)}
+        />
 
-      <FishingModal
-        isOpen={isOpenFishing}
-        toggleModal={() => toggleFishingModal()}
-        haveQuestUnfinish={haveQuest}
-      />
+        <FishingModal
+          isOpen={isOpenFishing}
+          toggleModal={() => toggleFishingModal()}
+          haveQuestUnfinish={haveQuest}
+        />
 
-      <MiningModal
-        isOpen={isOpenMining}
-        toggleModal={() => toggleMiningModal()}
-      />
+        <MiningModal
+          isOpen={isOpenMining}
+          toggleModal={() => toggleMiningModal()}
+          toggleLoadingModal={(state) => toggleLoadingModal(state)}
+        />
 
-    </div>
+      </div>
+    </>
   )
 }
 

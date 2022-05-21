@@ -49,7 +49,7 @@ function Openian() {
 
     setIsFishing(!isFishing)
   }, [isFishing])
-  
+
   return (
     <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
       <TransformWrapper
