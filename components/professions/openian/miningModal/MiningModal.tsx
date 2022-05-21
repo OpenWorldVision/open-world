@@ -10,19 +10,17 @@ import {
   checkIfMiningFinish,
   startMining,
   fetchMiningQuestData,
-  finishMining
+  finishMining,
 } from 'utils/professionContract'
-
-import { useDispatch } from 'react-redux'
-import { updateIsLoading } from 'reduxActions/isLoadingAction'
 
 type Props = {
   isOpen: boolean
   toggleModal: () => void
+  toggleLoadingModal: (boolean) => void
 }
 
 export default function MiningModal(props: Props) {
-  const { isOpen, toggleModal } = props
+  const { isOpen, toggleModal, toggleLoadingModal } = props
 
   const [isStartQuest, setIsStartQuest] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
@@ -31,16 +29,14 @@ export default function MiningModal(props: Props) {
   const [miningInterval, setMiningInterval] = useState(null)
   const [timeLeft, setTimeLeft] = useState(0)
 
-  const dispatch = useDispatch()
-
   const startQuest = useCallback(async () => {
-    dispatch(updateIsLoading({ isLoading: true }))
-    const mining = await startMining();
+    toggleLoadingModal(true)
+    const mining = await startMining()
     setTimeout(() => {
-      dispatch(updateIsLoading({ isLoading: false }))
+      toggleLoadingModal(false)
     }, 1000)
     if (mining !== null) {
-      const data = await checkIfMiningFinish();
+      const data = await checkIfMiningFinish()
       setIsFinished(data.finish)
       setIsStartQuest(true)
       setCanFinish(false)
@@ -57,6 +53,8 @@ export default function MiningModal(props: Props) {
         clearInterval(miningInterval)
         setCanFinish(true)
       }, duration)
+    } else {
+      toggleLoadingModal(false)
     }
   }, [])
 
@@ -88,15 +86,13 @@ export default function MiningModal(props: Props) {
   }, [])
 
   const handleFinish = useCallback(async () => {
-    dispatch(updateIsLoading({ isLoading: true }))
+    toggleLoadingModal(true)
     const finish = await finishMining()
-    setTimeout(() => {
-      dispatch(updateIsLoading({ isLoading: false }))
-    }, 1000)
     if (finish) {
       setIsStartQuest(false)
       setIsFinished(true)
     }
+    toggleLoadingModal(false)
   }, [])
 
   const confirmResult = useCallback(() => {
@@ -106,6 +102,7 @@ export default function MiningModal(props: Props) {
   }, [])
 
   const initialize = async () => {
+    toggleLoadingModal(true)
     const checkIfFinish = await checkIfMiningFinish()
     const data = await fetchMiningQuestData()
     const duration = await data.duration
@@ -115,20 +112,23 @@ export default function MiningModal(props: Props) {
     checkFinishFishingQuest()
 
     if (checkIfFinish.startTime === '0') {
-      setIsFinished(false);
+      setIsFinished(false)
       setIsStartQuest(false)
     } else {
       setIsFinished(checkIfFinish.finish)
       setIsStartQuest(true)
     }
+    toggleLoadingModal(false)
   }
 
   useEffect(() => {
-    initialize();
+    initialize()
   }, [])
 
   return (
-    <div className={`${style.miningOverlay} ${isOpen && style.active} overlay`}>
+    <div
+      className={`${style.miningOverlay} ${isOpen && style.active} overlay`}
+    >
       {!isFinished ? (
         <div className={style.frameMining}>
           <div className={style.frameHead}>
@@ -143,24 +143,19 @@ export default function MiningModal(props: Props) {
           </div>
           <div className={style.miningFooter}>
             {!isStartQuest ? (
-              <MiningQuest
-                startQuest={startQuest}
-              />
+              <MiningQuest startQuest={startQuest} />
             ) : (
               <MiningWait
                 isStartQuest={isStartQuest}
                 timeLeft={timeLeft}
                 handleFinish={handleFinish}
                 checkCanFinish={canFinish}
-
               />
             )}
           </div>
         </div>
       ) : (
-        <ResultMining
-          toggleModal={() => confirmResult()}
-        />
+        <ResultMining toggleModal={() => confirmResult()} />
       )}
     </div>
   )
