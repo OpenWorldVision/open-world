@@ -49,11 +49,11 @@
 }
 
 .openianFishBtn {
-  position: absolute;
-  top: 450px;
-  left: 240px;
-  width: 400px;
-  height: 385px;
+  position: absolute !important;
+  top: 450px !important;
+  left: 240px !important;
+  width: 400px !important;
+  height: 385px !important;
 }
 
 @media (max-width: 767px) {

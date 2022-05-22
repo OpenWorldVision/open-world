@@ -46,7 +46,7 @@
   left: 670px;
   width: 585px;
   height: 385px;
-  cursor: pointer !important;
+  cursor: url(/images/worldmap/SelectCursor.png), auto !important;
 }
 
 @media (max-width: 1857px) {

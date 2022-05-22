@@ -14,10 +14,6 @@ body {
   box-sizing: inherit;
 }
 
-button {
-  cursor: url('/images/worldmap/click-cursor.png'), auto !important;
-}
-
 a {
   color: #0070f3;
   text-decoration: none;
@@ -509,7 +505,6 @@ hr {
 
 .click-cursor {
   cursor: url('/images/worldmap/SelectCursor.png'), auto !important;
-  /* cursor: pointer !important; */
 }
 
 option{

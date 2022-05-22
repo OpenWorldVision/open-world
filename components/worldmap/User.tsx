@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
@@ -13,38 +13,29 @@ export default function User() {
   const profile = useSelector((state: any) => { return state.ProfileStore.profile })
   const dispatch = useDispatch()
 
-
-  const getContractProfile = async () => {
+  const getDataProfile = useCallback(async () => {
     const _profile = await getProfile()
-
     dispatch(setProfile({ profile: _profile }))
-  }
+  }, [])
 
   useEffect(() => {
-    getContractProfile()
+    getDataProfile()
   }, [])
 
   return (
     <UserCSS>
       <div className="user-avatar">
         <button
-          css={{
-            left: '55px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            '@media(max-width: 720px)': {
-              left: 0,
-            },
-            cursor: 'url(/images/worldmap/SelectCursor.png), auto !important',
+        className='click-cursor'
+          css={isOpenAvatar && {
+            margin: 'auto'
           }}
           onClick={() => {
             setIsOpenAvatar((isOpenAvatarPrev) => !isOpenAvatarPrev)
           }}
         >
-          <img src="/images/worldmap/Frame.png" alt="img" />
           <img
-            src={`./images/profile/hero/hero-${profile?._picId || 'none'}.png`}
+            src={`./images/profile/hero/${profile?._picId || 'none'}.png`}
             alt="img"
           />
         </button>
@@ -52,39 +43,60 @@ export default function User() {
           <div className="user-info">
             <div>{profile?._name}</div>
             <ul>
-              <li>0.00 OPEN</li>
+              <li css={{
+                display: 'flex',
+              }}>
+                <div style={{ width: '30px' }}>
+                  <img src='./favicon.ico' alt='img' width={25} height={25} />
+                </div>
+                0.00 OPEN
+              </li>
               {/* Career : Openian or Supplier or BlackSmith */}
-              <li>Career: Openian</li>
-              <li>Inventory</li>
+              <li>
+                Career: None
+              </li>
+              <li css={{
+                display: 'flex',
+                marginTop: '10px'
+              }}>
+                <div style={{ width: '30px' }}>
+                  <img src='./images/icons/inventory.png' alt='img' width={25} height={25} />
+                </div>
+                Inventory
+              </li>
             </ul>
             <ul>
               <li>
-                <div>Stamina Point:</div>
+                <div css={{
+                  display: 'flex',
+                }}>
+                  <div style={{ width: '30px' }}>
+                    <img src='./images/icons/stamina-point.png' alt='img' width={15} height={15} />
+                  </div>
+                  Stamina Point:
+                </div>
                 <div>100/100</div>
               </li>
-              <li>
-                <div>Health Point:</div>
+              <li css={{
+                marginTop: '10px'
+              }}>
+                <div css={{
+                  display: 'flex',
+                }}>
+                  <div style={{ width: '30px' }}>
+                    <img src='./images/icons/health-point.png' alt='img' width={25} height={25} />
+                  </div>
+                  Health Point:
+                </div>
                 <div>100/100</div>
               </li>
             </ul>
             <button
-              css={{
-                cursor: 'url(/images/worldmap/SelectCursor.png), auto !important',
-                width: '100%',
-                backgroundColor: '#009C44',
-                borderRadius: '5px',
-                height: '40px',
-                fontSize: '16px',
-                fontWeight: 'bold',
-                marginBottom: '6px',
-                ':hover': {
-                  backgroundColor: '#fbeb74',
-                  color: 'black',
-                },
-              }}
+              style={{ cursor: 'url(/images/worldmap/click-cursor.png), auto !important' }}
               onClick={() => {
                 setIsOpenUserInfo(true)
               }}
+              className='btn-profile click-cursor'
             >
               Profile
             </button>
@@ -98,10 +110,20 @@ export default function User() {
             profile={profile}
           />
         )}
-        {isOpenCreateProfile && (
+        {profile === false && (
           <CreateProfile
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             isOpenCreateProfile={isOpenCreateProfile}
+            getDataProfile={getDataProfile}
+          />
+        )}
+        {isOpenCreateProfile && (
+          <CreateProfile
+            profile={profile}
+            isEdit={true}
+            setIsOpenCreateProfile={setIsOpenCreateProfile}
+            isOpenCreateProfile={isOpenCreateProfile}
+            getDataProfile={getDataProfile}
           />
         )}
       </div>
@@ -113,30 +135,25 @@ const UserCSS = styled.div({
   '.user-avatar': {
     position: 'fixed',
     top: '30px',
-    left: '30px',
+    left: '50px',
     zIndex: '2000',
+    width: '200px',
     '@media(max-width: 720px)': {
       top: '10px',
       left: '10px',
     },
     '> button': {
-      width: '90px',
-      height: '90px',
-      position: 'relative',
-      'img:first-child': {
-        position: 'absolute',
-        top: '-2px',
-        left: '-2px',
-      },
-      'img:nth-child(2)': {
-        position: 'absolute',
-        width: '80%',
-        top: '14px',
-        left: '8px',
-        color: 'rgb(247,183,95)',
-        fontSize: '15px',
-        zIndex: 1,
-        borderRadius: '50%',
+      width: '100px',
+      height: '110px',
+      display: 'block',
+      backgroundImage: 'url(./images/worldmap/Frame.png)',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'contain',
+      padding: '10px',
+      img: {
+        width: '76px',
+        height: '76px',
+        borderRadius: '50%'
       },
     },
     '.user-info': {
@@ -144,8 +161,10 @@ const UserCSS = styled.div({
       top: '70px',
       left: 0,
       width: '200px',
-      backgroundImage:
-        'linear-gradient(to right, rgb(1,1,1), rgba(1,1,1, 0.6))',
+      backgroundImage: 'url(./images/profile/frame.png)',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: '100% 100%',
+      backgroundColor: 'rgb(0,0,0,.6)',
       fontSize: '14px',
       color: 'white',
       padding: '35px 20px 10px 20px',
@@ -153,9 +172,10 @@ const UserCSS = styled.div({
       '> div': {
         fontSize: '20px',
         textAlign: 'center',
-        '@media(max-width: 720px)': {
-          fontSize: '14px',
-        },
+        backgroundImage: 'url(./images/profile/frame.png)',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '100% 100%',
+        marginTop: '10px'
       },
       ul: {
         padding: '14px 0',
@@ -175,6 +195,21 @@ const UserCSS = styled.div({
           },
         },
       },
+      '.btn-profile': {
+        width: '100%',
+        backgroundImage: 'url(./images/profile/frame.png)',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '100% 100%',
+        border: '1px solid #fbeb74',
+        height: '40px',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        marginBottom: '6px',
+        ':hover': {
+          backgroundColor: '#fbeb74',
+          color: 'black',
+        },
+      }
     },
   },
 })

@@ -75,8 +75,8 @@ export default function Layout({ children, home }) {
       // isArena ||
       // isFoodCourt ||
       // isMarketPlace ||
-      isCastle ||
-      isProfessions
+      isCastle
+      // isProfessions
       // isWorkshop
     ) {
       return <BtnWorldMap backToWorldMap={handleBackToWorldMap} />
