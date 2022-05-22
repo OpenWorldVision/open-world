@@ -75,7 +75,7 @@ function SellModal(props: Props) {
           />
         </h3>
 
-        <Button className={styles.closeBtn} onClick={() => toggleModal()}>
+        <Button className={`${styles.closeBtn} click-cursor`} onClick={toggleModal}>
           <FontAwesomeIcon icon={faTimesCircle} />
         </Button>
 

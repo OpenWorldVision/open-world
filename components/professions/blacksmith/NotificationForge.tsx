@@ -8,24 +8,8 @@ type Props = {
 
 export default function NotificationForge(props: Props) {
   const { hiddenNotification } = props
-  // const [isLoading, setIsLoading] = useState(true)
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsLoading(false)
-  //   }, 2000)
-  // }, [])
   return (
     <>
-      {/* <div className={`${!isLoading && style.loadedNotification}`}>
-        <div className={`overlay ${style.preLoaderNotification}`}>
-          <div className={style.preloaderFoldingCube}>
-            <div className={`${style.preloaderCube1} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube2} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube4} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube3} ${style.preloaderCube}`}></div>
-          </div>
-        </div>
-      </div> */}
       <div className={style.notificationContainer}>
         <h3 className={style.notification}>
           <img

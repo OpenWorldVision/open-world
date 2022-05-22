@@ -1,4 +1,11 @@
 .foodCourtContainer {
+  height: 100%;
+  z-index: 999998;
+  background-color: #131313;
+  position: relative;
+}
+
+.foodCourtBg {
   background-image: url('/images/foodcourt/background.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -7,6 +14,14 @@
   position: relative;
   z-index: 999999;
   padding: 50px 100px;
+  /* overflow-y: scroll; */
+}
+
+.foodCourtTitleContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .foodCourtTitle {
@@ -19,35 +34,23 @@
   margin: 0 auto;
 }
 
-.foodCourtTitle::after,
-.foodCourtTitle::before {
-  content: '';
-  position: absolute;
+.navFoodCourt {
   background-image: url('/images/foodcourt/decorate.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 400px;
   height: 15px;
-  top: 25px;
 }
 
-.foodCourtTitle::after{
-  left: -584px;
-}
-
-.foodCourtTitle::before{
-  left: 534px;
-}
-
-.buyBtn, 
+.buyBtn,
 .sushiBtn,
 .fishBtn,
-.foodBtn{
+.foodBtn {
   background-color: transparent !important;
   padding: 0 !important;
 }
 
-.buyBtn{
+.buyBtn {
   background-image: url('/images/foodcourt/buy-btn.png') !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
@@ -55,26 +58,168 @@
   height: 62px !important;
 }
 
-.foodBtn{
+.foodBtn {
   background-image: url('/images/foodcourt/none-select.png') !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   width: 60px !important;
   height: 65px !important;
+  position: relative;
+  margin-left: 20px;
 }
 
-.sushiBtn{
+.sushiBtn {
   background-image: url('/images/foodcourt/sushi.png') !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   width: 45px !important;
   height: 35px !important;
+  position: absolute;
+  border-radius: 0 !important;
 }
 
-.fishBtn{
+.itemBoardSelected {
+  border: 2px solid #E8D179;
+}
+
+.fishBtn {
   background-image: url('/images/foodcourt/fish.png') !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   width: 45px !important;
   height: 35px !important;
+  position: absolute;
+}
+
+.foodCourtBoard {
+  margin: 0 auto;
+  margin-top: 20px;
+  background-image: url('/images/foodcourt/frame-food-court.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table {
+  color: #fff;
+  padding: 50px;
+  width: 100%;
+}
+
+.table {
+  text-align: center;
+  min-height: 631px;
+  position: relative;
+}
+
+.test {
+  position: absolute;
+  bottom: 40px;
+  left: 45%;
+}
+
+.columnTitle {
+  font-family: NewYork;
+  font-style: normal;
+  font-size: 30px;
+  font-weight: 400;
+  width: fit-content;
+  margin: 0 auto;
+  position: relative;
+  border-bottom: 2px solid #E8D179;
+  padding-bottom: 10px;
+  margin-bottom: 40px;
+}
+
+.refreshBtn {
+  background-image: url('/images/foodcourt/refresh-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 120px !important;
+  height: 50px !important;
+  margin-bottom: 40px;
+}
+
+.buyBtnItem {
+  background-image: url('/images/foodcourt/buy-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 80px !important;
+  height: 55px !important;
+}
+
+.columnItem {
+  text-align: center;
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.pagination {
+  width: 130px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.previous,
+.increase {
+  background-image: url('/images/foodcourt/triangle2.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 20px;
+  height: 25px;
+  background-color: transparent;
+}
+
+.increase {
+  background-image: url('/images/foodcourt/triangle1.png') !important;
+}
+
+.numberPage {
+  width: fit-content;
+  background-color: #200E03;
+  padding: 5px 10px;
+}
+
+.foodCourtBg::-webkit-scrollbar {
+  width: 20px;
+}
+
+.foodCourtBg::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.foodCourtBg::-webkit-scrollbar-thumb {
+  background-color: #282738;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.backBtn {
+  display: block;
+  position: absolute;
+  top: 30px;
+  left: 35px;
+  width: 160px;
+  height: 50px;
+  background-image: url('/images/professions/back-btn.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+
+@media only screen and (max-width: 675px) {
+  .foodCourtBg{
+    width: 1500px;
+    height: 1000px;
+  }
 }

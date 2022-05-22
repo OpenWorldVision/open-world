@@ -41,24 +41,8 @@ export default function ForgeHammer() {
     setIsStartQuestFail(false)
   }
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsLoading(false)
-  //   }, 10000)
-  // }, [])
-
   return (
     <>
-      {/* <div className={`${!isLoading && style.loadedForgeHammer}`}>
-        <div className={`overlay ${style.preLoaderForgeHammer}`}>
-          <div className={style.preloaderFoldingCube}>
-            <div className={`${style.preloaderCube1} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube2} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube4} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube3} ${style.preloaderCube}`}></div>
-          </div>
-        </div>
-      </div> */}
       <div className={style.forgeHammerOverlay}>
         {!isStartQuestSuccess && !isStartQuestFail && <div className={style.frameforgeHammer}>
           <div className={style.frameHead}>
