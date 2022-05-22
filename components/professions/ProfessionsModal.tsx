@@ -106,6 +106,7 @@ function ProfessionsModal(props: Props) {
   const initialize = async () => {
     await getRequireBalanceProfession()
     await checkIfCanActive()
+
     dispatch(updateIsLoading({ isLoading: false }))
   }
 

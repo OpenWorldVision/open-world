@@ -1,7 +1,7 @@
 .castleOverlay {
   background-color: #131313;
   height: 100vh;
-  z-index: 1000;
+  z-index: 2001;
 }
 
 .castleContainer {
@@ -41,11 +41,17 @@
   z-index: 99999;
 }
 
-.bankBtn {
-  top: 33%;
-  left: 204.366px;
-  width: 231.538px;
-  height: 48vh;
+.backBtn {
+  display: block !important;
+  position: absolute !important;
+  top: 30px;
+  left: 35px;
+  width: 235px !important;
+  height: 75px !important;
+  background-color: transparent !important;
+  background-image: url('/images/professions/back-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% !important;
 }
 
 .wowBtn {
@@ -75,6 +81,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media (max-width: 767px) {
+  .backBtn {
+    width: 100px !important;
+    height: 75px !important;
+    top: 15px;
+    left: 15px;
+  }
 }
 
 @media (max-width: 580px) {

@@ -11,7 +11,7 @@ const openWorldTokenContract = {
 
 const professionsContract = {
   addressHarmony: '0x87461de8692ead1de9ee628ff25d97ae393ea162',
-  addressBSC: '0x28C45C112eFb6836031b5076a312427A292d80Ec',
+  addressBSC: '0xE6046d1363F7Bebff6cB98c72094c89fF8ee500D',
   jsonInterface: require('../build/contracts/Profiles.json'),
 }
 
@@ -75,6 +75,7 @@ const getHeroCoreContract = async () => {
 export const fetchRequireBalanceProfession = async () => {
   const contract = await getProfessionsContract()
   const balance = await contract.requireBalanceProfession()
+
   return balance.toNumber()
 }
 
@@ -88,8 +89,6 @@ export const mintProfessionNFT = async (trait, balance) => {
     currentAddress
   )
 
-  console.log(allowance)
-
   if (allowance < web3.utils.toWei('1000000', 'ether')) {
     await OpenWorld.approve(
       heroCoreContract.addressBSC,
@@ -97,12 +96,7 @@ export const mintProfessionNFT = async (trait, balance) => {
     )
   }
 
-  try {
-    const data = await Herocore.mint(currentAddress, trait)
-    return data
-  } catch {
-    return null
-  }
+  await Herocore.mint(currentAddress, trait)
 }
 
 export const fetchUserProfessionNFT = async () => {
