@@ -22,6 +22,9 @@ contract Profession is AccessControlUpgradeable {
   uint256 public fishingStaminaRequire;
   uint256 public miningStaminaRequire;
 
+  uint256 public fishRequireMakeSushi;
+  uint256 public oreRequireMakeHammer;
+
   Item public item;
   Profiles public profiles;
 
@@ -73,6 +76,29 @@ contract Profession is AccessControlUpgradeable {
     item.mint(msg.sender, 2);
     openianMiningQuest[msg.sender] = Quest(0, true);
     return true;
+  }
+
+  function makeSushi() public {
+    require(
+      item.balanceOf(msg.sender) >= fishRequireMakeSushi,
+      'Not enough fish'
+    );
+    uint256[] memory okIds = new uint256[](2);
+    for (uint256 i; i < item.balanceOf(msg.sender); i++) {
+      if (okIds.length == 2) {
+        return;
+      }
+      uint256 tokenId = item.tokenOfOwnerByIndex(msg.sender, i);
+
+      if (item.get(tokenId) == 1) {
+        okIds[i] = tokenId;
+      }
+    }
+
+    if (okIds.length < 2) {
+      return;
+    }
+    
   }
 
   function getFishingQuest(address _account)

@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
+
+.shopOverlay {
+  background-image: url('/images/castle/shop/shop-bg.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #ccc;
+  z-index: 2001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.shopOverlay::-webkit-scrollbar-thumb {
+  background-color: rgb(123, 123, 123);
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+.shopOverlay::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.shopContainer {
+  max-width: 1200px;
+  height: fit-content;
+  padding: 120px 15px 0;
+}
+
+.npcCard {
+  display: block;
+  width: 100%;
+  height: 595px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+.npcCard.openianNPC {
+  background-image: url('/images/professions/npc/openianNPC.png');
+}
+
+.npcCard.supplierNPC {
+  background-image: url('/images/professions/npc/supplierNPC.png');
+}
+
+.npcCard.smithNPC {
+  background-image: url('/images/professions/npc/smithNPC.png');
+}
+
+.shopBoard {
+  width: 254px;
+  height: 71px;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url('/images/castle/shop/shop-board.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.backBtn {
+  display: block !important;
+  position: absolute !important;
+  top: 30px;
+  left: 35px;
+  width: 235px !important;
+  height: 75px !important;
+  background-color: transparent !important;
+  background-image: url('/images/professions/back-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% !important;
+}
+
+.shopSupply {
+  font-size: 28px;
+  text-align: center;
+  color: #fff;
+  width: 100%;
+  margin: 23px 0;
+  display: block;
+}
+
+.buyBtnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buyBtn {
+  width: 222px !important;
+  height: 52px !important;
+  background-color: transparent !important;
+  background-image: url('/images/castle/shop/shop-price-btn.png') !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  box-shadow: none !important;
+}
+
+.buyBtn span {
+  font-size: 22px;
+  color: #682525;
+}
+
+@media (max-width: 1535px) {
+  .shopOverlay {
+    align-items: flex-start;
+  }
+  .shopContainer {
+    padding-bottom: 120px;
+    padding-top: 150px;
+    width: 100vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .shopBoard {
+    width: 150px;
+    height: 45px;
+    top: 45px;
+  }
+  .shopContainer {
+    padding-top: 100px;
+  }
+  .shopOverlay{
+    background-size: cover;
+  }
+  .backBtn {
+    width: 100px !important;
+    height: 75px !important;
+    top: 15px;
+    left: 15px;
+  }
+}
