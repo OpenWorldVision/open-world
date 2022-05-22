@@ -1,15 +1,21 @@
 .castleOverlay {
   background-color: #131313;
   height: 100vh;
-  z-index: 1000;
+  z-index: 2001;
 }
 
 .castleContainer {
   position: relative;
-  width: 1858px;
-  height: 1706.33px;
+  width: 100vw;
+  height: 100vh;
   min-width: 1568px;
   background-color: #131313;
+}
+
+@media (max-width: 1857px) {
+  .castleContainer {
+    width: 1858px;
+  }
 }
 
 .castleBg {
@@ -18,279 +24,72 @@
   left: 0;
   background-image: url('/images/castle/castle-bg.png');
   background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  width: 1858px;
-  height: 1706.33px;
+  background-position: top center;
+  width: 100%;
+  height: 100%;
   z-index: 1000;
-  background-size: 100%;
+  background-size: 100% 100%;
   -ms-interpolation-mode: nearest-neighbor;
   image-rendering: -moz-crisp-edges;
   image-rendering: pixelated;
 }
 
-.fireWrap {
-  overflow: hidden;
-  width: 37.9184px;
-  height: 37.9184px;
-  z-index: 1383;
-  background-color: transparent;
+.castleBtn {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  z-index: 99999;
 }
 
-.fireWrap1 {
-  top: 1365.06px;
-  left: 1384.02px;
+.backBtn {
+  display: block !important;
+  position: absolute !important;
+  top: 30px;
+  left: 35px;
+  width: 235px !important;
+  height: 75px !important;
+  background-color: transparent !important;
+  background-image: url('/images/professions/back-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% !important;
 }
 
-.fireWrap2 {
-  top: 1366.25px;
-  left: 1629.3px;
-}
-
-.fireWrap3 {
-  top: 549.816px;
-  left: 1573.61px;
-}
-
-.fire {
-  background-image: url('/images/castle/fire.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  width: 303.347px;
-  height: 37.9184px;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: pixelated;
-  transform: translateX(0), scale(1, 1);
-  -webkit-animation: translateAnimation steps(8) normal 1s infinite;
-  animation: translateAnimation steps(8) normal 1s infinite;
-}
-
-.hallLightWrap {
-  overflow: hidden;
-  position: absolute;
-  width: 56.8776px;
-  height: 18.9592px;
-  z-index: 245;
-  background-color: transparent;
-  position: absolute;
-  top: 226.325px;
-}
-
-.hallLightWrap1 {
-  left: 1440.9px;
-}
-
-.hallLightWrap2 {
-  left: 1554.65px;
-}
-
-.hallLightWrap3 {
-  left: 1668.41px;
-}
-
-.hallLight {
-  background-image: url('/images/castle/halllight.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 455.02px;
-  height: 18.9592px;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: pixelated;
-  transform: scale(1, 1);
-  -webkit-animation: translateAnimation steps(8) normal 2s infinite;
-  animation: translateAnimation steps(8) normal 2s infinite;
-}
-
-.torchWrap {
-  overflow: hidden;
-  width: 37.9184px;
-  height: 37.9184px;
-  position: absolute;
-  top: 75.8367px;
-  z-index: 93;
-  background-color: transparent;
-}
-
-.torchWrap1 {
-  left: 1497.78px;
-}
-
-.torchWrap2 {
-  left: 1611.53px;
-}
-
-.torch {
-  background-image: url('/images/castle/torch.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 303.347px;
-  height: 37.9184px;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: pixelated;
-  -webkit-animation: translateAnimation steps(8) normal 1s infinite;
-  animation: translateAnimation steps(8) normal 1s infinite;
-}
-
-.beastWrap1 {
-  position: absolute;
-  width: 94.7959px;
-  height: 75.8367px;
-  top: 170.633px;
-  left: 246.469px;
-  overflow: hidden;
-  z-index: 188;
-}
-
-.beast1 {
-  background-image: url('/images/castle/beast1.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  width: 758.367px;
-  height: 75.8367px;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: pixelated;
-  transform: scale(1, 1);
-  -webkit-animation: translateAnimation steps(8) normal 2s infinite;
-  animation: translateAnimation steps(8) normal 2s infinite;
-}
-
-.beastWrap2 {
-  position: absolute;
-  width: 37.9184px;
-  height: 37.9184px;
-  top: 151.673px;
-  left: 398.143px;
-  overflow: hidden;
-  z-index: 169;
-}
-
-.beast2 {
-  background-image: url('/images/castle/beast2.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  width: 303.347px;
-  height: 37.9184px;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: pixelated;
-  transform: scale(1, 1);
-  -webkit-animation: translateAnimation steps(8) normal 3s infinite;
-  animation: translateAnimation steps(8) normal 3s infinite;
-}
-
-.throneLightWrap {
-  position: absolute;
-  width: 265.429px;
-  height: 37.9184px;
-  top: 398.143px;
-  left: 796.286px;
-  overflow: hidden;
-  z-index: 416;
-}
-
-.throneLight {
-  background-image: url('/images/castle/thronelight.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  width: 2123.43px;
-  height: 37.9184px;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: pixelated;
-  transform: scale(1, 1);
-  -webkit-animation: translateAnimation steps(8) normal 3s infinite;
-  animation: translateAnimation steps(8) normal 3s infinite;
-}
-
-.jesterWrap {
-  position: absolute;
-  width: 56.8776px;
-  height: 56.8776px;
-  top: 1315.29px;
-  left: 566.406px;
-  overflow: hidden;
-  z-index: 1345;
-}
-
-.jesterContainer {
-  position: absolute;
-  width: 56.8776px;
-  height: 56.8776px;
-  top: 1315.29px;
-  left: 566.406px;
-  overflow: hidden;
-  z-index: 1345;
-}
-
-.jester {
-  background-image: url('/images/castle/jester.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: absolute;
-  width: 3298.9px;
-  height: 56.8776px;
-  -ms-interpolation-mode: nearest-neighbor;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: pixelated;
-  transform: scale(1, 1);
-  -webkit-animation: translateAnimation steps(58) normal 2.2s infinite;
-  animation: translateAnimation steps(58) normal 2.2s infinite;
-}
-
-@-webkit-keyframes translateAnimation {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes translateAnimation {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-100%);
-  }
+.wowBtn {
+  top: 39%;
+  left: 520.366px;
+  width: 231.538px;
+  height: 35vh;
 }
 
 .landAuctionBtn {
-  position: absolute;
-  width: 272.538px;
-  height: 300.99px;
-  top: 490.378px;
-  left: 207.366px;
-  display: flex;
-  justify-content: center;
-  z-index: 99999;
+  top: 39%;
+  right: 520.366px;
+  width: 231.538px;
+  height: 35vh;
 }
 
-.jesterGrandleBtn {
-  position: absolute;
-  top: 1279.74px;
-  left: 541.844px;
-  min-width: 120px;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  z-index: 99999;
+.shopBtn {
+  top: 33%;
+  right: 204.366px;
+  width: 231.538px;
+  height: 48vh;
 }
+
 
 .castleModalBody {
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media (max-width: 767px) {
+  .backBtn {
+    width: 100px !important;
+    height: 75px !important;
+    top: 15px;
+    left: 15px;
+  }
 }
 
 @media (max-width: 580px) {

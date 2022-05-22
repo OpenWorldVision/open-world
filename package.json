@@ -39,7 +39,8 @@
     "remark": "^14.0.1",
     "remark-html": "^15.0.0",
     "web3": "^1.7.1",
-    "web3modal": "^1.9.5"
+    "web3modal": "^1.9.5",
+    "abdk-libraries-solidity": "2.4.0"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-etherscan": "^3.0.3",

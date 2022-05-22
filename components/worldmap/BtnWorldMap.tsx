@@ -38,7 +38,7 @@ const BtnWorldMapStyle = styled.div({
     padding: '1rem',
     backgroundImage:
       'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5))',
-    zIndex: '9000',
+    zIndex: '2000',
     cursor: 'url(/images/worldmap/CursorDefault.png), auto !important',
   },
   '@media(max-width: 768px)': {
