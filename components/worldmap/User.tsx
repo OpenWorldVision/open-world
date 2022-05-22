@@ -2,14 +2,16 @@ import { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
-import { getProfile } from 'utils/profileContract'
+import { isProfessionExist, getProfile } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
+import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 
 export default function User() {
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
+  const [isOpenTutorial, setIsOpenTutorial] = useState(false)
   const profile = useSelector((state: any) => { return state.ProfileStore.profile })
   const dispatch = useDispatch()
 
@@ -18,7 +20,12 @@ export default function User() {
     dispatch(setProfile({ profile: _profile }))
   }, [])
 
+  const checkProfessionExist = async () => {
+    setIsOpenTutorial(await isProfessionExist())
+  }
+
   useEffect(() => {
+    checkProfessionExist()
     getDataProfile()
   }, [])
 
@@ -124,6 +131,12 @@ export default function User() {
             getDataProfile={getDataProfile}
           />
         )}
+        {profile !== false && !isOpenCreateProfile && isOpenTutorial &&
+          <ProfessionsTutorial
+            setIsOpenTutorial={setIsOpenTutorial}
+            isOpenTutorial={isOpenTutorial}
+          />
+        }
       </div>
     </UserCSS>
   )
