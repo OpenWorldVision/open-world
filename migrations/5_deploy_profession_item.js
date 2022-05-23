@@ -18,9 +18,7 @@ module.exports = async function (deployer, network) {
     govToken = '0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B'
     profileAddress = '0xE6046d1363F7Bebff6cB98c72094c89fF8ee500D'
   }
-  const item = await deployProxy(Item, [govToken], {
-    deployer,
-  })
+  const item = await Item.at('0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492')
 
   const profession = await deployProxy(
     Profession,
