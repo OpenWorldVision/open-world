@@ -63,7 +63,7 @@ export default function ForgeHammer() {
         {!isStartQuestSuccess && !isStartQuestFail && <div className={style.frameforgeHammer}>
           <div className={style.frameHead}>
             <Link href="/professions/blacksmith">
-              <a className={style.exitBtn}></a>
+              <a className={`${style.exitBtn} click-cursor`}></a>
             </Link>
           </div>
           <div className={style.forgeHammerBody}>
@@ -106,7 +106,7 @@ export default function ForgeHammer() {
                 1 Ore makes 2 Hammers
               </div>
             </div>
-            <Button disabled={numberHammer === 0} onClick={handleStartQuest} className={style.startQuestBtn}></Button>
+            <Button sx={{cursor: 'url(/images/worldmap/SelectCursor.png), auto !important'}} disabled={numberHammer === 0} onClick={handleStartQuest} className={style.startQuestBtn}></Button>
           </div>
         </div>}
 

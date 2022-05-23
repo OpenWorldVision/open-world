@@ -36,7 +36,7 @@ export default function NotificationForge(props: Props) {
         <div className={style.content}>
           <div className={style.title}>FAILED</div>
           <div className={style.helpText}>Not enough of Ore</div>
-          <Button onClick={hiddenNotification} className={style.btnConfirm}></Button>
+          <Button sx={{cursor: 'url(/images/worldmap/SelectCursor.png), auto !important'}} onClick={hiddenNotification} className={style.btnConfirm}></Button>
         </div>
       </div>
     </>

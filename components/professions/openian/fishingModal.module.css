@@ -19,28 +19,41 @@
   transition: all 0.5s linear;
 }
 
+.fishingBg{
+  background-image: url('/images/professions/openian/game-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .modal {
   padding: 40px 50px 10px;
   position: relative;
-  width: 600px;
+  width: 500px;
+  height: 700px !important;
   height: fit-content;
-  background-image: url('/images/professions/borders/sellBorder-left.png'),
-    url('/images/professions/borders/sellBorder-right.png');
+  background-image: url('/images/professions/openian/frame-fishing.png');
+  /* background-image: url('/images/professions/borders/sellBorder-left.png'),
+    url('/images/professions/borders/sellBorder-right.png'); */
   background-position: 0, 100%;
   background-repeat: no-repeat;
-  background-size: 18px 100%;
+  background-size: 100% 100%;
   /* background-color: #3d2316; */
-  background-color: #3d2316;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
   z-index: 2;
 }
+
 .closeBtn {
   position: absolute !important;
   z-index: 1;
-  top: 15px;
+  top: 20px;
   right: 30px;
   text-align: center;
   border: none;
@@ -50,7 +63,12 @@
   font-size: 35px !important;
   box-shadow: none !important;
 }
-.modalFinish {
+
+.btnFishing{
+  top: 30px !important;
+}
+
+/* .modalFinish {
   padding: 40px 50px 10px;
   position: relative;
   height: 500px;
@@ -59,25 +77,40 @@
   background-position: center left, center right;
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  /* background-color: #3d2314; */
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
   z-index: 2;
+} */
+
+.modalFinish {
+  padding: 40px 50px 10px;
+  position: relative;
+  width: 500px;
+  height: fit-content;
+  background-image: url('/images/professions/borders/sellBorder-left.png'),
+    url('/images/professions/borders/sellBorder-right.png');
+  background-position: 0, 100%;
+  background-repeat: no-repeat;
+  background-size: 18px 100%;
+  background-color: #3d2316;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+  height: 415px;
 }
 
-.modal img {
-  width: 100%;
-}
 
-.modal::before,
-.modal::after {
+.modalFinish::before,
+.modalFinish::after {
   position: absolute;
   content: '';
 }
 
-.modal::before {
+.modalFinish::before {
   top: 0;
   left: 12px;
   right: 12px;
@@ -85,11 +118,11 @@
   background-position: center top, center bottom;
   background-repeat: no-repeat;
   background-size: calc(100% - 111px) 19px;
-  background-image: url('/images/professions/borders/SellBorder-top.png'),
-    url('/images/professions/borders/SellBorder-bottom.png');
+  background-image: url('/images/professions/borders/sellBorder-top.png'),
+    url('/images/professions/borders/sellBorder-bottom.png');
 }
 
-.modal::after {
+.modalFinish::after {
   top: 0;
   left: 0px;
   width: 100%;
@@ -97,10 +130,14 @@
   background-position: left top, right top, left bottom, right bottom;
   background-repeat: no-repeat;
   background-size: 68px;
-  background-image: url('/images/professions/borders/SellBorder-top-left.png'),
-    url('/images/professions/borders/SellBorder-top-right.png'),
-    url('/images/professions/borders/SellBorder-bottom-left.png'),
-    url('/images/professions/borders/SellBorder-bottom-right.png');
+  background-image: url('/images/professions/borders/sellBorder-top-left.png'),
+    url('/images/professions/borders/sellBorder-top-right.png'),
+    url('/images/professions/borders/sellBorder-bottom-left.png'),
+    url('/images/professions/borders/sellBorder-bottom-right.png');
+}
+
+.modal img {
+  width: 100%;
 }
 
 .boardContent {
@@ -109,7 +146,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 24px;
+  bottom: -40px;
+  /* margin-top: 24px; */
+}
+
+.imgFishing{
+  position: absolute;
+  width: 445px !important;
+  height: 200px;
+  top: -110px;
 }
 
 .sellBoard {
@@ -172,13 +217,14 @@
 .confirmBtn {
   width: 200px !important;
   height: fit-content !important;
-  margin-top: 30px;
+  margin-top: 20px;
 }
+
 .description {
-  width: 500px;
+  width: 430px;
   height: 300px;
   border-radius: 24px;
-  background-color: #30311b;
+  /* background-color: #30311b; */
   margin-top: 24px;
   display: flex;
   flex-direction: column;
@@ -199,8 +245,14 @@
   padding-right: 1rem;
   padding-top: 1rem;
 }
+
+.content{
+  margin-top: 70px;
+  width: 100%;
+}
+
 .titleText {
-  font-weight: 700;
+  font-weight: 400;
   color: '#fff';
   font-size: 20px;
   line-height: 24px;
@@ -208,18 +260,18 @@
 .valueText {
   font-weight: 400;
   color: '#fff';
-  font-size: 20px;
+  font-size: 16px;
   line-height: 24px;
 }
 
 .titleTextFinish {
-  font-weight: 500;
+  font-weight: 400;
   color: '#fff';
   font-size: 40px;
   line-height: 49px;
 }
 .valueTextFinish {
-  font-weight: 500;
+  font-weight: 400;
   color: '#fff';
   font-size: 36px;
   line-height: 44px;
@@ -235,7 +287,7 @@
   margin-left: 23px;
 }
 .noteText {
-  font-weight: 500;
+  font-weight: 400;
   color: '#fff';
   font-size: 24px;
   line-height: 29px;
@@ -243,11 +295,28 @@
   margin-top: 60px;
 }
 
+.iconStamina{
+  background-image: url('/images/professions/openian/stamina.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 14px;
+  height: 15px;
+  display: inline-block;
+  margin-top: 2px;
+}
+
+.confirmFinishBtn{
+  margin-top: 20px;
+}
+
+
 @media (max-width: 767px) {
   .modal {
-    width: 95vw;
+    /* width: 95vw; */
+    width: 350px;
     padding-left: 10px;
     padding-right: 10px;
+    height: 600px !important;
   }
   .boardContent h4,
   .setPrice {
@@ -267,4 +336,51 @@
   .sellingAmount .sellInput {
     width: 130px;
   }
+
+  .description{
+    width: 350px;
+  }
+
+  .imgFishing{
+    width: 300px !important;
+    height: 170px;
+    top: -62px;
+  }
+
+  .confirmBtn{
+    width: 150px !important;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  .content{
+    padding: 0 20px;
+  }
+
+  .modalFinish{
+    width: 100%;
+  }
+
+  .descriptionFinish{
+    width: 350px !important;
+  }
+
+  .titleTextFinish{
+    font-size: 26px;
+  }
+
+  .valueTextFinish{
+    font-size: 22px;
+  }
+  
+  .fishNFT{
+    width: 40px;
+  }
+
+  .noteText{
+    padding: 0 30px;
+    font-size: 18px;
+    width: 100%;
+  }
+
 }

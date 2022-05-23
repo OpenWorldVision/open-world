@@ -40,7 +40,7 @@ export default function NotificationSell(props: Props) {
         </h3>
         <div className={style.content}>
           <div className={style.title}>SUCCESS !!</div>
-          <Button onClick={handleConfirm} className={style.btnConfirm}></Button>
+          <Button sx={{cursor: 'url(/images/worldmap/SelectCursor.png), auto !important'}} onClick={handleConfirm} className={style.btnConfirm}></Button>
         </div>
       </div>
     </>
