@@ -117,4 +117,14 @@ contract Profession is AccessControlUpgradeable {
     startTime = openianMiningQuest[_account].startTime;
     finish = openianMiningQuest[_account].finish;
   }
+
+  function setMiningDuration(uint256 _duration) public {
+    require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
+    miningDuration = _duration;
+  }
+
+  function setFishingDuration(uint256 _duration) public {
+    require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
+    fishingDuration = _duration;
+  }
 }

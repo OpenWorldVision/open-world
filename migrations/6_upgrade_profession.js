@@ -10,7 +10,7 @@ module.exports = async function (deployer, network) {
     professionProxy = '0x707Ea5fC3Fc92c3B802Ecb9E1428E6F4FF03282f'
   }
   if (network === 'bsctestnet') {
-    professionProxy = '0x28C45C112eFb6836031b5076a312427A292d80Ec'
+    professionProxy = '0xf1FB61D2f353C8e612E201Ed8bb9Fb6FB4CC8673'
   }
 
   await upgradeProxy(professionProxy, Profession, {
