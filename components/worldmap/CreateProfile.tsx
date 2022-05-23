@@ -256,7 +256,6 @@ const CreateProfileCSS = styled.div({
           maxWidth: '495px',
           backgroundImage: 'url(./images/profile/frame.png)',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: '100% 100%',
           position: 'relative',
           display: 'flex',
           flexWrap: 'wrap',

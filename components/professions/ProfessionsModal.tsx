@@ -25,15 +25,15 @@ const npcText = [
   ],
   [
     'Supplier is a Career of OpenWorld',
-    'Supplier has skill to make Fish becomes Sushi then sell it at Food Court',
-    'Supplier run their own business at OpenWorld and make profit',
-    'Number or Supplier is limited',
+    'Supplier has the skill to make Fish becomes Sushi then sell it at Food Court',
+    'Supplier run their own business at OpenWorld and make a profit',
+    'The number of Supplier is limited',
   ],
   [
     'BlackSmith is a Career of OpenWorld',
-    'BlackSmith has skill to make Ore becomes Hammer then sell it at WorkShop',
-    'BlackSmith run their own business at OpenWorld and make profit',
-    'Number or BlackSmith is limited',
+    'BlackSmith has the skill to make Ore into Hammer and then sell it at the WorkShop',
+    'BlackSmith run their own business at OpenWorld and make a profit',
+    'Number of BlackSmith is limited',
   ],
 ]
 
@@ -162,7 +162,7 @@ function ProfessionsModal(props: Props) {
                   } click-cursor`}
                 >
                   <span>
-                    Have an {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
+                    Have a {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
                   </span>
                 </Button>
                 {npc !== 'openian' && (

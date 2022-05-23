@@ -33,6 +33,7 @@ export default function User() {
     <UserCSS>
       <div className="user-avatar">
         <button
+        className='click-cursor'
           css={isOpenAvatar && {
             margin: 'auto'
           }}
@@ -55,7 +56,7 @@ export default function User() {
                 <div style={{ width: '30px' }}>
                   <img src='./favicon.ico' alt='img' width={25} height={25} />
                 </div>
-                0.00 OPEN 
+                0.00 OPEN
               </li>
               {/* Career : Openian or Supplier or BlackSmith */}
               <li>
@@ -98,10 +99,11 @@ export default function User() {
               </li>
             </ul>
             <button
+              style={{ cursor: 'url(/images/worldmap/click-cursor.png), auto !important' }}
               onClick={() => {
                 setIsOpenUserInfo(true)
               }}
-              className='btn-profile'
+              className='btn-profile click-cursor'
             >
               Profile
             </button>

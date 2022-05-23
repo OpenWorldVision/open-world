@@ -56,7 +56,7 @@ function FishingModal(props: Props) {
       case TYPE_OF_MODAL.FINISH: {
         return (
           <div className={styles.descriptionFinish}>
-            <div className={styles.titleTextFinish}>You catch</div>
+            <div className={styles.titleTextFinish}>You Caught</div>
             <div className={styles.rowView}>
               <div className={styles.valueTextFinish}>x2</div>
               <img
@@ -66,7 +66,7 @@ function FishingModal(props: Props) {
               />
             </div>
             <div className={styles.noteText}>
-              All the Fishes you catch will be stored at your Inventory
+              All the Fish you catch will be stored in your inventory.
             </div>
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
@@ -112,7 +112,7 @@ function FishingModal(props: Props) {
             <div className={styles.description}>
               <div className={styles.titleText}>Description</div>
               <div className={styles.valueText}>
-                Fish is main material to make Sushi and Suppliers are paying
+                Fish is the main ingredient for making Sushi and Suppliers are paying
                 good money for them. Let’s go catch some !!!
               </div>
               <div className={styles.titleText}>Base Duration</div>
@@ -149,17 +149,16 @@ function FishingModal(props: Props) {
         {typeofModal !== TYPE_OF_MODAL.FINISH && (
           <h3 className={styles.sellBoard}>
             <img
-              src={`/images/professions/openian/${
-                typeofModal === TYPE_OF_MODAL.START
-                  ? `fishBoard`
-                  : `questFinish`
-              }.png`}
+              src={`/images/professions/openian/${typeofModal === TYPE_OF_MODAL.START
+                ? `fishBoard`
+                : `questFinish`
+                }.png`}
               alt="Fish board"
             />
           </h3>
         )}
 
-        <Button className={styles.closeBtn} onClick={() => toggleModal()}>
+        <Button className={`${styles.closeBtn} click-cursor`} onClick={() => toggleModal()}>
           <FontAwesomeIcon icon={faTimesCircle} />
         </Button>
 

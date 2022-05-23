@@ -395,7 +395,7 @@
   background-color: transparent !important;
   color: #f6e691;
   font-size: 35px !important;
-  cursor: pointer !important;
+  cursor: url(/images/worldmap/SelectCursor.png), auto !important;
   box-shadow: none !important;
 }
 

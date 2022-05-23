@@ -176,6 +176,7 @@ export default function Entry() {
         <Link href={'/'} passHref>
           <Button
             style={_styles.buttonStyle}
+            className='click-cursor'
           // onClick={connectWallet}
           >
             <Text style={_styles.buttonText}>PLAY</Text>
@@ -185,6 +186,7 @@ export default function Entry() {
           <div>
             <div className={styles.rowView}>
               <div
+                className='click-cursor'
                 style={{ marginRight: '1rem' }}
                 onClick={() => setPlay('music')}
               >
@@ -198,7 +200,7 @@ export default function Entry() {
                   className={styles.iconStyle}
                 />
               </div>
-              <div onClick={() => setPlay('sound')}>
+              <div className='click-cursor' onClick={() => setPlay('sound')}>
                 <img
                   src={
                     playSound

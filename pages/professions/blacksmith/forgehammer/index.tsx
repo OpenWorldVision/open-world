@@ -83,8 +83,8 @@ export default function ForgeHammer() {
               <div className={style.detail}>
                 <input value={numberHammer} className={style.input} type="text" />
                 <div className={style.BtnContainer}>
-                  <div onClick={handleNext} className={style.next}></div>
-                  <div onClick={handlePrev} className={style.prev}></div>
+                  <div onClick={handleNext} className={`${style.next} click-cursor`}></div>
+                  <div onClick={handlePrev} className={`${style.prev} click-cursor`}></div>
                 </div>
                 <div className={style.hammer}></div>
               </div>

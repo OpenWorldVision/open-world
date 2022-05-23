@@ -85,7 +85,7 @@ export default function Layout({ children, home }) {
 
   return (
     <div
-      // style={{ cursor: 'url(/images/default-cursor.png), auto' }}
+      style={{ cursor: 'url(/images/worldmap/CursorDefault.png), auto !important' }}
       className={`${styles.container} ${!isLoading && styles.loaded}`}
     >
       <Head>
