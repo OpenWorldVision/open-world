@@ -78,27 +78,26 @@ contract Profession is AccessControlUpgradeable {
     return true;
   }
 
-  function makeSushi() public {
+  function makeSushi(uint256 idUpgrade, uint256 idBurn) public {
     require(
-      item.balanceOf(msg.sender) >= fishRequireMakeSushi,
-      'Not enough fish'
+      item.ownerOf(idUpgrade) == msg.sender &&
+        item.ownerOf(idBurn) == msg.sender,
+      'Not owner of token'
     );
-    uint256[] memory okIds = new uint256[](2);
-    for (uint256 i; i < item.balanceOf(msg.sender); i++) {
-      if (okIds.length == 2) {
-        return;
-      }
-      uint256 tokenId = item.tokenOfOwnerByIndex(msg.sender, i);
+    require(item.get(idUpgrade) == 1 && item.get(idBurn) == 1, 'Not fish');
+    item.burn(idBurn);
+    item.setTrait(idUpgrade, 4);
+  }
 
-      if (item.get(tokenId) == 1) {
-        okIds[i] = tokenId;
-      }
-    }
-
-    if (okIds.length < 2) {
-      return;
-    }
-    
+  function makeHammer(uint256 idUpgrade, uint256 idBurn) public {
+    require(
+      item.ownerOf(idUpgrade) == msg.sender &&
+        item.ownerOf(idBurn) == msg.sender,
+      'Not owner of token'
+    );
+    require(item.get(idUpgrade) == 2 && item.get(idBurn) == 2, 'Not fish');
+    item.burn(idBurn);
+    item.setTrait(idUpgrade, 3);
   }
 
   function getFishingQuest(address _account)
