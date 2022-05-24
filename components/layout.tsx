@@ -124,15 +124,12 @@ export default function Layout({ children, home }) {
           <div className={`${styles.preloaderCube3} ${styles.preloaderCube}`}></div>
         </div>
       </div>
-
-      {!isConnected && (
-        <Entry />
-      )}
       {isConnected && (
         <main>
           {children}
           <Menu />
           <User />
+          <Entry />
           {checkCurrentPage()}
         </main>
       )}
