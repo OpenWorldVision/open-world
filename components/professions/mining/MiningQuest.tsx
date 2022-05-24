@@ -17,7 +17,7 @@ export default function MiningQuest(props: Props) {
           Description
         </div>
         <div className={style.detail}>
-          Ore is main material to make Hammer and BlackSmiths are paying good money for them. Let&apos;s go mine some !!!
+          Ore is the main material to make Hammers and BlackSmiths are paying good money for them. Let&apos;s go mine some !!!
         </div>
       </div>
       <div>
@@ -33,7 +33,7 @@ export default function MiningQuest(props: Props) {
           Stamina Per Attemp
         </div>
         <div className={style.detail}>
-          20 
+          20
           <div className={style.iconStamina}></div>
         </div>
       </div>
@@ -46,7 +46,7 @@ export default function MiningQuest(props: Props) {
           <div className={style.harmer}></div>
         </div>
       </div>
-      <Button disabled={harmer === 0} onClick={startQuest} className={style.startQuestBtn}></Button>
+      <Button disabled={harmer === 0} onClick={startQuest} className={`${style.startQuestBtn} click-cursor`}></Button>
     </div>
   )
 }

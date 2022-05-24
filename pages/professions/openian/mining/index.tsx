@@ -23,9 +23,9 @@ export default function Mining() {
       <div className={style.miningOverlay}>
       {!isFinished ? <div className={style.frameMining}>
         <div className={style.frameHead}>
-          <Button className={style.infoBtn}></Button>
+          <Button className={`${style.infoBtn} click-cursor`}></Button>
           <Link href="/professions/openian/main">
-            <a className={style.exitBtn}></a>
+            <a className={`${style.exitBtn} click-cursor`}></a>
           </Link>
         </div>
         <div className={style.miningBody}>

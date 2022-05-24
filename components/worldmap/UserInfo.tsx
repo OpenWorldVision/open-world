@@ -26,6 +26,7 @@ export default function Menu({
         <div className="modal-content-user-info">
           <div className="modal-content-user-info-header">
             <button
+              className='click-cursor'
               onClick={() => {
                 setIsOpenUserInfo(false)
               }}
@@ -42,6 +43,7 @@ export default function Menu({
           <div className="modal-content-user-info-body">
             <div>
               <button
+              className='click-cursor'
                 css={{
                   marginBottom: '10px',
                 }}
@@ -107,7 +109,7 @@ export default function Menu({
             </div>
             <div>
               <div>Account Details</div>
-              <button>{`${profile?._owner.slice(0, 6)} ... ${profile?._owner.slice(-4)}`}</button>
+              <button className='click-cursor'>{`${profile?._owner.slice(0, 6)} ... ${profile?._owner.slice(-4)}`}</button>
             </div>
           </div>
         </div>

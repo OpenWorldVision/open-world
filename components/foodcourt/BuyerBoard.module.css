@@ -3,7 +3,7 @@
   opacity: 0;
   visibility: hidden;
   will-change: opacity;
-  transition: all 0.5s linear;
+  /* transition: all 0.5s linear; */
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -16,7 +16,7 @@
   opacity: 1;
   visibility: visible;
   will-change: opacity;
-  transition: all 0.5s linear;
+  /* transition: all 0.5s linear; */
 }
 
 .modal {
@@ -35,7 +35,9 @@
   align-items: center;
   color: #fff;
   z-index: 2;
+  margin-top: 40px;
 }
+
 
 .modal img {
   width: 100%;
@@ -88,18 +90,17 @@
 }
 
 .closeBtn {
+  background-image: url('/images/foodcourt/exit-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 25px !important;
+  height: 25px !important;
   position: absolute !important;
   z-index: 1;
-  top: 15px;
-  right: 30px;
-  text-align: center;
-  border: none;
-  outline: none !important;
+  top: 20px;
+  right: 40px;
   background-color: transparent !important;
-  color: #f6e691;
-  font-size: 35px !important;
-  cursor: pointer !important;
-  box-shadow: none !important;
+  padding: 0 !important;
 }
 
 .boardContent h4,
@@ -121,34 +122,33 @@
 }
 
 .selectedItem img{
-  width: 70px;
+  width: 50px;
   margin: auto;
 }
 
 .BtnContainer {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 10px;
-  margin-left: 10px;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 10px;
 }
 
 .previous,
 .increase {
-  background-image: url('/images/professions/blacksmith/Triangle-1.png') !important;
-  background-repeat: no-repeat !important;
-  background-size: 100% 100% !important;
-  background-color: transparent !important;
-  height: 10px !important;
-  width: 10px !important;
-  padding: 0 !important;
-  cursor: pointer;
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px !important;
+  width: 30px !important;
+  height: 30px !important;
+  border: 2px solid #f6e691;
+  border-radius: 7px;
+  background-color: #261106 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.previous {
-  background-image: url('/images/professions/blacksmith/Triangle-2.png') !important;
-  margin-top: 4px;
+.increase{
+  margin-left: 10px;
 }
 
 .editNumberItems{
@@ -169,6 +169,8 @@
 .itemName{
   margin-left: 10px;
   text-transform: capitalize;
+  display: flex;
+  align-items: center;
 }
 
 .wantToBuy,

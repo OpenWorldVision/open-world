@@ -96,8 +96,9 @@
   .preLoaderNotification {
     background-color: #130e0c;
     z-index: 999999;
+    position: absolute;
     display: flex;
-    opacity: 1;
+    opacity: 0.5;
     visibility: visible;
   }
   
@@ -113,6 +114,17 @@
     width: 40px;
     height: 40px;
     transform: rotate(45deg);
+    position: absolute;
+    z-index: 999999;
+    top: 50%;
+    left: 45%;
+  }
+
+  .loadedNotification .preloaderFoldingCube {
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    transition: all 0.5s;
   }
   
   .preloaderFoldingCube .preloaderCube {
@@ -188,5 +200,8 @@
     .notification {
       width: 250px;
       top: -23px;
+    }
+    .preloaderFoldingCube{
+      left: unset;
     }
   }

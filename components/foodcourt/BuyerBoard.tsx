@@ -2,51 +2,52 @@ import { Button } from '@chakra-ui/react'
 import styles from './BuyerBoard.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import NotificationBuyItem from './NotificationBuyItem'
 
 type Props = {
   isOpen: boolean
-  toggleModal: () => void
+  toggleModalBuyModal: () => void
   buyDetail: object
 }
 
 export default function BuyerBoard(props: Props) {
-  const { isOpen, toggleModal, buyDetail } = props
+  const { isOpen, toggleModalBuyModal, buyDetail } = props
 
   const [numberItem, setNumberItem] = useState(0)
   const [totalOpen, setTotalOpen] = useState(0)
   const [myOpen, setMyOpen] = useState(100)
   const [notiContent, setNotiContent] = useState({})
   const [isShowNoti, setIsShowNoti] = useState(false)
-
-
-  const handlePrevious = () => {
-    setNumberItem(numberItem + 1)
-  }
-
-  const handleIncrease = () => {
+  
+  const handlePrevious = useCallback(() => {
     if (numberItem > 0) {
       setNumberItem(numberItem - 1)
     }
-  }
-
-  useEffect(() => {
-    setTotalOpen(numberItem * buyDetail['price'])
+  }, [numberItem])
+  
+  const handleIncrease = useCallback(() => {
+    setNumberItem(numberItem + 1)
   }, [numberItem])
 
-  const handleMaxItem = () => {
+  useEffect(() => {
+    if (buyDetail['price']) {
+      setTotalOpen(numberItem * buyDetail['price'])
+    }
+  }, [numberItem])
+
+  const handleMaxItem = useCallback(() => {
     setNumberItem(buyDetail['available'])
     numberItem * buyDetail['price'](numberItem * buyDetail['available'])
-  }
+  }, [numberItem])
 
-  const handleHiddenModal = () => {
-    toggleModal()
+  const handleHiddenModal = useCallback(() => {
+    toggleModalBuyModal()
     setNumberItem(0)
     setTotalOpen(0)
-  }
+  }, [])
 
-  const handleConfirmBuy = () => {
+  const handleConfirmBuy = useCallback(() => {
     if (numberItem > 0) {
       if (myOpen < totalOpen) {
         setNotiContent({
@@ -71,11 +72,12 @@ export default function BuyerBoard(props: Props) {
       setNumberItem(0)
       setTotalOpen(0)
     }
-  }
+  }, [numberItem])
 
-  const handleHiddenNoti = () => {
+  const handleShowNoti = useCallback(() => {
     setIsShowNoti(false)
-  }
+    toggleModalBuyModal()
+  }, [])
 
   return (
     <>
@@ -85,14 +87,13 @@ export default function BuyerBoard(props: Props) {
         {!isShowNoti && <div className={styles.modal}>
           <h3 className={styles.sellBoard}>
             <img
-              src="/images/foodcourt//buyer-board.png"
+              src="/images/foodcourt/buyer-board.png"
               alt="Buyer board"
             />
           </h3>
 
-          <Button sx={{cursor: 'url(/images/worldmap/SelectCursor.png), auto !important'}} className={`${styles.closeBtn} click-cursor`} onClick={handleHiddenModal}>
-            <FontAwesomeIcon icon={faTimesCircle} />
-          </Button>
+          <div className={`${styles.closeBtn} click-cursor`} onClick={handleHiddenModal}>
+          </div>
 
           <div className={styles.boardContent}>
             <h3>SELECTED ITEM:</h3>
@@ -110,12 +111,12 @@ export default function BuyerBoard(props: Props) {
                   <span>{numberItem}</span>
                   <div onClick={handleMaxItem} className='click-cursor'>Max</div>
                 </div>
-                <div className={styles.BtnContainer}>
-                  <div onClick={handlePrevious} className={`${styles.increase} click-cursor`}></div>
-                  <div onClick={handleIncrease} className={`${styles.previous} click-cursor`}></div>
-                </div>
                 <div className={styles.itemName}>{buyDetail['itemName']}</div>
               </div>
+            </div>
+            <div className={styles.BtnContainer}>
+              <div onClick={handlePrevious} className={`${styles.previous} click-cursor`}>-</div>
+              <div onClick={handleIncrease} className={`${styles.increase} click-cursor`}>+</div>
             </div>
             <div className={styles.haveToPay}>
               <div className={styles.helpText}>I Have To Pay</div>
@@ -124,13 +125,13 @@ export default function BuyerBoard(props: Props) {
                 <div>OPEN</div>
               </div>
             </div>
-            <Button sx={{cursor: 'url(/images/worldmap/SelectCursor.png), auto !important'}} disabled={numberItem === 0} onClick={handleConfirmBuy} className={styles.btnConfirm}></Button>
+            <Button sx={{ cursor: 'url(/images/worldmap/SelectCursor.png), auto !important' }} disabled={numberItem === 0} onClick={handleConfirmBuy} className={styles.btnConfirm}></Button>
           </div>
 
-          <div style={{ backgroundColor: 'transparent' }} className="overlay" onClick={() => toggleModal()}></div>
+          <div style={{ backgroundColor: 'transparent' }} className="overlay" onClick={() => toggleModalBuyModal()}></div>
         </div>
         }
-        {isShowNoti && <NotificationBuyItem notiContent={notiContent} toggleModalNoti={handleHiddenNoti} />}
+        {isShowNoti && <NotificationBuyItem notiContent={notiContent} handleHiddenNoti={handleShowNoti} />}
       </div>
     </>
   )

@@ -49,7 +49,7 @@ function Openian() {
 
     setIsFishing(!isFishing)
   }, [isFishing])
-
+  
   return (
     <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
       <TransformWrapper
@@ -70,13 +70,24 @@ function Openian() {
           <div className={`${styles.openianContainer} overlay`}>
             <div className={styles.openianBg}>
               <div
-                className={styles.openianFishBtn}
+                className={`${styles.openianFishBtn} click-cursor`}
                 onClick={() => toggleFishingModal()}
               ></div>
               <div
-                className={styles.openianSellBtn}
+                className={`${styles.openianSellBtn} click-cursor`}
                 onClick={() => toggleSellModal(true)}
-              ></div>
+              >aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              </div>
             </div>
           </div>
         </TransformComponent>

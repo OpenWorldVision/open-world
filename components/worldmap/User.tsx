@@ -2,14 +2,16 @@ import { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
-import { getProfile } from 'utils/profileContract'
+import { isProfessionExist, getProfile } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
+import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 
 export default function User() {
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
+  const [isOpenTutorial, setIsOpenTutorial] = useState(false)
   const profile = useSelector((state: any) => { return state.ProfileStore.profile })
   const dispatch = useDispatch()
 
@@ -18,7 +20,12 @@ export default function User() {
     dispatch(setProfile({ profile: _profile }))
   }, [])
 
+  const checkProfessionExist = async () => {
+    setIsOpenTutorial(await isProfessionExist())
+  }
+
   useEffect(() => {
+    checkProfessionExist()
     getDataProfile()
   }, [])
 
@@ -26,6 +33,7 @@ export default function User() {
     <UserCSS>
       <div className="user-avatar">
         <button
+        className='click-cursor'
           css={isOpenAvatar && {
             margin: 'auto'
           }}
@@ -48,7 +56,7 @@ export default function User() {
                 <div style={{ width: '30px' }}>
                   <img src='./favicon.ico' alt='img' width={25} height={25} />
                 </div>
-                0.00 OPEN 
+                0.00 OPEN
               </li>
               {/* Career : Openian or Supplier or BlackSmith */}
               <li>
@@ -91,10 +99,11 @@ export default function User() {
               </li>
             </ul>
             <button
+              style={{ cursor: 'url(/images/worldmap/click-cursor.png), auto !important' }}
               onClick={() => {
                 setIsOpenUserInfo(true)
               }}
-              className='btn-profile'
+              className='btn-profile click-cursor'
             >
               Profile
             </button>
@@ -124,6 +133,12 @@ export default function User() {
             getDataProfile={getDataProfile}
           />
         )}
+        {profile !== false && !isOpenCreateProfile && isOpenTutorial &&
+          <ProfessionsTutorial
+            setIsOpenTutorial={setIsOpenTutorial}
+            isOpenTutorial={isOpenTutorial}
+          />
+        }
       </div>
     </UserCSS>
   )
