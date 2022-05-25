@@ -3,12 +3,13 @@ import style from './professionsSelection.module.css'
 import { useCallback, useState } from 'react'
 import ProfessionsModal from './ProfessionsModal'
 import Link from 'next/link'
-import { useDispatch } from 'react-redux'
-import { updateIsLoading } from 'reduxActions/isLoadingAction'
+import ProfessionsResult from './ProfessionsResult'
+import LoadingModal from '@components/LoadingModal'
 
 function ProfessionsSelection() {
   const [selectedNPC, setSelectedNPC] = useState(null)
-  const dispatch = useDispatch()
+  const [result, setResult] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
 
   const selectNPC = useCallback((npcIndex: number) => {
     switch (npcIndex) {
@@ -25,11 +26,28 @@ function ProfessionsSelection() {
         setSelectedNPC('blacksmith')
         break
     }
-    dispatch(updateIsLoading({ isLoading: true }))
+    setIsLoading(true)
+  }, [])
+
+  const activateResult = (state) => {
+    setResult(state)
+  }
+
+  const onCloseModal = useCallback(() => {
+    selectNPC(0)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 800)
+  }, [])
+
+  const toggleLoadingModal = useCallback((state) => {
+    setIsLoading(state)
   }, [])
 
   return (
     <>
+      {isLoading && <LoadingModal />}
+
       <div
         className={`${style.professionsSelection} ${
           selectedNPC === null && style.active
@@ -92,9 +110,16 @@ function ProfessionsSelection() {
         </Link>
       </div>
 
-      {selectedNPC && (
-        <ProfessionsModal npc={selectedNPC} closeModal={() => selectNPC(0)} />
+      {selectedNPC && !result && (
+        <ProfessionsModal
+          npc={selectedNPC}
+          toggleLoadingModal={(state) => toggleLoadingModal(state)}
+          closeModal={() => onCloseModal()}
+          getResult={(result) => activateResult(result)}
+        />
       )}
+
+      {selectedNPC && result && <ProfessionsResult npc={selectedNPC} />}
     </>
   )
 }

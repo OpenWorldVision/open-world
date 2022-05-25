@@ -10,24 +10,24 @@ import BtnWorldMap from './worldmap/BtnWorldMap'
 import { getWeb3Client } from '@lib/web3'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
-import { updateIsLoading } from 'reduxActions/isLoadingAction'
+import LoadingModal from './LoadingModal'
 
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
   const router = useRouter()
   const [connected, setConnected] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const dispatch = useDispatch()
   const isConnected = useSelector((state: any) => { return state.IsConnectedStore.isConnected })
-  const isLoading = useSelector((state: any) => { return state.IsLoadingStore.isLoading })
 
   const checkIsConnected = useCallback((status) => {
     setConnected(status)
-    dispatch(updateIsLoading({ isLoading: true }))
+    setIsLoading(true)
     setTimeout(() => {
-      dispatch(updateIsLoading({ isLoading: false }))
-    }, 4000)
+      setIsLoading(false)
+    }, 2000)
   }, [])
 
   const [currentURL, setCurentURL] = useState('')
@@ -43,19 +43,19 @@ export default function Layout({ children, home }) {
     setCurentURL(window.location.href)
 
     if (!connected) {
-      dispatch(updateIsLoading({ isLoading: true }))
+      setIsLoading(true)
       setTimeout(() => {
-        dispatch(updateIsLoading({ isLoading: false }))
+        setIsLoading(false)
       }, 2000)
     }
 
     router.events.on("routeChangeStart", () => {
-      dispatch(updateIsLoading({ isLoading: true }))
+      setIsLoading(true)
     })
 
     router.events.on("routeChangeComplete", () => {
       setTimeout(() => {
-        dispatch(updateIsLoading({ isLoading: false }))
+        setIsLoading(false)
       }, 1000)
     })
   }, [])
@@ -115,15 +115,11 @@ export default function Layout({ children, home }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      {isLoading && <LoadingModal />}
 
-      <div className={`overlay ${styles.preLoader}`}>
-        <div className={styles.preloaderFoldingCube}>
-          <div className={`${styles.preloaderCube1} ${styles.preloaderCube}`}></div>
-          <div className={`${styles.preloaderCube2} ${styles.preloaderCube}`}></div>
-          <div className={`${styles.preloaderCube4} ${styles.preloaderCube}`}></div>
-          <div className={`${styles.preloaderCube3} ${styles.preloaderCube}`}></div>
-        </div>
-      </div>
+      {!isConnected && (
+        <Entry />
+      )}
       {isConnected && (
         <main>
           {children}
