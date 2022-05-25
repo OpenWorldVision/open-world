@@ -1,0 +1,65 @@
+.supplierOverlay {
+  background-image: url('/images/professions/suppliers/supplier.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #ccc;
+  z-index: 2001;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.supplierOverlay::-webkit-scrollbar-thumb {
+  background-color: rgb(123, 123, 123);
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+.supplierOverlay::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.supplierContainer {
+  max-width: 1200px;
+  height: fit-content;
+  padding: 120px 15px 0;
+}
+.containerSupplierSellBtn {
+  position: absolute;
+  top: 360px;
+  left: 300px;
+  width: 300px;
+  height: 400px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* background-color: red; */
+}
+.supplierButton {
+  background-image: url('/images/professions/suppliers/sellSushiButton.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 350px;
+  height: 80px;
+}
+
+.containerSupplierMakeBtn {
+  position: absolute;
+  top: 340px;
+  right: 700px;
+  width: 300px;
+  height: 400px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* background-color: red; */
+}
+.supplierButtonMake {
+  background-image: url('/images/professions/suppliers/makeSushiButton.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 350px;
+  height: 80px;
+}
