@@ -97,7 +97,7 @@
     background-color: #130e0c;
     z-index: 999999;
     display: flex;
-    opacity: 1;
+    opacity: 0.7;
     visibility: visible;
   }
   
@@ -113,6 +113,16 @@
     width: 40px;
     height: 40px;
     transform: rotate(45deg);
+    position: absolute;
+    z-index: 999999;
+    top: 50%;
+  }
+
+  .loadedNotification .preloaderFoldingCube {
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    transition: all 0.5s;
   }
   
   .preloaderFoldingCube .preloaderCube {

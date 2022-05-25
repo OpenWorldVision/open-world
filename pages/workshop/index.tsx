@@ -120,7 +120,7 @@ export default function WorkShop() {
       setPageWorkShop(pageWorkShop - 1)
     }
   }, [pageWorkShop])
- 
+
   const handleRefresh = useCallback(() => {
     setPageWorkShop(1)
   }, [])
@@ -211,6 +211,9 @@ export default function WorkShop() {
             toggleModalBuyModal={() => toggleBuyModal(false)}
             buyDetail={buyDetail}
           />
+          <Link href="/">
+            <a className={`${styles.backBtn} click-cursor`}></a>
+          </Link>
         </div>
         {/* <TransformWrapper
         initialPositionX={0}
@@ -278,9 +281,6 @@ export default function WorkShop() {
           </div>
         </TransformComponent>
       </TransformWrapper> */}
-        <Link href="/">
-          <a className={`${styles.backBtn} click-cursor`}></a>
-        </Link>
       </div>
     </>
   )

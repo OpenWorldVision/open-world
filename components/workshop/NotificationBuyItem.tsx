@@ -13,24 +13,25 @@ export default function NotificationBuyItem(props: Props) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 3000)
+    }, 2000)
     return () => { clearTimeout(timer) }
   }, [])
 
   const handleConfirm = useCallback(() => {
-      handleHiddenNoti()
-    }, [])
+    handleHiddenNoti()
+  }, [])
 
   return (
     <>
       <div className={`${!isLoading && style.loadedNotification}`}>
         <div className={`overlay ${style.preLoaderNotification}`}>
-          <div className={style.preloaderFoldingCube}>
-            <div className={`${style.preloaderCube1} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube2} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube4} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube3} ${style.preloaderCube}`}></div>
-          </div>
+
+        </div>
+        <div className={style.preloaderFoldingCube}>
+          <div className={`${style.preloaderCube1} ${style.preloaderCube}`}></div>
+          <div className={`${style.preloaderCube2} ${style.preloaderCube}`}></div>
+          <div className={`${style.preloaderCube4} ${style.preloaderCube}`}></div>
+          <div className={`${style.preloaderCube3} ${style.preloaderCube}`}></div>
         </div>
       </div>
       <div className={style.notificationContainer}>

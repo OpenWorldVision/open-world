@@ -48,7 +48,6 @@ export default function BuyerBoard(props: Props) {
   }, [])
 
   const handleConfirmBuy = useCallback(() => {
-    console.log(1)
     if (numberItem > 0) {
       if (myOpen < totalOpen) {
         setNotiContent({
