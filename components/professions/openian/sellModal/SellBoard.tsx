@@ -1,20 +1,29 @@
 import { Button } from '@chakra-ui/react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './sellBoard.module.css'
 import modalStyle from './sellModal.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { fetchUserInventoryItemAmount } from 'utils/Item'
 
 type Props = {
+  selectedItem: number
   toggleModal: () => void
 }
 
 function SellBoard(props: Props) {
-  const { toggleModal } = props
+  const { selectedItem, toggleModal } = props
   const priceRef = useRef<HTMLInputElement>()
   const [price, setPrice] = useState(0)
   const [sellingAmount, setSellingAmount] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
+  const [userItemAmount, setUserItemAmount] = useState([])
+  const [selectedItemAmount, setSelectedItemAmount] = useState(0)
+
+  const fetchSelectedItemAmount = async () => {
+    const itemAmount = await fetchUserInventoryItemAmount()
+    setUserItemAmount(Object.values(itemAmount))
+  }
 
   const calcTotalAmount = (_price = 1, _setTotalAmount = 1) => {
     setTotalAmount(_price * _setTotalAmount)
@@ -51,8 +60,10 @@ function SellBoard(props: Props) {
   }
 
   const increaseSellingAmount = () => {
-    setSellingAmount(sellingAmount + 1)
-    calcTotalAmount(price, sellingAmount + 1)
+    if (sellingAmount < selectedItemAmount) {
+      setSellingAmount(sellingAmount + 1)
+      calcTotalAmount(price, sellingAmount + 1)
+    }
   }
 
   const decreaseSellingAmount = () => {
@@ -61,6 +72,19 @@ function SellBoard(props: Props) {
       calcTotalAmount(price, sellingAmount - 1)
     }
   }
+
+  const sellAll = () => {
+    setSellingAmount(selectedItemAmount)
+    calcTotalAmount(price, selectedItemAmount)
+  }
+
+  useEffect(() => {
+    fetchSelectedItemAmount()
+  }, [])
+
+  useEffect(() => {
+    setSelectedItemAmount(userItemAmount[selectedItem])
+  }, [selectedItem])
 
   return (
     <div className={modalStyle.modal}>
@@ -74,11 +98,28 @@ function SellBoard(props: Props) {
 
       <div className={styles.boardContent}>
         <h4>SELECTED ITEM:</h4>
-        <a href="#inventory" className={`btn-chaka ${styles.selectedItemBtn} click-cursor`}>
-          <img
-            src="/images/professions/openian/select-item.png"
-            alt="Select Item"
-          />
+        <a
+          href="#inventory"
+          className={`btn-chaka ${styles.selectedItemBtn} click-cursor`}
+        >
+          {selectedItem === -1 && (
+            <img
+              src="/images/professions/openian/select-item.png"
+              alt="Select Item"
+            />
+          )}
+          {selectedItem === 0 && (
+            <img
+              src="/images/professions/openian/select-fish.png"
+              alt="Select Item"
+            />
+          )}
+          {selectedItem === 1 && (
+            <img
+              src="/images/professions/openian/select-ore.png"
+              alt="Select Item"
+            />
+          )}
         </a>
         <div className={styles.setPrice}>
           <span>PRICE: </span>
@@ -110,12 +151,14 @@ function SellBoard(props: Props) {
             >
               +
             </Button>
-            <Button className="btn-chaka click-cursor">All</Button>
+            <Button className="btn-chaka click-cursor" onClick={sellAll}>
+              All
+            </Button>
           </div>
         </div>
         <div className={styles.totalAmount}>
           <span>Total Amount: </span>
-          <span>{totalAmount}</span>
+          <span>{totalAmount} OPEN</span>
         </div>
 
         <Button className={`btn-chaka ${styles.confirmBtn} click-cursor`}>
