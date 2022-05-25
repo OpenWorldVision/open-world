@@ -509,6 +509,16 @@ contract NFTMarket is
     emit NewListing(msg.sender, _tokenAddress, _id, _price);
   }
 
+  function addMultiListing(
+    IERC721 _tokenAddress,
+    uint256[] calldata _ids,
+    uint256 _price
+  ) public tokenNotBanned(_tokenAddress) isValidERC721(_tokenAddress) {
+    for (uint256 i; i < _ids.length; i++) {
+      addListing(_tokenAddress, _ids[i], _price);
+    }
+  }
+
   function changeListingPrice(
     IERC721 _tokenAddress,
     uint256 _id,
