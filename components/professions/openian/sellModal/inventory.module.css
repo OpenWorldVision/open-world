@@ -21,6 +21,47 @@
   border-radius: 16px;
   width: 97px;
   height: 97px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.itemImage {
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+.itemImage.fish {
+  width: 36px;
+  height: 63px;
+  background-image: url('/images/inventory/fish.png');
+}
+
+.itemImage.ore {
+  width: 46px;
+  height: 58px;
+  background-image: url('/images/inventory/ore.png');
+}
+
+.itemImage.hammer {
+  width: 60px;
+  height: 63px;
+  background-image: url('/images/inventory/hammer.png');
+}
+
+.itemImage.sushi {
+  width: 50px;
+  height: 58px;
+  background-image: url('/images/inventory/sushi.png');
+}
+
+.itemAmount {
+  position: absolute;
+  right: 6px;
+  bottom: 3px;
 }
 
 @media (max-width: 1279px) {

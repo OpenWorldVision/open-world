@@ -2,6 +2,7 @@ import styles from './sellModal.module.css'
 import SellBoard from './SellBoard'
 import Inventory from './Inventory'
 import { Grid, GridItem } from '@chakra-ui/react'
+import { useState } from 'react'
 
 
 type Props = {
@@ -11,7 +12,11 @@ type Props = {
 
 function SellModal(props: Props) {
   const { isOpen, toggleModal } = props
+  const [selectedItem, setSelectedItem] = useState(-1)
 
+  const selectItemForSell = (item) => {
+    setSelectedItem(item)
+  }
 
   return (
     <div
@@ -31,11 +36,15 @@ function SellModal(props: Props) {
             'xl': 1,
           }}
         >
-          <Inventory />
+          <Inventory
+            isOpenianSell
+            selectOpenianSellItem={(item) => selectItemForSell(item)}
+          />
         </GridItem>
         <GridItem>
           <SellBoard
             toggleModal={() => toggleModal()}
+            selectedItem={selectedItem}
           />
         </GridItem>
       </Grid>
