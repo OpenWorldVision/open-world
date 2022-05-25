@@ -59,14 +59,18 @@ contract Item is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
   function getAmountItemByTrait(uint8 _trait, address _account)
     public
     view
-    returns (uint256[] memory _ids)
+    returns (uint256[] memory)
   {
+    uint256[] memory _ids = new uint256[](balanceOf(_account));
+    uint256 idx;
     for (uint256 i; i < balanceOf(_account); i++) {
       uint256 _id = tokenOfOwnerByIndex(_account, i);
       uint8 trait = get(_id);
       if (trait == _trait) {
-        _ids[_ids.length] = _id;
+        _ids[idx] = _id;
+        idx++;
       }
     }
+    return _ids;
   }
 }
