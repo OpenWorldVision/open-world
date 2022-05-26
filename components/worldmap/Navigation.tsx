@@ -5,7 +5,7 @@ function Navigation() {
     <>
       <NavigationItem title="castle" pageName="castle" />
       <NavigationItem title="market" pageName="market" />
-      <NavigationItem title="work shop" pageName="workShop" />
+      <NavigationItem title="work shop" pageName="workshop" />
       <NavigationItem title="food court" pageName="foodCourt" />
       <NavigationItem title="battle arena" pageName="battleArena" />
       <NavigationItem title="professions" pageName="professions" />
