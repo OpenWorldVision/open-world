@@ -8,33 +8,38 @@ const itemContract = {
 // Create contract
 const getItemContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-  const chainId = window?.ethereum?.chainId
+  // const chainId = await window?.ethereum?.chainId
 
-  if (chainId === '0x61') {
-    return new ethers.Contract(
-      itemContract.addressBSC,
-      itemContract.jsonInterface.abi,
-      provider.getSigner()
-    )
-  }
+  return new ethers.Contract(
+    itemContract.addressBSC,
+    itemContract.jsonInterface.abi,
+    provider.getSigner()
+  )
 }
 
 // Call methods
-export const fetchUserInventoryItemAmount = async () => {
+export const fetchListItemIds = async (trait) => {
   const contract = await getItemContract()
   const currentAddress = await window.ethereum.selectedAddress
-  const index = await contract.balanceOf(currentAddress)
-  const items = []
+  const itemIdList = await contract.getAmountItemByTrait(trait, currentAddress)
+  const result = itemIdList.map((id) => id.toNumber())
 
-  for (let i = 0; i < index.toNumber(); i++) {
-    const itemId = await contract.tokenOfOwnerByIndex(currentAddress, i)
-    items.push(await contract.get(itemId.toNumber()))
+  return result
+}
+
+export const fetchUserInventoryItemAmount = async () => {
+  const itemsAmount = []
+
+  for (let i = 1; i < 5; i++) {
+    const itemIdList = await fetchListItemIds(i)
+    const itemAmount = itemIdList.filter((x) => x !== 0).length
+    itemsAmount.push(itemAmount)
   }
 
-  const fishAmount = items.filter((x) => x === 1).length
-  const oreAmount = items.filter((x) => x === 2).length
-  const hammerAmount = items.filter((x) => x === 3).length
-  const sushiAmount = items.filter((x) => x === 4).length
-
-  return { fishAmount, oreAmount, hammerAmount, sushiAmount }
+  return {
+    fishAmount: itemsAmount[0],
+    oreAmount: itemsAmount[1],
+    hammerAmount: itemsAmount[2],
+    sushiAmount: itemsAmount[3],
+  }
 }

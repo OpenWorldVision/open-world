@@ -1,11 +1,12 @@
 import style from './inventory.module.css'
 import modalStyle from './sellModal.module.css'
-import { Grid, GridItem } from '@chakra-ui/react'
+import { Grid, GridItem, Spinner } from '@chakra-ui/react'
 import { fetchUserInventoryItemAmount } from 'utils/Item'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 type Props = {
   isOpenianSell?: boolean
+  isRefreshInventory?: boolean
   selectOpenianSellItem?: (number) => void
 }
 
@@ -19,17 +20,24 @@ const renderEmptyInventorySlot = (slotNumber) => {
 }
 
 function Inventory(props: Props) {
-  const { isOpenianSell, selectOpenianSellItem } = props
+  const { isOpenianSell, isRefreshInventory, selectOpenianSellItem } = props
   const [userItems, setUserItems] = useState(null)
 
-  const initialize = async () => {
+  const initialize = useCallback(async () => {
     const items = await fetchUserInventoryItemAmount()
     setUserItems(items)
-  }
+  }, [])
 
   useEffect(() => {
     initialize()
   }, [])
+
+  useEffect(() => {
+    if (isRefreshInventory) {
+      setUserItems(null)
+      initialize()
+    }
+  }, [isRefreshInventory])
 
   const onCickItemHandle = (itemTrait) => { // 0: Fish, 1: Ore, 2: Hammer, 3: Sushi
     if (userItems) {
@@ -69,7 +77,7 @@ function Inventory(props: Props) {
         >
           <div className={`${style.itemImage} ${style.fish}`}></div>
           <div className={style.itemAmount}>
-            {userItems ? `x${userItems.fishAmount}` : 'Loading'}
+            {userItems ? `x${userItems.fishAmount}` : <Spinner />}
           </div>
         </GridItem>
 
@@ -79,7 +87,7 @@ function Inventory(props: Props) {
         >
           <div className={`${style.itemImage} ${style.ore}`}></div>
           <div className={style.itemAmount}>
-            {userItems ? `x${userItems.oreAmount}` : 'Loading'}
+            {userItems ? `x${userItems.oreAmount}` :  <Spinner />}
           </div>
         </GridItem>
 
@@ -88,14 +96,14 @@ function Inventory(props: Props) {
             <GridItem className={`${style.emptySlot} click-cursor`}>
               <div className={`${style.itemImage} ${style.hammer}`}></div>
               <div className={style.itemAmount}>
-                {userItems ? `x${userItems.hammerAmount}` : 'Loading'}
+                {userItems ? `x${userItems.hammerAmount}` :  <Spinner />}
               </div>
             </GridItem>
 
             <GridItem className={`${style.emptySlot} click-cursor`}>
               <div className={`${style.itemImage} ${style.sushi}`}></div>
               <div className={style.itemAmount}>
-                {userItems ? `x${userItems.sushiAmount}` : 'Loading'}
+                {userItems ? `x${userItems.sushiAmount}` :  <Spinner />}
               </div>
             </GridItem>
           </>

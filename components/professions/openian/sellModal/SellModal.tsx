@@ -2,7 +2,7 @@ import styles from './sellModal.module.css'
 import SellBoard from './SellBoard'
 import Inventory from './Inventory'
 import { Grid, GridItem } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 
 type Props = {
@@ -13,10 +13,17 @@ type Props = {
 function SellModal(props: Props) {
   const { isOpen, toggleModal } = props
   const [selectedItem, setSelectedItem] = useState(-1)
+  const [isRefreshInventory, setIsRefreshInventory] = useState(false)
 
-  const selectItemForSell = (item) => {
+  const selectItemForSell = useCallback((item) => {
     setSelectedItem(item)
-  }
+  }, [selectedItem])
+
+  const handleFinishListing = useCallback(() => {
+    selectItemForSell(-1)
+    setIsRefreshInventory(true)
+    setTimeout(() => setIsRefreshInventory(false), 2000)
+  }, [])
 
   return (
     <div
@@ -39,12 +46,14 @@ function SellModal(props: Props) {
           <Inventory
             isOpenianSell
             selectOpenianSellItem={(item) => selectItemForSell(item)}
+            isRefreshInventory={isRefreshInventory}
           />
         </GridItem>
         <GridItem>
           <SellBoard
             toggleModal={() => toggleModal()}
             selectedItem={selectedItem}
+            handleFinishListing={() => handleFinishListing()}
           />
         </GridItem>
       </Grid>
