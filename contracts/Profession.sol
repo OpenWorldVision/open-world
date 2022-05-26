@@ -89,6 +89,13 @@ contract Profession is AccessControlUpgradeable {
     item.setTrait(idUpgrade, 4);
   }
 
+  function makeMultiSushi(uint256[] calldata _ids) public {
+    require(_ids.length > 2 && _ids.length.mod(2) == 0, 'Invalid');
+    for (uint256 index = 0; index < _ids.length; index += 2) {
+      makeSushi(_ids[index], _ids[index + 1]);
+    }
+  }
+
   function makeHammer(uint256 idUpgrade, uint256 idBurn) public {
     require(
       item.ownerOf(idUpgrade) == msg.sender &&
@@ -98,6 +105,13 @@ contract Profession is AccessControlUpgradeable {
     require(item.get(idUpgrade) == 2 && item.get(idBurn) == 2, 'Not fish');
     item.burn(idBurn);
     item.setTrait(idUpgrade, 3);
+  }
+
+  function makeMultiHammer(uint256[] calldata _ids) public {
+    require(_ids.length > 2 && _ids.length.mod(2) == 0, 'Invalid');
+    for (uint256 index = 0; index < _ids.length; index += 2) {
+      makeHammer(_ids[index], _ids[index + 1]);
+    }
   }
 
   function getFishingQuest(address _account)
