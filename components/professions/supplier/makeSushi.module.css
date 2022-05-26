@@ -20,7 +20,7 @@
 }
 
 .modal {
-  padding: 80px 50px 50px;
+  padding: 80px 50px 70px;
   position: relative;
   width: 600px;
   height: fit-content;
@@ -138,7 +138,7 @@
 .confirmBtn {
   width: 200px !important;
   height: fit-content !important;
-  margin-top: 30px;
+  margin-top: 40px;
 }
 .description {
   width: 500px;

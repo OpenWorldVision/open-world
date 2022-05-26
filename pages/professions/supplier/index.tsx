@@ -6,9 +6,10 @@ import FishingModal, {
 import { useCallback, useEffect, useState } from 'react'
 import MakeSushiModal from '@components/professions/supplier/MakeSushiModal'
 import { getNFTsByTrait } from 'utils/itemContract'
-import { dispatchMakeSushi } from 'utils/professionContract'
+import { dispatchMakeSushi } from '../../../utils/professionContract'
 import SellSushiModal from '@components/professions/supplier/SellSushiModal'
 import { sellSushi } from 'utils/NFTMarket'
+import LoadingModal from '@components/LoadingModal'
 
 function Supplier() {
   const [showMakeSushi, setShowMakeSushi] = useState(false)
@@ -16,6 +17,7 @@ function Supplier() {
   const [listFish, setListFish] = useState([])
   const [listSushi, setListSushi] = useState([])
   const [typeModal, setTypeModal] = useState(TYPE_OF_MODAL.START)
+  const [isLoading, setIsLoading] = useState(false)
   useEffect(() => {
     //get nfts by trait
     getListItemByTrait()
@@ -24,16 +26,25 @@ function Supplier() {
 
   const _onStartCook = useCallback(async () => {
     setTypeModal(TYPE_OF_MODAL.START)
+    setIsLoading(true)
     const data = await dispatchMakeSushi(listFish[0], listFish[1])
 
     if (data?.status) {
       setTypeModal(TYPE_OF_MODAL.FINISH)
+      setIsLoading(false)
     }
     getListItemByTrait()
   }, [listFish])
 
   const _onSellSushi = useCallback(async (valueSushi, quantitySushi) => {
+    setIsLoading(true)
     const data = await sellSushi(listSushi[0], valueSushi)
+    if (data) {
+      getListSushi()
+      setIsLoading(false)
+    } else {
+      setIsLoading(false)
+    }
   }, [])
 
   const getListItemByTrait = useCallback(async () => {
@@ -99,6 +110,7 @@ function Supplier() {
         </div>
       </div>
       {renderModal()}
+      {isLoading ? <LoadingModal /> : null}
     </div>
   )
 }

@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { Button, Input } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCallback, useEffect, useState } from 'react'
-import { finishFishing, startFishing } from 'utils/professionContract'
+import { useCallback, useState } from 'react'
 import styles from './makeSushi.module.css'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
@@ -21,15 +21,12 @@ const TYPE_OF_MODAL = {
 
 function MakeSushiModal(props: Props) {
   const { isOpen, toggleModal, listFishArray, onStartCook, typeModal } = props
-  const [isLoading, setIsLoading] = useState(false)
 
   const [valueFish, setValueFish] = useState(2)
 
   const startCook = useCallback(async () => {
     //
-    setIsLoading(true)
     onStartCook(valueFish, listFishArray[0], listFishArray[1])
-    setIsLoading(false)
 
     // set
   }, [listFishArray, onStartCook, valueFish])
@@ -45,8 +42,11 @@ function MakeSushiModal(props: Props) {
 
   const onPressUp = useCallback(() => {
     const newValue = valueFish + 2
+    if (newValue > listFishArray?.length) {
+      return
+    }
     setValueFish(newValue)
-  }, [valueFish])
+  }, [valueFish, listFishArray])
   const onPressDown = useCallback(() => {
     if (valueFish / 2 === 0) {
       return
@@ -142,6 +142,7 @@ function MakeSushiModal(props: Props) {
                         <img
                           className={styles.quantityIcon}
                           src={'/images/professions/suppliers/icon_up.png'}
+                          alt={'up'}
                         />
                       </div>
                       <div
@@ -151,6 +152,7 @@ function MakeSushiModal(props: Props) {
                         <img
                           className={styles.quantityIcon}
                           src={'/images/professions/suppliers/icon_down.png'}
+                          alt={'down'}
                         />
                       </div>
                     </div>
@@ -158,6 +160,7 @@ function MakeSushiModal(props: Props) {
                       <img
                         className={styles.iconNFTs}
                         src={'/images/professions/openian/sushiNFT.png'}
+                        alt={'sushiNFTs'}
                       />
                     </div>
                   </div>
@@ -181,12 +184,14 @@ function MakeSushiModal(props: Props) {
                         <img
                           className={styles.quantityIcon}
                           src={'/images/professions/suppliers/icon_up.png'}
+                          alt={'up'}
                         />
                       </div>
                       <div className={styles.buttonQuantity}>
                         <img
                           className={styles.quantityIcon}
                           src={'/images/professions/suppliers/icon_down.png'}
+                          alt={'down'}
                         />
                       </div>
                     </div>
@@ -195,15 +200,20 @@ function MakeSushiModal(props: Props) {
                       <img
                         className={styles.iconNFTs}
                         src={'/images/professions/openian/fishNFT.png'}
+                        alt={'sushi'}
                       />
                     </div>
                   </div>
                 </div>
+                <div className={styles.titleText}>Note</div>
+                <div className={styles.valueText}>1 Fish Makes 2 sushi</div>
               </div>
             </div>
+
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
               onClick={startCook}
+              disabled={valueFish === 0}
             >
               <img
                 src={`/images/professions/suppliers/buttonCook.png`}
@@ -214,7 +224,15 @@ function MakeSushiModal(props: Props) {
         )
       }
     }
-  }, [typeModal, valueFish, listFishArray])
+  }, [
+    typeModal,
+    toggleModal,
+    valueFish,
+    onPressUp,
+    onPressDown,
+    onChangeValue,
+    startCook,
+  ])
 
   return (
     <div

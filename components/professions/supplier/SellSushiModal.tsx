@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { Button, Input } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useState } from 'react'
-import { finishFishing, startFishing } from '../../../utils/professionContract'
 import styles from './sellSushi.module.css'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
@@ -21,7 +21,6 @@ const TYPE_OF_MODAL = {
 
 function SellSushiModal(props: Props) {
   const { isOpen, toggleModal, listSushi, onSellSushi, typeModal } = props
-  const [isLoading, setIsLoading] = useState(false)
 
   const [valueSushi, setValueSushi] = useState(1)
   const [quantitySushi, setQuantitySushi] = useState(1)
@@ -32,29 +31,19 @@ function SellSushiModal(props: Props) {
 
   const startCook = useCallback(async () => {
     //
-    setIsLoading(true)
     onSellSushi(valueSushi, quantitySushi)
-    setIsLoading(false)
-
     // set
   }, [onSellSushi, valueSushi, quantitySushi])
-
-  const _finishFishing = async () => {
-    //
-  }
 
   const onChangeValue = useCallback((event) => {
     const valueSushi = parseInt(event?.target?.value)
     setValueSushi(valueSushi)
   }, [])
 
-  const onChangeQuantity = useCallback(
-    (event) => {
-      const quantitySushi = parseInt(event?.target?.value)
-      setQuantitySushi(quantitySushi)
-    },
-    [quantitySushi]
-  )
+  const onChangeQuantity = useCallback((event) => {
+    const quantitySushi = parseInt(event?.target?.value)
+    setQuantitySushi(quantitySushi)
+  }, [])
 
   const renderText = useCallback(() => {
     switch (typeModal) {
@@ -85,36 +74,15 @@ function SellSushiModal(props: Props) {
           </div>
         )
       }
-      case TYPE_OF_MODAL.WAITING: {
-        return (
-          <div className={styles.boardContent}>
-            <div className={styles.description}>
-              <div className={styles.titleText}>Active Quest</div>
-              <div className={styles.valueText}>
-                Openian is on Fishing Quest. Be patient!
-              </div>
-              <div className={styles.titleText}>Duration</div>
-              <div className={styles.valueText}>20 second</div>
-            </div>
-            <Button
-              className={`btn-chaka ${styles.confirmBtn} click-cursor`}
-              onClick={_finishFishing}
-            >
-              <img
-                src={`/images/professions/openian/finishFishing.png`}
-                alt="Confirm"
-              />
-            </Button>
-          </div>
-        )
-      }
       default: {
         return (
           <div className={styles.boardContent}>
             <div className={styles.description}>
-              <div className={styles.titleText}>Selected Item:</div>
-              <div className={styles.valueText}>
-                Sushi is only item that help increase Stamina Point.
+              <div className={styles.columnView}>
+                <div className={styles.titleText}>Selected Item:</div>
+                <div className={styles.containerSushiNFTs}>
+                  <img src={`/images/professions/openian/sushiNFT.png`} />
+                </div>
               </div>
               <div
                 style={{
@@ -133,8 +101,8 @@ function SellSushiModal(props: Props) {
                       height={50}
                       backgroundColor={'#3d2316'}
                       onChange={onChangeValue}
+                      defaultValue={valueSushi}
                     />
-
                     <div>OPEN</div>
                   </div>
                 </div>
@@ -148,7 +116,7 @@ function SellSushiModal(props: Props) {
                       width={150}
                       height={50}
                       onChange={onChangeQuantity}
-                      defaultValue={valueSushi}
+                      defaultValue={quantitySushi}
                       backgroundColor={'#3d2316'}
                     />
                   </div>

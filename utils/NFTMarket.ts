@@ -34,5 +34,7 @@ export const sellSushi = async (id: number, price: number) => {
       .addListing(nftAddress, id, price)
       .send({ from: accounts[0] })
     return data
-  } catch (error) {}
+  } catch (error) {
+    return null
+  }
 }
