@@ -17,9 +17,10 @@ import Link from 'next/link'
 import { chainName } from 'utils/chainName'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 import { getWeb3Client } from '@lib/web3'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import Head from 'next/head'
+import { updateIsOpenEntry } from 'reduxActions/isOpenEntryAction'
 // import ModalAddWallet from './components/ModalAddWallet'
 
 
@@ -31,7 +32,8 @@ export default function Entry() {
   const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
 
   const dispatch = useDispatch()
-
+  const isOpen = useSelector((state: any) => { return state.isOpenEntryPage.isOpen })
+  
   //deploy cloudfare 2
   useEffect(() => {
     try {
@@ -165,77 +167,79 @@ export default function Entry() {
     }
   }
 
+  
 
   return (
     <>
       <Head>
         <title>Open World</title>
       </Head>
-      <div className={styles.main}>
-        <img src={'/images/common/gameLogo.png'} alt={'logo'} />
-        <Link href={'/'} passHref>
+      {isOpen && (
+        <div className={styles.main}>
+          <img src={'/images/common/gameLogo.png'} alt={'logo'} />
           <Button
             style={_styles.buttonStyle}
             className='click-cursor'
-          // onClick={connectWallet}
+            // onClick={connectWallet}
+            onClick={() => {dispatch(updateIsOpenEntry({ isOpen: false }))}}
           >
             <Text style={_styles.buttonText}>PLAY</Text>
           </Button>
-        </Link>
-        <div className={styles.bottomContainer}>
-          <div>
-            <div className={styles.rowView}>
-              <div
-                className='click-cursor'
-                style={{ marginRight: '1rem' }}
-                onClick={() => setPlay('music')}
-              >
-                <img
-                  src={
-                    playMusic
-                      ? '/images/common/play.svg'
-                      : '/images/common/notplay.svg'
-                  }
-                  alt={'musicPlay'}
-                  className={styles.iconStyle}
-                />
-              </div>
-              <div className='click-cursor' onClick={() => setPlay('sound')}>
-                <img
-                  src={
-                    playSound
-                      ? '/images/common/sound.png'
-                      : '/images/common/mute.png'
-                  }
-                  alt={'soundPlay'}
-                  className={styles.iconStyle}
-                />
-              </div>
-            </div>
-            <Text color={'#019C44'} fontSize={12}>
-              {nameOfChain}
-            </Text>
-          </div>
-        </div>
-        <Modal isOpen={openModalAddWallet} onClose={onCloseModal} isCentered>
-          <ModalOverlay>
-            <ModalContent>
-              <ModalHeader>Please add your wallet</ModalHeader>
-              <ModalCloseButton />
-              <ModalFooter>
-                <Button
-                  backgroundColor={'#019C44'}
-                  variant="ghost"
-                  onClick={onAddMetamask}
-                  textColor={'#fff'}
+          <div className={styles.bottomContainer}>
+            <div>
+              <div className={styles.rowView}>
+                <div
+                  className='click-cursor'
+                  style={{ marginRight: '1rem' }}
+                  onClick={() => setPlay('music')}
                 >
-                  Add Metamask
-                </Button>
-              </ModalFooter>
-            </ModalContent>
-          </ModalOverlay>
-        </Modal>
-      </div>
+                  <img
+                    src={
+                      playMusic
+                        ? '/images/common/play.svg'
+                        : '/images/common/notplay.svg'
+                    }
+                    alt={'musicPlay'}
+                    className={styles.iconStyle}
+                  />
+                </div>
+                <div className='click-cursor' onClick={() => setPlay('sound')}>
+                  <img
+                    src={
+                      playSound
+                        ? '/images/common/sound.png'
+                        : '/images/common/mute.png'
+                    }
+                    alt={'soundPlay'}
+                    className={styles.iconStyle}
+                  />
+                </div>
+              </div>
+              <Text color={'#019C44'} fontSize={12}>
+                {nameOfChain}
+              </Text>
+            </div>
+          </div>
+          <Modal isOpen={openModalAddWallet} onClose={onCloseModal} isCentered>
+            <ModalOverlay>
+              <ModalContent>
+                <ModalHeader>Please add your wallet</ModalHeader>
+                <ModalCloseButton />
+                <ModalFooter>
+                  <Button
+                    backgroundColor={'#019C44'}
+                    variant="ghost"
+                    onClick={onAddMetamask}
+                    textColor={'#fff'}
+                  >
+                    Add Metamask
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </ModalOverlay>
+          </Modal>
+        </div>
+      )}
     </>
   )
 }
