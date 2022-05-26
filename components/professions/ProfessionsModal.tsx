@@ -161,6 +161,8 @@ function ProfessionsModal(props: Props) {
                 ))}
               </span>
 
+              <span>You can buy NFT {npc.charAt(0).toUpperCase() + npc.slice(1)} at Castle / Shop</span>
+
               <div className={style.btnGroup}>
                 <Button
                   className={`${style.btn} ${style.acceptBtn} ${
@@ -168,7 +170,7 @@ function ProfessionsModal(props: Props) {
                   } click-cursor`}
                 >
                   <span>
-                    Have a {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
+                    Have {npc !== 'openian' ? 'a' : 'an'} {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
                   </span>
                 </Button>
                 {npc !== 'openian' && (
