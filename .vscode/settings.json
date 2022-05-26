@@ -2,7 +2,7 @@
   "cSpell.words": ["Chakra"],
   "[typescript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "solidity.compileUsingLocalVersion": "0.7.5",
   "solidity.compileUsingRemoteVersion": "0.7.5"
