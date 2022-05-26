@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage'
 
 import IsConnectedStore from './IsConnectedStore'
 import IsLoadingStore from './IsLoadingStore'
+import isOpenEntryPage from './isOpenEntryPage'
 import ProfileStore from './ProfileStore'
 
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   IsConnectedStore,
   IsLoadingStore,
   ProfileStore,
+  isOpenEntryPage,
 })
 
 

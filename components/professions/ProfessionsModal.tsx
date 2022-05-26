@@ -1,6 +1,5 @@
 import { Button, Grid, GridItem } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
-import { updateIsLoading } from 'reduxActions/isLoadingAction'
 import mainStyle from './professions.module.css'
 import inheritStyle from './professionsSelection.module.css'
 import style from './professionsModal.module.css'
@@ -39,18 +38,19 @@ const npcText = [
 
 type Props = {
   npc: string
+  getResult: (boolean) => void
+  toggleLoadingModal: (boolean) => void
   closeModal: () => void
 }
 
 function ProfessionsModal(props: Props) {
-  const { npc, closeModal } = props
+  const { npc, getResult, toggleLoadingModal, closeModal } = props
   const [currentNpcText, setCurrentNpcText] = useState([])
   const [haveNFT, setHaveNFT] = useState(false)
   const [canActivate, setCanActivate] = useState(false)
   const [currentOPEN, setCurrentOPEN] = useState(0)
   const [requireBalance, setRequireBalance] = useState(0)
   const dispatch = useDispatch()
-
 
   const getContractProfile = async () => {
     const _profile = await getProfile()
@@ -72,14 +72,21 @@ function ProfessionsModal(props: Props) {
 
   const onActivateProfession = async () => {
     if (canActivate) {
-      dispatch(updateIsLoading({ isLoading: true }))
+      toggleLoadingModal(true)
       const professionNft = npcs.indexOf(npc) + 1
       const check = await activateProfession(professionNft)
-      await getContractProfile();
-      dispatch(updateIsLoading({ isLoading: false }))
-      return check
+      if (check) {
+        await getContractProfile()
+        getResult(check)
+        toggleLoadingModal(false)
+      } else {
+        setTimeout(() => {
+          toggleLoadingModal(false)
+        }, 5000)
+      }
+    } else {
+      getResult(false)
     }
-    return null
   }
 
   const checkIfHasNTF = async () => {
@@ -106,8 +113,7 @@ function ProfessionsModal(props: Props) {
   const initialize = async () => {
     await getRequireBalanceProfession()
     await checkIfCanActive()
-
-    dispatch(updateIsLoading({ isLoading: false }))
+    toggleLoadingModal(false)
   }
 
   useEffect(() => {
@@ -155,6 +161,8 @@ function ProfessionsModal(props: Props) {
                 ))}
               </span>
 
+              <span>You can buy NFT {npc.charAt(0).toUpperCase() + npc.slice(1)} at Castle / Shop</span>
+
               <div className={style.btnGroup}>
                 <Button
                   className={`${style.btn} ${style.acceptBtn} ${
@@ -162,7 +170,7 @@ function ProfessionsModal(props: Props) {
                   } click-cursor`}
                 >
                   <span>
-                    Have a {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
+                    Have {npc !== 'openian' ? 'a' : 'an'} {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
                   </span>
                 </Button>
                 {npc !== 'openian' && (

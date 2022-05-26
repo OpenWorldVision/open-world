@@ -76,17 +76,7 @@ function Openian() {
               <div
                 className={`${styles.openianSellBtn} click-cursor`}
                 onClick={() => toggleSellModal(true)}
-              >aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              >
               </div>
             </div>
           </div>
