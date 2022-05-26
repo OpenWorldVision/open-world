@@ -22,6 +22,11 @@ function FishingModal(props: Props) {
   const [typeofModal, setTypeOfModal] = useState(TYPE_OF_MODAL.START)
   const [isLoading, setIsLoading] = useState(false)
 
+  const handleExitBtn = () => {
+    toggleModal()
+    setTypeOfModal(TYPE_OF_MODAL.START)
+  }
+
   useEffect(() => {
     if (haveQuestUnfinish) {
       setTypeOfModal(TYPE_OF_MODAL.WAITING)
@@ -42,7 +47,6 @@ function FishingModal(props: Props) {
   }
 
   const _finishFishing = async () => {
-    //
     setIsLoading(true)
     const dataFinish = await finishFishing()
     setIsLoading(false)
@@ -56,6 +60,12 @@ function FishingModal(props: Props) {
       case TYPE_OF_MODAL.FINISH: {
         return (
           <div className={styles.descriptionFinish}>
+            <h3 className={styles.sellBoard}>
+              {typeofModal === TYPE_OF_MODAL.FINISH && <img
+                src='/images/professions/openian/questFinish.png'
+                alt="Fish board"
+              />}
+            </h3>
             <div className={styles.titleTextFinish}>You Caught</div>
             <div className={styles.rowView}>
               <div className={styles.valueTextFinish}>x2</div>
@@ -69,7 +79,7 @@ function FishingModal(props: Props) {
               All the Fish you catch will be stored in your inventory.
             </div>
             <Button
-              className={`btn-chaka ${styles.confirmBtn} click-cursor`}
+              className={`btn-chaka ${styles.confirmBtn} ${styles.confirmFinishBtn} click-cursor`}
               onClick={() => {
                 toggleModal()
                 setTypeOfModal(TYPE_OF_MODAL.START)
@@ -87,12 +97,15 @@ function FishingModal(props: Props) {
         return (
           <div className={styles.boardContent}>
             <div className={styles.description}>
-              <div className={styles.titleText}>Active Quest</div>
-              <div className={styles.valueText}>
-                Openian is on Fishing Quest. Be patient!
+              <div className={styles.content}>
+                <div className={styles.titleText}>Active Quest</div>
+                <div className={styles.valueText}>
+                  Openian is on Fishing Quest. Be patient!
+                </div>
+                <div className={styles.titleText}>Duration</div>
+                <div className={styles.valueText}>20 second</div>
               </div>
-              <div className={styles.titleText}>Duration</div>
-              <div className={styles.valueText}>20 second</div>
+
             </div>
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
@@ -109,16 +122,18 @@ function FishingModal(props: Props) {
       default: {
         return (
           <div className={styles.boardContent}>
-            <div className={styles.description}>
-              <div className={styles.titleText}>Description</div>
-              <div className={styles.valueText}>
-                Fish is the main ingredient for making Sushi and Suppliers are paying
-                good money for them. Let’s go catch some !!!
+            <div className={`${styles.description}`}>
+              <div className={styles.content}>
+                <div className={styles.titleText}>Description</div>
+                <div className={styles.valueText}>
+                  Fish is the main ingredient for making Sushi and Suppliers are paying
+                  good money for them. Let’s go catch some !!!
+                </div>
+                <div className={styles.titleText}>Base Duration</div>
+                <div className={styles.valueText}>20 second</div>
+                <div className={styles.titleText}>Stamina Per Attemp</div>
+                <div className={styles.valueText}>7 Stamina <div className={styles.iconStamina}></div></div>
               </div>
-              <div className={styles.titleText}>Base Duration</div>
-              <div className={styles.valueText}>20 second</div>
-              <div className={styles.titleText}>Stamina Per Attemp</div>
-              <div className={styles.valueText}>7 Stamina</div>
             </div>
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
@@ -139,48 +154,57 @@ function FishingModal(props: Props) {
     <div
       className={`overlay ${styles.modalOverlay} ${isOpen && styles.active}`}
     >
-      <div
-        className={
-          typeofModal !== TYPE_OF_MODAL.FINISH
-            ? styles.modal
-            : styles.modalFinish
-        }
-      >
-        {typeofModal !== TYPE_OF_MODAL.FINISH && (
-          <h3 className={styles.sellBoard}>
-            <img
-              src={`/images/professions/openian/${typeofModal === TYPE_OF_MODAL.START
-                ? `fishBoard`
-                : `questFinish`
-                }.png`}
-              alt="Fish board"
-            />
-          </h3>
-        )}
-
-        <Button className={`${styles.closeBtn} click-cursor`} onClick={() => toggleModal()}>
-          <FontAwesomeIcon icon={faTimesCircle} />
-        </Button>
-
+      <div className={styles.fishingBg}>
         <div
           className={
             typeofModal !== TYPE_OF_MODAL.FINISH
-              ? styles.boardContent
-              : styles.boardContentFinish
+              ? styles.modal
+              : styles.modalFinish
           }
         >
-          {typeofModal !== TYPE_OF_MODAL.FINISH && (
-            <img
-              src="/images/professions/openian/fishBoardTemplate.png"
-              alt="Fish board"
-            />
-          )}
+          {/* {typeofModal !== TYPE_OF_MODAL.FINISH && (
+            <h3 className={styles.sellBoard}>
+              {typeofModal === TYPE_OF_MODAL.FINISH && <img
+                src='/images/professions/openian/questFinish.png'
+                alt="Fish board"
+              />}
+            </h3>
+          )} */}
 
-          {renderText()}
+          {/* {typeofModal === TYPE_OF_MODAL.FINISH && (
+            <h3 className={styles.sellBoard}>
+              {typeofModal === TYPE_OF_MODAL.FINISH && <img
+                src='/images/professions/openian/questFinish.png'
+                alt="Fish board"
+              />}
+            </h3>
+          )} */}
+
+          <Button className={`${styles.closeBtn} click-cursor ${typeofModal !== TYPE_OF_MODAL.FINISH && styles.btnFishing}`} onClick={handleExitBtn}>
+            <FontAwesomeIcon icon={faTimesCircle} />
+          </Button>
+
+          <div
+            className={
+              typeofModal !== TYPE_OF_MODAL.FINISH
+                ? styles.boardContent
+                : styles.boardContentFinish
+            }
+          >
+            {typeofModal !== TYPE_OF_MODAL.FINISH && (
+              <img
+                className={styles.imgFishing}
+                src="/images/professions/openian/fishBoardTemplate.png"
+                alt="Fish board"
+              />
+            )}
+
+            {renderText()}
+          </div>
         </div>
-      </div>
 
-      <div className="overlay" onClick={() => toggleModal()}></div>
+        <div className="overlay" onClick={toggleModal}></div>
+      </div>
     </div>
   )
 }
