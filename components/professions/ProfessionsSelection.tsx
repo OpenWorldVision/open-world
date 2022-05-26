@@ -8,7 +8,7 @@ import LoadingModal from '@components/LoadingModal'
 
 function ProfessionsSelection() {
   const [selectedNPC, setSelectedNPC] = useState(null)
-  const [result, setResult] = useState(null)
+  const [result, setResult] = useState(undefined)
   const [isLoading, setIsLoading] = useState(false)
 
   const selectNPC = useCallback((npcIndex: number) => {
@@ -46,7 +46,7 @@ function ProfessionsSelection() {
 
   return (
     <>
-      {isLoading && <LoadingModal />}
+      {isLoading && <LoadingModal fullBlack/>}
 
       <div
         className={`${style.professionsSelection} ${
@@ -110,16 +110,22 @@ function ProfessionsSelection() {
         </Link>
       </div>
 
-      {selectedNPC && !result && (
+      {selectedNPC && result === undefined && (
         <ProfessionsModal
           npc={selectedNPC}
-          toggleLoadingModal={(state) => toggleLoadingModal(state)}
-          closeModal={() => onCloseModal()}
-          getResult={(result) => activateResult(result)}
+          toggleLoadingModal={toggleLoadingModal}
+          closeModal={onCloseModal}
+          getResult={activateResult}
         />
       )}
 
-      {selectedNPC && result && <ProfessionsResult npc={selectedNPC} />}
+      {selectedNPC && result !== undefined &&
+        <ProfessionsResult
+          activateResult={result}
+          npc={selectedNPC}
+          closeModal={activateResult}
+        />
+      }
     </>
   )
 }

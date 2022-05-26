@@ -13,7 +13,9 @@ export default function NotificationSell(props: Props) {
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 1000)
-    return () => { clearTimeout(timer) }
+    return () => {
+      clearTimeout(timer)
+    }
   }, [])
 
   const handleConfirm = () => {
@@ -24,10 +26,18 @@ export default function NotificationSell(props: Props) {
       <div className={`${!isLoading && style.loadedNotification}`}>
         <div className={`overlay ${style.preLoaderNotification}`}>
           <div className={style.preloaderFoldingCube}>
-            <div className={`${style.preloaderCube1} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube2} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube4} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube3} ${style.preloaderCube}`}></div>
+            <div
+              className={`${style.preloaderCube1} ${style.preloaderCube}`}
+            ></div>
+            <div
+              className={`${style.preloaderCube2} ${style.preloaderCube}`}
+            ></div>
+            <div
+              className={`${style.preloaderCube4} ${style.preloaderCube}`}
+            ></div>
+            <div
+              className={`${style.preloaderCube3} ${style.preloaderCube}`}
+            ></div>
           </div>
         </div>
       </div>

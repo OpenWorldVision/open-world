@@ -6,6 +6,10 @@
   visibility: visible;
 }
 
+.preLoader.fullBlack {
+  background-color: rgba(19, 14, 12);
+}
+
 .loaded .preLoader {
   opacity: 0;
   visibility: hidden;
