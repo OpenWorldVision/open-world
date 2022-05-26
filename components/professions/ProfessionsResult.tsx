@@ -1,11 +1,14 @@
 import style from './professionsResult.module.css'
 import professionsStyle from './professions.module.css'
+import { Button } from '@chakra-ui/button';
 type Props = {
+  activateResult: boolean
   npc: string
+  closeModal: (any) => void
 }
 
 function ProfessionsResult(props: Props) {
-  const { npc } = props
+  const { npc, activateResult, closeModal } = props
   return (
     <div
       className={`overlay ${professionsStyle.professionsOverlay} ${style.modalOverlay}`}
@@ -17,14 +20,24 @@ function ProfessionsResult(props: Props) {
         </h3>
 
         <div className={style.modalCotent}>
-          <h4>CONGRATULATION !</h4>
-          <p>
-            YOUR AVATAR IS AN {npc} LET&apos;S GO CHECK OUT AMAZING THINGS YOU CAN DO
-            IN OPENWORLD !
-          </p>
+          {activateResult ?
+            <>
+              <h4>CONGRATULATIONS !!</h4>
+              <p>
+                YOUR AVATAR IS {npc !== 'openian' ? 'A' : 'AN'} {npc} LET&apos;S GO CHECK OUT THE AMAZING THINGS YOU CAN DO
+                IN OPENWORLD !
+              </p>
+            </>
+            :
+            <h4>FAILED!</h4>
+          }
         </div>
 
-        <a href="./professions" className={style.fisnishBtn}></a>
+        {activateResult ?
+          <a href="./professions" className={`${style.fisnishBtn} click-cursor`}></a>
+          :
+          <Button className={`${style.confirmBtn} click-cursor`} onClick={() => closeModal(undefined)}></Button>
+        }
       </div>
     </div>
   )

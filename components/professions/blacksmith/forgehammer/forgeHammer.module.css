@@ -5,7 +5,6 @@
   background-position: center center;
   height: 100vh;
   z-index: 999999;
-  position: relative;
   display: flex;
   justify-content: center;
 }

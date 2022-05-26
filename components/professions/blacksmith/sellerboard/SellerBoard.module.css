@@ -5,7 +5,6 @@
   background-position: center center;
   height: 100vh;
   z-index: 999999;
-  position: relative;
   display: flex;
   justify-content: center;
 }
@@ -386,11 +385,11 @@
 
 .closeBtn {
   position: absolute !important;
-  z-index: 1;
-  top: 15px;
-  right: 30px;
-  text-align: center;
-  border: none;
+  z-index: 1!important;
+  top: 15px!important;
+  right: 30px!important;
+  text-align: center!important;
+  border: none !important;
   outline: none !important;
   background-color: transparent !important;
   color: #f6e691;

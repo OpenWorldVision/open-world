@@ -27,6 +27,12 @@ export default function NotificationSell(props: Props) {
 
   useEffect(() => {
     handleSellHammer()
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
+    return () => {
+      clearTimeout(timer)
+    }
   }, [])
 
   const handleConfirm = useCallback(() => {
@@ -37,10 +43,18 @@ export default function NotificationSell(props: Props) {
       <div className={`${!isLoading && style.loadedNotification}`}>
         <div className={`overlay ${style.preLoaderNotification}`}>
           <div className={style.preloaderFoldingCube}>
-            <div className={`${style.preloaderCube1} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube2} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube4} ${style.preloaderCube}`}></div>
-            <div className={`${style.preloaderCube3} ${style.preloaderCube}`}></div>
+            <div
+              className={`${style.preloaderCube1} ${style.preloaderCube}`}
+            ></div>
+            <div
+              className={`${style.preloaderCube2} ${style.preloaderCube}`}
+            ></div>
+            <div
+              className={`${style.preloaderCube4} ${style.preloaderCube}`}
+            ></div>
+            <div
+              className={`${style.preloaderCube3} ${style.preloaderCube}`}
+            ></div>
           </div>
         </div>
       </div>
@@ -52,8 +66,13 @@ export default function NotificationSell(props: Props) {
           />
         </h3>
         <div className={style.content}>
-          <div className={style.title}>{checkSellHammer ? 'SUCCESS !!' : 'FAILED !!'}</div>
-          <Button onClick={handleConfirm} className={`${style.btnConfirm} click-cursor`}></Button>
+          <div className={style.title}>
+            {checkSellHammer ? 'SUCCESS !!' : 'FAILED !!'}
+          </div>
+          <Button
+            onClick={handleConfirm}
+            className={`${style.btnConfirm} click-cursor`}
+          ></Button>
         </div>
       </div>
     </>
