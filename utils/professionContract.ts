@@ -46,11 +46,9 @@ export const getFinishFishingQuest = async () => {
     const duration = await contract.methods
       .fishingDuration()
       .call({ from: accounts[0] })
-    // console.log('haha', duration)
     const data = await contract.methods
       .getFishingQuest(accounts[0])
       .call({ from: accounts[0] })
-    // console.log('gi z', data)
     const fishingQuest = {
       ...data,
       duration: parseInt(duration),

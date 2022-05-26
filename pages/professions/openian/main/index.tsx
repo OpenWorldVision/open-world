@@ -49,8 +49,7 @@ function Openian() {
 
     setIsFishing(!isFishing)
   }, [isFishing])
-  console.log(132123123);
-  
+
   return (
     <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
       <TransformWrapper
@@ -77,17 +76,18 @@ function Openian() {
               <div
                 className={`${styles.openianSellBtn} click-cursor`}
                 onClick={() => toggleSellModal(true)}
-              >aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
-              aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+              >
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
+                aushdaikusdhbaisbdiasbdiasbdiasbdiasbfoiasbdoasdaopsd
               </div>
             </div>
           </div>

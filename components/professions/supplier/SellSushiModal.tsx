@@ -44,7 +44,6 @@ function SellSushiModal(props: Props) {
   }
 
   const onChangeValue = useCallback((event) => {
-    console.log('21123', event)
     const valueSushi = parseInt(event?.target?.value)
     setValueSushi(valueSushi)
   }, [])
@@ -58,7 +57,6 @@ function SellSushiModal(props: Props) {
   )
 
   const renderText = useCallback(() => {
-    console.log('212', typeModal)
     switch (typeModal) {
       case TYPE_OF_MODAL.FINISH: {
         return (

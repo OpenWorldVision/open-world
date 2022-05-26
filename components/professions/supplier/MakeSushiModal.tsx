@@ -25,13 +25,8 @@ function MakeSushiModal(props: Props) {
 
   const [valueFish, setValueFish] = useState(2)
 
-  useEffect(() => {
-    console.log('11', listFishArray)
-  }, [listFishArray])
-
   const startCook = useCallback(async () => {
     //
-    console.log('con cac gi v', listFishArray)
     setIsLoading(true)
     onStartCook(valueFish, listFishArray[0], listFishArray[1])
     setIsLoading(false)
@@ -44,7 +39,6 @@ function MakeSushiModal(props: Props) {
   }
 
   const onChangeValue = useCallback((event) => {
-    console.log('21123', event)
     const numberFish = parseInt(event?.target?.value)
     setValueFish(numberFish)
   }, [])
@@ -62,7 +56,6 @@ function MakeSushiModal(props: Props) {
   }, [valueFish])
 
   const renderText = useCallback(() => {
-    console.log('212', typeModal)
     switch (typeModal) {
       case TYPE_OF_MODAL.FINISH: {
         return (

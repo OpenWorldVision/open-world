@@ -33,9 +33,6 @@ export const sellSushi = async (id: number, price: number) => {
     const data = await contract.methods
       .addListing(nftAddress, id, price)
       .send({ from: accounts[0] })
-    console.log('data add listing', data)
     return data
-  } catch (error) {
-    console.log('3124234', error)
-  }
+  } catch (error) {}
 }

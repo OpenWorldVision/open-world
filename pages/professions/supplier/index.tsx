@@ -21,15 +21,11 @@ function Supplier() {
     getListItemByTrait()
     getListSushi()
   }, [])
-  console.log('212', listSushi)
 
   const _onStartCook = useCallback(async () => {
     setTypeModal(TYPE_OF_MODAL.START)
-    console.log('?????', listFish[0], listFish[1])
     const data = await dispatchMakeSushi(listFish[0], listFish[1])
 
-    // console.log('haha', listFish)
-    console.log('21123', data)
     if (data?.status) {
       setTypeModal(TYPE_OF_MODAL.FINISH)
     }
@@ -37,18 +33,7 @@ function Supplier() {
   }, [listFish])
 
   const _onSellSushi = useCallback(async (valueSushi, quantitySushi) => {
-    // setTypeModal(TYPE_OF_MODAL.START)
-    console.log('22123', listSushi)
-    // console.log('?????', )
     const data = await sellSushi(listSushi[0], valueSushi)
-    console.log('cho heo ga', data)
-
-    // // console.log('haha', listFish)
-    // console.log('21123', data)
-    // if (data?.status) {
-    //   setTypeModal(TYPE_OF_MODAL.FINISH)
-    // }
-    // getListItemByTrait()
   }, [])
 
   const getListItemByTrait = useCallback(async () => {
@@ -62,12 +47,10 @@ function Supplier() {
   }, [])
   const toggleModal = useCallback(
     (type) => {
-      console.log('c')
       setTypeModal(TYPE_OF_MODAL.START)
       if (type === 'make') {
         setShowMakeSushi(!showMakeSushi)
       } else {
-        console.log('h2')
         setShowSellSushi(!showSellSushi)
       }
     },
