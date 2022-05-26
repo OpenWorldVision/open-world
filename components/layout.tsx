@@ -68,7 +68,7 @@ export default function Layout({ children, home }) {
     const isArena = currentURL.includes('battleArena')
     const isCastle = currentURL.includes('castle')
     const isFoodCourt = currentURL.includes('foodCourt')
-    const isMarketPlace = currentURL.includes('market')
+    const isMarketPlace = currentURL.includes('marketplace')
     const isProfessions = currentURL.includes('professions')
     const isWorkshop = currentURL.includes('workshop')
     if (
@@ -124,8 +124,12 @@ export default function Layout({ children, home }) {
       {isConnected && (
         <main>
           {children}
-          <Menu />
-          <User />
+          {!window.location.href.includes('marketplace') && (
+            <>
+              <Menu />
+              <User />
+            </>
+          )}
           {checkCurrentPage()}
         </main>
       )}

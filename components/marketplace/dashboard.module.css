@@ -1,0 +1,220 @@
+.main {
+    background: url('../../public/images/marketplace/market/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    font-weight: bold;
+    height: 100vh;
+}
+
+.nav{
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.nav1 {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 150px;
+    align-items: center;
+}
+
+.nav1 > input:last-child {
+    width: 250px;
+    height: 50px;
+    background: url('../../public/images/marketplace/market/nft-id.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 50px;
+    text-align: center;
+    color: white;
+}
+
+.nav2 {
+    display: flex;
+    margin-left: 50px;
+}
+
+.nav2 > div {
+    padding: 20px 50px;
+}
+
+
+.sortPriceBoard{
+    position: absolute;
+    bottom: -85px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: url('../../public/images/marketplace/market/frame-sort-price.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: white;
+    width: 98%;
+    text-align: center;
+}
+
+.sortPriceBoard > div{
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+.body{
+    display: flex;
+    height: calc(100% - 400px);
+}
+
+.body1{
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: auto;
+    flex: 1.5;
+}
+
+.body1::-webkit-scrollbar {
+    display: none;
+}
+
+.item{
+    padding: 0 20px;
+    width: 220px;
+}
+
+.itemInfo {
+    background: url('../../public/images/marketplace/market/frame-item.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemInfo > div:first-child {
+    font-size: 12px;
+    width: 65%;
+    margin: auto;
+}
+
+.itemInfo > div:first-child > div {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+
+.itemInfo > div:first-child > img {
+    width: 100%;
+}
+
+.itemInfo > div:last-child {
+    text-align: center;
+    font-size: 16px;
+    padding: 1px 0;
+}
+
+.btnBuy{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.body2 {
+    flex: 1;
+    padding-right: 50px;
+}
+
+.sellerBoard{
+    background: url('../../public/images/marketplace/market/seller-board.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    font-size: 25px;
+    font-weight: normal;
+}
+
+.header{
+    margin-top: 50px;
+}
+
+.selectedImage{
+    width: 120px;
+    height: 120px;
+    background: url('../../public/images/marketplace/market/selected-image.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin: 20px 0;
+}
+
+.priceInput{
+    display: flex;
+    margin-top: 50px;
+}
+
+.priceInput > div:first-child{
+    margin-right: 20px;
+}
+
+.priceInput > input{
+    border-radius: 15px;
+    background-color: #261106;
+    border: 1px solid #DFD99A;
+    width: 120px;
+    text-align: center;
+}
+
+.btnSell{
+    margin-top: 50px;
+}
+
+.priceInput > div:last-child{
+    margin-left: 20px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination{
+    display: flex;
+    align-items: center;
+}
+
+.pagination img{
+    padding: 0 20px;
+}
+
+.pagination > div{
+    background-color: #8C481D;
+    height: 120%;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.back {
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+}
+
+.select {
+    border-bottom: 2px solid #FFB966;
+}
