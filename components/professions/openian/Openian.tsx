@@ -91,11 +91,11 @@ function Openian() {
               <div className={styles.openianBg}>
                 <div
                   className={`${styles.openianMiningBtn} click-cursor`}
-                  onClick={() => toggleMiningModal()}
+                  onClick={toggleMiningModal}
                 ></div>
                 <div
                   className={`${styles.openianFishBtn} click-cursor`}
-                  onClick={() => toggleFishingModal()}
+                  onClick={toggleFishingModal}
                 ></div>
                 <div
                   className={`${styles.openianSellBtn} click-cursor`}
@@ -117,14 +117,14 @@ function Openian() {
 
         <FishingModal
           isOpen={isOpenFishing}
-          toggleModal={() => toggleFishingModal()}
+          toggleModal={toggleFishingModal}
           haveQuestUnfinish={haveQuest}
         />
 
         <MiningModal
           isOpen={isOpenMining}
-          toggleModal={() => toggleMiningModal()}
-          toggleLoadingModal={(state) => toggleLoadingModal(state)}
+          toggleModal={toggleMiningModal}
+          toggleLoadingModal={toggleLoadingModal}
         />
       </div>
     </>

@@ -135,7 +135,7 @@ export default function MiningModal(props: Props) {
             <Button className={style.infoBtn}></Button>
             <Button
               className={style.exitBtn}
-              onClick={() => toggleModal()}
+              onClick={toggleModal}
             ></Button>
           </div>
           <div className={style.miningBody}>
@@ -155,7 +155,7 @@ export default function MiningModal(props: Props) {
           </div>
         </div>
       ) : (
-        <ResultMining toggleModal={() => confirmResult()} />
+        <ResultMining toggleModal={confirmResult} />
       )}
     </div>
   )

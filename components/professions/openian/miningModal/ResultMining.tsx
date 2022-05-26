@@ -51,7 +51,7 @@ export default function ResultMining(props: Props) {
         </div>
         <Button
           className={style.confirmBtn}
-          onClick={() => toggleModal()}
+          onClick={toggleModal}
         ></Button>
       </div>
     </>

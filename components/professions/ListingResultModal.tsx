@@ -25,7 +25,7 @@ function ListingResultModal(props: Props) {
 
         <Button
           className={`${style.confirmBtn} click-cursor`}
-          onClick={() => toggleModal()}
+          onClick={toggleModal}
         ></Button>
       </div>
     </div>

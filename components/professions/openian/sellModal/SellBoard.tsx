@@ -105,7 +105,7 @@ function SellBoard(props: Props) {
     fetchSelectedItemIdsList()
   }, [selectedItem])
 
-  const listToMarket = async () => {
+  const listToMarket = useCallback(async () => {
     if (price !== 0 && sellingAmount !== 0) {
       setIsLoading(true)
       const itemSellIds = selectedItemIds.slice(0, sellingAmount)
@@ -123,7 +123,7 @@ function SellBoard(props: Props) {
       setIsLoading(false)
       return result
     }
-  }
+  }, [selectedItem, price, sellingAmount, totalAmount])
 
   const toggleListingModal = useCallback(async (state) => {
     setListingResult(state)
@@ -143,7 +143,7 @@ function SellBoard(props: Props) {
           <img src="/images/professions/openian/sellboard.png" alt="Sell board" />
         </h3>
 
-        <Button className={styles.closeBtn} onClick={() => toggleModal()}>
+        <Button className={styles.closeBtn} onClick={toggleModal}>
           <FontAwesomeIcon icon={faTimesCircle} />
         </Button>
 
@@ -181,8 +181,8 @@ function SellBoard(props: Props) {
               min="0"
               name="price"
               defaultValue="0"
-              onKeyUp={(e) => checkPriceInput(e)}
-              onBlur={() => checkIfEmpty()}
+              onKeyUp={checkPriceInput}
+              onBlur={checkIfEmpty}
             />
             <span>OPEN</span>
           </div>
@@ -214,7 +214,7 @@ function SellBoard(props: Props) {
 
           <Button
             className={`btn-chaka ${styles.confirmBtn} click-cursor`}
-            onClick={() => listToMarket()}
+            onClick={listToMarket}
           >
             <img
               src="/images/professions/openian/confirm-btn.png"
