@@ -45,13 +45,13 @@ function SellModal(props: Props) {
         >
           <Inventory
             isOpenianSell
-            selectOpenianSellItem={(item) => selectItemForSell(item)}
+            selectOpenianSellItem={selectItemForSell}
             isRefreshInventory={isRefreshInventory}
           />
         </GridItem>
         <GridItem>
           <SellBoard
-            toggleModal={() => toggleModal()}
+            toggleModal={toggleModal}
             selectedItem={selectedItem}
             handleFinishListing={() => handleFinishListing()}
           />

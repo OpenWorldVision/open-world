@@ -1,5 +1,5 @@
 .preLoader {
-  background-color: #130e0c;
+  background-color: rgba(19, 14, 12, 0.5);
   z-index: 999999;
   display: flex;
   opacity: 1;
