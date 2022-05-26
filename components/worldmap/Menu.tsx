@@ -44,7 +44,7 @@ export default function Menu() {
               </Link>
             </li>
             <li className='click-cursor'>
-              <Link href="/marketplace">
+              <Link href="/market">
                 <a className='click-cursor'>Marketplace</a>
               </Link>
             </li>

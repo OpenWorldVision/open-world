@@ -122,7 +122,7 @@ export default function Layout({ children, home }) {
       {isConnected && (
         <main>
           {children}
-          {!window.location.href.includes('marketplace') && (
+          {!window.location.href.includes('market') && (
             <>
               <Menu />
               <User />
