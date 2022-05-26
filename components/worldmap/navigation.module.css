@@ -16,14 +16,14 @@
   height: 110px;
 }
 
-.workShopWrap {
+.workshopWrap {
   top: 56%;
   left: 961px;
   width: 79px;
   height: 100px;
 }
 
-.foodCourtWrap {
+.foodcourtWrap {
   top: 64%;
   left: 924px;
   width: 89px;
@@ -81,13 +81,14 @@
 }
 
 @media (max-width: 1024px) {
-  .showLinkBtn:hover ~ .navigateLink {
+  .showLinkBtn:hover~.navigateLink {
     top: -40px;
     opacity: 1;
     will-change: opacity, top;
     transition: all 0.5s;
     z-index: 1;
   }
+
   .linkOverlay {
     position: absolute;
     top: 0;
@@ -130,14 +131,14 @@
     height: 80px;
   }
 
-  .foodCourtWrap {
+  .foodcourtWrap {
     top: 63%;
     left: 915px;
     width: 100px;
     height: 95px;
   }
 
-  .workShopWrap {
+  .workshopWrap {
     top: 56%;
     left: 950px;
     width: 90px;

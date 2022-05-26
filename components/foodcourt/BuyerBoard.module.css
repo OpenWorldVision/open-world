@@ -1,0 +1,238 @@
+.modalOverlay {
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity;
+  /* transition: all 0.5s linear; */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: transparent;
+}
+
+.modalOverlay.active {
+  z-index: 2002;
+  opacity: 1;
+  visibility: visible;
+  will-change: opacity;
+  /* transition: all 0.5s linear; */
+}
+
+.modal {
+  padding: 40px 50px 10px;
+  position: relative;
+  width: 550px;
+  height: fit-content;
+  background-image: url('/images/professions/borders/sellBorder-left.png'),
+    url('/images/professions/borders/sellBorder-right.png');
+  background-position: 0, 100%;
+  background-repeat: no-repeat;
+  background-size: 18px 100%;
+  background-color: #3d2316;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+  margin-top: 40px;
+}
+
+
+.modal img {
+  width: 100%;
+}
+
+.modal::before,
+.modal::after {
+  position: absolute;
+  content: '';
+}
+
+.modal::before {
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: calc(100% + 12px);
+  background-position: center top, center bottom;
+  background-repeat: no-repeat;
+  background-size: calc(100% - 111px) 19px;
+  background-image: url('/images/professions/borders/sellBorder-top.png'),
+    url('/images/professions/borders/sellBorder-bottom.png');
+}
+
+.modal::after {
+  top: 0;
+  left: 0px;
+  width: 100%;
+  height: calc(100% + 12px);
+  background-position: left top, right top, left bottom, right bottom;
+  background-repeat: no-repeat;
+  background-size: 68px;
+  background-image: url('/images/professions/borders/sellBorder-top-left.png'),
+    url('/images/professions/borders/sellBorder-top-right.png'),
+    url('/images/professions/borders/sellBorder-bottom-left.png'),
+    url('/images/professions/borders/sellBorder-bottom-right.png');
+}
+
+.boardContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sellBoard {
+  width: 220px;
+  position: absolute;
+  top: -20px;
+}
+
+.closeBtn {
+  background-image: url('/images/foodcourt/exit-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 25px !important;
+  height: 25px !important;
+  position: absolute !important;
+  z-index: 1;
+  top: 20px;
+  right: 40px;
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+.boardContent h4,
+.setPrice {
+  font-size: 30px;
+}
+
+.selectedItem{
+  margin-top: 10px;
+  width: 100px;
+  height: 90px;
+  background-color: #261106;
+  border: 1px solid #82734F;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-size: 70px 80px;
+  background-position: 20px 10px;
+  display: flex;
+}
+
+.selectedItem img{
+  width: 50px;
+  margin: auto;
+}
+
+.BtnContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.previous,
+.increase {
+  box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px !important;
+  width: 30px !important;
+  height: 30px !important;
+  border: 2px solid #f6e691;
+  border-radius: 7px;
+  background-color: #261106 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.increase{
+  margin-left: 10px;
+}
+
+.editNumberItems{
+  display: flex;
+}
+
+.numberItems{
+  display: flex;
+  justify-content: space-between;
+  background-image: url('/images/foodcourt/frame-number-item.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 170px;
+  padding: 0 10px;
+  margin-top: 5px;
+}
+
+.itemName{
+  margin-left: 10px;
+  text-transform: capitalize;
+  display: flex;
+  align-items: center;
+}
+
+.wantToBuy,
+.haveToPay{
+  margin-top: 10px;
+  width: 100%;
+}
+
+.helpText{
+  font-size: 14px;
+}
+
+.priceTotal{
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnConfirm{
+  background-image: url('/images/professions/npc/openian/mining/confirm.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+  width: 140px !important;
+  height: 40px !important;
+  background-color: transparent !important;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: block !important;
+  z-index: 4;
+}
+
+@media (max-width: 767px) {
+  .modal {
+    width: 95vw;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .boardContent h4,
+  .setPrice {
+    font-size: 20px;
+  }
+
+  .sellingAmount,
+  .totalAmount {
+    font-size: 16px;
+  }
+
+  .sellingAmount {
+    flex-direction: column;
+  }
+
+  .selectedItemBtn,
+  .setPrice .sellInput {
+    width: 100px !important;
+  }
+
+  .sellingAmount span {
+    font-size: 24px;
+  }
+
+  .sellingAmount .sellInput {
+    width: 130px;
+    margin: 10px 0;
+  }
+}

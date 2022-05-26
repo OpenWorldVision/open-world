@@ -9,8 +9,7 @@ import {
   fetchProfessionsNFTPrices
  }
 from 'utils/professions'
-import { useDispatch } from 'react-redux'
-import { updateIsLoading } from 'reduxActions/isLoadingAction'
+import LoadingModal from '@components/LoadingModal'
 
 function Shop() {
   const [nftsAmount, setNftsAmount] = useState({
@@ -25,14 +24,15 @@ function Shop() {
   })
   const [fetchAmountInterval, setFetchAmountInterval] = useState(null)
   const [fetchPricesInterval, setFetchPricesInterval] = useState(null)
-  const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(false)
 
-
-  const mintProfessionsNFT = async (trait, price) => {
-    dispatch(updateIsLoading({ isLoading: true }))
-    await mintProfessionNFT(trait, price)
-    await fetchNFTAmount()
-    dispatch(updateIsLoading({ isLoading: false }))
+  const mintProfessionsNFT = async (trait) => {
+    setIsLoading(true)
+    const checkMintResult = await mintProfessionNFT(trait)
+    if (checkMintResult) {
+      await fetchNFTAmount()
+    }
+    setIsLoading(false)
   }
 
   const fetchNFTAmount = useCallback(async () => {
@@ -46,13 +46,13 @@ function Shop() {
   }, [nftsPrices])
 
   const initialize = async () => {
+    setIsLoading(true)
     await fetchNFTAmount()
     await fetchNFTPrices()
-    dispatch(updateIsLoading({ isLoading: false }))
+    setIsLoading(false)
   }
 
   useEffect(() => {
-    dispatch(updateIsLoading({ isLoading: true }))
     initialize()
     setFetchPricesInterval(
       setInterval(() => {
@@ -62,7 +62,7 @@ function Shop() {
     setFetchAmountInterval(
       setInterval(() => {
         fetchNFTAmount()
-      }, 10000)
+      }, 5000)
     )
 
     return () => {
@@ -76,6 +76,10 @@ function Shop() {
       <Head>
         <title>Shop</title>
       </Head>
+
+      {/* Loading */}
+      {isLoading && <LoadingModal />}
+
       <div className={style.shopContainer}>
         <Grid
           templateColumns={{
@@ -95,7 +99,7 @@ function Shop() {
             ></div>
             <span className={style.shopSupply}>SUPPLY LEFT: { nftsAmount.openianAmount }</span>
             <div className={style.buyBtnWrap}>
-              <Button className={style.buyBtn} onClick={() => mintProfessionsNFT(1, parseInt(nftsPrices.openianPrice))}>
+              <Button className={style.buyBtn} onClick={() => mintProfessionsNFT(1)}>
                 <span>{ nftsPrices.openianPrice } OPEN</span>
               </Button>
             </div>
@@ -110,7 +114,7 @@ function Shop() {
             ></div>
             <span className={style.shopSupply}>SUPPLY LEFT: { nftsAmount.supplierAmount }</span>
             <div className={style.buyBtnWrap}>
-              <Button className={style.buyBtn} onClick={() => mintProfessionsNFT(2, parseInt(nftsPrices.supplierPrice))}>
+              <Button className={style.buyBtn} onClick={() => mintProfessionsNFT(2)}>
                 <span>{nftsPrices.supplierPrice} OPEN</span>
               </Button>
             </div>
@@ -130,7 +134,7 @@ function Shop() {
             ></div>
             <span className={style.shopSupply}>SUPPLY LEFT: { nftsAmount.blacksmithAmount }</span>
             <div className={style.buyBtnWrap}>
-              <Button className={style.buyBtn} onClick={() => mintProfessionsNFT(3, parseInt(nftsPrices.blacksmithPrice))}>
+              <Button className={style.buyBtn} onClick={() => mintProfessionsNFT(3)}>
                 <span>{nftsPrices.blacksmithPrice} OPEN</span>
               </Button>
             </div>
