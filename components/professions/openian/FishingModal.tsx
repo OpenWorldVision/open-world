@@ -11,7 +11,7 @@ type Props = {
   haveQuestUnfinish: boolean
 }
 
-const TYPE_OF_MODAL = {
+export const TYPE_OF_MODAL = {
   START: 'START',
   WAITING: 'WAITING',
   FINISH: 'FINISH',
@@ -112,8 +112,8 @@ function FishingModal(props: Props) {
             <div className={styles.description}>
               <div className={styles.titleText}>Description</div>
               <div className={styles.valueText}>
-                Fish is the main ingredient for making Sushi and Suppliers are paying
-                good money for them. Let’s go catch some !!!
+                Fish is the main ingredient for making Sushi and Suppliers are
+                paying good money for them. Let’s go catch some !!!
               </div>
               <div className={styles.titleText}>Base Duration</div>
               <div className={styles.valueText}>20 second</div>
@@ -149,16 +149,20 @@ function FishingModal(props: Props) {
         {typeofModal !== TYPE_OF_MODAL.FINISH && (
           <h3 className={styles.sellBoard}>
             <img
-              src={`/images/professions/openian/${typeofModal === TYPE_OF_MODAL.START
-                ? `fishBoard`
-                : `questFinish`
-                }.png`}
+              src={`/images/professions/openian/${
+                typeofModal === TYPE_OF_MODAL.START
+                  ? `fishBoard`
+                  : `questFinish`
+              }.png`}
               alt="Fish board"
             />
           </h3>
         )}
 
-        <Button className={`${styles.closeBtn} click-cursor`} onClick={() => toggleModal()}>
+        <Button
+          className={`${styles.closeBtn} click-cursor`}
+          onClick={() => toggleModal()}
+        >
           <FontAwesomeIcon icon={faTimesCircle} />
         </Button>
 
