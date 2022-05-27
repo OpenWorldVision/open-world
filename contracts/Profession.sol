@@ -51,7 +51,7 @@ contract Profession is AccessControlUpgradeable {
   function finishFishing() public returns (bool) {
     (uint256 startTime, bool finish) = getFishingQuest(msg.sender);
     require(!finish, 'This quest is finish');
-    require(startTime.add(fishingDuration) >= block.timestamp, 'Wait more');
+    require(block.timestamp >= startTime.add(fishingDuration), 'Wait more');
     item.mint(msg.sender, 1);
     item.mint(msg.sender, 1);
     openianFishingQuest[msg.sender] = Quest(0, true);
@@ -71,7 +71,7 @@ contract Profession is AccessControlUpgradeable {
   function finishMining() public returns (bool) {
     (uint256 startTime, bool finish) = getMiningQuest(msg.sender);
     require(!finish, 'This quest is finish');
-    require(startTime.add(fishingDuration) >= block.timestamp, 'Wait more');
+    require(block.timestamp >= startTime.add(fishingDuration), 'Wait more');
     item.mint(msg.sender, 2);
     item.mint(msg.sender, 2);
     openianMiningQuest[msg.sender] = Quest(0, true);
