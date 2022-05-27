@@ -1,0 +1,198 @@
+.main {
+    background: url('../../public/images/marketplace/market/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    font-weight: bold;
+    height: 100vh;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    flex-wrap: wrap;
+}
+
+.nav1 {
+    display: flex;
+    margin-left: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav1 > div {
+    padding: 20px 50px;
+}
+
+.nav2 {
+    display: flex;
+    margin: 0 50px;
+    align-items: center;
+}
+
+.nav2 > div:first-child {
+    background: url('../../public/images/marketplace/market/sort-price.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #712C2C;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 50px;
+    position: relative;
+}
+
+.sortPriceBoard{
+    position: absolute;
+    bottom: -85px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background: url('../../public/images/marketplace/market/frame-sort-price.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: white;
+    width: 98%;
+    text-align: center;
+}
+
+.sortPriceBoard > div{
+    padding: 10px 0;
+    font-size: 16px;
+}
+
+
+.nav2 > input:last-child {
+    width: 250px;
+    height: 50px;
+    background: url('../../public/images/marketplace/market/nft-id.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 50px;
+    text-align: center;
+    color: white;
+}
+
+.body{
+    padding: 20px 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: calc(100% - 350px);
+    overflow: auto;
+    
+}
+
+.body::-webkit-scrollbar {
+    display: none;
+}
+
+.item{
+    padding: 0 20px;
+    width: 220px;
+}
+
+.itemInfo {
+    background: url('../../public/images/marketplace/market/frame-item.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemInfo > div:first-child {
+    font-size: 12px;
+    width: 65%;
+    margin: auto;
+}
+
+.itemInfo > div:first-child > div {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+
+.itemInfo > div:first-child > img {
+    width: 100%;
+}
+
+.itemInfo > div:last-child {
+    text-align: center;
+    font-size: 16px;
+    padding: 1px 0;
+}
+
+.itemBuy{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.footer {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination{
+    display: flex;
+    align-items: center;
+}
+
+.pagination img{
+    padding: 0 20px;
+}
+
+.pagination > div{
+    background-color: #8C481D;
+    height: 120%;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.back {
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+}
+
+.select {
+    border-bottom: 2px solid #FFB966;
+}
+/* 
+@media (max-width: 1485px) {
+    .nav {
+        justify-content: center;
+    }
+    .nav1 {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 820px) {
+    .nav {
+        justify-content: center;
+    }
+    .nav1 {
+        margin-left: 0;
+    }
+    .body {
+        padding: 20px 100px;
+    }
+} */

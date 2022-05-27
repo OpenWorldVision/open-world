@@ -34,7 +34,7 @@ export default function NotificationBuyItem(props: Props) {
           <div className={`${style.preloaderCube3} ${style.preloaderCube}`}></div>
         </div>
       </div>
-      <div className={style.notificationContainer}>
+      {!isLoading && <div className={style.notificationContainer}>
         <h3 className={style.notification}>
           <img
             src="/images/professions/blacksmith/notification.png"
@@ -47,7 +47,7 @@ export default function NotificationBuyItem(props: Props) {
           {notiContent['value'] && <div style={{ marginTop: '20px' }} className={style.helpText}>Check Your Inventory For Bought Items !</div>}
           <Button sx={{ cursor: 'url(/images/worldmap/SelectCursor.png), auto !important' }} onClick={handleConfirm} className={style.btnConfirm}></Button>
         </div>
-      </div>
+      </div>}
     </>
   )
 }

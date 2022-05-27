@@ -116,6 +116,7 @@
     position: absolute;
     z-index: 999999;
     top: 50%;
+    left: 45%;
   }
 
   .loadedNotification .preloaderFoldingCube {
@@ -198,5 +199,8 @@
     .notification {
       width: 250px;
       top: -23px;
+    }
+    .preloaderFoldingCube{
+      left: unset;
     }
   }

@@ -102,7 +102,7 @@ export default function ForgeHammer() {
                 2 Ore makes 1 Hammer
               </div>
             </div>
-            <Button disabled={numberHammer === 0} onClick={handleStartQuest} className={`${style.startQuestBtn} click-cursor`}></Button>
+            <Button sx={{cursor: 'url(/images/worldmap/SelectCursor.png), auto !important'}} disabled={numberHammer === 0} onClick={handleStartQuest} className={style.startQuestBtn}></Button>
           </div>
         </div>}
 
