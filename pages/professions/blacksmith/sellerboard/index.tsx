@@ -1,17 +1,14 @@
 import { Button } from '@chakra-ui/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import styles from './SellerBoard.module.css'
+import styles from '@components/professions/blacksmith/SellerBoard.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
-import NotificationSell from './NotificationSell'
+import NotificationSell from '@components/professions/blacksmith/NotificationSell'
+import Link from 'next/link'
+
 import { sellHammer, fetchAmountItemByTrait } from 'utils/blackSmithContract'
 
-type Props = {
-  toggleModal: (boolean) => void
-}
-
-function SellModal(props: Props) {
-  const { toggleModal } = props
+function SellModal() {
   const priceRef = useRef<HTMLInputElement>()
   const [price, setPrice] = useState(0)
   const [sellingAmount, setSellingAmount] = useState(0)
@@ -97,7 +94,7 @@ function SellModal(props: Props) {
   }, [])
 
   return (
-    <div className={`${styles.sellerBoardOverlay} overlay`}>
+    <div className={styles.sellerBoardOverlay}>
       {!isClickConfirm && (
         <div className={styles.modal}>
           <h3 className={styles.sellBoard}>
@@ -107,12 +104,11 @@ function SellModal(props: Props) {
             />
           </h3>
 
-          <Button
-            className={styles.closeBtn}
-            onClick={() => toggleModal(false)}
-          >
-            <FontAwesomeIcon icon={faTimesCircle} />
-          </Button>
+          <Link href="/professions/blacksmith">
+            <a className={styles.closeBtn}>
+              <FontAwesomeIcon icon={faTimesCircle} />
+            </a>
+          </Link>
 
           {/* <Button className={styles.closeBtn}>
           <FontAwesomeIcon icon={faTimesCircle} />
@@ -161,7 +157,12 @@ function SellModal(props: Props) {
                 >
                   +
                 </Button>
-                <Button className="btn-chaka click-cursor">All</Button>
+                <Button
+                  onClick={hanleGetAllHammer}
+                  className="btn-chaka click-cursor"
+                >
+                  All
+                </Button>
               </div>
             </div>
             <div className={styles.totalAmount}>

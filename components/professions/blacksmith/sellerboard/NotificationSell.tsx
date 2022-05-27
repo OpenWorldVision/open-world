@@ -1,14 +1,30 @@
 import { Button } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import style from './NotificationSell.module.css'
+
+import { sellHammer } from 'utils/blackSmithContract'
 
 type Props = {
   hiddenNotification: () => void
+  listHammer: Array<number>
+  sellingAmount: number
+  price: number
 }
 
 export default function NotificationSell(props: Props) {
-  const { hiddenNotification } = props
+  const { hiddenNotification, listHammer, sellingAmount, price } = props
   const [isLoading, setIsLoading] = useState(true)
+  const [checkSellHammer, setCheckSellHammer] = useState(false)
+
+  const handleSellHammer = async () => {
+    const listSellHammer = listHammer.slice(0, sellingAmount)
+    const handleSellHammer = await sellHammer(listSellHammer, price)
+    setIsLoading(false)
+    if (handleSellHammer) {
+      setCheckSellHammer(true)
+    }
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
@@ -16,11 +32,12 @@ export default function NotificationSell(props: Props) {
     return () => {
       clearTimeout(timer)
     }
+    handleSellHammer()
   }, [])
 
-  const handleConfirm = () => {
+  const handleConfirm = useCallback(() => {
     hiddenNotification()
-  }
+  }, [])
   return (
     <>
       <div className={`${!isLoading && style.loadedNotification}`}>
@@ -49,8 +66,13 @@ export default function NotificationSell(props: Props) {
           />
         </h3>
         <div className={style.content}>
-          <div className={style.title}>SUCCESS !!</div>
-          <Button sx={{cursor: 'url(/images/worldmap/SelectCursor.png), auto !important'}} onClick={handleConfirm} className={style.btnConfirm}></Button>
+          <div className={style.title}>
+            {checkSellHammer ? 'SUCCESS !!' : 'FAILED !!'}
+          </div>
+          <Button
+            onClick={handleConfirm}
+            className={`${style.btnConfirm} click-cursor`}
+          ></Button>
         </div>
       </div>
     </>

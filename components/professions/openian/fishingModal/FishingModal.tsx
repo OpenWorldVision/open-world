@@ -17,7 +17,7 @@ type Props = {
   updateInventory: () => void
 }
 
-const TYPE_OF_MODAL = {
+export const TYPE_OF_MODAL = {
   START: 'START',
   WAITING: 'WAITING',
   FINISH: 'FINISH',
