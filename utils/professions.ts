@@ -117,9 +117,20 @@ export const fetchUserProfessionNFT = async () => {
 }
 
 export const activateProfession = async (profession) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   const contract = await getProfessionsContract()
-  const checkSuccess = await contract.setProfession(profession)
-  return checkSuccess
+  try {
+    const result = await contract.setProfession(profession)
+
+    let transactionReceipt = null
+    do {
+      transactionReceipt = await provider.getTransactionReceipt(result.hash)
+    } while (transactionReceipt === null)
+
+    return transactionReceipt.status
+  } catch {
+    return false
+  }
 }
 
 export const fetchProfessionsNFTAmount = async () => {

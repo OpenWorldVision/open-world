@@ -4,27 +4,19 @@ import style from './Mining.module.css'
 
 type Props = {
   isStartQuest: boolean
+  timeLeft: number
+  checkCanFinish: boolean
   handleFinish: () => void
 }
 
 export default function MiningWait(props: Props) {
-  const { isStartQuest, handleFinish } = props
-
-  const [checkCanFinish, setCheckCanFinish] = useState(true)
+  const { checkCanFinish, isStartQuest, timeLeft, handleFinish } = props
 
   const handleCheckCanFinish = () => {
-    if (!checkCanFinish) {
+    if (checkCanFinish) {
       handleFinish()
     }
   }
-
-  useEffect(() => {
-    if (isStartQuest) {
-      setTimeout(() => {
-        setCheckCanFinish(false)
-      }, 20000)
-    }
-  }, [])
 
   return (
     <div className={style.miningWaitDetail}>
@@ -41,9 +33,9 @@ export default function MiningWait(props: Props) {
           Time Left
         </div>
         <div className={style.detail}>
-          20 secconds
+          {timeLeft} secconds
         </div>
-        <Button onClick={handleCheckCanFinish} className={`${!checkCanFinish && style.finishBtn} ${checkCanFinish && style.finishBtnDisable} click-cursor`}></Button>
+        <Button onClick={handleCheckCanFinish} className={`${checkCanFinish && style.finishBtn} ${!checkCanFinish && style.finishBtnDisable}`}></Button>
       </div>
     </div>
   )

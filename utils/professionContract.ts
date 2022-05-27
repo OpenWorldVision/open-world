@@ -8,6 +8,7 @@ const professionContract = {
   jsonInterface: require('../build/contracts/Profession.json'),
 }
 
+// Fishing
 const getProfessionContract = async () => {
   const chainId = await web3.eth.getChainId()
 
@@ -38,25 +39,41 @@ export const startFishing = async () => {
   }
 }
 
-export const getFinishFishingQuest = async () => {
+export const fetchFishingQuestData = async () => {
   const contract = await getProfessionContract()
   const accounts = await web3.eth.getAccounts()
 
   try {
+    const requireStamina = await contract.methods
+      .fishingStaminaRequire()
+      .call({ from: accounts[0] })
+
     const duration = await contract.methods
       .fishingDuration()
       .call({ from: accounts[0] })
-    const data = await contract.methods
-      .getFishingQuest(accounts[0])
-      .call({ from: accounts[0] })
+
     const fishingQuest = {
-      ...data,
-      duration: parseInt(duration) * 1000,
+      requireStamina: parseInt(requireStamina),
+      duration: parseInt(duration),
     }
     return fishingQuest
   } catch {
-    return false
+    return {
+      requireStamina: -1,
+      duration: -1,
+    }
   }
+}
+
+export const checkIfFishingFinish = async () => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+
+  const data = await contract.methods
+    .getFishingQuest(accounts[0])
+    .call({ from: accounts[0] })
+
+  return { ...data }
 }
 
 export const finishFishing = async () => {
@@ -70,6 +87,58 @@ export const finishFishing = async () => {
   } catch (error) {}
 }
 
+// Mining
+export const startMining = async () => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+
+  try {
+    const data = await contract.methods
+      .startMining()
+      .send({ from: accounts[0] })
+    return data
+  } catch {
+    return null
+  }
+}
+
+export const fetchMiningQuestData = async () => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+
+  try {
+    const requireStamina = await contract.methods
+      .miningStaminaRequire()
+      .call({ from: accounts[0] })
+
+    const duration = await contract.methods
+      .miningDuration()
+      .call({ from: accounts[0] })
+
+    const miningQuest = {
+      requireStamina: parseInt(requireStamina),
+      duration: parseInt(duration),
+    }
+    return miningQuest
+  } catch {
+    return {
+      requireStamina: -1,
+      duration: -1,
+    }
+  }
+}
+
+export const checkIfMiningFinish = async () => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+
+  const data = await contract.methods
+    .getMiningQuest(accounts[0])
+    .call({ from: accounts[0] })
+
+  return { ...data }
+}
+
 export const dispatchMakeSushi = async (itemId1: number, itemId2: number) => {
   const contract = await getProfessionContract()
   const accounts = await web3.eth.getAccounts()
@@ -80,3 +149,18 @@ export const dispatchMakeSushi = async (itemId1: number, itemId2: number) => {
     return data
   } catch (error) {}
 }
+
+export const finishMining = async () => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+  try {
+    const data = await contract.methods
+      .finishMining()
+      .send({ from: accounts[0] })
+    return data
+  } catch (error) {
+    return null
+  }
+}
+
+// Sell

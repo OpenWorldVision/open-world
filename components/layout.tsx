@@ -20,7 +20,9 @@ export default function Layout({ children, home }) {
   const [isLoading, setIsLoading] = useState(false)
 
   const dispatch = useDispatch()
-  const isConnected = useSelector((state: any) => { return state.IsConnectedStore.isConnected })
+  const isConnected = useSelector((state: any) => {
+    return state.IsConnectedStore.isConnected
+  })
 
   const checkIsConnected = useCallback((status) => {
     setConnected(status)
@@ -49,11 +51,11 @@ export default function Layout({ children, home }) {
       }, 2000)
     }
 
-    router.events.on("routeChangeStart", () => {
+    router.events.on('routeChangeStart', () => {
       setIsLoading(true)
     })
 
-    router.events.on("routeChangeComplete", () => {
+    router.events.on('routeChangeComplete', () => {
       setTimeout(() => {
         setIsLoading(false)
       }, 1000)
@@ -85,7 +87,9 @@ export default function Layout({ children, home }) {
 
   return (
     <div
-      style={{ cursor: 'url(/images/worldmap/CursorDefault.png), auto !important' }}
+      style={{
+        cursor: 'url(/images/worldmap/CursorDefault.png), auto !important',
+      }}
       className={`${styles.container} ${!isLoading && styles.loaded}`}
     >
       <Head>
@@ -115,10 +119,9 @@ export default function Layout({ children, home }) {
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      {isLoading && <LoadingModal />}
-      {!isConnected && (
-        <Entry />
-      )}
+      {isLoading && <LoadingModal fullBlack />}
+
+      {!isConnected && <Entry />}
       {isConnected && (
         <main>
           {children}

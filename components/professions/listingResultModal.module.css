@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
+  z-index: 3;
 }
 
 .modal {
@@ -20,7 +21,7 @@
   justify-content: center;
   align-items: center;
   color: #fff;
-  z-index: 2;
+  z-index: 4;
 }
 
 .modal img {
@@ -60,42 +61,32 @@
 }
 
 .modalLine {
-    width: 80%;
-    height: 15px;
-    position: absolute;
-    top: -50px;
-    z-index: 1;
-    background-image: url('/images/professions/modalLine.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+  width: 80%;
+  height: 15px;
+  position: absolute;
+  top: -50px;
+  z-index: 1;
+  background-image: url('/images/professions/modalLine.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .modalCotent {
-    padding: 40px 0 200px;
-    text-transform: uppercase;
-    text-align: center;
+  padding: 40px 0 200px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 30px;
 }
 
 .modalCotent h4 {
-    font-size: 24px;
-    padding-bottom: 50px;
+  font-size: 24px;
+  padding-bottom: 50px;
 }
 
 .board {
   width: 220px;
   position: absolute;
   top: -20px;
-}
-
-.fisnishBtn {
-    width: 210px;
-    height: 60px;
-    position: absolute;
-    bottom: 10px;
-    z-index: 1;
-    background-image: url('/images/professions/finishBtn.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
 }
 
 .confirmBtn {
