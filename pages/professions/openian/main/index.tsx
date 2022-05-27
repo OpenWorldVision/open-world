@@ -31,11 +31,6 @@ function Openian() {
     const data = await getFinishFishingQuest()
     const NOW = new Date().getTime()
     const endTime = parseInt(data?.startTime) * 1000 + data?.duration
-    // if (endTime < NOW && !data.finish) {
-    //   setHaveQuest(true)
-    // } else {
-    //   setHaveQuest(false)
-    // }
     if (data?.startTime !== '0') {
       if (endTime < NOW && !data.finish) {
         setHaveQuest(true)

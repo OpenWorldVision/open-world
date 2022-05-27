@@ -32,10 +32,6 @@ function MakeSushiModal(props: Props) {
     // set
   }, [listFishArray, onStartCook, valueFish])
 
-  const _finishFishing = async () => {
-    //
-  }
-
   const onPressUp = useCallback(() => {
     setErrorText('')
     const newValue = valueFish + 1
