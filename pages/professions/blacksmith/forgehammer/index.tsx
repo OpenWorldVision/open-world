@@ -2,44 +2,56 @@
 import { Button } from '@chakra-ui/button'
 import style from '@components/professions/blacksmith/forgeHammer.module.css'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import NotificationForge from '@components/professions/blacksmith/NotificationForge'
 import ResultForgeHammer from '@components/professions/blacksmith/resultForgeHammer'
 
+import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
+
 export default function ForgeHammer() {
-  const [isLoading, setIsLoading] = useState(true)
   const [numberHammer, setNumberHammer] = useState(0)
   const [numberOreNeed, setNumberOreNeed] = useState(0)
-  const [numberYourOre, setNumberYourOre] = useState(1)
+  const [numberYourOre, setNumberYourOre] = useState([])
 
   const [isStartQuestSuccess, setIsStartQuestSuccess] = useState(false)
   const [isStartQuestFail, setIsStartQuestFail] = useState(false)
 
-
-  const handleNext = () => {
-    setNumberHammer(numberHammer + 2)
-    setNumberOreNeed(numberOreNeed + 1)
+  const getListYourOre = async () => {
+    const listYourOre = await fetchAmountItemByTrait(2)
+    setNumberYourOre(listYourOre)
   }
 
-  const handlePrev = () => {
+  useEffect(() => {
+    getListYourOre()
+  }, [])
+
+  const handleNext = useCallback(() => {
+    setNumberHammer(numberHammer + 1)
+    setNumberOreNeed(numberOreNeed + 2)
+  }, [numberHammer])
+
+  const handlePrev = useCallback(() => {
     if (numberHammer > 0) {
-      setNumberHammer(numberHammer - 2)
-      setNumberOreNeed(numberOreNeed - 1)
+      setNumberHammer(numberHammer - 1)
+      setNumberOreNeed(numberOreNeed - 2)
     }
-  }
-
+  }, [numberHammer])
   const handleStartQuest = () => {
-    if (numberOreNeed <= numberYourOre && numberHammer !== 0) {
+    if (numberOreNeed <= numberYourOre.length && numberHammer !== 0) {
       setIsStartQuestSuccess(true)
     }
-    else{
+    else {
       setIsStartQuestFail(true)
     }
   }
 
-  const hiddenNotification = () => {
+  const hiddenNotification = useCallback(() => {
     setIsStartQuestFail(false)
-  }
+  }, [])
+
+  const hiddenPopupResult = useCallback(() => {
+    setIsStartQuestSuccess(false)
+  }, [])
 
   return (
     <>
@@ -78,7 +90,7 @@ export default function ForgeHammer() {
                 Ore You Need :
               </div>
               <div className={style.detail}>
-                <input value={numberOreNeed} className={`${style.input} ${numberOreNeed > numberYourOre && style.oreInvalid}`} type="text" />
+                <input value={numberOreNeed} className={`${style.input} ${numberOreNeed > numberYourOre.length && style.oreInvalid}`} type="text" />
                 <div className={style.ore}></div>
               </div>
             </div>
@@ -87,15 +99,15 @@ export default function ForgeHammer() {
                 Note
               </div>
               <div className={style.detail}>
-                1 Ore makes 2 Hammers
+                2 Ore makes 1 Hammer
               </div>
             </div>
             <Button sx={{cursor: 'url(/images/worldmap/SelectCursor.png), auto !important'}} disabled={numberHammer === 0} onClick={handleStartQuest} className={style.startQuestBtn}></Button>
           </div>
         </div>}
 
-        {isStartQuestSuccess && <ResultForgeHammer hammerReceived={numberHammer}/>}
-        {isStartQuestFail && <NotificationForge hiddenNotification={hiddenNotification}/>}
+        {isStartQuestSuccess && <ResultForgeHammer hiddenPopupResult={hiddenPopupResult} hammerReceived={numberHammer} numberYourOre={numberYourOre} />}
+        {isStartQuestFail && <NotificationForge hiddenNotification={hiddenNotification} />}
       </div>
     </>
 
