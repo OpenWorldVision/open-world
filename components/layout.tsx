@@ -68,7 +68,7 @@ export default function Layout({ children, home }) {
     const isArena = currentURL.includes('battleArena')
     const isCastle = currentURL.includes('castle')
     const isFoodCourt = currentURL.includes('foodCourt')
-    const isMarketPlace = currentURL.includes('market')
+    const isMarketPlace = currentURL.includes('marketplace')
     const isProfessions = currentURL.includes('professions')
     const isWorkshop = currentURL.includes('workshop')
     if (
@@ -116,16 +116,18 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       {isLoading && <LoadingModal />}
-
       {!isConnected && (
         <Entry />
       )}
       {isConnected && (
         <main>
           {children}
-          <Menu />
-          <User />
-          <Entry />
+          {!window.location.href.includes('market') && (
+            <>
+              <Menu />
+              <User />
+            </>
+          )}
           {checkCurrentPage()}
         </main>
       )}
