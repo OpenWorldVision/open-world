@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import style from './Mining.module.css'
 import { Button } from '@chakra-ui/react'
 
@@ -17,19 +17,24 @@ type Props = {
   isOpen: boolean
   toggleModal: () => void
   toggleLoadingModal: (boolean) => void
+  updateInventory: () => void
 }
 
 export default function MiningModal(props: Props) {
-  const { isOpen, toggleModal, toggleLoadingModal } = props
+  const { isOpen, toggleModal, toggleLoadingModal, updateInventory } = props
 
   const [isStartQuest, setIsStartQuest] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
   const [canFinish, setCanFinish] = useState(false)
   const [duration, setDuration] = useState(0)
-  const [miningInterval, setMiningInterval] = useState(null)
+  const [requireStamina, setRequireStamina] = useState(0)
+  const [countDownStart, setCountDownStart] = useState(false)
   const [timeLeft, setTimeLeft] = useState(0)
 
+  const miningInterval = useRef<ReturnType<typeof setInterval>>(null)
+
   const startQuest = useCallback(async () => {
+    setTimeLeft(duration)
     toggleLoadingModal(true)
     const mining = await startMining()
     setTimeout(() => {
@@ -37,51 +42,43 @@ export default function MiningModal(props: Props) {
     }, 1000)
     if (mining !== null) {
       const data = await checkIfMiningFinish()
+      setCountDownStart(true)
       setIsFinished(data.finish)
       setIsStartQuest(true)
       setCanFinish(false)
-
-      setMiningInterval(
-        setInterval(() => {
-          if (timeLeft > 0) {
-            setTimeLeft(timeLeft - 1)
-          }
-        }, 1000)
-      )
-
-      setTimeout(() => {
-        clearInterval(miningInterval)
-        setCanFinish(true)
-      }, duration)
     } else {
       toggleLoadingModal(false)
     }
   }, [])
 
-  const checkFinishFishingQuest = useCallback(async () => {
+  useEffect(() => {
+    if (countDownStart) {
+      miningInterval.current = setInterval(() => {
+        setTimeLeft((timeLeft) => timeLeft - 1)
+      }, 1000)
+    }
+  }, [countDownStart])
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      setCanFinish(true)
+      clearInterval(miningInterval.current)
+      setCountDownStart(false)
+    }
+  }, [timeLeft])
+
+  const checkFinishMiningQuest = useCallback(async () => {
     const data = await checkIfMiningFinish()
     const NOW = new Date().getTime()
-    const endTime = parseInt(data?.startTime) + duration * 1000
+    const endTime = (parseInt(data?.startTime) + duration * 1000) * 1000
 
     if (endTime <= NOW && !data.finish) {
-      setTimeLeft(0)
+      // setTimeLeft(0)
       setCanFinish(true)
     } else {
-      setTimeLeft(endTime - NOW)
+      setTimeLeft(Math.round((endTime - NOW) / 1000000))
+      setCountDownStart(true)
       setCanFinish(false)
-
-      setTimeout(() => {
-        clearInterval(miningInterval)
-        setCanFinish(true)
-      }, timeLeft)
-
-      setMiningInterval(
-        setInterval(() => {
-          if (timeLeft > 0) {
-            setTimeLeft(timeLeft - 1)
-          }
-        }, 1000)
-      )
     }
   }, [])
 
@@ -89,8 +86,10 @@ export default function MiningModal(props: Props) {
     toggleLoadingModal(true)
     const finish = await finishMining()
     if (finish) {
+      updateInventory()
       setIsStartQuest(false)
       setIsFinished(true)
+      setTimeLeft(duration)
     }
     toggleLoadingModal(false)
   }, [])
@@ -105,11 +104,11 @@ export default function MiningModal(props: Props) {
     toggleLoadingModal(true)
     const checkIfFinish = await checkIfMiningFinish()
     const data = await fetchMiningQuestData()
-    const duration = await data.duration
-    setDuration(duration)
-    setTimeLeft(duration)
 
-    checkFinishFishingQuest()
+    setDuration(data.duration)
+    setRequireStamina(data.requireStamina)
+
+    checkFinishMiningQuest()
 
     if (checkIfFinish.startTime === '0') {
       setIsFinished(false)
@@ -126,24 +125,23 @@ export default function MiningModal(props: Props) {
   }, [])
 
   return (
-    <div
-      className={`${style.miningOverlay} ${isOpen && style.active} overlay`}
-    >
+    <div className={`${style.miningOverlay} ${isOpen && style.active} overlay`}>
       {!isFinished ? (
         <div className={style.frameMining}>
           <div className={style.frameHead}>
             <Button className={style.infoBtn}></Button>
-            <Button
-              className={style.exitBtn}
-              onClick={toggleModal}
-            ></Button>
+            <Button className={style.exitBtn} onClick={toggleModal}></Button>
           </div>
           <div className={style.miningBody}>
             <div className={style.artItem}></div>
           </div>
           <div className={style.miningFooter}>
             {!isStartQuest ? (
-              <MiningQuest startQuest={startQuest} />
+              <MiningQuest
+                duration={duration}
+                requireStamina={requireStamina}
+                startQuest={startQuest}
+              />
             ) : (
               <MiningWait
                 isStartQuest={isStartQuest}

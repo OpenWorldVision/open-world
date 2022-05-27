@@ -1,14 +1,20 @@
 import { Button } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCallback, useEffect, useState } from 'react'
-import { finishFishing, startFishing } from 'utils/professionContract'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import {
+  checkIfFishingFinish,
+  fetchFishingQuestData,
+  finishFishing,
+  startFishing,
+} from 'utils/professionContract'
 import styles from './fishingModal.module.css'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   isOpen: boolean
   toggleModal: () => void
-  haveQuestUnfinish: boolean
+  toggleLoadingModal: (boolean) => void
+  updateInventory: () => void
 }
 
 const TYPE_OF_MODAL = {
@@ -18,9 +24,32 @@ const TYPE_OF_MODAL = {
 }
 
 function FishingModal(props: Props) {
-  const { isOpen, toggleModal, haveQuestUnfinish } = props
+  const { isOpen, toggleLoadingModal, toggleModal, updateInventory } = props
   const [typeofModal, setTypeOfModal] = useState(TYPE_OF_MODAL.START)
-  const [isLoading, setIsLoading] = useState(false)
+  const [requireStamina, setRequireStamina] = useState(0)
+  const [duration, setDuration] = useState(0)
+
+  const [canFinish, setCanFinish] = useState(false)
+  const [countDownStart, setCountDownStart] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(0)
+
+  const miningInterval = useRef<ReturnType<typeof setInterval>>(null)
+
+  const startQuest = useCallback(async () => {
+    setTimeLeft(duration)
+    toggleLoadingModal(true)
+    const fishing = await startFishing()
+    setTimeout(() => {
+      toggleLoadingModal(false)
+    }, 1000)
+    if (fishing !== null) {
+      setCountDownStart(true)
+      setTypeOfModal(TYPE_OF_MODAL.WAITING)
+      setCanFinish(false)
+    } else {
+      toggleLoadingModal(false)
+    }
+  }, [])
 
   const handleExitBtn = () => {
     toggleModal()
@@ -28,32 +57,71 @@ function FishingModal(props: Props) {
   }
 
   useEffect(() => {
-    if (haveQuestUnfinish) {
-      setTypeOfModal(TYPE_OF_MODAL.WAITING)
+    if (countDownStart) {
+      miningInterval.current = setInterval(() => {
+        setTimeLeft((timeLeft) => timeLeft - 1)
+      }, 1000)
+    }
+  }, [countDownStart])
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      setCanFinish(true)
+      clearInterval(miningInterval.current)
+      setCountDownStart(false)
+    }
+  }, [timeLeft])
+
+  const checkFinishFishingQuest = useCallback(async () => {
+    const data = await checkIfFishingFinish()
+    const NOW = new Date().getTime()
+    const endTime = (parseInt(data?.startTime) + duration * 1000) * 1000
+
+    if (endTime <= NOW && !data.finish) {
+      setCanFinish(true)
     } else {
-      setTypeOfModal(TYPE_OF_MODAL.START)
+      setTimeLeft(Math.round((endTime - NOW) / 1000000))
+      setCountDownStart(true)
+      setCanFinish(false)
     }
-  }, [haveQuestUnfinish])
+  }, [])
 
-  const _startFishing = async () => {
-    //
-    setIsLoading(true)
-    const dataFishing = await startFishing()
-    setIsLoading(false)
-    if (dataFishing) {
+  const handleFinish = useCallback(async () => {
+    toggleLoadingModal(true)
+    const finish = await finishFishing()
+    if (finish) {
+      updateInventory()
+      setTypeOfModal(TYPE_OF_MODAL.FINISH)
+      setTimeLeft(duration)
+    }
+    toggleLoadingModal(false)
+  }, [])
+
+  const confirmResult = useCallback(() => {
+    setTypeOfModal(TYPE_OF_MODAL.START)
+    toggleModal()
+  }, [])
+
+  const initialize = async () => {
+    toggleLoadingModal(true)
+    const checkIfFinish = await checkIfFishingFinish()
+    const data = await fetchFishingQuestData()
+    setRequireStamina(data.requireStamina)
+    setDuration(data.duration)
+
+    checkFinishFishingQuest()
+
+    if (checkIfFinish.startTime === '0') {
+      setTypeOfModal(TYPE_OF_MODAL.START)
+    } else {
       setTypeOfModal(TYPE_OF_MODAL.WAITING)
     }
-    // set
+    toggleLoadingModal(false)
   }
 
-  const _finishFishing = async () => {
-    setIsLoading(true)
-    const dataFinish = await finishFishing()
-    setIsLoading(false)
-    if (dataFinish) {
-      setTypeOfModal(TYPE_OF_MODAL.FINISH)
-    }
-  }
+  useEffect(() => {
+    initialize()
+  }, [])
 
   const renderText = useCallback(() => {
     switch (typeofModal) {
@@ -78,14 +146,11 @@ function FishingModal(props: Props) {
               />
             </div>
             <div className={styles.noteText}>
-              All the Fish you catch will be stored in your inventory.
+              All the Fishes you catch will be stored in your inventory.
             </div>
             <Button
               className={`btn-chaka ${styles.confirmBtn} ${styles.confirmFinishBtn} click-cursor`}
-              onClick={() => {
-                toggleModal()
-                setTypeOfModal(TYPE_OF_MODAL.START)
-              }}
+              onClick={confirmResult}
             >
               <img
                 src={`/images/professions/openian/confirm-btn.png`}
@@ -104,18 +169,25 @@ function FishingModal(props: Props) {
                 <div className={styles.valueText}>
                   Openian is on Fishing Quest. Be patient!
                 </div>
-                <div className={styles.titleText}>Duration</div>
-                <div className={styles.valueText}>20 second</div>
+                <div className={styles.titleText}>Time Left</div>
+                <div className={styles.valueText}>{timeLeft} seconds</div>
               </div>
             </div>
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
-              onClick={_finishFishing}
+              onClick={handleFinish}
             >
-              <img
-                src={`/images/professions/openian/finishFishing.png`}
-                alt="Confirm"
-              />
+              {canFinish ? (
+                <img
+                  src={`/images/professions/openian/finishFishing.png`}
+                  alt="Fisnish"
+                />
+              ) : (
+                <img
+                  src={`/images/professions/openian/finish-disable-btn.png`}
+                  alt="Fisnish"
+                />
+              )}
             </Button>
           </div>
         )
@@ -128,30 +200,31 @@ function FishingModal(props: Props) {
                 <div className={styles.titleText}>Description</div>
                 <div className={styles.valueText}>
                   Fish is the main ingredient for making Sushi and Suppliers are
-                  paying good money for them. Let’s go catch some !!!
+                  paying good money for them. Let&apos;s go catch some !!!
                 </div>
                 <div className={styles.titleText}>Base Duration</div>
-                <div className={styles.valueText}>20 second</div>
+                <div className={styles.valueText}>{duration} second</div>
                 <div className={styles.titleText}>Stamina Per Attemp</div>
                 <div className={styles.valueText}>
-                  7 Stamina <div className={styles.iconStamina}></div>
+                  {requireStamina} Stamina{' '}
+                  <div className={styles.iconStamina}></div>
                 </div>
               </div>
             </div>
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
-              onClick={_startFishing}
+              onClick={startQuest}
             >
               <img
                 src={`/images/professions/openian/startFishing.png`}
-                alt="Confirm"
+                alt="Start Quest"
               />
             </Button>
           </div>
         )
       }
     }
-  }, [typeofModal, haveQuestUnfinish])
+  }, [typeofModal, timeLeft, duration, requireStamina, canFinish])
 
   return (
     <div
