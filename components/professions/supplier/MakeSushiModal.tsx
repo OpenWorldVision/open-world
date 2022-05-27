@@ -93,10 +93,7 @@ function MakeSushiModal(props: Props) {
               <div className={styles.titleText}>Duration</div>
               <div className={styles.valueText}>20 second</div>
             </div>
-            <Button
-              className={`btn-chaka ${styles.confirmBtn} click-cursor`}
-              onClick={_finishFishing}
-            >
+            <Button className={`btn-chaka ${styles.confirmBtn} click-cursor`}>
               <img
                 src={`/images/professions/openian/finishFishing.png`}
                 alt="Confirm"
