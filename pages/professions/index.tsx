@@ -3,10 +3,12 @@ import ProfessionsSelection from '@components/professions/ProfessionsSelection'
 import Openian from '@components/professions/openian/Openian'
 import { useSelector } from 'react-redux'
 import Head from 'next/head'
-
+import Supplier from './supplier'
 
 function Professions() {
-  const profile = useSelector((state: any) => { return state.ProfileStore.profile })
+  const profile = useSelector((state: any) => {
+    return state.ProfileStore.profile
+  })
 
   return (
     <>
@@ -15,12 +17,9 @@ function Professions() {
       </Head>
       <div className={`${style.professionsOverlay} overlay game-scroll-bar`}>
         <div className={style.professionsContainer}>
-          {profile?._profession === '0' &&
-            <ProfessionsSelection />
-          }
-          {profile?._profession === '1' &&
-            <Openian />
-          }
+          {profile?._profession === '0' && <ProfessionsSelection />}
+          {profile?._profession === '1' && <Openian />}
+          {profile?._profession === '2' && <Supplier />}
         </div>
       </div>
     </>

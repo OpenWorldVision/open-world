@@ -458,12 +458,7 @@
           },
           "t_enum(Profession)1033": {
             "label": "enum Profiles.Profession",
-            "members": [
-              "UNKNOWN",
-              "OPENER",
-              "SUPPLIER",
-              "BLACKSMITH"
-            ]
+            "members": ["UNKNOWN", "OPENER", "SUPPLIER", "BLACKSMITH"]
           },
           "t_mapping(t_uint256,t_uint256)": {
             "label": "mapping(uint256 => uint256)"
@@ -998,12 +993,7 @@
           },
           "t_enum(Profession)1480": {
             "label": "enum Profiles.Profession",
-            "members": [
-              "UNKNOWN",
-              "OPENER",
-              "SUPPLIER",
-              "BLACKSMITH"
-            ]
+            "members": ["UNKNOWN", "OPENER", "SUPPLIER", "BLACKSMITH"]
           },
           "t_mapping(t_uint256,t_uint256)": {
             "label": "mapping(uint256 => uint256)"

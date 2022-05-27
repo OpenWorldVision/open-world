@@ -11,7 +11,7 @@ type Props = {
   haveQuestUnfinish: boolean
 }
 
-const TYPE_OF_MODAL = {
+export const TYPE_OF_MODAL = {
   START: 'START',
   WAITING: 'WAITING',
   FINISH: 'FINISH',
@@ -61,10 +61,12 @@ function FishingModal(props: Props) {
         return (
           <div className={styles.descriptionFinish}>
             <h3 className={styles.sellBoard}>
-              {typeofModal === TYPE_OF_MODAL.FINISH && <img
-                src='/images/professions/openian/questFinish.png'
-                alt="Fish board"
-              />}
+              {typeofModal === TYPE_OF_MODAL.FINISH && (
+                <img
+                  src="/images/professions/openian/questFinish.png"
+                  alt="Fish board"
+                />
+              )}
             </h3>
             <div className={styles.titleTextFinish}>You Caught</div>
             <div className={styles.rowView}>
@@ -105,7 +107,6 @@ function FishingModal(props: Props) {
                 <div className={styles.titleText}>Duration</div>
                 <div className={styles.valueText}>20 second</div>
               </div>
-
             </div>
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
@@ -126,13 +127,15 @@ function FishingModal(props: Props) {
               <div className={styles.content}>
                 <div className={styles.titleText}>Description</div>
                 <div className={styles.valueText}>
-                  Fish is the main ingredient for making Sushi and Suppliers are paying
-                  good money for them. Let’s go catch some !!!
+                  Fish is the main ingredient for making Sushi and Suppliers are
+                  paying good money for them. Let’s go catch some !!!
                 </div>
                 <div className={styles.titleText}>Base Duration</div>
                 <div className={styles.valueText}>20 second</div>
                 <div className={styles.titleText}>Stamina Per Attemp</div>
-                <div className={styles.valueText}>7 Stamina <div className={styles.iconStamina}></div></div>
+                <div className={styles.valueText}>
+                  7 Stamina <div className={styles.iconStamina}></div>
+                </div>
               </div>
             </div>
             <Button
@@ -180,7 +183,12 @@ function FishingModal(props: Props) {
             </h3>
           )} */}
 
-          <Button className={`${styles.closeBtn} click-cursor ${typeofModal !== TYPE_OF_MODAL.FINISH && styles.btnFishing}`} onClick={handleExitBtn}>
+          <Button
+            className={`${styles.closeBtn} click-cursor ${
+              typeofModal !== TYPE_OF_MODAL.FINISH && styles.btnFishing
+            }`}
+            onClick={handleExitBtn}
+          >
             <FontAwesomeIcon icon={faTimesCircle} />
           </Button>
 
