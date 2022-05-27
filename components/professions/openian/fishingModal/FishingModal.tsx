@@ -59,7 +59,9 @@ function FishingModal(props: Props) {
   useEffect(() => {
     if (countDownStart) {
       miningInterval.current = setInterval(() => {
-        setTimeLeft((timeLeft) => timeLeft - 1)
+        if (timeLeft > 0) {
+          setTimeLeft((timeLeft) => timeLeft - 1)
+        }
       }, 1000)
     }
   }, [countDownStart])

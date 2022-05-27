@@ -54,7 +54,9 @@ export default function MiningModal(props: Props) {
   useEffect(() => {
     if (countDownStart) {
       miningInterval.current = setInterval(() => {
-        setTimeLeft((timeLeft) => timeLeft - 1)
+        if (timeLeft > 0) {
+          setTimeLeft((timeLeft) => timeLeft - 1)
+        }
       }, 1000)
     }
   }, [countDownStart])
