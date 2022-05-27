@@ -158,3 +158,5 @@ export const sellHammer = async (arrayHammer: Array<number>, price: number) => {
     return false
   }
 }
+
+

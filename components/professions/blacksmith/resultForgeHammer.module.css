@@ -87,29 +87,31 @@
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 500;
-  font-size: 30px;
+  font-size: 45px;
   line-height: 89px;
 }
 
 .received {
   display: flex;
   justify-content: center;
+  align-items: center;
+  font-size: 25px;
 }
 
 .hammer {
   background-image: url('/images/professions/blacksmith/hammer.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  width: 30px;
-  height: 30px;
-  margin-left: 6px;
+  width: 60px;
+  height: 60px;
+  margin-left: 10px;
 }
 
 .helpText {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 29px;
 }
 
