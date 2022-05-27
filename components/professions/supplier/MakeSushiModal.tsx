@@ -22,7 +22,8 @@ const TYPE_OF_MODAL = {
 function MakeSushiModal(props: Props) {
   const { isOpen, toggleModal, listFishArray, onStartCook, typeModal } = props
 
-  const [valueFish, setValueFish] = useState(2)
+  const [valueFish, setValueFish] = useState(1)
+  const [errorText, setErrorText] = useState('')
 
   const startCook = useCallback(async () => {
     //
@@ -35,25 +36,26 @@ function MakeSushiModal(props: Props) {
     //
   }
 
-  const onChangeValue = useCallback((event) => {
-    const numberFish = parseInt(event?.target?.value)
-    setValueFish(numberFish)
-  }, [])
-
   const onPressUp = useCallback(() => {
-    const newValue = valueFish + 2
+    setErrorText('')
+    const newValue = valueFish + 1
     if (newValue > listFishArray?.length) {
-      return
+      setErrorText(`You have only ${listFishArray?.length} Fishes`)
+      // return
     }
+
     setValueFish(newValue)
   }, [valueFish, listFishArray])
   const onPressDown = useCallback(() => {
-    if (valueFish / 2 === 0) {
+    if (valueFish === 0) {
       return
     }
-    const newValue = valueFish - 2
+    const newValue = valueFish - 1
     setValueFish(newValue)
-  }, [valueFish])
+    if (newValue <= listFishArray?.length) {
+      setErrorText('')
+    }
+  }, [valueFish, listFishArray?.length])
 
   const renderText = useCallback(() => {
     switch (typeModal) {
@@ -130,7 +132,7 @@ function MakeSushiModal(props: Props) {
                       color={'#fff'}
                       width={100}
                       height={50}
-                      value={valueFish / 2 || 0}
+                      value={valueFish * 2}
                       backgroundColor={'#3d2316'}
                       disabled={true}
                     />
@@ -174,10 +176,10 @@ function MakeSushiModal(props: Props) {
                       color={'#fff'}
                       width={100}
                       height={50}
-                      value={valueFish}
-                      onChange={onChangeValue}
                       defaultValue={valueFish}
                       backgroundColor={'#3d2316'}
+                      disabled={true}
+                      value={valueFish}
                     />
                     <div className={styles.filterButtonContainerNoOpacity}>
                       <div className={styles.buttonQuantity}>
@@ -205,6 +207,9 @@ function MakeSushiModal(props: Props) {
                     </div>
                   </div>
                 </div>
+                {errorText?.length > 0 ? (
+                  <div className={styles.errorText}>{errorText}</div>
+                ) : null}
                 <div className={styles.titleText}>Note</div>
                 <div className={styles.valueText}>1 Fish Makes 2 sushi</div>
               </div>
@@ -213,7 +218,7 @@ function MakeSushiModal(props: Props) {
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
               onClick={startCook}
-              disabled={valueFish === 0}
+              disabled={valueFish === 0 || errorText?.length > 0}
             >
               <img
                 src={`/images/professions/suppliers/buttonCook.png`}
@@ -230,8 +235,8 @@ function MakeSushiModal(props: Props) {
     valueFish,
     onPressUp,
     onPressDown,
-    onChangeValue,
     startCook,
+    errorText,
   ])
 
   return (

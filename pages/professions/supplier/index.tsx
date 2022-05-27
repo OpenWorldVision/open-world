@@ -5,7 +5,11 @@ import FishingModal, {
 } from '@components/professions/openian/FishingModal'
 import { useCallback, useEffect, useState } from 'react'
 import MakeSushiModal from '@components/professions/supplier/MakeSushiModal'
-import { getNFTsByTrait } from 'utils/itemContract'
+import {
+  getApprovalAll,
+  getNFTsByTrait,
+  setApprovedAll,
+} from 'utils/itemContract'
 import { dispatchMakeSushi } from '../../../utils/professionContract'
 import SellSushiModal from '@components/professions/supplier/SellSushiModal'
 import { sellSushi } from 'utils/NFTMarket'
@@ -18,10 +22,30 @@ function Supplier() {
   const [listSushi, setListSushi] = useState([])
   const [typeModal, setTypeModal] = useState(TYPE_OF_MODAL.START)
   const [isLoading, setIsLoading] = useState(false)
+  const getListItemByTrait = useCallback(async () => {
+    const data = await getNFTsByTrait(1)
+    setListFish(data)
+    return data
+  }, [])
+  const getListSushi = useCallback(async () => {
+    const listSushi = await getNFTsByTrait(4)
+    setListSushi(listSushi)
+  }, [])
   useEffect(() => {
     //get nfts by trait
     getListItemByTrait()
     getListSushi()
+  }, [getListItemByTrait, getListSushi])
+
+  const setApproved = async () => {
+    await setApprovedAll()
+  }
+  const getApprovedStatus = useCallback(async () => {
+    const isApproved = await getApprovalAll()
+    if (!isApproved) {
+      setApproved()
+    }
+    return isApproved
   }, [])
 
   const _onStartCook = useCallback(async () => {
@@ -34,28 +58,25 @@ function Supplier() {
       setIsLoading(false)
     }
     getListItemByTrait()
-  }, [listFish])
+  }, [getListItemByTrait, listFish])
 
-  const _onSellSushi = useCallback(async (valueSushi, quantitySushi) => {
-    setIsLoading(true)
-    const data = await sellSushi(listSushi[0], valueSushi)
-    if (data) {
-      getListSushi()
-      setIsLoading(false)
-    } else {
-      setIsLoading(false)
-    }
-  }, [])
+  const _onSellSushi = useCallback(
+    async (valueSushi) => {
+      getApprovedStatus()
+      setTypeModal(TYPE_OF_MODAL.START)
+      setIsLoading(true)
+      const data = await sellSushi(listSushi[0], valueSushi)
+      if (data) {
+        setTypeModal(TYPE_OF_MODAL.FINISH)
+        getListSushi()
+        setIsLoading(false)
+      } else {
+        setIsLoading(false)
+      }
+    },
+    [getApprovedStatus, getListSushi, listSushi]
+  )
 
-  const getListItemByTrait = useCallback(async () => {
-    const data = await getNFTsByTrait(1)
-    setListFish(data)
-    return data
-  }, [])
-  const getListSushi = useCallback(async () => {
-    const listSushi = await getNFTsByTrait(4)
-    setListSushi(listSushi)
-  }, [])
   const toggleModal = useCallback(
     (type) => {
       setTypeModal(TYPE_OF_MODAL.START)
@@ -65,7 +86,7 @@ function Supplier() {
         setShowSellSushi(!showSellSushi)
       }
     },
-    [showMakeSushi, showSellSushi, typeModal]
+    [showMakeSushi, showSellSushi]
   )
 
   const renderModal = useCallback(() => {
@@ -87,7 +108,16 @@ function Supplier() {
         />
       </div>
     )
-  }, [showMakeSushi, showSellSushi, listFish, typeModal])
+  }, [
+    showMakeSushi,
+    listFish,
+    _onStartCook,
+    typeModal,
+    showSellSushi,
+    listSushi,
+    _onSellSushi,
+    toggleModal,
+  ])
   return (
     <div>
       <Head>

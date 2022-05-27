@@ -51,7 +51,7 @@ export const getFinishFishingQuest = async () => {
       .call({ from: accounts[0] })
     const fishingQuest = {
       ...data,
-      duration: parseInt(duration),
+      duration: parseInt(duration) * 1000,
     }
     return fishingQuest
   } catch {

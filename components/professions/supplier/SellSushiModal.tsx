@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, Input } from '@chakra-ui/react'
+import { Button, Input, list } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useState } from 'react'
 import styles from './sellSushi.module.css'
@@ -24,16 +24,17 @@ function SellSushiModal(props: Props) {
 
   const [valueSushi, setValueSushi] = useState(1)
   const [quantitySushi, setQuantitySushi] = useState(1)
-
-  useEffect(() => {
-    //
-  }, [listSushi])
+  const [errorText, setErrorText] = useState('')
 
   const startCook = useCallback(async () => {
+    if (listSushi?.length === 0) {
+      setErrorText(`You don't have any Sushi!`)
+      return
+    }
     //
     onSellSushi(valueSushi, quantitySushi)
     // set
-  }, [onSellSushi, valueSushi, quantitySushi])
+  }, [onSellSushi, valueSushi, quantitySushi, listSushi])
 
   const onChangeValue = useCallback((event) => {
     const valueSushi = parseInt(event?.target?.value)
@@ -50,20 +51,21 @@ function SellSushiModal(props: Props) {
       case TYPE_OF_MODAL.FINISH: {
         return (
           <div className={styles.descriptionFinish}>
-            <div className={styles.titleTextFinish}>You got</div>
+            <div className={styles.titleTextFinish}>SUCCESS</div>
             <div className={styles.rowView}>
-              <div className={styles.valueTextFinish}>x2</div>
+              <div className={styles.noteTextFinish}>
+                {`You sold ${quantitySushi}`}
+              </div>
+
               <img
                 src={`/images/professions/openian/sushiNFT.png`}
                 alt="Confirm"
                 className={styles.fishNFT}
               />
             </div>
-            <div className={styles.noteText}>
-              All the Sushi you make will be stored at your Inventory
-            </div>
+
             <Button
-              className={`btn-chaka ${styles.confirmBtn} click-cursor`}
+              className={`btn-chaka ${styles.confirmBtnFinish} click-cursor`}
               onClick={toggleModal}
             >
               <img
@@ -123,6 +125,10 @@ function SellSushiModal(props: Props) {
                 </div>
               </div>
             </div>
+            {errorText?.length > 0 ? (
+              <div className={styles.errorText}>{errorText}</div>
+            ) : null}
+
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
               onClick={startCook}
@@ -138,10 +144,12 @@ function SellSushiModal(props: Props) {
     }
   }, [
     typeModal,
+    quantitySushi,
     toggleModal,
     onChangeValue,
-    onChangeQuantity,
     valueSushi,
+    onChangeQuantity,
+    errorText,
     startCook,
   ])
 
@@ -154,7 +162,14 @@ function SellSushiModal(props: Props) {
           typeModal !== TYPE_OF_MODAL.FINISH ? styles.modal : styles.modalFinish
         }
       >
-        <Button className={styles.closeBtn} onClick={toggleModal}>
+        <Button
+          className={
+            typeModal !== TYPE_OF_MODAL.FINISH
+              ? styles.closeBtn
+              : styles.closeBtnFinish
+          }
+          onClick={toggleModal}
+        >
           <FontAwesomeIcon icon={faTimesCircle} />
         </Button>
 
