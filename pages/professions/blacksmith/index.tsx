@@ -10,8 +10,9 @@ export default function BlackSmith() {
         initialPositionX={0}
         initialPositionY={0}
         centerOnInit={true}
+        doubleClick={{disabled: true}}
       >
-        <TransformComponent>
+        <TransformComponent wrapperStyle={{ height: '100vh', width: '100vw' }}>
           <div className={styles.blackSmithBg}>
             <Link href="/professions/blacksmith/sellerboard">
               <a className={`${styles.sellHammer} click-cursor`}></a>

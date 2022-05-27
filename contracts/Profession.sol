@@ -105,6 +105,7 @@ contract Profession is AccessControlUpgradeable {
     require(item.get(idUpgrade) == 2 && item.get(idBurn) == 2, 'Not fish');
     item.burn(idBurn);
     item.setTrait(idUpgrade, 3);
+
   }
 
   function makeMultiHammer(uint256[] calldata _ids) public {
@@ -112,6 +113,7 @@ contract Profession is AccessControlUpgradeable {
     for (uint256 index = 0; index < _ids.length; index += 2) {
       makeHammer(_ids[index], _ids[index + 1]);
     }
+
   }
 
   function getFishingQuest(address _account)

@@ -1,10 +1,12 @@
 import { Button } from '@chakra-ui/react'
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import styles from '@components/professions/blacksmith/SellerBoard.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import NotificationSell from '@components/professions/blacksmith/NotificationSell'
 import Link from 'next/link'
+
+import { sellHammer, fetchAmountItemByTrait } from 'utils/blackSmithContract'
 
 function SellModal() {
 
@@ -15,6 +17,17 @@ function SellModal() {
 
   const [isSuccess, setIsSuccess] = useState(false)
   const [isClickConfirm, setIsClickConfirm] = useState(false)
+
+  const [listHammer, setListHammer] = useState([])
+
+  const getListYourHammer = async () => {
+    const listYourHammer = await fetchAmountItemByTrait(3)
+    setListHammer(listYourHammer)
+  }
+
+  useEffect(() => {
+    getListYourHammer()
+  }, [])
 
   const calcTotalAmount = (_price = 1, _setTotalAmount = 1) => {
     setTotalAmount(_price * _setTotalAmount)
@@ -51,29 +64,35 @@ function SellModal() {
   }
 
   const increaseSellingAmount = () => {
-    setSellingAmount(sellingAmount + 1)
-    calcTotalAmount(price, sellingAmount + 1)
+    if (sellingAmount < listHammer.length) {
+      calcTotalAmount(price, sellingAmount + 1)
+      setSellingAmount(sellingAmount + 1)
+    }
   }
 
   const decreaseSellingAmount = () => {
     if (sellingAmount > 0) {
-      setSellingAmount(sellingAmount - 1)
       calcTotalAmount(price, sellingAmount - 1)
+      setSellingAmount(sellingAmount - 1)
     }
   }
 
-  const handleConfirmSeller = () => {
+  const hanleGetAllHammer = () => {
+    calcTotalAmount(price, listHammer.length)
+    setSellingAmount(listHammer.length)
+  }
+
+  const handleConfirmSeller = async () => {
     if (price && sellingAmount) {
       setIsClickConfirm(true)
-      setIsSuccess(true)
       setSellingAmount(0)
       setTotalAmount(0)
     }
   }
 
-  const hiddenNotification = () => {
+  const hiddenNotification = useCallback(() => {
     setIsClickConfirm(false)
-  }
+  }, [])
 
   return (
     <div className={styles.sellerBoardOverlay}>
@@ -136,7 +155,7 @@ function SellModal() {
               >
                 +
               </Button>
-              <Button className="btn-chaka click-cursor">All</Button>
+              <Button onClick={hanleGetAllHammer} className="btn-chaka click-cursor">All</Button>
             </div>
           </div>
           <div className={styles.totalAmount}>
@@ -153,7 +172,12 @@ function SellModal() {
           </Button>
         </div>
       </div>}
-      {isClickConfirm && <NotificationSell hiddenNotification={hiddenNotification} />}
+      {isClickConfirm && <NotificationSell
+        hiddenNotification={hiddenNotification}
+        listHammer={listHammer}
+        sellingAmount={sellingAmount}
+        price={price}
+        />}
     </div>
   )
 }
