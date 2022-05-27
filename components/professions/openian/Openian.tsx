@@ -118,7 +118,7 @@ function Openian() {
 
     setIsFishing(!isFishing)
   }, [isFishing])
-  
+
   return (
     <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
       <TransformWrapper
@@ -145,8 +145,7 @@ function Openian() {
               <div
                 className={`${styles.openianSellBtn} click-cursor`}
                 onClick={() => toggleSellModal(true)}
-              >
-              </div>
+              ></div>
             </div>
           </div>
         </TransformComponent>
