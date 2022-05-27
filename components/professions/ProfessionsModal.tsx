@@ -12,6 +12,7 @@ import {
   activateProfession,
 } from '../../utils/professions'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
+import LoadingModal from '@components/LoadingModal'
 
 const npcs = ['openian', 'supplier', 'blacksmith']
 
@@ -38,7 +39,7 @@ const npcText = [
 
 type Props = {
   npc: string
-  getResult: (boolean) => void
+  getResult: (any) => void
   toggleLoadingModal: (boolean) => void
   closeModal: () => void
 }
@@ -50,13 +51,7 @@ function ProfessionsModal(props: Props) {
   const [canActivate, setCanActivate] = useState(false)
   const [currentOPEN, setCurrentOPEN] = useState(0)
   const [requireBalance, setRequireBalance] = useState(0)
-  const dispatch = useDispatch()
-
-  const getContractProfile = async () => {
-    const _profile = await getProfile()
-
-    dispatch(setProfile({ profile: _profile }))
-  }
+  const [isLoading, setIsLoading] = useState(false)
 
   const getRequireBalanceProfession = async () => {
     const balance = await fetchRequireBalanceProfession()
@@ -72,20 +67,11 @@ function ProfessionsModal(props: Props) {
 
   const onActivateProfession = async () => {
     if (canActivate) {
-      toggleLoadingModal(true)
+      setIsLoading(true)
       const professionNft = npcs.indexOf(npc) + 1
       const check = await activateProfession(professionNft)
-      if (check) {
-        await getContractProfile()
-        getResult(check)
-        toggleLoadingModal(false)
-      } else {
-        setTimeout(() => {
-          toggleLoadingModal(false)
-        }, 5000)
-      }
-    } else {
-      getResult(false)
+      setIsLoading(false)
+      getResult(check)
     }
   }
 
@@ -119,88 +105,91 @@ function ProfessionsModal(props: Props) {
   useEffect(() => {
     getCurrentNpcText()
     initialize()
-  }, [])
+  }, [npc])
 
   return (
-    <div
-      className={`${mainStyle.professionsOverlay} ${style.npcOverlay} overlay game-scroll-bar`}
-    >
-      <div className={style.npcContainer}>
-        <Grid
-          templateRows="repeat(4, 1fr)"
-          templateColumns={{
-            base: 'repeat(1, 1fr)',
-            xl: 'repeat(3, 1fr)',
-          }}
-          gap={10}
-        >
-          <GridItem
-            className={style.npcCardWrap}
-            rowSpan={4}
-            colSpan={{
-              base: 2,
-              xl: 1,
+    <>
+      {isLoading && <LoadingModal />}
+      <div
+        className={`${mainStyle.professionsOverlay} ${style.npcOverlay} overlay game-scroll-bar`}
+      >
+        <div className={style.npcContainer}>
+          <Grid
+            templateRows="repeat(4, 1fr)"
+            templateColumns={{
+              base: 'repeat(1, 1fr)',
+              xl: 'repeat(3, 1fr)',
             }}
-            h={{
-              base: 590,
-              md: 720,
-            }}
-            w={{
-              xl: 430,
-            }}
+            gap={10}
           >
-            <div className={`${style.npcCard} ${style[`${npc}NPC`]}`}></div>
-          </GridItem>
-          <GridItem rowSpan={3} colSpan={2}>
-            <div className={`${inheritStyle.professionsText} ${style.npcText}`}>
-              <span>
-                {currentNpcText.map((line) => (
-                  <>
-                    {line} <br />
-                  </>
-                ))}
-              </span>
+            <GridItem
+              className={style.npcCardWrap}
+              rowSpan={4}
+              colSpan={{
+                base: 2,
+                xl: 1,
+              }}
+              h={{
+                base: 590,
+                md: 720,
+              }}
+              w={{
+                xl: 430,
+              }}
+            >
+              <div className={`${style.npcCard} ${style[`${npc}NPC`]}`}></div>
+            </GridItem>
+            <GridItem rowSpan={3} colSpan={2}>
+              <div className={`${inheritStyle.professionsText} ${style.npcText}`}>
+                <span>
+                  {currentNpcText.map((line) => (
+                    <>
+                      {line} <br />
+                    </>
+                  ))}
+                </span>
 
-              <span>You can buy NFT {npc.charAt(0).toUpperCase() + npc.slice(1)} at Castle / Shop</span>
+                <span>You can buy NFT {npc.charAt(0).toUpperCase() + npc.slice(1)} at Castle / Shop</span>
 
-              <div className={style.btnGroup}>
-                <Button
-                  className={`${style.btn} ${style.acceptBtn} ${
-                    haveNFT && style.active
-                  } click-cursor`}
-                >
-                  <span>
-                    Have {npc !== 'openian' ? 'a' : 'an'} {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
-                  </span>
-                </Button>
-                {npc !== 'openian' && (
+                <div className={style.btnGroup}>
                   <Button
                     className={`${style.btn} ${style.acceptBtn} ${
-                      currentOPEN >= requireBalance && style.active
+                      haveNFT && style.active
                     } click-cursor`}
                   >
-                    <span>Have {requireBalance} $OPEN</span>
+                    <span>
+                      Have {npc !== 'openian' ? 'a' : 'an'} {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
+                    </span>
                   </Button>
-                )}
+                  {npc !== 'openian' && (
+                    <Button
+                      className={`${style.btn} ${style.acceptBtn} ${
+                        currentOPEN >= requireBalance && style.active
+                      } click-cursor`}
+                    >
+                      <span>Have {requireBalance} $OPEN</span>
+                    </Button>
+                  )}
+                </div>
               </div>
-            </div>
-          </GridItem>
-          <GridItem colSpan={2} className={style.activateWrap}>
-            <Button
-              className={`btn-chaka ${style.activateBtn} ${
-                canActivate && style.active
-              } click-cursor`}
-              onClick={onActivateProfession}
-            ></Button>
-          </GridItem>
-        </Grid>
-      </div>
+            </GridItem>
+            <GridItem colSpan={2} className={style.activateWrap}>
+              <Button
+                className={`btn-chaka ${style.activateBtn} ${
+                  canActivate && style.active
+                } click-cursor`}
+                onClick={onActivateProfession}
+              ></Button>
+            </GridItem>
+          </Grid>
+        </div>
 
-      <div
-        className={`${inheritStyle.backBtn} click-cursor`}
-        onClick={closeModal}
-      ></div>
-    </div>
+        <div
+          className={`${inheritStyle.backBtn} click-cursor`}
+          onClick={closeModal}
+        ></div>
+      </div>
+    </>
   )
 }
 

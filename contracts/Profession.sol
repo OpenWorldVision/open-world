@@ -51,7 +51,7 @@ contract Profession is AccessControlUpgradeable {
   function finishFishing() public returns (bool) {
     (uint256 startTime, bool finish) = getFishingQuest(msg.sender);
     require(!finish, 'This quest is finish');
-    require(startTime.add(fishingDuration) >= block.timestamp, 'Wait more');
+    require(block.timestamp >= startTime.add(fishingDuration), 'Wait more');
     item.mint(msg.sender, 1);
     item.mint(msg.sender, 1);
     openianFishingQuest[msg.sender] = Quest(0, true);
@@ -71,34 +71,47 @@ contract Profession is AccessControlUpgradeable {
   function finishMining() public returns (bool) {
     (uint256 startTime, bool finish) = getMiningQuest(msg.sender);
     require(!finish, 'This quest is finish');
-    require(startTime.add(fishingDuration) >= block.timestamp, 'Wait more');
+    require(block.timestamp >= startTime.add(fishingDuration), 'Wait more');
     item.mint(msg.sender, 2);
     item.mint(msg.sender, 2);
     openianMiningQuest[msg.sender] = Quest(0, true);
     return true;
   }
 
-  function makeSushi() public {
+  function makeSushi(uint256 idUpgrade, uint256 idBurn) public {
     require(
-      item.balanceOf(msg.sender) >= fishRequireMakeSushi,
-      'Not enough fish'
+      item.ownerOf(idUpgrade) == msg.sender &&
+        item.ownerOf(idBurn) == msg.sender,
+      'Not owner of token'
     );
-    uint256[] memory okIds = new uint256[](2);
-    for (uint256 i; i < item.balanceOf(msg.sender); i++) {
-      if (okIds.length == 2) {
-        return;
-      }
-      uint256 tokenId = item.tokenOfOwnerByIndex(msg.sender, i);
+    require(item.get(idUpgrade) == 1 && item.get(idBurn) == 1, 'Not fish');
+    item.burn(idBurn);
+    item.setTrait(idUpgrade, 4);
+  }
 
-      if (item.get(tokenId) == 1) {
-        okIds[i] = tokenId;
-      }
+  function makeMultiSushi(uint256[] calldata _ids) public {
+    require(_ids.length > 2 && _ids.length.mod(2) == 0, 'Invalid');
+    for (uint256 index = 0; index < _ids.length; index += 2) {
+      makeSushi(_ids[index], _ids[index + 1]);
     }
+  }
 
-    if (okIds.length < 2) {
-      return;
+  function makeHammer(uint256 idUpgrade, uint256 idBurn) public {
+    require(
+      item.ownerOf(idUpgrade) == msg.sender &&
+        item.ownerOf(idBurn) == msg.sender,
+      'Not owner of token'
+    );
+    require(item.get(idUpgrade) == 2 && item.get(idBurn) == 2, 'Not fish');
+    item.burn(idBurn);
+    item.setTrait(idUpgrade, 3);
+  }
+
+  function makeMultiHammer(uint256[] calldata _ids) public {
+    require(_ids.length > 2 && _ids.length.mod(2) == 0, 'Invalid');
+    for (uint256 index = 0; index < _ids.length; index += 2) {
+      makeHammer(_ids[index], _ids[index + 1]);
     }
-    
   }
 
   function getFishingQuest(address _account)
@@ -117,5 +130,15 @@ contract Profession is AccessControlUpgradeable {
   {
     startTime = openianMiningQuest[_account].startTime;
     finish = openianMiningQuest[_account].finish;
+  }
+
+  function setMiningDuration(uint256 _duration) public {
+    require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
+    miningDuration = _duration;
+  }
+
+  function setFishingDuration(uint256 _duration) public {
+    require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
+    fishingDuration = _duration;
   }
 }

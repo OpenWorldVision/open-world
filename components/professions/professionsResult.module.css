@@ -98,6 +98,17 @@
     background-repeat: no-repeat;
 }
 
+.confirmBtn {
+  width: 210px !important;
+  height: 60px !important;
+  position: absolute !important;
+  bottom: 10px !important;
+  z-index: 5 !important;
+  background-image: url('/images/professions/npc/openian/mining/confirm.png') !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}
+
 @media (max-width: 767px) {
   .modal {
     width: 95vw;

@@ -1,0 +1,109 @@
+.modalOverlay {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  z-index: 3;
+}
+
+.modal {
+  padding: 40px 50px 10px;
+  position: relative;
+  width: 700px;
+  height: fit-content;
+  background-image: url('/images/professions/borders/sellBorder-left.png'),
+    url('/images/professions/borders/sellBorder-right.png');
+  background-position: 0, 100%;
+  background-repeat: no-repeat;
+  background-size: 18px 100%;
+  background-color: #3d2316;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 4;
+}
+
+.modal img {
+  width: 100%;
+}
+
+.modal::before,
+.modal::after {
+  position: absolute;
+  content: '';
+}
+
+.modal::before {
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: calc(100% + 12px);
+  background-position: center top, center bottom;
+  background-repeat: no-repeat;
+  background-size: calc(100% - 111px) 19px;
+  background-image: url('/images/professions/borders/sellBorder-top.png'),
+    url('/images/professions/borders/sellBorder-bottom.png');
+}
+
+.modal::after {
+  top: 0;
+  left: 0px;
+  width: 100%;
+  height: calc(100% + 12px);
+  background-position: left top, right top, left bottom, right bottom;
+  background-repeat: no-repeat;
+  background-size: 68px;
+  background-image: url('/images/professions/borders/sellBorder-top-left.png'),
+    url('/images/professions/borders/sellBorder-top-right.png'),
+    url('/images/professions/borders/sellBorder-bottom-left.png'),
+    url('/images/professions/borders/sellBorder-bottom-right.png');
+}
+
+.modalLine {
+  width: 80%;
+  height: 15px;
+  position: absolute;
+  top: -50px;
+  z-index: 1;
+  background-image: url('/images/professions/modalLine.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.modalCotent {
+  padding: 40px 0 200px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 30px;
+}
+
+.modalCotent h4 {
+  font-size: 24px;
+  padding-bottom: 50px;
+}
+
+.board {
+  width: 220px;
+  position: absolute;
+  top: -20px;
+}
+
+.confirmBtn {
+  width: 210px !important;
+  height: 60px !important;
+  position: absolute !important;
+  bottom: 10px !important;
+  z-index: 5 !important;
+  background-image: url('/images/professions/npc/openian/mining/confirm.png') !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}
+
+@media (max-width: 767px) {
+  .modal {
+    width: 95vw;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

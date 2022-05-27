@@ -1,0 +1,99 @@
+.modalOverlay {
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity;
+  transition: all 0.5s linear;
+  padding-top: 108px;
+  justify-content: center;
+  display: flex;
+  background-color: transparent;
+  background-image: url('/images/professions/openian/sell-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.modalOverlay.active {
+  z-index: 2002;
+  opacity: 1;
+  visibility: visible;
+  will-change: opacity;
+  transition: all 0.5s linear;
+}
+
+.modal {
+  padding: 40px 50px 10px;
+  position: relative;
+  width: 700px;
+  height: fit-content;
+  background-image: url('/images/professions/borders/sellBorder-left.png'),
+    url('/images/professions/borders/sellBorder-right.png');
+  background-position: 0, 100%;
+  background-repeat: no-repeat;
+  background-size: 18px 100%;
+  background-color: #3d2316;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+}
+
+.modal img {
+  width: 100%;
+}
+
+.modal::before,
+.modal::after {
+  position: absolute;
+  content: '';
+}
+
+.modal::before {
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: calc(100% + 12px);
+  background-position: center top, center bottom;
+  background-repeat: no-repeat;
+  background-size: calc(100% - 111px) 19px;
+  background-image: url('/images/professions/borders/sellBorder-top.png'),
+    url('/images/professions/borders/sellBorder-bottom.png');
+}
+
+.modal::after {
+  top: 0;
+  left: 0px;
+  width: 100%;
+  height: calc(100% + 12px);
+  background-position: left top, right top, left bottom, right bottom;
+  background-repeat: no-repeat;
+  background-size: 68px;
+  background-image: url('/images/professions/borders/sellBorder-top-left.png'),
+    url('/images/professions/borders/sellBorder-top-right.png'),
+    url('/images/professions/borders/sellBorder-bottom-left.png'),
+    url('/images/professions/borders/sellBorder-bottom-right.png');
+}
+
+.board {
+  width: 220px;
+  position: absolute;
+  top: -20px;
+}
+
+@media (max-width: 1279px) {
+  .modalContainer {
+    grid-auto-flow: dense;
+  }
+}
+
+@media (max-width: 767px) {
+  .modalOverlay {
+    padding-bottom: 300px;
+  }
+  .modal {
+    width: 95vw !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+}
