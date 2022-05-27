@@ -30,7 +30,7 @@
   left: 300px;
   width: 300px;
   height: 400px;
-  cursor: pointer;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,15 +46,28 @@
 
 .containerSupplierMakeBtn {
   position: absolute;
-  top: 340px;
-  right: 700px;
-  width: 300px;
+  top: 240px;
+  right: 300px;
+  width: 500px;
   height: 400px;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  z-index: 9999;
   /* background-color: red; */
+}
+.backBtn {
+  display: block;
+  position: absolute;
+  top: 30px;
+  left: 35px;
+  width: 180px;
+  height: 60px;
+  background-image: url('/images/professions/back-btn.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  /* background-color: red; */
+  z-index: 9999;
 }
 
 .containerSupplierSellBtn {
@@ -63,7 +76,7 @@
   right: 300px;
   width: 300px;
   height: 400px;
-  cursor: pointer;
+
   display: flex;
   flex-direction: column;
   justify-content: center;

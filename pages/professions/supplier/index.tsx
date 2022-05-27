@@ -14,6 +14,7 @@ import { dispatchMakeSushi } from '../../../utils/professionContract'
 import SellSushiModal from '@components/professions/supplier/SellSushiModal'
 import { sellSushi } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
+import Link from 'next/link'
 
 function Supplier() {
   const [showMakeSushi, setShowMakeSushi] = useState(false)
@@ -141,6 +142,9 @@ function Supplier() {
       </div>
       {renderModal()}
       {isLoading ? <LoadingModal /> : null}
+      <Link href="/">
+        <a className={`${styles.backBtn} click-cursor`}></a>
+      </Link>
     </div>
   )
 }

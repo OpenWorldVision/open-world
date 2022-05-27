@@ -38,14 +38,14 @@ export default function ResultForgeHammer(props: Props) {
         </h3>
         <div className={style.frameHead}>
             <Link href="/professions/blacksmith">
-              <a className={style.exitBtn}></a>
+              <a className={`${style.exitBtn} click-cursor`}></a>
             </Link>
           </div>
         <div className={style.content}>
           <div className={style.title}>You Get</div>
           <div className={style.received}>X{hammerReceived} <div className={style.hammer}></div></div>
           <div className={style.helpText}>All the Hammers you make will be stored at your Inventory</div>
-          <Button className={style.btnConfirm}></Button>
+          <Button sx={{cursor: 'url(/images/worldmap/SelectCursor.png), auto !important'}} className={style.btnConfirm}></Button>
         </div>
       </div>
     </>

@@ -14,16 +14,16 @@ export default function BlackSmith() {
         <TransformComponent>
           <div className={styles.blackSmithBg}>
             <Link href="/professions/blacksmith/sellerboard">
-              <a className={`${styles.sellHammer}`}></a>
+              <a className={`${styles.sellHammer} click-cursor`}></a>
             </Link>
             <Link href="/professions/blacksmith/forgehammer">
-              <a className={`${styles.forgeHammer}`}></a>
+              <a className={`${styles.forgeHammer} click-cursor`}></a>
             </Link>
           </div>
         </TransformComponent>
       </TransformWrapper>
       <Link href="/professions">
-        <a className={`${styles.backBtn}`}></a>
+        <a className={`${styles.backBtn} click-cursor`}></a>
       </Link>
     </div>
   )

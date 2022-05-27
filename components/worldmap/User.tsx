@@ -42,7 +42,7 @@ export default function User() {
           }}
         >
           <img
-            src={`./images/profile/hero/${profile?._picId || 'none'}.png`}
+            src={`./images/profile/hero/${(profile?._picId && profile?._picId < 14) ? profile?._picId : 'none'}.png`}
             alt="img"
           />
         </button>
