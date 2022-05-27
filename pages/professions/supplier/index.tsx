@@ -2,7 +2,7 @@ import styles from '../../../components/professions/supplier.module.css'
 import Head from 'next/head'
 import FishingModal, {
   TYPE_OF_MODAL,
-} from '@components/professions/openian/FishingModal'
+} from '@components/professions/openian/fishingModal/FishingModal'
 import { useCallback, useEffect, useState } from 'react'
 import MakeSushiModal from '@components/professions/supplier/MakeSushiModal'
 import {

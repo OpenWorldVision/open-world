@@ -26,13 +26,13 @@ export default function NotificationSell(props: Props) {
   }
 
   useEffect(() => {
-    handleSellHammer()
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 1000)
     return () => {
       clearTimeout(timer)
     }
+    handleSellHammer()
   }, [])
 
   const handleConfirm = useCallback(() => {
