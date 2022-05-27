@@ -39,25 +39,41 @@ export const startFishing = async () => {
   }
 }
 
-export const getFinishFishingQuest = async () => {
+export const fetchFishingQuestData = async () => {
   const contract = await getProfessionContract()
   const accounts = await web3.eth.getAccounts()
 
   try {
+    const requireStamina = await contract.methods
+      .fishingStaminaRequire()
+      .call({ from: accounts[0] })
+
     const duration = await contract.methods
       .fishingDuration()
       .call({ from: accounts[0] })
-    const data = await contract.methods
-      .getFishingQuest(accounts[0])
-      .call({ from: accounts[0] })
+
     const fishingQuest = {
-      ...data,
-      duration: parseInt(duration) * 1000,
+      requireStamina: parseInt(requireStamina),
+      duration: parseInt(duration),
     }
     return fishingQuest
   } catch {
-    return false
+    return {
+      requireStamina: -1,
+      duration: -1,
+    }
   }
+}
+
+export const checkIfFishingFinish = async () => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+
+  const data = await contract.methods
+    .getFishingQuest(accounts[0])
+    .call({ from: accounts[0] })
+
+  return { ...data }
 }
 
 export const finishFishing = async () => {

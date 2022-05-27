@@ -19,7 +19,7 @@
   transition: all 0.5s linear;
 }
 
-.fishingBg{
+.fishingBg {
   background-image: url('/images/professions/openian/game-bg.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -64,7 +64,7 @@
   box-shadow: none !important;
 }
 
-.btnFishing{
+.btnFishing {
   top: 30px !important;
 }
 
@@ -102,7 +102,6 @@
   z-index: 2;
   height: 415px;
 }
-
 
 .modalFinish::before,
 .modalFinish::after {
@@ -150,7 +149,7 @@
   /* margin-top: 24px; */
 }
 
-.imgFishing{
+.imgFishing {
   position: absolute;
   width: 445px !important;
   height: 200px;
@@ -218,6 +217,7 @@
   width: 200px !important;
   height: fit-content !important;
   margin-top: 20px;
+  z-index: 1 !important;
 }
 
 .description {
@@ -246,7 +246,7 @@
   padding-top: 1rem;
 }
 
-.content{
+.content {
   margin-top: 70px;
   width: 100%;
 }
@@ -262,6 +262,7 @@
   color: '#fff';
   font-size: 16px;
   line-height: 24px;
+  margin: 8px 0 10px;
 }
 
 .titleTextFinish {
@@ -295,7 +296,7 @@
   margin-top: 60px;
 }
 
-.iconStamina{
+.iconStamina {
   background-image: url('/images/professions/openian/stamina.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -305,10 +306,9 @@
   margin-top: 2px;
 }
 
-.confirmFinishBtn{
+.confirmFinishBtn {
   margin-top: 20px;
 }
-
 
 @media (max-width: 767px) {
   .modal {
@@ -337,50 +337,49 @@
     width: 130px;
   }
 
-  .description{
+  .description {
     width: 350px;
   }
 
-  .imgFishing{
+  .imgFishing {
     width: 300px !important;
     height: 170px;
     top: -62px;
   }
 
-  .confirmBtn{
+  .confirmBtn {
     width: 150px !important;
     margin-bottom: 20px;
     margin-top: 10px;
   }
 
-  .content{
+  .content {
     padding: 0 20px;
   }
 
-  .modalFinish{
+  .modalFinish {
     width: 100%;
   }
 
-  .descriptionFinish{
+  .descriptionFinish {
     width: 350px !important;
   }
 
-  .titleTextFinish{
+  .titleTextFinish {
     font-size: 26px;
   }
 
-  .valueTextFinish{
+  .valueTextFinish {
     font-size: 22px;
   }
-  
-  .fishNFT{
+
+  .fishNFT {
     width: 40px;
   }
 
-  .noteText{
+  .noteText {
     padding: 0 30px;
     font-size: 18px;
     width: 100%;
   }
-
 }
