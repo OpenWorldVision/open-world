@@ -104,7 +104,7 @@ export default function FoodCourt() {
   }, [])
 
   const handleSelectItemBoard = useCallback((item) => () => {
-    setIsItemBoard(item)
+    setIsItemBoard(item)  
     setListItemsBoard(item === 'sushi' ? listSushi : listFish)
   }, [])
 
@@ -131,7 +131,7 @@ export default function FoodCourt() {
       'itemName': isItemBoard
     })
     toggleBuyModal(true)
-  }, [])
+  }, [isOpenBuyBoard, isItemBoard])
 
   useEffect(() => {
     const checkWindowWidth = () => {

@@ -39,7 +39,7 @@ export default function BuyerBoard(props: Props) {
   const handleMaxItem = useCallback(() => {
     setNumberItem(buyDetail['available'])
     numberItem * buyDetail['price'](numberItem * buyDetail['available'])
-  }, [numberItem])
+  }, [numberItem, buyDetail])
 
   const handleHiddenModal = useCallback(() => {
     toggleModalBuyModal()
