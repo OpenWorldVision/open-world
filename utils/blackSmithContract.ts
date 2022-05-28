@@ -118,12 +118,13 @@ export const fetchAmountItemByTrait = async (hammer: number) => {
   }
 }
 
-export const makeHammer = async (idItemUpgrade: number, idItemBurn: number) => {
+export const makeHammer = async (listSellHammer: Array<number>) => {
   const contract = await getprofessionsContract()
   const accounts = await web3.eth.getAccounts()
+  console.log(contract)
   try {
     await contract.methods
-      .makeHammer(idItemUpgrade, idItemBurn)
+      .makeMultiHammer(listSellHammer)
       .send({ from: accounts[0] })
     return true
   } catch (err) {
