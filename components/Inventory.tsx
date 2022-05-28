@@ -1,38 +1,37 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
+import { fetchUserInventoryItemAmount } from 'utils/Item'
 
-const itemsIndex = [
-  {
-    name: 'fish',
-    indexItem: 1,
-    amount: 12
-  },
-  {
-    name: 'ore',
-    indexItem: 2,
-    amount: 8
-  },
-  {
-    name: 'hammer',
-    indexItem: 3,
-    amount: 5
-  },
-  {
-    name: 'susi',
-    indexItem: 4,
-    amount: 29
-  }
-]
+
 
 export default function Inventory({
   isOpenInventory,
   setIsOpenInventory,
 }) {
-  const [valueItemSelect, setValueItemSelect] = useState({})
-  const [price, setPrice] = useState(0)
-  const [amountItems, setAmountItems] = useState(0)
+  const [valueItemSelect, setValueItemSelect] = useState(null)
+  const [price, setPrice] = useState(null)
+  const [amountItems, setAmountItems] = useState(null)
   const [isOpenNotify, setIsOpenNotify] = useState(false)
+  const [items, setItems] = useState([])
+
+  const getItemsIndex = async () => {
+    const data = await fetchUserInventoryItemAmount()
+    const itemsIndex = []
+    for (const i in data) {
+      // if(data[i] > 0){
+        
+      // }
+      itemsIndex.push({
+        indexItem: i,
+        amount: data[i] + 10
+      })
+    }
+    setItems(itemsIndex)
+  }
   
+  useEffect(() => {
+    getItemsIndex()
+  }, [])
 
   const handleCloseModalInventory = useCallback(
     (e: any) => {
@@ -73,10 +72,10 @@ export default function Inventory({
                   onClick={() => {setIsOpenInventory(false)}}
                 />
                 <div className="container-items">
-                  {[...itemsIndex, ...Array(16 - itemsIndex.length)].map((value) => {
+                  {[...items, ...Array(16 - items.length)].map((value) => {
                     if (value) {
                       return <div key={value.indexItem} className="container-item click-cursor">
-                          <img onClick={() => {setValueItemSelect(value), setAmountItems(0)}} src={`/images/inventory/items/${value.indexItem}.png`} alt="img" />
+                          <img onClick={() => {setValueItemSelect(value), setAmountItems('')}} src={`/images/inventory/items/${value.indexItem}.png`} alt="img" />
                         <div>{value.amount}</div>
                       </div>
                     } else {
@@ -106,7 +105,7 @@ export default function Inventory({
                       <div onClick={() => {amountItems < valueItemSelect?.amount && setAmountItems(amountItemsPrev => amountItemsPrev + 1)}} className='click-cursor'>+</div>
                       <div onClick={() => {amountItems > 0 && setAmountItems(amountItemsPrev => amountItemsPrev - 1)}} className='click-cursor'>-</div>
                     </div>
-                    <div onClick={() => {setAmountItems(valueItemSelect.amount)}} className='click-cursor'>ALL</div>
+                    <div onClick={() => {setAmountItems(valueItemSelect?.amount)}} className='click-cursor'>ALL</div>
                   </div>
                 </div>
                 <div className='container-2-btn-confirm click-cursor'>

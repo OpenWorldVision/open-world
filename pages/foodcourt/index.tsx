@@ -206,11 +206,11 @@ export default function FoodCourt() {
             </Table>
           </TableContainer>
         </div>
-        <BuyerBoard
+        {/* <BuyerBoard
           isOpen={isOpenBuyBoard}
           toggleModalBuyModal={() => toggleBuyModal(false)}
           buyDetail={buyDetail}
-        />
+        /> */}
         <Link href="/">
           <a className={`${styles.backBtn} click-cursor`}></a>
         </Link>

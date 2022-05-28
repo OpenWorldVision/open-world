@@ -58,12 +58,12 @@ export default function Market() {
                         <div className={styles.itemInfo}>
                             <div>
                                 <div>#1 HALLEN</div>
-                                <img src={`./images/marketplace/market/items/${nav}.png`} alt="" />
+                                <img src={`./images/marketplace/items/${nav}.png`} alt="" />
                             </div>
                             <div>100 OPEN</div>
                         </div>
                         <div className={styles.itemBuy}>
-                            <img src="./images/marketplace/market/buy.png" alt="img" />
+                            <img src="./images/marketplace/buy.png" alt="img" />
                         </div>
                     </div>
                 })}
@@ -72,20 +72,20 @@ export default function Market() {
                 <div className={styles.pagination}>
                     <img 
                         onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                        src="./images/marketplace/market/triangle-left.png" 
+                        src="./images/marketplace/triangle-left.png" 
                         alt="img" 
                     />
                     <div>{page < 10 ? `0${page}` : page}</div>
                     <img
                         onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(test.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                        src="./images/marketplace/market/triangle-right.png" 
+                        src="./images/marketplace/triangle-right.png" 
                         alt="img" 
                     />
                 </div>
             </div>
             <Link href='/'>
                 <a className={styles.back}>
-                    <img src="./images/marketplace/market/back.png" alt="img" />
+                    <img src="./images/marketplace/back.png" alt="img" />
                 </a>
             </Link>
         </div>
