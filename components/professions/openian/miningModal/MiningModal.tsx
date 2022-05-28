@@ -26,10 +26,10 @@ export default function MiningModal(props: Props) {
   const [isStartQuest, setIsStartQuest] = useState(false)
   const [isFinished, setIsFinished] = useState(false)
   const [canFinish, setCanFinish] = useState(false)
-  const [duration, setDuration] = useState(0)
+  const [duration, setDuration] = useState(10)
   const [requireStamina, setRequireStamina] = useState(0)
   const [countDownStart, setCountDownStart] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(10)
 
   const miningInterval = useRef<ReturnType<typeof setInterval>>(null)
 
