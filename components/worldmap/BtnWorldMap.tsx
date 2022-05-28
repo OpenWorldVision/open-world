@@ -11,8 +11,8 @@ export default function BtnWorldMap(props: PropsWithChildren<Props>) {
   const { backToWorldMap } = props
   return (
     <BtnWorldMapStyle>
-      <div>
-        <div className="bordered-box-thin">
+      <div className='click-cursor'>
+        <div className="bordered-box-thin click-cursor">
           <Link href="/">
             <a onClick={backToWorldMap}>World Map</a>
           </Link>
@@ -28,7 +28,7 @@ const BtnWorldMapStyle = styled.div({
     padding: '0em 0.6em 0em 2.1em',
     color: 'rgb(255, 255, 255)',
     textDecoration: 'none',
-    // cursor: 'url(/images/worldmap/SelectCursor.png),auto',
+    cursor: 'url(/images/worldmap/SelectCursor.png),auto !important',
   },
   '.bordered-box-thin': {
     position: 'fixed',
@@ -38,8 +38,8 @@ const BtnWorldMapStyle = styled.div({
     padding: '1rem',
     backgroundImage:
       'linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5))',
-    zIndex: '9000',
-    // cursor: 'url(/images/jeweler/default-cursor.png), auto',
+    zIndex: '2000',
+    cursor: 'url(/images/worldmap/CursorDefault.png), auto !important',
   },
   '@media(max-width: 768px)': {
     '.bordered-box-thin': {

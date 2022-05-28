@@ -1,0 +1,400 @@
+.forgeHammerOverlay {
+  background-image: url('/images/professions/npc/openian/mining/background-mining-quest.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center center;
+  height: 100vh;
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+}
+
+.frameforgeHammer {
+  background-image: url('/images/professions/blacksmith/frame-forge-hammer.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  max-width: 498px;
+  max-height: 698px;
+  width: 350px;
+  height: 510px;
+  position: relative;
+  margin: auto;
+}
+
+.frameHead {
+  position: absolute;
+  top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.infoBtn {
+  background-image: url('/images/professions/npc/openian/mining/question-mark-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-position: center center !important;
+  width: 25px !important;
+  height: 25px !important;
+  background-color: transparent !important;
+}
+
+.exitBtn {
+  background-image: url('/images/professions/npc/openian/mining/exit-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-position: center center !important;
+  width: 25px !important;
+  height: 25px !important;
+  background-color: transparent !important;
+  padding: 0 23px;
+}
+
+.forgeHammerBody {
+  position: absolute;
+  top: 75px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.artItem {
+  background-image: url('/images/professions/npc/openian/mining/art-item.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 285px;
+  height: 150px;
+}
+
+/* .forgeHammerDetail {
+  position: absolute;
+  bottom: 65px;
+  left: 50px;
+  width: 75%;
+} */
+
+.title {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.detail {
+  font-size: 12px;
+  line-height: 21px;
+  color: #FFFFFF;
+  display: flex;
+}
+
+.harmer {
+  background-image: url('/images/professions/npc/openian/mining/harmer.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 30px;
+  height: 30px;
+  left: 60px;
+  bottom: -6px;
+  position: absolute;
+}
+
+.startQuestBtn {
+  background-image: url('/images/professions/npc/openian/mining/start-quest-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+  width: 120px !important;
+  height: 35px !important;
+  background-color: transparent !important;
+  position: absolute !important;
+  bottom: -40px;
+  left: 70px;
+  margin: 0 auto;
+  display: block !important;
+}
+
+.miningWaitDetail {
+  position: absolute;
+  bottom: 200px;
+  left: 50px;
+  width: 75%;
+}
+
+.forgeHammerFooter {
+  position: absolute;
+  bottom: 17%;
+  padding: 0 45px;
+}
+
+
+.title {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.detail {
+  font-size: 12px;
+  line-height: 21px;
+  color: #FFFFFF;
+  display: flex;
+}
+
+.amountHammer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.amountHammer .detail {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 70px;
+  height: 18px;
+  background-color: #261106;
+  border-left: 1px;
+  border-right: 1px;
+  border-style: solid;
+  border-color: #7F734D;
+  border-radius: 10px;
+  outline: none;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.BtnContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 10px;
+  margin-left: 5px;
+}
+
+.next,
+.prev {
+  background-image: url('/images/professions/blacksmith/Triangle-1.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  background-color: transparent !important;
+  height: 10px !important;
+  width: 10px !important;
+  padding: 0 !important;
+}
+
+.prev {
+  background-image: url('/images/professions/blacksmith/Triangle-2.png') !important;
+  margin-top: 4px;
+}
+
+.hammer {
+  background-image: url('/images/professions/blacksmith/hammer.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 30px;
+  height: 30px;
+  margin-left: 6px;
+}
+
+.oreNeed{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.oreNeed .detail {
+  display: flex;
+  align-items: center;
+}
+
+.ore {
+  background-image: url('/images/professions/blacksmith/ore-2.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 30px;
+  height: 30px;
+  margin-left: 20px;
+}
+
+.startQuestBtn {
+  bottom: -60px;
+  left: 35%;
+}
+
+.oreInvalid{
+  color: #f8585d;
+}
+
+.preLoaderForgeHammer {
+  background-color: #130e0c;
+  z-index: 999999;
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+}
+
+.loadedForgeHammer .preLoaderForgeHammer {
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1;
+  transition: all 0.5s;
+}
+
+
+.preloaderFoldingCube {
+  margin: auto;
+  width: 40px;
+  height: 40px;
+  transform: rotate(45deg);
+}
+
+.preloaderFoldingCube .preloaderCube {
+  float: left;
+  width: 50%;
+  height: 50%;
+  position: relative;
+  transform: scale(1.1);
+}
+
+.preloaderFoldingCube .preloaderCube:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(-315deg, #716efc 0%, #f8585d 100%);
+  animation: preloader-foldCubeAngle 2.4s infinite linear both;
+  transform-origin: 100% 100%;
+}
+
+.preloaderFoldingCube .preloaderCube2 {
+  transform: scale(1.1) rotateZ(90deg);
+}
+
+.preloaderFoldingCube .preloaderCube3 {
+  transform: scale(1.1) rotateZ(180deg);
+}
+
+.preloaderFoldingCube .preloaderCube4 {
+  transform: scale(1.1) rotateZ(270deg);
+}
+
+.preloaderFoldingCube .preloaderCube2:before {
+  animation-delay: 0.3s;
+}
+
+.preloaderFoldingCube .preloaderCube3:before {
+  animation-delay: 0.6s;
+}
+
+.preloaderFoldingCube .preloaderCube4:before {
+  animation-delay: 0.9s;
+}
+
+
+@keyframes preloader-foldCubeAngle {
+
+  0%,
+  10% {
+    transform: perspective(140px) rotateX(-180deg);
+    opacity: 0;
+  }
+
+  25%,
+  75% {
+    transform: perspective(140px) rotateX(0deg);
+    opacity: 1;
+  }
+
+  90%,
+  100% {
+    transform: perspective(140px) rotateY(180deg);
+    opacity: 0;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .frameforgeHammer {
+    max-width: 450px;
+    width: 450px;
+    height: 670px;
+  }
+
+  .frameHead {
+    position: absolute;
+    top: 40px;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .artItem {
+    background-size: 100% 100%;
+    width: 380px;
+    height: 200px;
+    margin-top: 10px;
+  }
+
+  .forgeHammerFooter{
+    bottom: 20%;
+    padding: 0 50px;
+  }
+
+  .forgeHammerDetail {
+    bottom: 100px;
+    left: 50px;
+    width: 75%;
+  }
+
+  .title {
+    font-size: 18px;
+    color: #FFFFFF;
+  }
+
+  .detail {
+    font-size: 14px;
+    color: #FFFFFF;
+    display: flex;
+  }
+
+  .input{
+    width: 90px;
+    height: 20px;
+  }
+
+  .startQuestBtn {
+    background-size: 100% 100% !important;
+    background-position: center center !important;
+    width: 130px !important;
+    height: 40px !important;
+    bottom: -90px;
+    left: 35%;
+    /* display: block !important;
+      margin: 0 auto; */
+  }
+
+  .harmer {
+    width: 35px;
+    height: 35px;
+    left: 70px;
+    bottom: -15px;
+  }
+
+  .finishBtn,
+  .finishBtnDisable {
+    width: 130px !important;
+    height: 40px !important;
+    bottom: -150px;
+    left: 35%;
+  }
+}

@@ -1,0 +1,131 @@
+.main {
+    background: url('../../public/images/marketplace/market/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    font-weight: bold;
+    height: 100vh;
+}
+
+.header{
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.container{
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: fit-content;
+    padding: 80px 200px 80px 50px;
+    margin-left: 100px;
+    border-radius: 80px;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.container .col{
+    text-align: center;
+}
+
+.container .col:first-child > div:first-child{
+    background-color: #573116;
+}
+
+
+.container .col > div:first-child{
+    margin-bottom: 30px;
+    padding: 0 50px;
+}
+
+
+.body{
+    height: calc(100% - 400px);
+    margin-top: 100px;
+}
+
+.nav {
+    display: flex;
+    margin-left: 50px;
+}
+
+.nav > div {
+    padding: 20px 50px;
+}
+
+.boardInfo {
+    display: flex;
+    flex-direction: column;
+    margin: 0 100px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.boardInfoHeader{
+    padding: 10px 100px;
+    display: flex;
+    justify-content:space-between;
+}
+
+.boardInfoHeader > div{
+    flex: 1;
+    text-align: center;
+}
+
+.boardInfoItems{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50px;
+}
+
+.boardInfoItem{
+    display: flex;
+    padding: 10px 100px;
+}
+
+.boardInfoItem > div{
+    flex: 1;
+    text-align: center;
+}
+
+.boardInfoItem > div > img{
+    margin: auto;
+}
+
+.footer {
+    position: fixed;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination{
+    display: flex;
+    align-items: center;
+}
+
+.pagination img{
+    padding: 0 20px;
+}
+
+.pagination > div{
+    background-color: #8C481D;
+    height: 120%;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.back {
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+}
+
+.select {
+    border-bottom: 2px solid #FFB966;
+}

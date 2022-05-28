@@ -2,11 +2,19 @@ import { useCallback, useEffect, useState } from 'react'
 import styles from './openian.module.css'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import Link from 'next/link'
-import SellModal from './SellModal'
+import SellModal from './sellModal/SellModal'
+import FishingModal from './fishingModal/FishingModal'
+import MiningModal from './miningModal/MiningModal'
+import LoadingModal from '@components/LoadingModal'
 
 function Openian() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [isOpenMining, setIsOpenMining] = useState(false)
   const [isOpenStore, setIsOpenStore] = useState(false)
+  const [isOpenFishing, setIsOpenFishing] = useState(false)
+  const [haveQuest, setHaveQuest] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [updateInventory, setUpdateInventory] = useState(false)
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -26,43 +34,91 @@ function Openian() {
     setIsOpenStore(state)
   }, [])
 
+  const toggleFishingModal = useCallback(() => {
+    setIsOpenFishing(!isOpenFishing)
+  }, [isOpenFishing])
+
+  const toggleMiningModal = useCallback(() => {
+    setIsOpenMining(!isOpenMining)
+  }, [isOpenMining])
+
+  const toggleLoadingModal = useCallback(
+    (state) => {
+      setIsLoading(state)
+    },
+    [isLoading]
+  )
+
+  const onUpdateInventory = () => {
+    setUpdateInventory(!updateInventory)
+  }
+
   return (
-    <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
-      <TransformWrapper
-        initialPositionX={0}
-        initialPositionY={0}
-        centerOnInit={true}
-        wheel={{
-          disabled: true,
-        }}
-        doubleClick={{
-          disabled: true,
-        }}
-        panning={{
-          disabled: windowWidth >= 1858,
-        }}
-      >
-        <TransformComponent wrapperStyle={{ height: '100vh', width: '100vw' }}>
-          <div className={`${styles.openianContainer} overlay`}>
-            <div className={styles.openianBg}>
-              <div
-                className={styles.openianSellBtn}
-                onClick={() => toggleSellModal(true)}
-              ></div>
+    <>
+      {isLoading && <LoadingModal />}
+
+      <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
+        <TransformWrapper
+          initialPositionX={0}
+          initialPositionY={0}
+          centerOnInit={true}
+          wheel={{
+            disabled: true,
+          }}
+          doubleClick={{
+            disabled: true,
+          }}
+          panning={{
+            disabled: windowWidth >= 1858,
+          }}
+        >
+          <TransformComponent
+            wrapperStyle={{ height: '100vh', width: '100vw' }}
+          >
+            <div className={`${styles.openianContainer} overlay`}>
+              <div className={styles.openianBg}>
+                <div
+                  className={`${styles.openianMiningBtn} click-cursor`}
+                  onClick={toggleMiningModal}
+                ></div>
+                <div
+                  className={`${styles.openianFishBtn} click-cursor`}
+                  onClick={toggleFishingModal}
+                ></div>
+                <div
+                  className={`${styles.openianSellBtn} click-cursor`}
+                  onClick={() => toggleSellModal(true)}
+                ></div>
+              </div>
             </div>
-          </div>
-        </TransformComponent>
-      </TransformWrapper>
+          </TransformComponent>
+        </TransformWrapper>
 
-      <Link href="/">
-        <a className={`${styles.backBtn} click-cursor`}></a>
-      </Link>
+        <Link href="/">
+          <a className={`${styles.backBtn} click-cursor`}></a>
+        </Link>
 
-      <SellModal
-        isOpen={isOpenStore}
-        toggleModal={() => toggleSellModal(false)}
-      />
-    </div>
+        <SellModal
+          isOpen={isOpenStore}
+          toggleModal={() => toggleSellModal(false)}
+          updateInventory={updateInventory}
+        />
+
+        <FishingModal
+          isOpen={isOpenFishing}
+          toggleModal={toggleFishingModal}
+          toggleLoadingModal={toggleLoadingModal}
+          updateInventory={onUpdateInventory}
+        />
+
+        <MiningModal
+          isOpen={isOpenMining}
+          toggleModal={toggleMiningModal}
+          toggleLoadingModal={toggleLoadingModal}
+          updateInventory={onUpdateInventory}
+        />
+      </div>
+    </>
   )
 }
 

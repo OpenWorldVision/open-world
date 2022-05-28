@@ -1,0 +1,280 @@
+.modalOverlay {
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  will-change: opacity;
+  transition: all 0.5s linear;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: transparent;
+}
+
+.modalOverlay.active {
+  z-index: 2002;
+  opacity: 1;
+  visibility: visible;
+  will-change: opacity;
+  transition: all 0.5s linear;
+}
+
+.modal {
+  padding: 80px 50px 70px;
+  position: relative;
+  width: 600px;
+  height: fit-content;
+  background-position: 100%, 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* background-color: #3d2316; */
+  background-image: url('/images/professions/suppliers/supplierModalBackground.png');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+}
+.closeBtn {
+  position: absolute !important;
+  z-index: 1;
+  top: 40px;
+  right: 30px;
+  text-align: center;
+  border: none;
+  outline: none !important;
+  background-color: transparent !important;
+  color: #f6e691;
+  font-size: 35px !important;
+  box-shadow: none !important;
+}
+.modalFinish {
+  padding: 40px 50px 10px;
+  position: relative;
+  height: 500px;
+  width: 600px;
+  background-image: url('/images/professions/openian/claimFish.png');
+  background-position: center left, center right;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  /* background-color: #3d2314; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+}
+.errorText {
+  padding-top: 0px;
+  /* padding-bottom: 20px; */
+  color: #ff8080;
+  font-size: 1rem;
+}
+
+/* .modal img {
+  width: 100%;
+} */
+
+.boardContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.sellBoard {
+  width: 250px;
+  height: 50px;
+  position: absolute;
+  top: -60px;
+}
+
+.boardContent h4,
+.setPrice {
+  font-size: 30px;
+}
+
+.sellingAmount,
+.totalAmount {
+  font-size: 20px;
+}
+
+.selectedItemBtn {
+  width: 140px !important;
+  height: fit-content !important;
+  padding: 0 !important;
+  margin: 20px 0;
+}
+
+.setPrice {
+  margin: 20px 0;
+}
+
+.sellingAmount {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sellInput {
+  padding: 0 10px;
+  font-size: 24px;
+  background-color: transparent;
+  text-align: center;
+  color: #fff;
+  border: none;
+  outline: none;
+  background-image: url('/images/professions/openian/sellboard-input.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: left center;
+}
+
+.setPrice .sellInput {
+  margin-right: 20px;
+  width: 140px;
+}
+
+.sellingAmount .sellInput {
+  width: 230px;
+}
+
+.confirmBtn {
+  width: 200px !important;
+  height: fit-content !important;
+  margin-top: 40px;
+  background-color: red;
+}
+.description {
+  width: 500px;
+  height: 300px;
+  border-radius: 24px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 2rem;
+}
+.descriptionFinish {
+  width: 500px;
+  height: 300px;
+  border-radius: 24px;
+
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+}
+.titleText {
+  font-weight: 700;
+  color: '#fff';
+  font-size: 20px;
+  line-height: 24px;
+}
+.valueText {
+  font-weight: 400;
+  color: '#fff';
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.titleTextFinish {
+  font-weight: 500;
+  color: '#fff';
+  font-size: 40px;
+  line-height: 49px;
+}
+.valueTextFinish {
+  font-weight: 500;
+  color: '#fff';
+  font-size: 36px;
+  line-height: 44px;
+}
+.rowView {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.fishNFT {
+  width: 36px;
+  height: 63px;
+  margin-left: 23px;
+}
+.noteText {
+  font-weight: 500;
+  color: '#fff';
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  margin-top: 60px;
+}
+.rowView2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.inputSushi {
+  width: 100px;
+  height: 50px;
+}
+.flex1 {
+  display: flex;
+  flex: 1;
+}
+.flex1WithFlexEnd {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  align-items: center;
+}
+.iconNFTs {
+  width: 36px;
+  height: 36px;
+  margin-left: 12px;
+}
+.filterButtonContainer {
+  display: flex;
+  flex-direction: column;
+}
+.quantityIcon {
+  width: 20px;
+  height: 20px;
+}
+.filterButtonContainerNoOpacity {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+}
+
+@media (max-width: 767px) {
+  .modal {
+    width: 95vw;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .boardContent h4,
+  .setPrice {
+    font-size: 20px;
+  }
+
+  .sellingAmount,
+  .totalAmount {
+    font-size: 16px;
+  }
+
+  .selectedItemBtn,
+  .setPrice .sellInput {
+    width: 100px !important;
+  }
+
+  .sellingAmount .sellInput {
+    width: 130px;
+  }
+}
