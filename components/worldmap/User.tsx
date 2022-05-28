@@ -8,7 +8,6 @@ import { setProfile } from 'reduxActions/profileAction'
 import Inventory from '../Inventory'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 
-
 export default function User() {
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
