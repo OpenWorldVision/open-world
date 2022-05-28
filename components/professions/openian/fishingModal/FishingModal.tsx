@@ -27,11 +27,11 @@ function FishingModal(props: Props) {
   const { isOpen, toggleLoadingModal, toggleModal, updateInventory } = props
   const [typeofModal, setTypeOfModal] = useState(TYPE_OF_MODAL.START)
   const [requireStamina, setRequireStamina] = useState(0)
-  const [duration, setDuration] = useState(0)
+  const [duration, setDuration] = useState(10)
 
   const [canFinish, setCanFinish] = useState(false)
   const [countDownStart, setCountDownStart] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(10)
 
   const miningInterval = useRef<ReturnType<typeof setInterval>>(null)
 
@@ -89,14 +89,16 @@ function FishingModal(props: Props) {
   }, [])
 
   const handleFinish = useCallback(async () => {
-    toggleLoadingModal(true)
-    const finish = await finishFishing()
-    if (finish) {
-      updateInventory()
-      setTypeOfModal(TYPE_OF_MODAL.FINISH)
-      setTimeLeft(duration)
+    if (canFinish) {
+      toggleLoadingModal(true)
+      const finish = await finishFishing()
+      if (finish) {
+        updateInventory()
+        setTypeOfModal(TYPE_OF_MODAL.FINISH)
+        setTimeLeft(duration)
+      }
+      toggleLoadingModal(false)
     }
-    toggleLoadingModal(false)
   }, [])
 
   const confirmResult = useCallback(() => {
