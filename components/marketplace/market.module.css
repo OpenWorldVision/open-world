@@ -84,9 +84,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    height: calc(100% - 350px);
+    height: calc(100% - 300px);
     overflow: auto;
-    
 }
 
 .body::-webkit-scrollbar {

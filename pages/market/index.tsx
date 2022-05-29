@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import Head from 'next/head'
 import { useState } from 'react'
 
+
 function MarketPlace() {
     const [nav, setNav] = useState(1)
 
@@ -18,7 +19,7 @@ function MarketPlace() {
                     <img src="./favicon.ico" alt="img" />
                     <div
                         onClick={() => {setNav(1)}}
-                        className={nav === 1 && 'select'}
+                        className={nav === 1 ? 'select click-cursor' : 'click-cursor'}
                     >
                         MARKET
                     </div>
@@ -26,7 +27,7 @@ function MarketPlace() {
                 <div className='nav-items-2'>
                     <div
                         onClick={() => {setNav(2)}}
-                        className={nav === 2 && 'select'}
+                        className={nav === 2 ? 'select click-cursor' : 'click-cursor'}
                     >
                         DASHBOARD
                     </div>
@@ -34,7 +35,7 @@ function MarketPlace() {
                 <div className='nav-items-3'>
                     <div
                         onClick={() => {setNav(3)}}
-                        className={nav === 3 && 'select'}
+                        className={nav === 3 ? 'select click-cursor' : 'click-cursor'}
                     >
                         HISTORY
                     </div>

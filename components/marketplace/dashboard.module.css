@@ -92,6 +92,7 @@
     padding-top: 5px;
     display: flex;
     flex-direction: column;
+    padding-bottom: 25px;
 }
 
 .itemInfo > div:first-child {
@@ -103,6 +104,7 @@
 .itemInfo > div:first-child > div {
     font-size: 12px;
     font-weight: normal;
+    text-align: left;
 }
 
 
@@ -141,10 +143,14 @@
 }
 
 .header{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .selectedImage{
+    margin: 20px 0;
+}
+
+.selectedImageFrame{
     width: 120px;
     height: 120px;
     background: url('../../public/images/marketplace/market/selected-image.png');
@@ -152,11 +158,11 @@
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin: 20px 0;
+    margin-bottom: 50px;
 }
 
 .priceInput{
     display: flex;
-    margin-top: 50px;
 }
 
 .priceInput > div:first-child{
@@ -169,10 +175,11 @@
     border: 1px solid #DFD99A;
     width: 120px;
     text-align: center;
+    outline: none;
 }
 
 .btnSell{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .priceInput > div:last-child{

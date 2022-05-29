@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { getListingIDsBySeller, getNumberOfItemListings } from 'utils/Market'
 import styles from './history.module.css'
 
 const numOfPage = 4
@@ -7,8 +8,17 @@ const numOfPage = 4
 export default function History() {
     const [page, setPage] = useState(1)
     const [nav, setNav] = useState(1)
+    const [data, setData] = useState([])
+    const [totalItems, setTotalItems] = useState(null)
     
-    const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    useEffect(() => {
+        getWeapons()
+    }, [nav])
+
+    const getWeapons = async () => {
+        setData(await getListingIDsBySeller())
+        setTotalItems(await getNumberOfItemListings())
+    }
 
     return (
         <div className={styles.main}>
@@ -20,15 +30,15 @@ export default function History() {
                     </div>
                     <div className={styles.col}>
                         <div>OPENIAN</div>
-                        <div>0</div>
+                        <div>{totalItems.openianAmount}</div>
                     </div>
                     <div className={styles.col}>
                         <div>SUPPLIER</div>
-                        <div>0</div>
+                        <div>{totalItems.supplierAmount}</div>
                     </div>
                     <div className={styles.col}>
                         <div>BLACKSMITH</div>
-                        <div>0</div>
+                        <div>{totalItems.blacksmithAmount}</div>
                     </div>
                 </div>
             </div>
@@ -65,15 +75,15 @@ export default function History() {
                         <div>ACTION</div>
                     </div>
                     <div className={styles.boardInfoItems}>
-                        {test.slice((page - 1)*numOfPage, (page - 1)*numOfPage + numOfPage).map(value => (
+                        {data.slice((page - 1)*numOfPage, (page - 1)*numOfPage + numOfPage).map(value => (
                             <div key={value} className={styles.boardInfoItem}>
-                                <div>#1</div>
+                                <div>#{value.id}</div>
                                 <div>05/30/2022</div>
                                 <div>0xA619D31...2F9F6A7D2D</div>
                                 <div>100 OPEN</div>
                                 <div>SELLING</div>
                                 <div>
-                                <img src="./images/marketplace/market/history-cancel.png" alt="img" />
+                                    <img src="./images/marketplace/market/history-cancel.png" alt="img" />
                                 </div>
                             </div>
                         ))}
@@ -89,7 +99,7 @@ export default function History() {
                     />
                     <div>{page < 10 ? `0${page}` : page}</div>
                     <img
-                        onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(test.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
+                        onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
                         src="./images/marketplace/market/triangle-right.png" 
                         alt="img" 
                     />
