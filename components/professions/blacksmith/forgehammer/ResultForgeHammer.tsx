@@ -37,7 +37,7 @@ export default function ResultForgeHammer(props: Props) {
           {checkIsSucess ? <><div className={style.title}>You Get</div><div className={style.received}>X{hammerReceived} <div className={style.hammer}></div></div><div className={style.helpText}>All the Hammers you make will be stored at your Inventory</div></>
             : <div className={style.title}>FAILED!!</div>
           }
-          <Button onClick={handleConfirm} className={style.btnConfirm}></Button>
+          <Button onClick={handleConfirm} className={`${style.btnConfirm} click-cursor`}></Button>
         </div>
       </div>
     </>

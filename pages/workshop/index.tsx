@@ -133,7 +133,7 @@ export default function WorkShop() {
     })
     toggleBuyModal(true)
 
-  }, [])
+  }, [isItemBoard])
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -215,72 +215,6 @@ export default function WorkShop() {
             <a className={`${styles.backBtn} click-cursor`}></a>
           </Link>
         </div>
-        {/* <TransformWrapper
-        initialPositionX={0}
-        initialPositionY={0}
-        centerOnInit={true}
-        doubleClick={{ disabled: true }}
-        // minScale={windowWidth <= 912 ? 0.5 : 1}
-      >
-        <TransformComponent wrapperStyle={{ height: '100vh', width: '100vw' }}>
-          <div className={styles.workShopBg}>
-            <div className={styles.workShopTitleContainer}>
-              <div className={styles.navWorkShop}></div>
-              <div className={styles.workShopTitle}></div>
-              <div className={styles.navWorkShop}></div>
-            </div>
-            <div>
-              <Button className={`${styles.buyBtn} click-cursor`}></Button>
-              <Button onClick={handleSelectItemBoard('ore')} className={`click-cursor ${styles.foodBtn}`}>
-                <div className={styles.oreBtn}></div>
-                <div className={`${isItemBoard === 'ore' && styles.itemBoardSelected}`}></div>
-              </Button>
-              <Button onClick={handleSelectItemBoard('hammer')} className={`click-cursor ${styles.foodBtn}`}>
-                <div className={styles.hammerBtn}></div>
-                <div className={`${isItemBoard === 'hammer' && styles.itemBoardSelected}`}></div>
-              </Button>
-            </div>
-            <div className={styles.workShopBoard}>
-              <TableContainer className={styles.table}>
-                <Table size='sm' variant='strunstylediped'>
-                  <TableCaption className={styles.paginationContainer}>
-                    <div className={styles.pagination}>
-                      <div onClick={handlePreviousPage} className={`${styles.increase} click-cursor`}></div>
-                      <div className={styles.numberPage}>{pageWorkShop < 10 && 0}{pageWorkShop}</div>
-                      <div onClick={handleIncreasePage} className={`${styles.previous} click-cursor`}></div>
-                    </div>
-                  </TableCaption>
-                  <Thead>
-                    <Tr>
-                      <Th>
-                        <div className={styles.columnTitle}>SELLER</div>
-                      </Th>
-                      <Th><div className={styles.columnTitle}>PRICE</div></Th>
-                      <Th><div className={styles.columnTitle}>AVAILABLE</div></Th>
-                      <Th sx={{ textAlign: 'center' }}><Button onClick={handleRefresh} className={`${styles.refreshBtn} click-cursor`}></Button></Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {listItemsBoard.slice((pageWorkShop - 1) * 5).map((item, index) => {
-                      if (index < 5) {
-                        return <>
-                          <Tr>
-                            <Td><div className={styles.columnItem}>{item.seller}</div></Td>
-                            <Td><div className={styles.columnItem}>{item.price} OPEN</div></Td>
-                            <Td><div className={styles.columnItem}>{item.available}</div></Td>
-                            <Td sx={{ textAlign: 'center' }}><Button onClick={handleBuyItem(item.available, item.price)} className={`${styles.buyBtnItem} click-cursor`}></Button></Td>
-                          </Tr>
-                        </>
-                      }
-                    })}
-                  </Tbody>
-                </Table>
-              </TableContainer>
-            </div>
-
-          </div>
-        </TransformComponent>
-      </TransformWrapper> */}
       </div>
     </>
   )

@@ -18,7 +18,7 @@ export default function ForgeHammer(props: Props) {
   const [numberOreNeed, setNumberOreNeed] = useState(0)
   const [numberYourOre, setNumberYourOre] = useState([])
 
-  const [isStartQuestSuccess, setIsStartQuestSuccess] = useState(false)
+  const [isStartQuest, setIsStartQuest] = useState(false)
   const [isStartQuestFail, setIsStartQuestFail] = useState(false)
 
   const [checkIsSucess, setCheckIsSuccess] = useState(false)
@@ -46,10 +46,10 @@ export default function ForgeHammer(props: Props) {
   const handleStartQuest = async () => {
     toggleLoadingModal(true)
     if (numberOreNeed <= numberYourOre.length && numberHammer !== 0) {
-      setIsStartQuestSuccess(true)
       const listSellHammer = numberYourOre.slice(0, numberOreNeed)
       const forgeHammer = await makeHammer(listSellHammer)
       setCheckIsSuccess(forgeHammer)
+      setIsStartQuest(true)
       toggleLoadingModal(false)
     } else {
       toggleLoadingModal(false)
@@ -62,19 +62,24 @@ export default function ForgeHammer(props: Props) {
   }, [])
 
   const hiddenPopupResult = useCallback(() => {
-    setIsStartQuestSuccess(false)
+    setIsStartQuest(false)
   }, [])
 
+
+  const handleToggleModal = () =>{
+    toggleModal(false)
+    setCheckIsSuccess(false)
+  }
 
   return (
     <>
       <div className={`${style.forgeHammerOverlay} ${isOpen && style.active} overlay`}>
-        {!isStartQuestSuccess && !isStartQuestFail && (
+        {!isStartQuest && !isStartQuestFail && (
           <div className={style.frameforgeHammer}>
             <div className={style.frameHead}>
               <Button
                 className={`${style.exitBtn} click-cursor`}
-                onClick={() => toggleModal(false)}
+                onClick={handleToggleModal}
               ></Button>
             </div>
             <div className={style.forgeHammerBody}>
@@ -135,7 +140,7 @@ export default function ForgeHammer(props: Props) {
           </div>
         )}
 
-        {isStartQuestSuccess && (
+        {isStartQuest && (
           <ResultForgeHammer
             hiddenPopupResult={hiddenPopupResult}
             hammerReceived={numberHammer}
