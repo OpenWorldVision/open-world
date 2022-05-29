@@ -8,7 +8,7 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  min-width: 1568px;
+  min-width: 1858px;
   background-color: #131313;
 }
 
@@ -29,10 +29,10 @@
 .backBtn {
   display: block;
   position: absolute;
-  top: 30px;
+  bottom: 30px;
   left: 35px;
-  width: 160px;
-  height: 50px;
+  width: 180px;
+  height: 60px;
   background-image: url('/images/professions/back-btn.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -174,8 +174,11 @@
   }
 }
 
-@media (max-width: 1857px) {
-  .blackSmithContainer {
-    width: 1858px;
+@media (max-width: 767px) {
+  .backBtn {
+    width: 110px !important;
+    height: 40px !important;
+    bottom: 20px;
+    left: 15px;
   }
 }

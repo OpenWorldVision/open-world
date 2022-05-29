@@ -6,6 +6,7 @@ import SellModal from './sellModal/SellModal'
 import FishingModal from './fishingModal/FishingModal'
 import MiningModal from './miningModal/MiningModal'
 import LoadingModal from '@components/LoadingModal'
+import Head from 'next/head'
 
 function Openian() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -55,6 +56,9 @@ function Openian() {
 
   return (
     <>
+      <Head>
+        <title>Openian</title>
+      </Head>
       {isLoading && <LoadingModal />}
 
       <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>

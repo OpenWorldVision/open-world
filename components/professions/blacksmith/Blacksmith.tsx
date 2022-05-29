@@ -5,6 +5,7 @@ import SellBoard from './sellerboard/SellBoard'
 import { useCallback, useEffect, useState } from 'react'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import ForgeHammer from './forgehammer/ForgeHammer';
+import Head from 'next/head'
 
 export default function Blacksmith() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -41,6 +42,9 @@ export default function Blacksmith() {
 
   return (
     <>
+      <Head>
+        <title>Blacksmith</title>
+      </Head>
       <div className={`overlay game-scroll-bar ${styles.blackSmithOverlay}`}>
         <TransformWrapper
           initialPositionX={0}

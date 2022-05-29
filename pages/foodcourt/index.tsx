@@ -4,6 +4,7 @@ import styles from '@components/foodcourt/foodcourt.module.css'
 import { useCallback, useEffect, useState } from 'react'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import BuyerBoard from '@components/foodcourt/BuyerBoard'
+import Head from 'next/head'
 
 const listSushi = [
   {
@@ -148,71 +149,76 @@ export default function FoodCourt() {
   }, [])
 
   return (
-    <div className={styles.foodCourtContainer}>
-      <div className={styles.foodCourtBg}>
-        <div className={styles.foodCourtTitleContainer}>
-          <div className={styles.navFoodCourt}></div>
-          <div className={styles.foodCourtTitle}></div>
-          <div className={styles.navFoodCourt}></div>
+    <>
+      <Head>
+        <title>Foodcourt</title>
+      </Head>
+      <div className={styles.foodCourtContainer}>
+        <div className={styles.foodCourtBg}>
+          <div className={styles.foodCourtTitleContainer}>
+            <div className={styles.navFoodCourt}></div>
+            <div className={styles.foodCourtTitle}></div>
+            <div className={styles.navFoodCourt}></div>
+          </div>
+          <div>
+            <Button className={`${styles.buyBtn} click-cursor`}></Button>
+            <Button onClick={handleSelectItemBoard('sushi')} className={`click-cursor ${styles.foodBtn}`}>
+              <div className={styles.sushiBtn}></div>
+              <div className={`${isItemBoard === 'sushi' && styles.itemBoardSelected}`}></div>
+            </Button>
+            <Button onClick={handleSelectItemBoard('fish')} className={`click-cursor ${styles.foodBtn}`}>
+              <div className={styles.fishBtn}></div>
+              <div className={`${isItemBoard === 'fish' && styles.itemBoardSelected}`}></div>
+            </Button>
+          </div>
+          <div className={styles.foodCourtBoard}>
+            <TableContainer className={styles.table}>
+              <Table size='sm' variant='strunstylediped'>
+                <TableCaption className={styles.paginationContainer}>
+                  <div className={styles.pagination}>
+                    <div onClick={handlePreviousPage} className={`${styles.increase} click-cursor`}></div>
+                    <div className={styles.numberPage}>{pageFoodCourt < 10 && 0}{pageFoodCourt}</div>
+                    <div onClick={handleIncreasePage} className={`${styles.previous} click-cursor`}></div>
+                  </div>
+                </TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>
+                      <div className={styles.columnTitle}>SELLER</div>
+                    </Th>
+                    <Th><div className={styles.columnTitle}>PRICE</div></Th>
+                    <Th><div className={styles.columnTitle}>AVAILABLE</div></Th>
+                    <Th sx={{ textAlign: 'center' }}><Button onClick={handleRefresh} className={`${styles.refreshBtn} click-cursor`}></Button></Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {listItemsBoard.slice((pageFoodCourt - 1) * 5).map((item, index) => {
+                    if (index < 5) {
+                      return <>
+                        <Tr>
+                          <Td><div className={styles.columnItem}>{item.seller}</div></Td>
+                          <Td><div className={styles.columnItem}>{item.price} OPEN</div></Td>
+                          <Td><div className={styles.columnItem}>{item.available}</div></Td>
+                          <Td sx={{ textAlign: 'center' }}><Button onClick={handleBuyItem(item.available, item.price)} className={`${styles.buyBtnItem} click-cursor`}></Button></Td>
+                        </Tr>
+                      </>
+                    }
+                  })}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </div>
+          <BuyerBoard
+            isOpen={isOpenBuyBoard}
+            toggleModalBuyModal={() => toggleBuyModal(false)}
+            buyDetail={buyDetail}
+          />
+          <Link href="/">
+            <a className={`${styles.backBtn} click-cursor`}></a>
+          </Link>
         </div>
-        <div>
-          <Button className={`${styles.buyBtn} click-cursor`}></Button>
-          <Button onClick={handleSelectItemBoard('sushi')} className={`click-cursor ${styles.foodBtn}`}>
-            <div className={styles.sushiBtn}></div>
-            <div className={`${isItemBoard === 'sushi' && styles.itemBoardSelected}`}></div>
-          </Button>
-          <Button onClick={handleSelectItemBoard('fish')} className={`click-cursor ${styles.foodBtn}`}>
-            <div className={styles.fishBtn}></div>
-            <div className={`${isItemBoard === 'fish' && styles.itemBoardSelected}`}></div>
-          </Button>
-        </div>
-        <div className={styles.foodCourtBoard}>
-          <TableContainer className={styles.table}>
-            <Table size='sm' variant='strunstylediped'>
-              <TableCaption className={styles.paginationContainer}>
-                <div className={styles.pagination}>
-                  <div onClick={handlePreviousPage} className={`${styles.increase} click-cursor`}></div>
-                  <div className={styles.numberPage}>{pageFoodCourt < 10 && 0}{pageFoodCourt}</div>
-                  <div onClick={handleIncreasePage} className={`${styles.previous} click-cursor`}></div>
-                </div>
-              </TableCaption>
-              <Thead>
-                <Tr>
-                  <Th>
-                    <div className={styles.columnTitle}>SELLER</div>
-                  </Th>
-                  <Th><div className={styles.columnTitle}>PRICE</div></Th>
-                  <Th><div className={styles.columnTitle}>AVAILABLE</div></Th>
-                  <Th sx={{ textAlign: 'center' }}><Button onClick={handleRefresh} className={`${styles.refreshBtn} click-cursor`}></Button></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {listItemsBoard.slice((pageFoodCourt - 1) * 5).map((item, index) => {
-                  if (index < 5) {
-                    return <>
-                      <Tr>
-                        <Td><div className={styles.columnItem}>{item.seller}</div></Td>
-                        <Td><div className={styles.columnItem}>{item.price} OPEN</div></Td>
-                        <Td><div className={styles.columnItem}>{item.available}</div></Td>
-                        <Td sx={{ textAlign: 'center' }}><Button onClick={handleBuyItem(item.available, item.price)} className={`${styles.buyBtnItem} click-cursor`}></Button></Td>
-                      </Tr>
-                    </>
-                  }
-                })}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </div>
-        <BuyerBoard
-          isOpen={isOpenBuyBoard}
-          toggleModalBuyModal={() => toggleBuyModal(false)}
-          buyDetail={buyDetail}
-        />
-        <Link href="/">
-          <a className={`${styles.backBtn} click-cursor`}></a>
-        </Link>
       </div>
-    </div>
+    </>
 
   )
 } 

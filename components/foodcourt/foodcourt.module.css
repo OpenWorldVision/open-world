@@ -1,6 +1,6 @@
 .foodCourtContainer {
   height: 100%;
-  z-index: 999999;
+  z-index: 999998;
   background-color: #131313;
   position: relative;
 }
@@ -210,10 +210,10 @@
 .backBtn {
   display: block;
   position: fixed;
-  top: 30px;
+  bottom: 30px;
   left: 35px;
-  width: 160px;
-  height: 50px;
+  width: 180px;
+  height: 60px;
   background-image: url('/images/professions/back-btn.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -222,10 +222,18 @@
 
 
 @media only screen and (max-width: 675px) {
-  .foodCourtContainer{
+  .backBtn {
+    width: 110px !important;
+    height: 40px !important;
+    bottom: 20px;
+    left: 15px;
+  }
+
+  .foodCourtContainer {
     overflow-y: scroll;
   }
-  .foodCourtBg{
+
+  .foodCourtBg {
     width: 1500px;
   }
 }

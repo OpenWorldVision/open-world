@@ -4,6 +4,7 @@ import styles from '@components/workshop/workshop.module.css'
 import { useCallback, useEffect, useState } from 'react'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import BuyerBoard from '@components/workshop/BuyerBoard'
+import Head from 'next/head'
 
 const listOre = [
   {
@@ -151,6 +152,9 @@ export default function WorkShop() {
 
   return (
     <>
+      <Head>
+        <title>Workshop</title>
+      </Head>
       <div className={styles.workShopContainer}>
         <div className={styles.workShopBg}>
           <div className={styles.workShopTitleContainer}>
