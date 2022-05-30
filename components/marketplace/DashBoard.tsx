@@ -8,6 +8,7 @@ const numOfPage = 12
 export default function DashBoard() {
     const [page, setPage] = useState(1)
     const [nav, setNav] = useState(1)
+    const [dataInit, setDataInit] = useState([])
     const [data, setData] = useState([])
     const [selected, setSelected] = useState(null)
     const [priceInput, setPriceInput] = useState(null)
@@ -19,7 +20,9 @@ export default function DashBoard() {
 
     const getWeapons = async () => {
         setStatus('Loadding ...')
-        setData(await getAmountItemByTrait(nav))
+        const result = await getAmountItemByTrait(nav)
+        setDataInit(result)
+        setData(result)
         setStatus('No results found')
     }
 
@@ -28,12 +31,17 @@ export default function DashBoard() {
         await getWeapons()
     }
 
+    const sortId = (id: string) => {
+        if (id === '') setData(dataInit)
+        else setData(dataInit.filter(value => value === Number(id)))
+    }
+
     return (
         <div className={styles.main}>
             <div className={styles.nav}>
                 <div className={styles.nav1}>
                     <div>MY NFT</div>
-                    <input type="text" placeholder='NFT ID' />
+                    <input type="text" placeholder='NFT ID' onChange={(e) => {sortId(e.target.value)}} />
                 </div>
                 <div className={styles.nav2}>
                     <div

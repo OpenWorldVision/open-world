@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getWeaponListingIDsPage, purchaseListing } from 'utils/Market'
 import styles from './market.module.css'
 
@@ -9,6 +9,7 @@ export default function Market() {
     const [isOpenSortPrice, setIsOpenSortPrice] = useState(false)
     const [page, setPage] = useState(1)
     const [nav, setNav] = useState(1)
+    const [dataInit, setDataInit] = useState([])
     const [data, setData] = useState([])
     const [status, setStatus] = useState('Loadding ...')
 
@@ -18,41 +19,48 @@ export default function Market() {
 
     const getWeapons = async () => {
         setStatus('Loadding ...')
-        setData(await getWeaponListingIDsPage(numOfPage, page, nav))
+        const result = await getWeaponListingIDsPage(numOfPage, page, nav)
+        setDataInit(result)
+        setData(result)
         setStatus('No results found')
     }
 
     const increasePage = async () => {
         setStatus('Loadding ...')
+        setData([])
         const result = await getWeaponListingIDsPage(numOfPage, page + 1, nav)
         if (result.length > 0) {
+            setDataInit(result)
             setData(result)
             setPage(page => page + 1)
-        }
+        } else setData(dataInit)
     }
 
     const decreasePage = async () => {
-        setStatus('Loadding ...')
         if (page - 1 > 0) {
+            setStatus('Loadding ...')
+            setData([])
             const result = await getWeaponListingIDsPage(numOfPage, page - 1, nav)
+            setDataInit(result)
             setData(result)
             setPage(page => page - 1)
+            setStatus('No results found')
         }
     }
 
     const sortHighest = () => {
         setIsOpenSortPrice(false)
-        setData(data => data.sort((a, b) => a.price - b.price))
+        setData(dataInit.sort((a, b) => a.price - b.price))
     }
     
     const sortLowest = () => {
         setIsOpenSortPrice(false)
-        setData(data => data.sort((a, b) => b.price - a.price))
+        setData(dataInit.sort((a, b) => b.price - a.price))
     }
 
-    const sortId = () => {
-        setIsOpenSortPrice(false)
-        setData(data => data.sort((a, b) => b.price - a.price))
+    const sortId = (id: string) => {
+        if (id === '') setData(dataInit)
+        else setData(dataInit.filter(value => value.id === Number(id)))
     }
 
     const handlePurchase = async (value) => {
@@ -97,7 +105,7 @@ export default function Market() {
                             </div>
                         )}
                     </div>
-                    <input type="text" placeholder='NFT ID'  />
+                    <input type="number" placeholder='NFT ID' onChange={(e) => {sortId(e.target.value)}} />
                 </div>
             </div>
             <div className={styles.body}>
