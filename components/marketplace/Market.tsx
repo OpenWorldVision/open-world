@@ -10,25 +10,29 @@ export default function Market() {
     const [page, setPage] = useState(1)
     const [nav, setNav] = useState(1)
     const [data, setData] = useState([])
+    const [status, setStatus] = useState('Loadding ...')
 
     useEffect(() => {
         getWeapons()
     }, [nav])
 
     const getWeapons = async () => {
+        setStatus('Loadding ...')
         setData(await getWeaponListingIDsPage(numOfPage, page, nav))
+        setStatus('No results found')
     }
 
     const increasePage = async () => {
+        setStatus('Loadding ...')
         const result = await getWeaponListingIDsPage(numOfPage, page + 1, nav)
         if (result.length > 0) {
             setData(result)
             setPage(page => page + 1)
         }
-        
     }
 
     const decreasePage = async () => {
+        setStatus('Loadding ...')
         if (page - 1 > 0) {
             const result = await getWeaponListingIDsPage(numOfPage, page - 1, nav)
             setData(result)
@@ -53,6 +57,7 @@ export default function Market() {
 
     const handlePurchase = async (value) => {
         await purchaseListing(value.id, value.price)
+        await getWeapons()
     }
 
     return (
@@ -96,12 +101,13 @@ export default function Market() {
                 </div>
             </div>
             <div className={styles.body}>
+                {data.length === 0 && <div className={styles.loading}>{status}</div>}
                 {data.map(value => {
                     return <div key={value} className={styles.item}>
                         <div className={styles.itemInfo}>
                             <div>
                                 <div>#{value.id} HALLEN</div>
-                                <img src={`./images/marketplace/market/items/${nav}.png`} alt="" />
+                                <img src={`/images/marketplace/market/items/${nav}.png`} alt="img" />
                             </div>
                             <div>{value.price} OPEN</div>
                         </div>

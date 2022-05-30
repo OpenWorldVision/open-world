@@ -11,19 +11,21 @@ export default function DashBoard() {
     const [data, setData] = useState([])
     const [selected, setSelected] = useState(null)
     const [priceInput, setPriceInput] = useState(null)
+    const [status, setStatus] = useState('Loadding ...')
     
     useEffect(() => {
         getWeapons()
     }, [nav])
 
     const getWeapons = async () => {
+        setStatus('Loadding ...')
         setData(await getAmountItemByTrait(nav))
+        setStatus('No results found')
     }
 
     const handleSell = async () => {
-        if(priceInput && selected) {
-            addListing(selected, priceInput)
-        }
+        await addListing(selected, priceInput)
+        await getWeapons()
     }
 
     return (
@@ -62,6 +64,7 @@ export default function DashBoard() {
             </div>
             <div className={styles.body}>
                 <div className={styles.body1}>
+                    {data.length === 0 && <div className={styles.loading}>{status}</div>}
                     {data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
                         return <div key={value} className={styles.item}>
                             <div onClick={() => {setSelected(value)}} className={styles.itemInfo + ' click-cursor'}>
@@ -85,9 +88,9 @@ export default function DashBoard() {
                             <input type="number" value={priceInput} onChange={(e) => setPriceInput(e.target.value !== '' && Number(e.target.value))} />
                             <div>OPEN</div>
                         </div>
-                        <div className={styles.btnSell}>
-                            <img onClick={handleSell} className='click-cursor' src="./images/marketplace/market/sell.png" alt="img" />
-                        </div>
+                        {priceInput && selected && <div className={styles.btnSell}>
+                            <img onClick={() => {handleSell()}} className='click-cursor' src="./images/marketplace/market/sell.png" alt="img" />
+                        </div>}
                     </div>
                 </div>
             </div>

@@ -84,12 +84,17 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     height: calc(100% - 300px);
     overflow: auto;
 }
 
 .body::-webkit-scrollbar {
     display: none;
+}
+
+.loading {
+    font-size: 30px;
 }
 
 .item{

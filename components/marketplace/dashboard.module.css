@@ -71,8 +71,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     overflow: auto;
     flex: 1.5;
+}
+
+.loading {
+    font-size: 30px;
 }
 
 .body1::-webkit-scrollbar {

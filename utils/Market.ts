@@ -1,7 +1,4 @@
 import { ethers } from 'ethers'
-import Web3 from 'web3'
-
-const web3 = new Web3(Web3.givenProvider)
 
 
 const itemContract = {
@@ -14,22 +11,7 @@ const marketContract = {
   jsonInterface: require('../build/contracts/NFTMarket.json'),
 }
 
-const openWorldTokenContract = {
-  addressBSC: '0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B',
-  jsonInterface: require('../build/contracts/ERC20.json'),
-}
-
 // Create contract
-const getOpeWorldContract = async () => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-
-  return new ethers.Contract(
-    openWorldTokenContract.addressBSC,
-    openWorldTokenContract.jsonInterface.abi,
-    provider.getSigner()
-  )
-}
-
 const getMarketContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   const chainId = window?.ethereum?.chainId
@@ -112,7 +94,7 @@ export const getListingIDsBySeller = async () => {
       const result = await Market.getFinalPrice(itemContract.addressBSC, item.toNumber())
       array.push({
         id: item.toNumber(),
-        price: result.toNumber()
+        price: result.toNumber(),
       })
     }
     return array
@@ -135,14 +117,24 @@ export const getAmountItemByTrait = async (trait: number) => {
 
 export const addListing = async (id: number, price: number) => {
   const Market = await getMarketContract()
-  const OpenWorld = await getOpeWorldContract()
-  
+  const Item = await getItemContract()
+
   try {
-    await OpenWorld.approve(
-      marketContract.addressBSC,
-      web3.utils.toWei('1000000', 'ether')
-    )
+    await Item.setApprovalForAll(marketContract.addressBSC, true)
     await Market.addListing(itemContract.addressBSC, id, price)
+    return true
+  } catch {
+    return false
+  }
+}
+
+export const cancelListing = async (id: number) => {
+  const Market = await getMarketContract()
+  const Item = await getItemContract()
+
+  try {
+    await Item.setApprovalForAll(marketContract.addressBSC, true)
+    await Market.cancelListing(itemContract.addressBSC, id)
     return true
   } catch {
     return false
@@ -151,17 +143,13 @@ export const addListing = async (id: number, price: number) => {
 
 export const purchaseListing = async (id: number, price: number) => {
   const Market = await getMarketContract()
-  const OpenWorld = await getOpeWorldContract()
+  const Item = await getItemContract()
 
   try {
-    await OpenWorld.approve(
-      marketContract.addressBSC,
-      web3.utils.toWei('1000000', 'ether')
-    )
+    await Item.setApprovalForAll(marketContract.addressBSC, true)
     await Market.purchaseListing(itemContract.addressBSC, id, price)
     return true
-  } catch (e) {
-    console.log(e);
+  } catch {
     return false
   }
 }
