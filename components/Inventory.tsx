@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { fetchUserInventoryItemAmount } from 'utils/Item'
+import { listMultiItems } from 'utils/Market'
 
 
 
@@ -11,32 +12,67 @@ export default function Inventory({
   const [valueItemSelect, setValueItemSelect] = useState(null)
   const [price, setPrice] = useState(null)
   const [amountItems, setAmountItems] = useState(null)
-  const [isOpenNotify, setIsOpenNotify] = useState(false)
+  const [isOpenNotify, setIsOpenNotify] = useState(null)
   const [items, setItems] = useState([])
-
-  const getItemsIndex = async () => {
-    const data = await fetchUserInventoryItemAmount()
-    const itemsIndex = []
-    for (const i in data) {
-      // if(data[i] > 0){
-        
-      // }
-      itemsIndex.push({
-        indexItem: i,
-        amount: data[i] + 10
-      })
-    }
-    setItems(itemsIndex)
-  }
+  const [data, setData] = useState(null)
   
   useEffect(() => {
     getItemsIndex()
   }, [])
 
+  async function getItemsIndex() {
+    const itemsIndex = []
+    const result = await fetchUserInventoryItemAmount()
+    for (const i in result) {
+      if(i === 'fishAmount' && result[i] > 0){
+        itemsIndex.push({
+          indexItem: 'fishAmount',
+          amount: result[i]
+        })
+      } else if (i === 'oreAmount' && result[i] > 0) {
+        itemsIndex.push({
+          indexItem: 'oreAmount',
+          amount: result[i]
+        })
+      } else if (i === 'hammerAmount' && result[i] > 0) {
+        itemsIndex.push({
+          indexItem: 'hammerAmount',
+          amount: result[i]
+        })
+      } else if (i === 'sushiAmount' && result[i] > 0) {
+        itemsIndex.push({
+          indexItem: 'sushiAmount',
+          amount: result[i]
+        })
+      }
+    }
+    setItems(itemsIndex)
+    setData(result)
+  }
+
+  async function handleSelling() {
+    setData(null)
+    setValueItemSelect(null)
+    let result = false
+    if (valueItemSelect.indexItem === 'fishAmount') {
+      result = await listMultiItems(data.fishItems.slice(0,Number(amountItems)), price)
+    } else if (valueItemSelect.indexItem === 'oreAmount') {
+      result = await listMultiItems(data.oreItems.slice(0,Number(amountItems)), price)
+    } else if (valueItemSelect.indexItem === 'hammerAmount') {
+      result = await listMultiItems(data.hammerItems.slice(0,Number(amountItems)), price)
+    } else if (valueItemSelect.indexItem === 'sushiAmount') {
+      result = await listMultiItems(data.sushiItems.slice(0,Number(amountItems)), price)
+    }
+    if (result) {
+      getItemsIndex()
+      setIsOpenNotify({ type: true })
+    } else setIsOpenNotify({ type: false })
+  }
+
   const handleCloseModalInventory = useCallback(
     (e: any) => {
       if (e.target !== e.currentTarget) return
-      setIsOpenInventory(false)
+      setIsOpenInventory(null)
     },
     [isOpenInventory]
   )
@@ -52,11 +88,10 @@ export default function Inventory({
         <div className="modal-content">
           {isOpenNotify ? <div className='main'>
             <div className='container-notify'>
-              <div className='notify-header'>SUCCESS</div>
-              <div className='notify-body-1'>Your Order has been Completed !</div>
-              <div className='notify-body-2'>Check Your Inventory For Bought Items !</div>
+              <div className='notify-header'>{isOpenNotify.type ? 'SUCCESS' : 'FAILED'}</div>
+              <div className='notify-body'>{isOpenNotify.type ? 'Your Order has been Completed !' : 'Your Order has been Failed'}</div>
               <img
-                onClick={() => {setIsOpenNotify(false)}}
+                onClick={() => {setIsOpenNotify(null)}}
                 className='notify-confirm click-cursor' 
                 src="/images/inventory/confirm-notify.png" 
                 alt="img" 
@@ -72,17 +107,16 @@ export default function Inventory({
                   onClick={() => {setIsOpenInventory(false)}}
                 />
                 <div className="container-items">
-                  {[...items, ...Array(16 - items.length)].map((value) => {
+                  {data ? [...items, ...Array(16 - items.length)].map((value) => {
                     if (value) {
                       return <div key={value.indexItem} className="container-item click-cursor">
                           <img onClick={() => {setValueItemSelect(value), setAmountItems('')}} src={`/images/inventory/items/${value.indexItem}.png`} alt="img" />
                         <div>{value.amount}</div>
                       </div>
                     } else {
-                      return <div key={value} className="container-item">
-                      </div>
+                      return <div key={value} className="container-item" />
                     }
-                  })}
+                  }): <div>Loadding ...</div>}
                 </div>
               </div>
             </div>
@@ -94,23 +128,24 @@ export default function Inventory({
                 </div>
                 <div className='container-2-price-input'>
                   <div>Price:</div>
-                  <input type="number" value={price} onChange={(e) => {setPrice(Number(e.target.value))}} />
+                  <input type="number" value={price} onChange={(e) => {setPrice(e.target.value === '' ? '' : Number(e.target.value))}} />
                   <div>OPEN</div>
                 </div>
                 <div className='container-2-selling-amout'>
                   <div>Selling Amount</div>
-                  <input type="number" value={amountItems} onChange={(e) => {setAmountItems(Number(e.target.value))}} />
-                  <div>
-                    <div>
-                      <div onClick={() => {amountItems < valueItemSelect?.amount && setAmountItems(amountItemsPrev => amountItemsPrev + 1)}} className='click-cursor'>+</div>
-                      <div onClick={() => {amountItems > 0 && setAmountItems(amountItemsPrev => amountItemsPrev - 1)}} className='click-cursor'>-</div>
-                    </div>
+                  <input type="number" value={amountItems} onChange={(e) => {setAmountItems(e.target.value === '' ? '' : (Number(e.target.value) < valueItemSelect?.amount ? Number(e.target.value) : valueItemSelect?.amount))}} />
+                  <div className='container-2-selling-amout-caculation'>
+                    <div onClick={() => {amountItems < valueItemSelect?.amount && setAmountItems(amountItemsPrev => Number(amountItemsPrev) + 1)}} className='click-cursor'>+</div>
+                    <div onClick={() => {amountItems > 0 && setAmountItems(amountItemsPrev => Number(amountItemsPrev) - 1)}} className='click-cursor'>-</div>
                     <div onClick={() => {setAmountItems(valueItemSelect?.amount)}} className='click-cursor'>ALL</div>
                   </div>
                 </div>
-                <div className='container-2-btn-confirm click-cursor'>
-                  <img onClick={() => {setIsOpenNotify(true)}} src="/images/inventory/confirm-seller-board.png" alt="img" />
-                </div>
+                <div className='container-2-total'>Total price: <span>{valueItemSelect ? amountItems*price : 0}</span> OPEN</div>
+                {valueItemSelect && (price > 0) && (amountItems > 0) && 
+                  <div className='container-2-btn-confirm click-cursor'>
+                    <img onClick={() => {handleSelling()}} src="/images/inventory/confirm-seller-board.png" alt="img" />
+                  </div>
+                }
               </div>
             </div>
           </div>}
@@ -154,7 +189,7 @@ const InventoryCSS = styled.div({
         '.container-notify': {
           flex: 1,
           maxWidth: '750px',
-          maxHeight: '600px',
+          maxHeight: '550px',
           backgroundImage: 'url(/images/inventory/notify.png)',
           backgroundRepeat: 'no-repeat',
           backgroundSize: '100% 100%',
@@ -166,7 +201,7 @@ const InventoryCSS = styled.div({
             marginTop: '80px',
             fontSize: '40px',
           },
-          '.notify-body-1, .notify-body-2': {
+          '.notify-body': {
             marginTop: '50px',
             fontSize: '25px'
           },
@@ -177,11 +212,18 @@ const InventoryCSS = styled.div({
         '.container': {
           display: 'flex',
           justifyContent: 'center',
+          flex: 1,
+          maxWidth: '450px',
+          '@media(min-width: 500px)': {
+            minWidth: '450px',
+          },
           '.container-body': {
+            display: 'flex',
+            justifyContent: 'center',
             backgroundImage: 'url(/images/inventory/frame.png)',
             backgroundRepeat: 'no-repeat',
             backgroundSize: '100% 100%',
-            maxWidth: '450px',
+            width: '100%',
             height: '700px',
             padding: '165px 30px 65px 35px',
             position: 'relative',
@@ -193,9 +235,11 @@ const InventoryCSS = styled.div({
             '.container-items': {
               display: 'flex',
               justifyContent: 'center',
+              alignItems: 'center',
               flexWrap: 'wrap',
               overflow: 'auto',
               height: '100%',
+              fontSize: '28px',
               '.container-item': {
                 backgroundColor: '#1E0F00',
                 width: '80px',
@@ -230,9 +274,14 @@ const InventoryCSS = styled.div({
           '@media(min-width: 950px)': {
             marginLeft: '50px',
           },
+          '@media(max-width: 950px)': {
+            marginTop: '50px',
+          },
           flex: 1,
           maxWidth: '750px',
-          minWidth: '450px',
+          '@media(min-width: 320px)': {
+            minWidth: '350px',
+          },
           display: 'flex',
           justifyContent: 'center',
           '.container-2-body': {
@@ -278,19 +327,17 @@ const InventoryCSS = styled.div({
               '> div:first-child': {
                 fontSize: '22px',
                 position: 'absolute',
-                left: '-60px',
+                left: '-60px'
               },
               '> input': {
-                display: 'flex',
-                alignItems: 'center',
                 backgroundColor: '#261106',
                 padding: '0 10px',
                 borderRadius: '5px',
                 borderLeft: '2px solid #B9AE7B',
                 borderRight: '2px solid #B9AE7B',
                 width: '170px',
-                outline: 'none',
-                textAlign: 'center'
+                textAlign: 'center',
+                outline: 'none'
               },
               '> div:last-child': {
                 position: 'absolute',
@@ -301,12 +348,19 @@ const InventoryCSS = styled.div({
             '.container-2-selling-amout': {
               display: 'flex',
               alignItems: 'center',
-              marginTop: '80px',
+              marginTop: '30px',
               position: 'relative',
+              '@media(max-width: 500px)': {
+                marginTop: '50px',
+              },
               '> div:first-child': {
                 position: 'absolute',
                 left: '-130px',
-                fontSize: '18px'
+                fontSize: '18px',
+                '@media(max-width: 500px)': {
+                  left: '20px',
+                  top: '-30px'
+                }
               },
               '> input': {
                 display: 'flex',
@@ -320,41 +374,41 @@ const InventoryCSS = styled.div({
                 outline: 'none',
                 textAlign: 'center'
               },
-              '> div:last-child': {
+              '.container-2-selling-amout-caculation': {
                 position: 'absolute',
-                right: '-115px',
+                right: 0,
+                left: '-5px',
+                bottom: '-65px',
+                margin: 'auto',
                 fontSize: '22px',
                 display: 'flex',
-                flexDirection: 'column',
                 alignItems: 'center',
-                '> div:first-child': {
+                '> div': {
                   display: 'flex',
-                  fontSize: '50px',
-                  lineHeight: '24px',
-                  div: {
-                    display: 'flex',
-                    justifyContent: 'center',
-                    width: '40px',
-                    height: '40px',
-                    border: '2px solid #B9AE7B',
-                    marginLeft: '20px',
-                  }
-                },
-                '> div:last-child': {
-                  marginTop: '20px',
-                  display: 'flex',
+                  fontSize: '40px',
+                  lineHeight: '25px',
                   justifyContent: 'center',
                   width: '40px',
                   height: '40px',
-                  border: '2px solid #B9AE7B',
-                  marginLeft: '20px',
-                  fontSize: '18px',
-                  lineHeight: '35px'
+                  border: '2px solid #F1E994',
+                  margin: '0 10px',
+                  borderRadius: '10px',
+                  ':last-child': {
+                    fontSize: '18px',
+                    lineHeight: '35px',
+                  }
                 }
               }
             },
+            '.container-2-total': {
+              marginTop: '80px ',
+              span: {
+                fontSize: '30px',
+                color: '#F1E994'
+              }
+            },
             '.container-2-btn-confirm': {
-              marginTop: '50px'
+              marginTop: '20px'
             }
           }
         }
