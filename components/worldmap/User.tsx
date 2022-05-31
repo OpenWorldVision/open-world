@@ -20,15 +20,19 @@ export default function User() {
     dispatch(setProfile({ profile: _profile }))
   }, [])
 
-  const checkProfessionExist = async () => {
-    setIsOpenTutorial(await isProfessionExist())
-  }
+  // const checkProfessionExist = async () => {
+  //   setIsOpenTutorial(await isProfessionExist())
+  // }
 
   useEffect(() => {
-    checkProfessionExist()
+    // checkProfessionExist()
     getDataProfile()
   }, [])
 
+  const handleOpenTutorial = useCallback(() => {
+    setIsOpenTutorial(true)
+  }, [])
+  console.log(isOpenTutorial)
   return (
     <UserCSS>
       <div className="user-avatar">
@@ -122,6 +126,7 @@ export default function User() {
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             isOpenCreateProfile={isOpenCreateProfile}
             getDataProfile={getDataProfile}
+            handleOpenTutorial={handleOpenTutorial}
           />
         )}
         {isOpenCreateProfile && (
@@ -131,9 +136,16 @@ export default function User() {
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             isOpenCreateProfile={isOpenCreateProfile}
             getDataProfile={getDataProfile}
+            handleOpenTutorial={handleOpenTutorial}
           />
         )}
-        {profile !== false && !isOpenCreateProfile && isOpenTutorial &&
+        {/* {profile !== false && !isOpenCreateProfile && isOpenTutorial &&
+          <ProfessionsTutorial
+            setIsOpenTutorial={setIsOpenTutorial}
+            isOpenTutorial={isOpenTutorial}
+          />
+        } */}
+        {isOpenTutorial &&
           <ProfessionsTutorial
             setIsOpenTutorial={setIsOpenTutorial}
             isOpenTutorial={isOpenTutorial}
