@@ -66,7 +66,10 @@ function Supplier() {
       getApprovedStatus()
       setTypeModal(TYPE_OF_MODAL.START)
       setIsLoading(true)
-      const data = await sellSushi(listSushi[0], valueSushi)
+      const listSushiSell = []
+      listSushiSell.push(parseInt(listSushi[0]))
+      console.log('21213', listSushiSell)
+      const data = await sellSushi(listSushiSell, valueSushi)
       if (data) {
         setTypeModal(TYPE_OF_MODAL.FINISH)
         getListSushi()
