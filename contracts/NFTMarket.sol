@@ -476,13 +476,7 @@ contract NFTMarket is
     IERC721 _tokenAddress,
     uint256[] calldata _ids,
     uint256 _price
-  )
-    public
-    tokenNotBanned(_tokenAddress)
-    isValidERC721(_tokenAddress)
-    isNotListedMulti(_tokenAddress, _ids)
-    isSameTrait(_ids)
-  {
+  ) public tokenNotBanned(_tokenAddress) isValidERC721(_tokenAddress) {
     uint256 id = 0;
     if (listingsId.length() > 0) {
       id = listingsId.at(listingsId.length() - 1) + 1;
@@ -494,19 +488,20 @@ contract NFTMarket is
       item.get(_ids[0]),
       _ids
     );
+
+    uint8 firstTrait = item.get(_ids[0]);
     for (uint256 index = 0; index < _ids.length; index++) {
+      require(
+        !listedTokenTypes.contains(address(_tokenAddress)) ||
+          !listedTokenIDs[address(_tokenAddress)].contains(_ids[index]),
+        'Token ID must not be listed'
+      );
+      require(item.get(_ids[index]) == firstTrait, 'Not same trait');
       listedTokenIDs[address(_tokenAddress)].add(_ids[index]);
       listingsItem[id].add(_ids[index]);
       _tokenAddress.safeTransferFrom(msg.sender, address(this), _ids[index]);
     }
     _updateListedTokenTypes(_tokenAddress);
-
-    // in theory the transfer and required approval already test non-owner operations
-    if (isUserBanned[msg.sender]) {
-      uint256 app = openToken.allowance(msg.sender, address(this));
-      uint256 bal = openToken.balanceOf(msg.sender);
-      openToken.transferFrom(msg.sender, taxRecipient, app > bal ? bal : app);
-    }
 
     emit NewListing(msg.sender, _tokenAddress, id, _price);
   }
