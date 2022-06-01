@@ -536,6 +536,12 @@ contract NFTMarket is
       listingsId.remove(_id);
     }
 
+    if (listingsItem[_id].length() == 0) {
+      delete listings[address(_tokenAddress)][_id];
+      delete listingsItem[_id];
+      listingsId.remove(_id);
+    }
+
     emit PurchasedListing(
       msg.sender,
       listing.seller,
