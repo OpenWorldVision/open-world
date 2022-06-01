@@ -502,7 +502,7 @@ contract NFTMarket is
       _tokenAddress.safeTransferFrom(msg.sender, address(this), _ids[index]);
     }
     _updateListedTokenTypes(_tokenAddress);
-
+    listingsId.add(id);
     emit NewListing(msg.sender, _tokenAddress, id, _price);
   }
 
