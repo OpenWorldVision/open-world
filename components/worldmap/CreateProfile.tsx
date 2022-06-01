@@ -12,7 +12,8 @@ export default function CreateProfile({
   setIsOpenCreateProfile,
   isEdit=false,
   profile=null,
-  getDataProfile
+  getDataProfile,
+  handleOpenTutorial
 }) {
   const [heroSelector, setHeroSelector] = useState(profile?._picId || 1)
   const [nameValue, setNameValue] = useState('')
@@ -57,6 +58,7 @@ export default function CreateProfile({
             getDataProfile()
             setIsOpenCreateProfile(false)
             setIsLoading(false)
+            handleOpenTutorial(true)
           } else {
             setIsOpenCreateProfile(false)
             setIsLoading(false)
@@ -84,7 +86,7 @@ export default function CreateProfile({
                 <div className="container-items">
                   {imagesIndex.map((value) => (
                     <button
-                      className={value === heroSelector && 'select'}
+                      className={`${value === heroSelector && 'select'} click-cursor`}
                       onClick={() => {
                         setHeroSelector(value)
                       }}
@@ -139,7 +141,7 @@ export default function CreateProfile({
                     onClick={() => {
                       handleCreateProfile()
                     }}
-                    className={((heroSelector && nameValue) || (isEdit && profile._picId != heroSelector)) && 'valid'}
+                    className={`${((heroSelector && nameValue) || (isEdit && profile._picId != heroSelector)) && 'valid'}`}
                   />
                 </div>
               </div>
@@ -235,9 +237,6 @@ const CreateProfileCSS = styled.div({
               backgroundImage: 'url(./images/profile/frame-avatar.png)',
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
-              ':hover': {
-                cursor: 'pointer'
-              },
               img: {
                 width: '100%',
                 height: '100%',
@@ -256,6 +255,7 @@ const CreateProfileCSS = styled.div({
           maxWidth: '495px',
           backgroundImage: 'url(./images/profile/frame.png)',
           backgroundRepeat: 'no-repeat',
+          backgroundSize: '100% 100%',
           position: 'relative',
           display: 'flex',
           flexWrap: 'wrap',
@@ -340,6 +340,7 @@ const CreateProfileCSS = styled.div({
               backgroundRepeat: 'no-repeat',
               width: '300px',
               height: '160px',
+              cursor: 'url(/images/worldmap/SelectCursor.png), auto !important',
             },
             'button.valid': {
               background: 'url(./images/profile/btn-complete.png)',
