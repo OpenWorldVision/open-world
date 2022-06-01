@@ -2,7 +2,7 @@ import Web3 from 'web3'
 
 const web3 = new Web3(Web3.givenProvider)
 
-const professionContract = {
+export const nftMarketContract = {
   addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
   addressBSC: '0x7210aEaF0c7d74366E37cfB37073cB630Ac86B5b',
   jsonInterface: require('../build/contracts/NFTMarket.json'),
@@ -15,27 +15,30 @@ const getNFTMarketContract = async () => {
 
   if (chainId === 97) {
     return new web3.eth.Contract(
-      professionContract.jsonInterface.abi,
-      professionContract.addressBSC
+      nftMarketContract.jsonInterface.abi,
+      nftMarketContract.addressBSC
     )
   } else if (chainId === 1666700000) {
     return new web3.eth.Contract(
-      professionContract.jsonInterface.abi,
-      professionContract.addressHarmony
+      nftMarketContract.jsonInterface.abi,
+      nftMarketContract.addressHarmony
     )
   }
 }
 
-export const sellSushi = async (id: number, price: number) => {
+export const sellSushi = async (ids: Array<number>, price: number) => {
   const contract = await getNFTMarketContract()
   const accounts = await web3.eth.getAccounts()
 
+  console.log('2124', ids)
+
   try {
     const data = await contract.methods
-      .addListing(nftAddress, id, price)
+      .addListing(nftAddress, ids, price)
       .send({ from: accounts[0] })
     return data
   } catch (error) {
+    console.log('e4witi', error)
     return null
   }
 }
@@ -45,7 +48,7 @@ export const getListingIDs = async () => {
   const accounts = await web3.eth.getAccounts()
   try {
     const listIds = await contract.methods
-      .getListingSlice(nftAddress, 0, 100)
+      .getListingSlice(nftAddress, 0, 20)
       .call({ from: accounts[0] })
     const listFull = []
     listIds?.sellers?.forEach((id, index) => {
