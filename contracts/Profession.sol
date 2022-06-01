@@ -25,6 +25,9 @@ contract Profession is AccessControlUpgradeable {
   uint256 public fishRequireMakeSushi;
   uint256 public oreRequireMakeHammer;
 
+  uint256 public constant maxStamina = 10000;
+  uint256 public constant secondsPerStamina = 7; // Reduce 420 point per hour
+
   Item public item;
   Profiles public profiles;
 
