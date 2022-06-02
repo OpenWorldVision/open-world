@@ -201,7 +201,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 />
                 <ModalContent
@@ -216,7 +216,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -336,7 +336,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 />
                 <ModalContent
@@ -351,7 +351,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -398,7 +398,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 />
                 <ModalContent
@@ -413,7 +413,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -441,7 +441,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 />
                 <ModalContent
@@ -456,7 +456,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -555,7 +555,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 />
                 <ModalContent
@@ -570,7 +570,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -776,7 +776,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 />
                 <ModalContent
@@ -791,7 +791,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -855,7 +855,8 @@ export default function Jeweler(props) {
                           backgroundColor: '#009c44',
                           marginTop: '40px',
                           fontSize: '28px',
-                          cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                          cursor:
+                            'url(/images/worldmap/CursorDefault.webp), auto',
                         }}
                       >
                         Claim
@@ -872,7 +873,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 />
                 <ModalContent
@@ -887,7 +888,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -950,7 +951,7 @@ export default function Jeweler(props) {
                 <ModalOverlay
                   style={{
                     backgroundColor: 'rgba(30, 30, 30, 0.5)',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 />
                 <ModalContent
@@ -965,7 +966,7 @@ export default function Jeweler(props) {
                     margin: 'auto',
                     overflow: 'hidden auto',
                     color: '#fff',
-                    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+                    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
@@ -1120,7 +1121,7 @@ const JewelerPage = styled.div({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
     overflow: 'hidden',
     '.jeweler': {
       position: 'absolute',

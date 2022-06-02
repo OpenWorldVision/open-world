@@ -12,7 +12,9 @@ export default function User() {
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
   const [isOpenTutorial, setIsOpenTutorial] = useState(false)
-  const profile = useSelector((state: any) => { return state.ProfileStore.profile })
+  const profile = useSelector((state: any) => {
+    return state.ProfileStore.profile
+  })
   const dispatch = useDispatch()
 
   const getDataProfile = useCallback(async () => {
@@ -32,16 +34,20 @@ export default function User() {
     <UserCSS>
       <div className="user-avatar">
         <button
-        className='click-cursor'
-          css={isOpenAvatar && {
-            margin: 'auto'
-          }}
+          className="click-cursor"
+          css={
+            isOpenAvatar && {
+              margin: 'auto',
+            }
+          }
           onClick={() => {
             setIsOpenAvatar((isOpenAvatarPrev) => !isOpenAvatarPrev)
           }}
         >
           <img
-            src={`./images/profile/hero/${(profile?._picId && profile?._picId < 14) ? profile?._picId : 'none'}.png`}
+            src={`./images/profile/hero/${
+              profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
+            }.webp`}
             alt="img"
           />
         </button>
@@ -49,48 +55,71 @@ export default function User() {
           <div className="user-info">
             <div>{profile?._name}</div>
             <ul>
-              <li css={{
-                display: 'flex',
-              }}>
+              <li
+                css={{
+                  display: 'flex',
+                }}
+              >
                 <div style={{ width: '30px' }}>
-                  <img src='./favicon.ico' alt='img' width={25} height={25} />
+                  <img src="./favicon.ico" alt="img" width={25} height={25} />
                 </div>
                 0.00 OPEN
               </li>
               {/* Career : Openian or Supplier or BlackSmith */}
-              <li>
-                Career: None
-              </li>
-              <li css={{
-                display: 'flex',
-                marginTop: '10px'
-              }}>
+              <li>Career: None</li>
+              <li
+                css={{
+                  display: 'flex',
+                  marginTop: '10px',
+                }}
+              >
                 <div style={{ width: '30px' }}>
-                  <img src='./images/icons/inventory.png' alt='img' width={25} height={25} />
+                  <img
+                    src="./images/icons/inventory.png"
+                    alt="img"
+                    width={25}
+                    height={25}
+                  />
                 </div>
                 Inventory
               </li>
             </ul>
             <ul>
               <li>
-                <div css={{
-                  display: 'flex',
-                }}>
+                <div
+                  css={{
+                    display: 'flex',
+                  }}
+                >
                   <div style={{ width: '30px' }}>
-                    <img src='./images/icons/stamina-point.png' alt='img' width={15} height={15} />
+                    <img
+                      src="./images/icons/stamina-point.png"
+                      alt="img"
+                      width={15}
+                      height={15}
+                    />
                   </div>
                   Stamina Point:
                 </div>
                 <div>100/100</div>
               </li>
-              <li css={{
-                marginTop: '10px'
-              }}>
-                <div css={{
-                  display: 'flex',
-                }}>
+              <li
+                css={{
+                  marginTop: '10px',
+                }}
+              >
+                <div
+                  css={{
+                    display: 'flex',
+                  }}
+                >
                   <div style={{ width: '30px' }}>
-                    <img src='./images/icons/health-point.png' alt='img' width={25} height={25} />
+                    <img
+                      src="./images/icons/health-point.png"
+                      alt="img"
+                      width={25}
+                      height={25}
+                    />
                   </div>
                   Health Point:
                 </div>
@@ -98,11 +127,14 @@ export default function User() {
               </li>
             </ul>
             <button
-              style={{ cursor: 'url(/images/worldmap/click-cursor.png), auto !important' }}
+              style={{
+                cursor:
+                  'url(/images/worldmap/click-cursor.png), auto !important',
+              }}
               onClick={() => {
                 setIsOpenUserInfo(true)
               }}
-              className='btn-profile click-cursor'
+              className="btn-profile click-cursor"
             >
               Profile
             </button>
@@ -134,12 +166,12 @@ export default function User() {
             handleOpenTutorial={handleOpenTutorial}
           />
         )}
-        {isOpenTutorial &&
+        {isOpenTutorial && (
           <ProfessionsTutorial
             setIsOpenTutorial={setIsOpenTutorial}
             isOpenTutorial={isOpenTutorial}
           />
-        }
+        )}
       </div>
     </UserCSS>
   )
@@ -160,14 +192,14 @@ const UserCSS = styled.div({
       width: '100px',
       height: '110px',
       display: 'block',
-      backgroundImage: 'url(./images/worldmap/Frame.png)',
+      backgroundImage: 'url(./images/worldmap/Frame.webp)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'contain',
       padding: '10px',
       img: {
         width: '76px',
         height: '76px',
-        borderRadius: '50%'
+        borderRadius: '50%',
       },
     },
     '.user-info': {
@@ -189,7 +221,7 @@ const UserCSS = styled.div({
         backgroundImage: 'url(./images/profile/frame.png)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100% 100%',
-        marginTop: '10px'
+        marginTop: '10px',
       },
       ul: {
         padding: '14px 0',
@@ -223,7 +255,7 @@ const UserCSS = styled.div({
           backgroundColor: '#fbeb74',
           color: 'black',
         },
-      }
+      },
     },
   },
 })

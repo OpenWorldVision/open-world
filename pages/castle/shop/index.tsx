@@ -6,9 +6,8 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   mintProfessionNFT,
   fetchProfessionsNFTAmount,
-  fetchProfessionsNFTPrices
- }
-from 'utils/professions'
+  fetchProfessionsNFTPrices,
+} from 'utils/professions'
 import LoadingModal from '@components/LoadingModal'
 
 function Shop() {
@@ -36,13 +35,13 @@ function Shop() {
   }
 
   const fetchNFTAmount = useCallback(async () => {
-    const amount = await fetchProfessionsNFTAmount();
-    setNftsAmount(amount);
+    const amount = await fetchProfessionsNFTAmount()
+    setNftsAmount(amount)
   }, [nftsAmount])
 
   const fetchNFTPrices = useCallback(async () => {
-    const prices = await fetchProfessionsNFTPrices();
-    setNftsPrices(prices);
+    const prices = await fetchProfessionsNFTPrices()
+    setNftsPrices(prices)
   }, [nftsPrices])
 
   const initialize = async () => {
@@ -97,10 +96,15 @@ function Shop() {
             <div
               className={`${style.npcCard} ${style.openianNPC} click-cursor`}
             ></div>
-            <span className={style.shopSupply}>SUPPLY LEFT: { nftsAmount.openianAmount }</span>
+            <span className={style.shopSupply}>
+              SUPPLY LEFT: {nftsAmount.openianAmount}
+            </span>
             <div className={style.buyBtnWrap}>
-              <Button className={style.buyBtn} onClick={() => mintProfessionsNFT(1)}>
-                <span>{ nftsPrices.openianPrice } OPEN</span>
+              <Button
+                className={style.buyBtn}
+                onClick={() => mintProfessionsNFT(1)}
+              >
+                <span>{nftsPrices.openianPrice} OPEN</span>
               </Button>
             </div>
           </GridItem>
@@ -112,9 +116,14 @@ function Shop() {
             <div
               className={`${style.npcCard} ${style.supplierNPC} click-cursor`}
             ></div>
-            <span className={style.shopSupply}>SUPPLY LEFT: { nftsAmount.supplierAmount }</span>
+            <span className={style.shopSupply}>
+              SUPPLY LEFT: {nftsAmount.supplierAmount}
+            </span>
             <div className={style.buyBtnWrap}>
-              <Button className={style.buyBtn} onClick={() => mintProfessionsNFT(2)}>
+              <Button
+                className={style.buyBtn}
+                onClick={() => mintProfessionsNFT(2)}
+              >
                 <span>{nftsPrices.supplierPrice} OPEN</span>
               </Button>
             </div>
@@ -132,9 +141,14 @@ function Shop() {
             <div
               className={`${style.npcCard} ${style.smithNPC} click-cursor`}
             ></div>
-            <span className={style.shopSupply}>SUPPLY LEFT: { nftsAmount.blacksmithAmount }</span>
+            <span className={style.shopSupply}>
+              SUPPLY LEFT: {nftsAmount.blacksmithAmount}
+            </span>
             <div className={style.buyBtnWrap}>
-              <Button className={style.buyBtn} onClick={() => mintProfessionsNFT(3)}>
+              <Button
+                className={style.buyBtn}
+                onClick={() => mintProfessionsNFT(3)}
+              >
                 <span>{nftsPrices.blacksmithPrice} OPEN</span>
               </Button>
             </div>
