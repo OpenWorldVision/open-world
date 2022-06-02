@@ -65,15 +65,18 @@ export default function ForgeHammer(props: Props) {
     setIsStartQuest(false)
   }, [])
 
-
-  const handleToggleModal = () =>{
+  const handleToggleModal = () => {
     toggleModal(false)
     setCheckIsSuccess(false)
   }
 
   return (
     <>
-      <div className={`${style.forgeHammerOverlay} ${isOpen && style.active} overlay`}>
+      <div
+        className={`${style.forgeHammerOverlay} ${
+          isOpen && style.active
+        } overlay`}
+      >
         {!isStartQuest && !isStartQuestFail && (
           <div className={style.frameforgeHammer}>
             <div className={style.frameHead}>
@@ -116,8 +119,9 @@ export default function ForgeHammer(props: Props) {
                 <div className={style.detail}>
                   <input
                     value={numberOreNeed}
-                    className={`${style.input} ${numberOreNeed > numberYourOre.length && style.oreInvalid
-                      }`}
+                    className={`${style.input} ${
+                      numberOreNeed > numberYourOre.length && style.oreInvalid
+                    }`}
                     type="text"
                   />
                   <div className={style.ore}></div>
@@ -130,7 +134,7 @@ export default function ForgeHammer(props: Props) {
               <Button
                 sx={{
                   cursor:
-                    'url(/images/worldmap/SelectCursor.png), auto !important',
+                    'url(/images/worldmap/SelectCursor.webp), auto !important',
                 }}
                 disabled={numberHammer === 0}
                 onClick={handleStartQuest}

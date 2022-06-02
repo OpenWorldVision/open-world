@@ -1,19 +1,21 @@
 import { useCallback, useState } from 'react'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { changePictureProfile, crateProfile, checkNameTaken } from 'utils/profileContract'
+import {
+  changePictureProfile,
+  crateProfile,
+  checkNameTaken,
+} from 'utils/profileContract'
 
-const imagesIndex = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
-]
+const imagesIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
 export default function CreateProfile({
   isOpenCreateProfile,
   setIsOpenCreateProfile,
-  isEdit=false,
-  profile=null,
+  isEdit = false,
+  profile = null,
   getDataProfile,
-  handleOpenTutorial
+  handleOpenTutorial,
 }) {
   const [heroSelector, setHeroSelector] = useState(profile?._picId || 1)
   const [nameValue, setNameValue] = useState('')
@@ -31,10 +33,13 @@ export default function CreateProfile({
 
   const handleCreateProfile = async () => {
     setIsLoading(true)
-    if(isEdit && profile._picId != heroSelector) {
+    if (isEdit && profile._picId != heroSelector) {
       if (heroSelector) {
-        const isChangePictureProfile = await changePictureProfile(Number(profile._id), heroSelector)
-        if (isChangePictureProfile){
+        const isChangePictureProfile = await changePictureProfile(
+          Number(profile._id),
+          heroSelector
+        )
+        if (isChangePictureProfile) {
           router.push('/')
           getDataProfile()
           setIsOpenCreateProfile(false)
@@ -49,11 +54,11 @@ export default function CreateProfile({
         const isNameTaken = await checkNameTaken(nameValue)
         if (nameValue.length <= 3 || nameValue.length >= 16) {
           setIsNameValid(false)
-        } else if(isNameTaken){
+        } else if (isNameTaken) {
           setIsNameValid(false)
         } else {
           const isCreateProfile = await crateProfile(nameValue, heroSelector)
-          if (isCreateProfile){
+          if (isCreateProfile) {
             router.push('/')
             getDataProfile()
             setIsOpenCreateProfile(false)
@@ -72,12 +77,13 @@ export default function CreateProfile({
     <CreateProfileCSS>
       <div className="modal-create-profile">
         <div className="modal-content">
-          {isLoading ? <div className='loading'>
-            <div className='loading-content'>
-              Loading ...
+          {isLoading ? (
+            <div className="loading">
+              <div className="loading-content">Loading ...</div>
             </div>
-          </div> : (
-            <div className="body"
+          ) : (
+            <div
+              className="body"
               onClick={(e) => {
                 handleCloseModalCreateProfile(e)
               }}
@@ -86,14 +92,16 @@ export default function CreateProfile({
                 <div className="container-items">
                   {imagesIndex.map((value) => (
                     <button
-                      className={`${value === heroSelector && 'select'} click-cursor`}
+                      className={`${
+                        value === heroSelector && 'select'
+                      } click-cursor`}
                       onClick={() => {
                         setHeroSelector(value)
                       }}
                       key={value}
                     >
                       <img
-                        src={`./images/profile/hero/${value}.png`}
+                        src={`/images/profile/hero/${value}.webp`}
                         alt="img"
                       />
                     </button>
@@ -103,7 +111,7 @@ export default function CreateProfile({
               <div className="body-bottom">
                 <div className="avatar-selected">
                   <img
-                    src={`./images/profile/hero/${heroSelector || 1}.png`}
+                    src={`/images/profile/hero/${heroSelector || 1}.webp`}
                     alt="img"
                   />
                 </div>
@@ -133,15 +141,21 @@ export default function CreateProfile({
                       textShadow: '0 0 10px #FF0000',
                     }}
                   >
-                    {(nameValue.length <= 3 || nameValue.length >= 16 ? 'Name must be between 4 and 15' : 'User name has been used. Try other name')}
+                    {nameValue.length <= 3 || nameValue.length >= 16
+                      ? 'Name must be between 4 and 15'
+                      : 'User name has been used. Try other name'}
                   </div>
                 )}
-                <div className='complete-profile'>
+                <div className="complete-profile">
                   <button
                     onClick={() => {
                       handleCreateProfile()
                     }}
-                    className={`${((heroSelector && nameValue) || (isEdit && profile._picId != heroSelector)) && 'valid'}`}
+                    className={`${
+                      ((heroSelector && nameValue) ||
+                        (isEdit && profile._picId != heroSelector)) &&
+                      'valid'
+                    }`}
                   />
                 </div>
               </div>
@@ -175,7 +189,7 @@ const CreateProfileCSS = styled.div({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: '40px'
+        fontSize: '40px',
       },
       '.body': {
         display: 'flex',
@@ -206,9 +220,10 @@ const CreateProfileCSS = styled.div({
             left: 0,
             width: '100%',
             height: '15px',
-            backgroundImage: 'url(./images/profile/top-frame-profile-image.png)',
+            backgroundImage:
+              'url(./images/profile/top-frame-profile-image.png)',
             backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain'
+            backgroundSize: 'contain',
           },
           '::after': {
             content: '""',
@@ -219,9 +234,10 @@ const CreateProfileCSS = styled.div({
             margin: 'auto',
             width: '300px',
             height: '135px',
-            backgroundImage: 'url(./images/profile/title-frame-profile-image.png)',
+            backgroundImage:
+              'url(./images/profile/title-frame-profile-image.webp)',
             backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain'
+            backgroundSize: 'contain',
           },
           '.container-items': {
             overflow: 'auto',
@@ -241,14 +257,14 @@ const CreateProfileCSS = styled.div({
                 width: '100%',
                 height: '100%',
                 padding: '2px',
-                borderRadius: '12px'
-              }
+                borderRadius: '12px',
+              },
             },
             'button.select': {
               outline: '4px solid yellow',
-              borderRadius: '12px'
-            }
-          }
+              borderRadius: '12px',
+            },
+          },
         },
         '.body-bottom': {
           flex: 1,
@@ -262,7 +278,7 @@ const CreateProfileCSS = styled.div({
           marginTop: '100px',
           padding: '80px 20px',
           '@media(min-width: 1396px)': {
-            marginLeft: '50px'
+            marginLeft: '50px',
           },
           '@media(max-width: 1395px)': {
             maxWidth: '900px',
@@ -274,7 +290,8 @@ const CreateProfileCSS = styled.div({
             left: '0',
             width: '100%',
             height: '15px',
-            backgroundImage: 'url(./images/profile/top-frame-profile-detail.png)',
+            backgroundImage:
+              'url(./images/profile/top-frame-profile-detail.png)',
             '@media(max-width: 1395px)': {
               backgroundImage: 'url(./images/profile/top-frame-1.png)',
             },
@@ -290,9 +307,10 @@ const CreateProfileCSS = styled.div({
             margin: 'auto',
             width: '300px',
             height: '135px',
-            backgroundImage: 'url(./images/profile/title-frame-profile-detail.png)',
+            backgroundImage:
+              'url(./images/profile/title-frame-profile-detail.png)',
             backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain'
+            backgroundSize: 'contain',
           },
           '.avatar-selected': {
             background: 'url(./images/profile/frame-avatar.png)',
@@ -307,7 +325,7 @@ const CreateProfileCSS = styled.div({
               borderRadius: '18px',
               padding: '4px',
               display: 'block',
-              margin: 'auto'
+              margin: 'auto',
             },
           },
           '.input-name': {
@@ -340,16 +358,17 @@ const CreateProfileCSS = styled.div({
               backgroundRepeat: 'no-repeat',
               width: '300px',
               height: '160px',
-              cursor: 'url(/images/worldmap/SelectCursor.png), auto !important',
+              cursor:
+                'url(/images/worldmap/SelectCursor.webp), auto !important',
             },
             'button.valid': {
               background: 'url(./images/profile/btn-complete.png)',
               backgroundSize: 'contain',
-              backgroundRepeat: 'no-repeat'
-            }
-          }
-        }
-      }
+              backgroundRepeat: 'no-repeat',
+            },
+          },
+        },
+      },
     },
   },
 })
