@@ -2,11 +2,12 @@ import { Button } from '@chakra-ui/react'
 import styles from './BuyerBoard.module.css'
 import { useCallback, useEffect, useState } from 'react'
 import NotificationBuyItem from './NotificationBuyItem'
+import { purchaseItems } from 'utils/NFTMarket'
 
 type Props = {
   isOpen: boolean
   toggleModalBuyModal: () => void
-  buyDetail: object
+  buyDetail: any
 }
 
 export default function BuyerBoard(props: Props) {
@@ -18,57 +19,21 @@ export default function BuyerBoard(props: Props) {
   const [notiContent, setNotiContent] = useState({})
   const [isShowNoti, setIsShowNoti] = useState(false)
 
-  const handlePrevious = useCallback(() => {
-    if (numberItem > 0) {
-      setNumberItem(numberItem - 1)
-    }
-  }, [numberItem])
-
-  const handleIncrease = useCallback(() => {
-    setNumberItem(numberItem + 1)
-  }, [numberItem])
-
-  useEffect(() => {
-    if (buyDetail['price']) {
-      setTotalOpen(numberItem * buyDetail['price'])
-    }
-  }, [numberItem])
-
-  const handleMaxItem = useCallback(() => {
-    setNumberItem(buyDetail['available'])
-    numberItem * buyDetail['price'](numberItem * buyDetail['available'])
-  }, [numberItem, buyDetail])
-
   const handleHiddenModal = useCallback(() => {
     toggleModalBuyModal()
     setNumberItem(0)
     setTotalOpen(0)
   }, [])
 
-  const handleConfirmBuy = useCallback(() => {
-    if (numberItem > 0) {
-      if (myOpen < totalOpen) {
-        setNotiContent({
-          value: false,
-          content: 'Not Enough OPEN !',
-        })
-      } else if (buyDetail['available'] < numberItem) {
-        setNotiContent({
-          value: false,
-          content: 'The Available Amount Is Not Enough !',
-        })
-      } else {
-        setNotiContent({
-          value: true,
-          content: 'Your Order has been Completed !',
-          helpText: 'Check Your Inventory For Bought Items !',
-        })
-      }
-      setIsShowNoti(true)
-      setNumberItem(0)
-      setTotalOpen(0)
+  const handleConfirmBuy = useCallback(async () => {
+    setIsShowNoti(true)
+    setNumberItem(0)
+    setTotalOpen(0)
+    const data = await purchaseItems(parseInt(buyDetail?.id), buyDetail?.items)
+    if (data) {
+      //handle success
     }
-  }, [numberItem])
+  }, [buyDetail])
 
   const handleShowNoti = useCallback(() => {
     setIsShowNoti(false)
@@ -94,42 +59,17 @@ export default function BuyerBoard(props: Props) {
             <div className={styles.boardContent}>
               <h3>SELECTED ITEM:</h3>
               <div className={`${styles.selectedItem}`}>
-                {buyDetail['itemName'] === 'sushi' ? (
-                  <img src="/images/foodcourt/sushi.png" alt="Sushi" />
-                ) : (
+                {buyDetail['trait'] === '1' ? (
                   <img src="/images/foodcourt/fish.png" alt="Fish" />
+                ) : (
+                  <img src="/images/foodcourt/sushi.png" alt="Sushi" />
                 )}
               </div>
-              <div className={styles.wantToBuy}>
-                <div className={styles.helpText}>I Want To Buy</div>
-                <div className={styles.editNumberItems}>
-                  <div className={styles.numberItems}>
-                    <span>{numberItem}</span>
-                    <div onClick={handleMaxItem} className="click-cursor">
-                      Max
-                    </div>
-                  </div>
-                  <div className={styles.itemName}>{buyDetail['itemName']}</div>
-                </div>
-              </div>
-              <div className={styles.BtnContainer}>
-                <div
-                  onClick={handlePrevious}
-                  className={`${styles.previous} click-cursor`}
-                >
-                  -
-                </div>
-                <div
-                  onClick={handleIncrease}
-                  className={`${styles.increase} click-cursor`}
-                >
-                  +
-                </div>
-              </div>
+
               <div className={styles.haveToPay}>
                 <div className={styles.helpText}>I Have To Pay</div>
                 <div className={styles.priceTotal}>
-                  {totalOpen}
+                  {buyDetail?.price * buyDetail?.items?.length}
                   <div>OPEN</div>
                 </div>
               </div>

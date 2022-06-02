@@ -75,15 +75,20 @@ export async function getListingIDs(): Promise<Listing[]> {
   }
 }
 
-const getDetailNFTItem = async (id: number) => {
+export const purchaseItems = async (
+  transactionId: number,
+  itemIds: Array<number>
+) => {
   const contract = await getNFTMarketContract()
   const accounts = await web3.eth.getAccounts()
-  const price = await contract?.methods
-    ?.getFinalPrice(nftAddress, id)
-    .call({ from: accounts[0] })
-  const sellerInfor = await contract?.methods
-    ?.getSellerOfNftID(nftAddress, id)
-    .call({ from: accounts[0] })
+  try {
+    const result = await contract.methods
+      ?.purchaseListing(nftAddress, transactionId, itemIds)
+      .send({ from: accounts[0] })
+    return result
+  } catch (error) {
+    return null
+  }
 }
 
 // const
