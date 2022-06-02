@@ -101,7 +101,7 @@ export default function CreateProfile({
                       key={value}
                     >
                       <img
-                        src={`./images/profile/hero/${value}.webp`}
+                        src={`/images/profile/hero/${value}.webp`}
                         alt="img"
                       />
                     </button>
@@ -111,7 +111,7 @@ export default function CreateProfile({
               <div className="body-bottom">
                 <div className="avatar-selected">
                   <img
-                    src={`./images/profile/hero/${heroSelector || 1}.webp`}
+                    src={`/images/profile/hero/${heroSelector || 1}.webp`}
                     alt="img"
                   />
                 </div>
@@ -235,7 +235,7 @@ const CreateProfileCSS = styled.div({
             width: '300px',
             height: '135px',
             backgroundImage:
-              'url(./images/profile/title-frame-profile-image.png)',
+              'url(./images/profile/title-frame-profile-image.webp)',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
           },

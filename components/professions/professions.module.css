@@ -1,5 +1,5 @@
 .professionsOverlay {
-  background-image: url('/images/background/game-bg.jpg');
+  background-image: url('/images/background/game-bg.webp');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -40,3 +40,4 @@
     background-size: cover;
   }
 }
+

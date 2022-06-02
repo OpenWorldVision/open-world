@@ -1,4 +1,8 @@
-module.exports = {
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+module.exports = withBundleAnalyzer({
   images: {
     // limit of 25 deviceSizes values
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -24,4 +28,4 @@ module.exports = {
   env: {
     environment: 'develop',
   },
-}
+})

@@ -45,7 +45,7 @@ export default function User() {
           }}
         >
           <img
-            src={`./images/profile/hero/${
+            src={`/images/profile/hero/${
               profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
             }.webp`}
             alt="img"
@@ -192,7 +192,7 @@ const UserCSS = styled.div({
       width: '100px',
       height: '110px',
       display: 'block',
-      backgroundImage: 'url(./images/worldmap/Frame.webp)',
+      backgroundImage: 'url(/images/worldmap/Frame.webp)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'contain',
       padding: '10px',
