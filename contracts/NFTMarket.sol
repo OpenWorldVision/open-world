@@ -499,9 +499,10 @@ contract NFTMarket is
       require(item.get(_ids[index]) == firstTrait, 'Not same trait');
       listedTokenIDs[address(_tokenAddress)].add(_ids[index]);
       listingsItem[id].add(_ids[index]);
+      _updateListedTokenTypes(_tokenAddress);
+
       _tokenAddress.safeTransferFrom(msg.sender, address(this), _ids[index]);
     }
-    _updateListedTokenTypes(_tokenAddress);
     listingsId.add(id);
     emit NewListing(msg.sender, _tokenAddress, id, _price);
   }
