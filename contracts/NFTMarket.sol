@@ -265,40 +265,6 @@ contract NFTMarket is
     return tokens;
   }
 
-  function getWeaponListingIDsPage(
-    IERC721 _tokenAddress,
-    uint8 _limit,
-    uint256 _pageNumber,
-    uint8 _trait
-  ) public view returns (uint256[] memory) {
-    EnumerableSet.UintSet storage set = listedTokenIDs[address(_tokenAddress)];
-    uint256 matchingWeaponsAmount = getNumberOfItemListings(
-      _tokenAddress,
-      _trait
-    );
-    uint256 pageEnd = _limit * (_pageNumber + 1);
-    uint256 tokensSize = matchingWeaponsAmount >= pageEnd
-      ? _limit
-      : matchingWeaponsAmount.sub(_limit * _pageNumber);
-    uint256[] memory tokens = new uint256[](tokensSize);
-
-    uint256 counter = 0;
-    uint8 tokenIterator = 0;
-    for (uint256 i = 0; i < set.length() && counter < pageEnd; i++) {
-      uint8 itemTrait = item.get(set.at(i));
-
-      if (itemTrait == _trait) {
-        if (counter >= pageEnd - _limit) {
-          tokens[tokenIterator] = set.at(i);
-          tokenIterator++;
-        }
-        counter++;
-      }
-    }
-
-    return tokens;
-  }
-
   function getNumberOfListingsBySeller(IERC721 _tokenAddress, address _seller)
     public
     view
