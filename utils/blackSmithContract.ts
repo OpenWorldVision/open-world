@@ -1,5 +1,6 @@
 import { ethers } from 'ethers'
 import Web3 from 'web3'
+import { nftMarketContract } from './NFTMarket'
 
 const web3 = new Web3(Web3.givenProvider)
 
@@ -15,7 +16,7 @@ const itemContract = {
 const marketPlaceContract = {
   //Hiện tại chưa có Harmony
   addressHarmony: '0x87461de8692ead1de9ee628ff25d97ae393ea162',
-  addressBSC: '0xF65a2cd87d3b0Fa43C10979c2E60BAA40Bb03C1d',
+  addressBSC: '0x7210aEaF0c7d74366E37cfB37073cB630Ac86B5b',
   jsonInterface: require('../build/contracts/NFTMarket.json'),
 }
 
@@ -35,7 +36,7 @@ const getItemContract = async () => {
       itemContract.addressBSC,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   } else if (chainId === 1666700000) {
@@ -44,7 +45,7 @@ const getItemContract = async () => {
       itemContract.addressHarmony,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   }
@@ -60,7 +61,7 @@ const getmarketPlaceContract = async () => {
       marketPlaceContract.addressBSC,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   } else if (chainId === 1666700000) {
@@ -69,7 +70,7 @@ const getmarketPlaceContract = async () => {
       marketPlaceContract.addressHarmony,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   }
@@ -85,7 +86,7 @@ const getprofessionsContract = async () => {
       professionsContract.addressBSC,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   } else if (chainId === 1666700000) {
@@ -94,7 +95,7 @@ const getprofessionsContract = async () => {
       professionsContract.addressHarmony,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   }
@@ -113,7 +114,6 @@ const getProfessionsEtherContract = async () => {
   }
 }
 
-
 export const fetchAmountItemByTrait = async (hammer: number) => {
   const contract = await getItemContract()
   const accounts = await web3.eth.getAccounts()
@@ -125,9 +125,8 @@ export const fetchAmountItemByTrait = async (hammer: number) => {
     const listFiltered = data.filter((item) => item !== '0')
     const listFilteredNumber = listFiltered.map((item) => Number(item))
     return listFilteredNumber
-  }
-  catch (err) {
-    console.log(err);
+  } catch (err) {
+    console.log(err)
     return false
   }
 }
@@ -137,9 +136,7 @@ export const makeHammer = async (listOre: Array<number>) => {
   const accounts = await web3.eth.getAccounts()
 
   try {
-    await contract.methods
-      .makeMultiHammer(listOre)
-      .send({ from: accounts[0] })
+    await contract.methods.makeMultiHammer(listOre).send({ from: accounts[0] })
     return true
   } catch (err) {
     console.log(err)
@@ -154,12 +151,12 @@ export const sellHammer = async (arrayHammer: Array<number>, price: number) => {
 
   try {
     const isApprovedMarket = await item.methods
-      .isApprovedForAll(accounts[0], marketPlaceContract.addressBSC)
+      .isApprovedForAll(accounts[0], nftMarketContract.addressBSC)
       .call({ from: accounts[0] })
 
     if (!isApprovedMarket) {
       await item.methods
-        .setApprovalForAll(marketPlaceContract.addressBSC, true)
+        .setApprovalForAll(nftMarketContract.addressBSC, true)
         .send({ from: accounts[0] })
     }
 
@@ -167,8 +164,7 @@ export const sellHammer = async (arrayHammer: Array<number>, price: number) => {
       .addMultiListing(itemContract.addressBSC, arrayHammer, price)
       .send({ from: accounts[0] })
     return true
-  }
-  catch (err) {
+  } catch (err) {
     console.log(err)
     return false
   }

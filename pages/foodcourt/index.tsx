@@ -78,15 +78,11 @@ export default function FoodCourt() {
   }, [])
 
   const handleBuyItem = useCallback(
-    (available, price) => () => {
-      setBuyDetail({
-        available: available,
-        price: price,
-        itemName: isItemBoard,
-      })
+    (item) => () => {
+      setBuyDetail(item)
       toggleBuyModal()
     },
-    [isItemBoard, toggleBuyModal]
+    [toggleBuyModal]
   )
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import { fetchUserInventoryItemAmount, fetchListItemIds } from 'utils/Item'
 import { listMultiItems } from 'utils/Market'
 import LoadingModal from '@components/LoadingModal'
 import ListingResultModal from '../../ListingResultModal'
+import { getApprovalAll, setApprovedAll } from 'utils/itemContract'
 
 type Props = {
   selectedItem: number
@@ -105,9 +106,22 @@ function SellBoard(props: Props) {
     fetchSelectedItemIdsList()
   }, [selectedItem])
 
+  const setApproved = async () => {
+    await setApprovedAll()
+  }
+  const getApprovedStatus = useCallback(async () => {
+    const isApproved = await getApprovalAll()
+    if (!isApproved) {
+      setApproved()
+    }
+    return isApproved
+  }, [])
+
   const listToMarket = useCallback(async () => {
     if (price !== 0 && sellingAmount !== 0) {
       setIsLoading(true)
+      getApprovedStatus()
+
       const itemSellIds = selectedItemIds.slice(0, sellingAmount)
       const result = await listMultiItems(itemSellIds, price)
       if (result !== null) {
@@ -123,7 +137,13 @@ function SellBoard(props: Props) {
       setIsLoading(false)
       return result
     }
-  }, [price, sellingAmount, selectedItemIds, handleFinishListing])
+  }, [
+    price,
+    sellingAmount,
+    getApprovedStatus,
+    selectedItemIds,
+    handleFinishListing,
+  ])
 
   const toggleListingModal = useCallback(async (state) => {
     setListingResult(state)
