@@ -20,131 +20,58 @@ import BuyerBoard from '@components/foodcourt/BuyerBoard'
 import Head from 'next/head'
 import { getListingIDs } from 'utils/NFTMarket'
 
-const listSushi = [
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'jennei',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'jennei',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'jennei',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'jennei',
-    price: 10,
-    available: 500,
-  },
-  {
-    seller: 'rose',
-    price: 10,
-    available: 1000,
-  },
-]
-
-const listFish = [
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-]
-
 export default function FoodCourt() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-  const [isItemBoard, setIsItemBoard] = useState('sushi')
-  const [listItemsBoard, setListItemsBoard] = useState(listSushi)
+  const [isItemBoard, setIsItemBoard] = useState<'sushi' | 'fish'>('sushi')
+  const [listItemsBoard, setListItemsBoard] = useState([])
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageFoodCourt, setPageFoodCourt] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
 
-  const getListSushi = async () => {
+  const handleGetSushiList = async () => {
     const data = await getListingIDs()
+    setListItemsBoard(data.filter((listing) => listing.trait === '4'))
+  }
+
+  const handleGetFishList = async () => {
+    const data = await getListingIDs()
+    setListItemsBoard(data.filter((listing) => listing.trait === '1'))
   }
 
   useEffect(() => {
-    getListSushi()
-  })
+    handleGetSushiList()
+  }, [])
 
-  const toggleBuyModal = useCallback((state) => {
-    setIsOpenBuyBoard(state)
+  const toggleBuyModal = useCallback(() => {
+    setIsOpenBuyBoard((prev) => !prev)
   }, [])
 
   const handleSelectItemBoard = useCallback(
     (item) => () => {
       setIsItemBoard(item)
-      setListItemsBoard(item === 'sushi' ? listSushi : listFish)
+      if (item === 'sushi') {
+        handleGetSushiList()
+      } else {
+        handleGetFishList()
+      }
     },
     []
   )
 
   const handleIncreasePage = useCallback(() => {
-    if (listItemsBoard.slice(pageFoodCourt * 5).length !== 0) {
-      setPageFoodCourt(pageFoodCourt + 1)
-    }
-  }, [pageFoodCourt])
+    setPageFoodCourt((prevPageFoodCourt) => {
+      if (listItemsBoard.slice(prevPageFoodCourt * 5).length !== 0) {
+        return prevPageFoodCourt + 1
+      }
+      return prevPageFoodCourt
+    })
+  }, [listItemsBoard])
 
   const handlePreviousPage = useCallback(() => {
-    if (pageFoodCourt > 1) {
-      setPageFoodCourt(pageFoodCourt - 1)
-    }
-  }, [pageFoodCourt])
+    setPageFoodCourt((prevPageFoodCourt) =>
+      prevPageFoodCourt > 1 ? prevPageFoodCourt - 1 : prevPageFoodCourt
+    )
+  }, [])
 
   const handleRefresh = useCallback(() => {
     setPageFoodCourt(1)
@@ -157,9 +84,9 @@ export default function FoodCourt() {
         price: price,
         itemName: isItemBoard,
       })
-      toggleBuyModal(true)
+      toggleBuyModal()
     },
-    [isOpenBuyBoard, isItemBoard]
+    [isItemBoard, toggleBuyModal]
   )
 
   useEffect(() => {
@@ -294,7 +221,7 @@ export default function FoodCourt() {
           </div>
           <BuyerBoard
             isOpen={isOpenBuyBoard}
-            toggleModalBuyModal={() => toggleBuyModal(false)}
+            toggleModalBuyModal={toggleBuyModal}
             buyDetail={buyDetail}
           />
           <Link href="/">

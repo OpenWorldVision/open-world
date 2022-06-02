@@ -42,8 +42,15 @@ export const sellSushi = async (ids: Array<number>, price: number) => {
     return null
   }
 }
-
-export const getListingIDs = async () => {
+const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
+type Listing = {
+  id: string
+  items: string[]
+  price: string
+  seller: string
+  trait: string
+}
+export async function getListingIDs(): Promise<Listing[]> {
   const contract = await getNFTMarketContract()
   const accounts = await web3.eth.getAccounts()
   try {
@@ -51,33 +58,21 @@ export const getListingIDs = async () => {
       .getListingSlice(nftAddress, 0, 20)
       .call({ from: accounts[0] })
     const listFull = []
-    listIds?.sellers?.forEach((id, index) => {
-      const prevId = listIds?.sellers?.[index - 1]
-
-      if (prevId !== id) {
-        const itemNFT = {
-          [id]: {
-            listItem: [
-              { id: listIds?.ids?.[index], price: listIds?.prices?.[index] },
-            ],
-          },
-        }
-        listFull?.push(itemNFT)
-      } else {
-        listFull?.map((item) => {
-          if (item?.hasOwnProperty(id)) {
-            item?.[id]?.listItem?.push({
-              id: listIds?.ids?.[index],
-              price: listIds?.prices?.[index],
-            })
-          }
-          return item
+    listIds?.sellers?.forEach((sellerAddress, index) => {
+      if (sellerAddress !== NULL_ADDRESS) {
+        listFull.push({
+          id: listIds?.ids[index],
+          items: listIds?.items[index],
+          price: listIds?.prices[index],
+          seller: listIds?.sellers[index],
+          trait: listIds?.trait[index],
         })
       }
     })
-    console.log('ga vit', listIds)
     return listFull
-  } catch (error) {}
+  } catch (error) {
+    return []
+  }
 }
 
 const getDetailNFTItem = async (id: number) => {
