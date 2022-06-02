@@ -347,33 +347,6 @@ contract NFTMarket is
     return listedTokenIDs[address(_tokenAddress)].length();
   }
 
-  // function getNumberOfCharacterListings(
-  //   IERC721 _tokenAddress,
-  //   uint8 _trait,
-  //   uint8 _minLevel,
-  //   uint8 _maxLevel
-  // ) public view returns (uint256) {
-  //   EnumerableSet.UintSet storage listedTokens = listedTokenIDs[
-  //     address(_tokenAddress)
-  //   ];
-  //   uint256 counter = 0;
-  //   uint8 characterLevel;
-  //   uint8 characterTrait;
-  //   for (uint256 i = 0; i < listedTokens.length(); i++) {
-  //     characterLevel = characters.getLevel(listedTokens.at(i));
-  //     characterTrait = characters.getTrait(listedTokens.at(i));
-  //     if (
-  //       (_trait == 255 || characterTrait == _trait) &&
-  //       (_minLevel == 255 ||
-  //         _maxLevel == 255 ||
-  //         (characterLevel >= _minLevel && characterLevel <= _maxLevel))
-  //     ) {
-  //       counter++;
-  //     }
-  //   }
-  //   return counter;
-  // }
-
   function getNumberOfItemListings(IERC721 _tokenAddress, uint8 _trait)
     public
     view
@@ -426,6 +399,21 @@ contract NFTMarket is
       );
   }
 
+  function getListingIdAtIndex(uint256 index) public view returns (uint256) {
+    return listingsId.at(index);
+  }
+
+  function getListingItemIds(uint256 id)
+    public
+    view
+    returns (uint256[] memory itemsIds)
+  {
+    itemsIds = new uint256[](listingsItem[id].length());
+    for (uint256 idx = 0; idx < listingsItem[id].length(); idx++) {
+      itemsIds[idx] = listingsItem[id].at(idx);
+    }
+  }
+
   function getListingSlice(
     IERC721 _tokenAddress,
     uint256 start,
@@ -460,12 +448,8 @@ contract NFTMarket is
       ids[index] = id;
       sellers[index] = listing.seller;
       prices[index] = listing.price;
-      trait[index++] = listing.trait;
-      uint256[] memory itemsIds = new uint256[](listingsItem[id].length());
-      for (uint256 idx = 0; idx < listingsItem[id].length(); idx++) {
-        itemsIds[idx] = listingsItem[id].at(idx);
-      }
-      items[index] = itemsIds;
+      trait[index] = listing.trait;
+      items[index++] = getListingItemIds(id);
     }
   }
 
