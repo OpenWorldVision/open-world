@@ -7,7 +7,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 
-export default function User() {
+type Props = {
+  balance: number
+}
+
+export default function User(props: Props) {
+  const { balance } = props
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
@@ -36,6 +41,7 @@ export default function User() {
     }
   }, [])
 
+
   useEffect(() => {
     getDataProfile()
   }, [])
@@ -43,7 +49,6 @@ export default function User() {
   const handleOpenTutorial = useCallback(() => {
     setIsOpenTutorial(true)
   }, [])
-
   return (
     <UserCSS>
       <div className="user-avatar">
@@ -59,9 +64,8 @@ export default function User() {
           }}
         >
           <img
-            src={`/images/profile/hero/${
-              profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
-            }.webp`}
+            src={`/images/profile/hero/${profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
+              }.webp`}
             alt="img"
           />
         </button>
@@ -77,7 +81,9 @@ export default function User() {
                 <div style={{ width: '30px' }}>
                   <img src="./favicon.ico" alt="img" width={25} height={25} />
                 </div>
-                0.00 OPEN
+                <span css={{
+                  marginRight: '5px'
+                }}>{balance}</span> OPEN
               </li>
               {/* Career : Openian or Supplier or BlackSmith */}
               <li>
@@ -160,6 +166,7 @@ export default function User() {
             isOpenUserInfo={isOpenUserInfo}
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             profile={profile}
+            balance={balance}
           />
         )}
         {profile === false && (

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import LoadingModal from './LoadingModal'
 import { motion } from 'framer-motion'
+import { getBalanceOpen } from 'utils/checkBalanceOpen'
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -24,11 +25,19 @@ const variants = {
 export default function Layout({ children, home }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [balance, setBalance] = useState(null)
 
   const dispatch = useDispatch()
   const isConnected = useSelector((state: any) => {
     return state.IsConnectedStore.isConnected
   })
+
+  const getBalance = async () => {
+    const balance = await getBalanceOpen()
+    
+    setBalance(balance)
+  }
+
   const checkConnect = async () => {
     setCurrentURL(window.location.href)
     const web3Client = await getWeb3Client()
@@ -39,6 +48,7 @@ export default function Layout({ children, home }) {
   const [currentURL, setCurrentURL] = useState('')
   useEffect(() => {
     checkConnect()
+    getBalance()
     setCurrentURL(window.location.href)
 
     router.events.on('routeChangeStart', () => {
@@ -49,30 +59,6 @@ export default function Layout({ children, home }) {
       setIsLoading(false)
     })
   }, [])
-
-  const handleBackToWorldMap = () => {
-    setCurrentURL('')
-  }
-
-  const checkCurrentPage = () => {
-    const isArena = currentURL.includes('battleArena')
-    const isCastle = currentURL.includes('castle')
-    const isFoodCourt = currentURL.includes('foodCourt')
-    const isMarketPlace = currentURL.includes('marketplace')
-    const isProfessions = currentURL.includes('professions')
-    const isWorkshop = currentURL.includes('workshop')
-    if (
-      // isArena ||
-      // isFoodCourt ||
-      // isMarketPlace ||
-      isCastle
-      // isProfessions
-      // isWorkshop
-    ) {
-      return <BtnWorldMap backToWorldMap={handleBackToWorldMap} />
-    }
-  }
-
   return (
     <div
       style={{
@@ -112,10 +98,9 @@ export default function Layout({ children, home }) {
           {!window.location.href.includes('market') && (
             <>
               <Menu />
-              <User />
+              <User balance={balance}/>
             </>
           )}
-          {checkCurrentPage()}
         </motion.main>
       )}
       {!home && (
