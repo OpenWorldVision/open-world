@@ -6,7 +6,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 18px;
-  cursor: url('/images/worldmap/CursorDefault.png'), auto !important;
+  cursor: url('/images/worldmap/CursorDefault.webp'), auto !important;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -504,11 +504,11 @@ hr {
 }
 
 .click-cursor {
-  cursor: url('/images/worldmap/SelectCursor.png'), auto !important;
+  cursor: url('/images/worldmap/SelectCursor.webp'), auto !important;
 }
 
 option{
-  cursor: url('/images/worldmap/SelectCursor.png'), auto !important;
+  cursor: url('/images/worldmap/SelectCursor.webp'), auto !important;
 }
 
 .overlay {

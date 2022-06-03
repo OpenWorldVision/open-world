@@ -5,11 +5,14 @@ import SellBoard from './sellerboard/SellBoard'
 import { useCallback, useEffect, useState } from 'react'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import ForgeHammer from './forgehammer/ForgeHammer';
+import LoadingModal from '@components/LoadingModal'
 
 export default function Blacksmith() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [isForgeHammer, setIsForgeHammer] = useState(false)
   const [isSellBoard, setIsSellBoard] = useState(false)
+
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -39,8 +42,16 @@ export default function Blacksmith() {
     [isSellBoard]
   )
 
+  const toggleLoadingModal = useCallback(
+    (state)  => {
+      setIsLoading(state)
+    },
+    [isLoading]
+  )
+
   return (
     <>
+      {isLoading && <LoadingModal />}
       <div className={`overlay game-scroll-bar ${styles.blackSmithOverlay}`}>
         <TransformWrapper
           initialPositionX={0}
@@ -74,12 +85,12 @@ export default function Blacksmith() {
           </TransformComponent>
         </TransformWrapper>
         <Link href="/">
-          <a className={`${styles.backBtn}`}></a>
+          <a className={`${styles.backBtn} click-cursor`}></a>
         </Link>
       </div>
 
-      {isSellBoard && <SellBoard toggleModal={toggleSellBoardModal} />}
-      {isForgeHammer && <ForgeHammer toggleModal={toggleForgeHammerModal} />}
+      {<SellBoard isOpen={isSellBoard} toggleModal={toggleSellBoardModal} toggleLoadingModal={toggleLoadingModal} />}
+      {<ForgeHammer isOpen={isForgeHammer} toggleModal={toggleForgeHammerModal} toggleLoadingModal={toggleLoadingModal} />}
     </>
   )
 }

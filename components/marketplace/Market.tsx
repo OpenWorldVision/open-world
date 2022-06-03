@@ -1,152 +1,223 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { getWeaponListingIDsPage, purchaseListing } from 'utils/Market'
+import { getListingIDs, purchaseListing } from 'utils/Market'
 import styles from './market.module.css'
 
-const numOfPage = 6
+const numOfPage = 12
 
 export default function Market() {
     const [isOpenSortPrice, setIsOpenSortPrice] = useState(false)
     const [page, setPage] = useState(1)
-    const [nav, setNav] = useState(1)
+    const [nav, setNav] = useState(0)
     const [dataInit, setDataInit] = useState([])
     const [data, setData] = useState([])
-    const [status, setStatus] = useState('Loadding ...')
+    const [status, setStatus] = useState('Loading ...')
+    const [isOpenNotify, setIsOpenNotify] = useState(null)
 
     useEffect(() => {
-        getWeapons()
-    }, [nav])
+        getItems()
+    }, [])
 
-    const getWeapons = async () => {
-        setStatus('Loadding ...')
-        const result = await getWeaponListingIDsPage(numOfPage, page, nav)
+    const getItems = async () => {
+        const result = await getListingIDs()
         setDataInit(result)
         setData(result)
-        setStatus('No results found')
-    }
-
-    const increasePage = async () => {
-        setStatus('Loadding ...')
-        setData([])
-        const result = await getWeaponListingIDsPage(numOfPage, page + 1, nav)
-        if (result.length > 0) {
-            setDataInit(result)
-            setData(result)
-            setPage(page => page + 1)
-        } else setData(dataInit)
-    }
-
-    const decreasePage = async () => {
-        if (page - 1 > 0) {
-            setStatus('Loadding ...')
-            setData([])
-            const result = await getWeaponListingIDsPage(numOfPage, page - 1, nav)
-            setDataInit(result)
-            setData(result)
-            setPage(page => page - 1)
-            setStatus('No results found')
-        }
     }
 
     const sortHighest = () => {
+        changeNav(nav)
         setIsOpenSortPrice(false)
-        setData(dataInit.sort((a, b) => a.price - b.price))
+        setData(data.sort((a, b) => b.price - a.price))
     }
     
     const sortLowest = () => {
+        changeNav(nav)
         setIsOpenSortPrice(false)
-        setData(dataInit.sort((a, b) => b.price - a.price))
+        setData(data.sort((a, b) => a.price - b.price))
     }
 
-    const sortId = (id: string) => {
-        if (id === '') setData(dataInit)
-        else setData(dataInit.filter(value => value.id === Number(id)))
+    const sortId = (id) => {
+        if (id !== '') {
+            if (nav === 0) {
+                if (!dataInit.length) {
+                    setStatus('No results found')
+                    setData([])
+                } else {
+                    setData(dataInit.filter(value => value.id === Number(id)))
+                }
+            }
+            else if (nav === 4) {
+                const result = dataInit.filter(value => {
+                    return value.isOwner
+                })
+                if (!result.length) {
+                    setStatus('No results found')
+                    setData([])
+                } else {
+                    setData(result.filter(value => value.id === Number(id)))
+                }
+            }
+            else {
+                const result = dataInit.filter(value => {
+                    return value.trait === nav
+                })
+                if (!result.length) {
+                    setStatus('No results found')
+                    setData([])
+                } else {
+                    setData(result.filter(value => value.id === Number(id)))
+                }
+            }
+        } else {
+            changeNav(nav)
+        }
     }
 
     const handlePurchase = async (value) => {
-        await purchaseListing(value.id, value.price)
-        await getWeapons()
+        const result = await purchaseListing(value.id, value.price)
+        if (result) {
+            setStatus('Loading ...')
+            setDataInit([])
+            setData([])
+            await getItems()
+            setIsOpenNotify({ type: true })
+        } else setIsOpenNotify({ type: false })
+
+    }
+
+    const changeNav = (nav: number) => {
+        setNav(nav)
+        setPage(1)
+        if (nav === 0) {
+            if (!dataInit.length) {
+                setStatus('No results found')
+                setData([])
+            } else {
+                setData(dataInit)
+            }
+        }
+        else if (nav === 4) {
+            const result = dataInit.filter(value => {
+                return value.isOwner
+            })
+            if (!result.length) {
+                setStatus('No results found')
+                setData([])
+            } else {
+                setData(result)
+            }
+        }
+        else {
+            const result = dataInit.filter(value => {
+                return value.trait === nav
+            })
+            if (!result.length) {
+                setStatus('No results found')
+                setData([])
+            } else {
+                setData(result)
+            }
+        }
     }
 
     return (
-        <div className={styles.main}>
-            <div className={styles.nav}>
-                <div className={styles.nav1}>
-                    <div
-                        onClick={() => {setData([]), setNav(1)}}
-                    >
-                        <div className={nav === 1 && styles.select}>OPENIAN</div>
-                    </div>
-                    <div
-                        onClick={() => {setData([]), setNav(2)}}
-                    >
-                        <div className={nav === 2 && styles.select}>SUPPLIER</div>
-                    </div>
-                    <div
-                        onClick={() => {setData([]), setNav(3)}}
-                    >
-                        <div className={nav === 3 && styles.select}>BLACKSMITH</div>
-                    </div>
-                    <div
-                        onClick={() => {setData([]), setNav(4)}}
-                    >
-                        <div className={nav === 4 && styles.select}>COLLECTION</div>
-                    </div>
-                </div>
-                <div className={styles.nav2}>
-                    <div>
-                        <div
-                            onClick={() => {setIsOpenSortPrice(isOpenSortPricePrev => !isOpenSortPricePrev)}}
-                        >SORT PRICE</div>
-                        {isOpenSortPrice && (
-                            <div className={styles.sortPriceBoard}>
-                                <div onClick={sortHighest}>HIGHEST</div>
-                                <div onClick={sortLowest}>LOWEST</div>
-                            </div>
-                        )}
-                    </div>
-                    <input type="number" placeholder='NFT ID' onChange={(e) => {sortId(e.target.value)}} />
-                </div>
-            </div>
-            <div className={styles.body}>
-                {data.length === 0 && <div className={styles.loading}>{status}</div>}
-                {data.map(value => {
-                    return <div key={value} className={styles.item}>
-                        <div className={styles.itemInfo}>
-                            <div>
-                                <div>#{value.id} HALLEN</div>
-                                <img src={`/images/marketplace/market/items/${nav}.png`} alt="img" />
-                            </div>
-                            <div>{value.price} OPEN</div>
-                        </div>
-                        <div className={styles.itemBuy}>
-                            <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/market/buy.png" alt="img" />
-                        </div>
-                    </div>
-                })}
-            </div>
-            <div className={styles.footer}>
-                <div className={styles.pagination}>
-                    <img 
-                        onClick={() => {decreasePage()}}
-                        src="./images/marketplace/market/triangle-left.png" 
-                        alt="img"
-                        className='click-cursor' 
-                    />
-                    <div>{page < 10 ? `0${page}` : page}</div>
+        <>
+            {isOpenNotify ? <div className={styles.main}>
+                <div className={styles.containerNotify}>
+                    <div className={styles.notifyHeader}>{isOpenNotify.type ? 'SUCCESS' : 'FAILED'}</div>
+                    <div className={styles.notifyBody}>{isOpenNotify.type ? 'Your Order has been Completed !' : 'Your Order has been Failed'}</div>
                     <img
-                        onClick={() => {increasePage()}}
-                        src="./images/marketplace/market/triangle-right.png" 
+                        onClick={() => {setIsOpenNotify(null)}}
+                        className={styles.notifyConfirm + ' click-cursor'}
+                        src="/images/marketplace/market/confirm-notify.png" 
                         alt="img" 
-                        className='click-cursor' 
                     />
                 </div>
+            </div> : <div className={styles.main}>
+                <div className={styles.nav}>
+                    <div className={styles.nav1}>
+                        <div
+                            onClick={() => {changeNav(0)}}
+                        >
+                            <div className={nav === 0 ? styles.select + ' click-cursor' : 'click-cursor'}>ALL</div>
+                        </div>
+                        <div
+                            onClick={() => {changeNav(1)}}
+                        >
+                            <div className={nav === 1 ? styles.select + ' click-cursor' : 'click-cursor'}>OPENIAN</div>
+                        </div>
+                        <div
+                            onClick={() => {changeNav(2)}}
+                        >
+                            <div className={nav === 2 ? styles.select + ' click-cursor' : 'click-cursor'}>SUPPLIER</div>
+                        </div>
+                        <div
+                            onClick={() => {changeNav(3)}}
+                        >
+                            <div className={nav === 3 ? styles.select + ' click-cursor' : 'click-cursor'}>BLACKSMITH</div>
+                        </div>
+                        <div
+                            onClick={() => {changeNav(4)}}
+                        >
+                            <div className={nav === 4 ? styles.select + ' click-cursor' : 'click-cursor'}>MY COLLECTION</div>
+                        </div>
+                    </div>
+                    <div className={styles.nav2}>
+                        <div>
+                            <div
+                                onClick={() => {setIsOpenSortPrice(isOpenSortPricePrev => !isOpenSortPricePrev)}}
+                            >SORT PRICE</div>
+                            {isOpenSortPrice && (
+                                <div className={styles.sortPriceBoard}>
+                                    <div onClick={() => {sortHighest()}}>HIGHEST</div>
+                                    <div onClick={() => {sortLowest()}}>LOWEST</div>
+                                </div>
+                            )}
+                        </div>
+                        <input type="number" placeholder='NFT ID' onChange={(e) => {sortId(e.target.value)}} />
+                    </div>
+                </div>
+                <div className={styles.body}>
+                    {data.length === 0 && <div className={styles.loading}>{status}</div>}
+                    {data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
+                        return <div key={value} className={styles.item}>
+                            <div className={styles.itemInfo}>
+                                <div>
+                                    <div>#{value.id} HALLEN</div>
+                                    <img src={`/images/marketplace/market/items/${value.trait}.png`} alt="img" />
+                                </div>
+                                <div>{value.price} OPEN</div>
+                            </div>
+                            {nav !== 4 && <div className={styles.itemBuy}>
+                                <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/market/buy.png" alt="img" />
+                            </div>}
+                        </div>
+                    })}
+                </div>
+                <div className={styles.footer}>
+                    <div className={styles.pagination}>
+                        <img 
+                            onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
+                            src="./images/marketplace/market/triangle-left.png" 
+                            alt="img"
+                            className='click-cursor' 
+                        />
+                        <div>{page < 10 ? `0${page}` : page}</div>
+                        <img
+                            onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
+                            src="./images/marketplace/market/triangle-right.png" 
+                            alt="img" 
+                            className='click-cursor' 
+                        />
+                    </div>
+                </div>
+                <Link href='/'>
+                    <a className={styles.back}>
+                        <img src="./images/marketplace/market/back.png" alt="img" />
+                    </a>
+                </Link>
             </div>
-            <Link href='/'>
-                <a className={styles.back}>
-                    <img src="./images/marketplace/market/back.png" alt="img" />
-                </a>
-            </Link>
-        </div>
+            }
+        </>
     )
 }

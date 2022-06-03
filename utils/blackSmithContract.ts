@@ -1,3 +1,4 @@
+import { ethers } from 'ethers'
 import Web3 from 'web3'
 
 const web3 = new Web3(Web3.givenProvider)
@@ -99,6 +100,19 @@ const getprofessionsContract = async () => {
   }
 }
 
+const getProfessionsEtherContract = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
+  const chainId = window?.ethereum?.chainId
+
+  if (chainId === '0x61') {
+    return new ethers.Contract(
+      professionsContract.addressBSC,
+      professionsContract.jsonInterface.abi,
+      provider.getSigner()
+    )
+  }
+}
+
 
 export const fetchAmountItemByTrait = async (hammer: number) => {
   const contract = await getItemContract()
@@ -118,12 +132,13 @@ export const fetchAmountItemByTrait = async (hammer: number) => {
   }
 }
 
-export const makeHammer = async (idItemUpgrade: number, idItemBurn: number) => {
+export const makeHammer = async (listOre: Array<number>) => {
   const contract = await getprofessionsContract()
   const accounts = await web3.eth.getAccounts()
+
   try {
     await contract.methods
-      .makeHammer(idItemUpgrade, idItemBurn)
+      .makeMultiHammer(listOre)
       .send({ from: accounts[0] })
     return true
   } catch (err) {
@@ -158,5 +173,3 @@ export const sellHammer = async (arrayHammer: Array<number>, price: number) => {
     return false
   }
 }
-
-

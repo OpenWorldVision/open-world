@@ -5,12 +5,13 @@
     color: white;
     font-weight: bold;
     height: 100vh;
+    padding-top: 20px;
 }
 
 .nav {
+    padding-bottom: 10px;
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
     flex-wrap: wrap;
 }
 
@@ -200,3 +201,32 @@
         padding: 20px 100px;
     }
 } */
+
+.containerNotify {
+    flex: 1;
+    height: 100%;
+    margin: auto;
+    max-width: 750px;
+    max-height: 500px;
+    background-image: url(/images/marketplace/market/notify.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.notifyHeader {
+    margin-top: 80px;
+    font-size: 40px
+}
+
+.notifyConfirm {
+    margin-top: 80px
+}
+
+.notifyBody {
+    margin-top: 50px;
+    font-size: 25px
+}

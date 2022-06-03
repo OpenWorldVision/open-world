@@ -118,7 +118,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  cursor: url(/images/worldmap/CursorDefault.png), auto;
+  cursor: url(/images/worldmap/CursorDefault.webp), auto;
 }
 
 .inputQuantitySelectCraft {
@@ -193,7 +193,7 @@
 
 .disabledButton {
   background: none !important;
-  cursor: url(/images/worldmap/CursorDefault.png), auto !important;
+  cursor: url(/images/worldmap/CursorDefault.webp), auto !important;
   box-shadow: unset;
 }
 

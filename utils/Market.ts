@@ -63,19 +63,46 @@ export const listMultiItems = async (ids, price) => {
   }
 }
 
-export const getWeaponListingIDsPage = async (limit: number, page: number, trait: number) => {
+export const getListingIDs = async () => {
   const Market = await getMarketContract()
+  const Item = await getItemContract()
+  const currentAddress = await window.ethereum.selectedAddress
   const array = []
-  
   try {
-    const items = await Market.getWeaponListingIDsPage(itemContract.addressBSC, limit, page, trait)
-    for (const item of items) {
-      const result = await Market.getFinalPrice(itemContract.addressBSC, item.toNumber())
-      
+    const result = await Market.getListingIDs(itemContract.addressBSC)
+    for (const i of result) {
+      const _seller = await Market.getSellerOfNftID(itemContract.addressBSC, i.toNumber())
+      const _price = await Market.getFinalPrice(itemContract.addressBSC, i.toNumber())
+      const _trait = await Item.get(i.toNumber())
       array.push({
-        id: item.toNumber(),
-        price: result.toNumber()
+        id: i.toNumber(),
+        price: _price.toNumber(),
+        trait: _trait,
+        seller: _seller,
+        isOwner: _seller.toLowerCase() === currentAddress.toLowerCase()
       })
+    }
+    return array
+  } catch {
+    return []
+  }
+}
+
+export const getAmountItemByTrait = async () => {
+  const Item = await getItemContract()
+  const currentAddress = await window.ethereum.selectedAddress
+  const array = []
+
+  try {
+    for(let i = 1; i < 4; i++) {
+      const result = await Item.getAmountItemByTrait(i, currentAddress)
+      for (const y of result) {
+        const _trait = await Item.get(y.toNumber())
+        array.push({
+          id: y.toNumber(),
+          trait: _trait
+        })
+      }
     }
     return array
   } catch {
@@ -103,26 +130,20 @@ export const getListingIDsBySeller = async () => {
   }
 }
 
-export const getAmountItemByTrait = async (trait: number) => {
-  const Item = await getItemContract()
-  const currentAddress = await window.ethereum.selectedAddress
-
-  try {
-    const itemIdList = await Item.getAmountItemByTrait(trait, currentAddress)
-    return itemIdList.map((id) => id.toNumber())
-  } catch {
-    return []
-  }
-}
-
 export const addListing = async (id: number, price: number) => {
   const Market = await getMarketContract()
   const Item = await getItemContract()
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
 
   try {
     await Item.setApprovalForAll(marketContract.addressBSC, true)
-    await Market.addListing(itemContract.addressBSC, id, price)
-    return true
+    const result = await Market.addListing(itemContract.addressBSC, id, price)
+    let transactionReceipt = null
+    do {
+      transactionReceipt = await provider.getTransactionReceipt(result.hash)
+    } while (transactionReceipt === null)
+
+    return transactionReceipt.status
   } catch {
     return false
   }
@@ -131,24 +152,37 @@ export const addListing = async (id: number, price: number) => {
 export const cancelListing = async (id: number) => {
   const Market = await getMarketContract()
   const Item = await getItemContract()
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
 
   try {
     await Item.setApprovalForAll(marketContract.addressBSC, true)
-    await Market.cancelListing(itemContract.addressBSC, id)
-    return true
+    const result = await Market.cancelListing(itemContract.addressBSC, id)
+    let transactionReceipt = null
+    do {
+      transactionReceipt = await provider.getTransactionReceipt(result.hash)
+    } while (transactionReceipt === null)
+
+    return transactionReceipt.status
   } catch {
     return false
   }
 }
 
 export const purchaseListing = async (id: number, price: number) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   const Market = await getMarketContract()
   const Item = await getItemContract()
 
   try {
     await Item.setApprovalForAll(marketContract.addressBSC, true)
-    await Market.purchaseListing(itemContract.addressBSC, id, price)
-    return true
+    const result = await Market.purchaseListing(itemContract.addressBSC, id, price)
+
+    let transactionReceipt = null
+    do {
+      transactionReceipt = await provider.getTransactionReceipt(result.hash)
+    } while (transactionReceipt === null)
+
+    return transactionReceipt.status
   } catch {
     return false
   }

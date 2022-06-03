@@ -1,13 +1,5 @@
 import { ethers } from 'ethers'
 
-export const openWorldContract = {
-  address:
-    process.env.environment === 'production'
-      ? '0x27a339d9B59b21390d7209b78a839868E319301B'
-      : '0xcEC1d95e9bfFde1021B1f3C39862c6c3a5BA1A91',
-  // jsonInterface: require('@/assets/contracts/AirdropLander.json')
-  jsonInterface: require('../contracts/xBlade.json'),
-}
 // const GasLimit = 800000
 // const getOpenWorldContract = async (web3Client) => {
 //   const accounts = await web3Client.eth.getAccounts()

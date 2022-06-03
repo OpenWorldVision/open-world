@@ -33,7 +33,7 @@
   left: 35px;
   width: 235px;
   height: 75px;
-  background-image: url('/images/professions/back-btn.png');
+  background-image: url('/images/professions/back-btn.webp');
   background-repeat: no-repeat;
   background-size: 100%;
 }
@@ -61,7 +61,7 @@
   top: 20%;
   left: 670px;
   width: 585px;
-  cursor: url(/images/worldmap/SelectCursor.png), auto !important;
+  cursor: url(/images/worldmap/SelectCursor.webp), auto !important;
   height: 47vh;
 }
 

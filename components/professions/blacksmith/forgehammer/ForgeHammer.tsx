@@ -3,21 +3,25 @@ import style from './forgeHammer.module.css'
 import { useCallback, useEffect, useState } from 'react'
 import NotificationForge from './NotificationForge'
 import ResultForgeHammer from './ResultForgeHammer'
-import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
+import { fetchAmountItemByTrait, makeHammer } from 'utils/blackSmithContract'
 
 type Props = {
   toggleModal: (boolean) => void
+  toggleLoadingModal: (boolean) => void
+  isOpen: boolean
 }
 
 export default function ForgeHammer(props: Props) {
-  const { toggleModal } = props
-  const [isLoading, setIsLoading] = useState(true)
+  const { toggleModal, toggleLoadingModal, isOpen } = props
+
   const [numberHammer, setNumberHammer] = useState(0)
   const [numberOreNeed, setNumberOreNeed] = useState(0)
   const [numberYourOre, setNumberYourOre] = useState([])
 
-  const [isStartQuestSuccess, setIsStartQuestSuccess] = useState(false)
+  const [isStartQuest, setIsStartQuest] = useState(false)
   const [isStartQuestFail, setIsStartQuestFail] = useState(false)
+
+  const [checkIsSucess, setCheckIsSuccess] = useState(false)
 
   const getListYourOre = async () => {
     const listYourOre = await fetchAmountItemByTrait(2)
@@ -39,10 +43,16 @@ export default function ForgeHammer(props: Props) {
       setNumberOreNeed(numberOreNeed - 2)
     }
   }, [numberHammer])
-  const handleStartQuest = () => {
+  const handleStartQuest = async () => {
+    toggleLoadingModal(true)
     if (numberOreNeed <= numberYourOre.length && numberHammer !== 0) {
-      setIsStartQuestSuccess(true)
+      const listSellHammer = numberYourOre.slice(0, numberOreNeed)
+      const forgeHammer = await makeHammer(listSellHammer)
+      setCheckIsSuccess(forgeHammer)
+      setIsStartQuest(true)
+      toggleLoadingModal(false)
     } else {
+      toggleLoadingModal(false)
       setIsStartQuestFail(true)
     }
   }
@@ -52,18 +62,27 @@ export default function ForgeHammer(props: Props) {
   }, [])
 
   const hiddenPopupResult = useCallback(() => {
-    setIsStartQuestSuccess(false)
+    setIsStartQuest(false)
   }, [])
+
+  const handleToggleModal = () => {
+    toggleModal(false)
+    setCheckIsSuccess(false)
+  }
 
   return (
     <>
-      <div className={`${style.forgeHammerOverlay} overlay`}>
-        {!isStartQuestSuccess && !isStartQuestFail && (
+      <div
+        className={`${style.forgeHammerOverlay} ${
+          isOpen && style.active
+        } overlay`}
+      >
+        {!isStartQuest && !isStartQuestFail && (
           <div className={style.frameforgeHammer}>
             <div className={style.frameHead}>
               <Button
-                className={style.exitBtn}
-                onClick={() => toggleModal(false)}
+                className={`${style.exitBtn} click-cursor`}
+                onClick={handleToggleModal}
               ></Button>
             </div>
             <div className={style.forgeHammerBody}>
@@ -115,7 +134,7 @@ export default function ForgeHammer(props: Props) {
               <Button
                 sx={{
                   cursor:
-                    'url(/images/worldmap/SelectCursor.png), auto !important',
+                    'url(/images/worldmap/SelectCursor.webp), auto !important',
                 }}
                 disabled={numberHammer === 0}
                 onClick={handleStartQuest}
@@ -125,11 +144,12 @@ export default function ForgeHammer(props: Props) {
           </div>
         )}
 
-        {isStartQuestSuccess && (
+        {isStartQuest && (
           <ResultForgeHammer
             hiddenPopupResult={hiddenPopupResult}
             hammerReceived={numberHammer}
-            numberYourOre={numberYourOre}
+            checkIsSucess={checkIsSucess}
+            toggleModal={toggleModal}
           />
         )}
         {isStartQuestFail && (

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather&display=swap');
 
 .shopOverlay {
-  background-image: url('/images/castle/shop/shop-bg.png');
+  background-image: url('/images/castle/shop/shop-bg.webp');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -38,15 +38,15 @@
 }
 
 .npcCard.openianNPC {
-  background-image: url('/images/professions/npc/openianNPC.png');
+  background-image: url('/images/professions/npc/openianNPC.webp');
 }
 
 .npcCard.supplierNPC {
-  background-image: url('/images/professions/npc/supplierNPC.png');
+  background-image: url('/images/professions/npc/supplierNPC.webp');
 }
 
 .npcCard.smithNPC {
-  background-image: url('/images/professions/npc/smithNPC.png');
+  background-image: url('/images/professions/npc/smithNPC.webp');
 }
 
 .shopBoard {
@@ -69,7 +69,7 @@
   width: 235px !important;
   height: 75px !important;
   background-color: transparent !important;
-  background-image: url('/images/professions/back-btn.png') !important;
+  background-image: url('/images/professions/back-btn.webp') !important;
   background-repeat: no-repeat !important;
   background-size: 100% !important;
 }

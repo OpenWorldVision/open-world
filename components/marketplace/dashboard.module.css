@@ -5,10 +5,10 @@
     color: white;
     font-weight: bold;
     height: 100vh;
+    padding-top: 20px;
 }
 
 .nav{
-    padding-top: 20px;
     padding-bottom: 10px;
 }
 
@@ -63,7 +63,7 @@
 
 .body{
     display: flex;
-    height: calc(100% - 400px);
+    height: calc(100% - 380px);
 }
 
 .body1{
@@ -87,6 +87,7 @@
 .item{
     padding: 0 20px;
     width: 220px;
+    margin-top: 50px;
 }
 
 .itemInfo {
@@ -145,6 +146,9 @@
     padding: 50px;
     font-size: 25px;
     font-weight: normal;
+    max-width: 650px;
+    margin: auto;
+    margin-top: -45px;
 }
 
 .header{
@@ -229,4 +233,43 @@
 
 .select {
     border-bottom: 2px solid #FFB966;
+}
+
+.containerNotify {
+    flex: 1;
+    height: 100%;
+    margin: auto;
+    max-width: 750px;
+    max-height: 500px;
+    background-image: url(/images/marketplace/market/notify.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.notifyHeader {
+    margin-top: 80px;
+    font-size: 40px;
+}
+
+.notifyConfirm {
+    margin-top: 80px;
+}
+
+.notifyBody {
+    margin-top: 50px;
+    font-size: 25px;
+}
+
+.containerTotal{
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.containerTotal span{
+    font-size: 30px;
+    color: #F1E994;
 }

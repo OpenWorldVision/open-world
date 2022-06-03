@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 import {
   Button,
-  Divider,
   Modal,
   ModalCloseButton,
   ModalContent,
@@ -13,28 +12,24 @@ import {
 } from '@chakra-ui/react'
 
 import styles from '@components/entry/entry.module.css'
-import Link from 'next/link'
 import { chainName } from 'utils/chainName'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
-import { getWeb3Client } from '@lib/web3'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import Head from 'next/head'
 import { updateIsOpenEntry } from 'reduxActions/isOpenEntryAction'
-// import ModalAddWallet from './components/ModalAddWallet'
-
 
 export default function Entry() {
-
   const [playMusic, setPlayMusic] = useState(false)
   const [playSound, setPlaySound] = useState(false)
   const [nameOfChain, setNameOfChain] = useState('Binance Smart Chain')
   const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
 
   const dispatch = useDispatch()
-  const isOpen = useSelector((state: any) => { return state.isOpenEntryPage.isOpen })
-  
-  //deploy cloudfare 2
+  const isOpen = useSelector((state: any) => {
+    return state.isOpenEntryPage.isOpen
+  })
+
   useEffect(() => {
     try {
       const connectWallet = async () => {
@@ -145,7 +140,7 @@ export default function Entry() {
               },
             },
           })
-        } catch (error: unknown) { }
+        } catch (error: unknown) {}
       }
     }
   }
@@ -167,8 +162,6 @@ export default function Entry() {
     }
   }
 
-  
-
   return (
     <>
       <Head>
@@ -176,12 +169,19 @@ export default function Entry() {
       </Head>
       {isOpen && (
         <div className={styles.main}>
-          <img src={'/images/common/gameLogo.png'} alt={'logo'} />
+          <img
+            src={'/images/common/gameLogo.webp'}
+            alt={'logo'}
+            className={styles.entryLogo}
+          />
+
+          <div className={styles.entryBackground} />
           <Button
             style={_styles.buttonStyle}
-            className='click-cursor'
-            // onClick={connectWallet}
-            onClick={() => {dispatch(updateIsOpenEntry({ isOpen: false }))}}
+            className="click-cursor"
+            onClick={() => {
+              dispatch(updateIsOpenEntry({ isOpen: false }))
+            }}
           >
             <Text style={_styles.buttonText}>PLAY</Text>
           </Button>
@@ -189,7 +189,7 @@ export default function Entry() {
             <div>
               <div className={styles.rowView}>
                 <div
-                  className='click-cursor'
+                  className="click-cursor"
                   style={{ marginRight: '1rem' }}
                   onClick={() => setPlay('music')}
                 >
@@ -203,7 +203,7 @@ export default function Entry() {
                     className={styles.iconStyle}
                   />
                 </div>
-                <div className='click-cursor' onClick={() => setPlay('sound')}>
+                <div className="click-cursor" onClick={() => setPlay('sound')}>
                   <img
                     src={
                       playSound

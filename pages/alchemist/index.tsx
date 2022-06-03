@@ -99,7 +99,7 @@ const AlchemistPage = styled.div({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    cursor: 'url(/images/worldmap/CursorDefault.png), auto',
+    cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
     overflow: 'hidden',
     '.alchemist': {
       position: 'absolute',

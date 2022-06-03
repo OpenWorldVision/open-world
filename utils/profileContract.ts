@@ -6,7 +6,7 @@ const GasLimit = 800000
 
 const profilesContract = {
   addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
-  addressBSC: '0xe6046d1363f7bebff6cb98c72094c89ff8ee500d',
+  addressBSC: '0xE6046d1363F7Bebff6cB98c72094c89fF8ee500D',
   jsonInterface: require('../build/contracts/Profiles.json'),
 }
 
