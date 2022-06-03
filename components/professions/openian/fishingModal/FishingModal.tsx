@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react'
+import { Button, useToast } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
@@ -9,6 +9,7 @@ import {
 } from 'utils/professionContract'
 import styles from './fishingModal.module.css'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
 
 type Props = {
   isOpen: boolean
@@ -35,7 +36,27 @@ function FishingModal(props: Props) {
 
   const miningInterval = useRef<ReturnType<typeof setInterval>>(null)
 
+  const toast = useToast()
+
+  const checkRequirementBeforeStartQuest = useCallback(async () => {
+    const sushiList = await fetchAmountItemByTrait(4)
+    if (sushiList?.length < 2) {
+      toast({
+        title: 'Fishing Quest',
+        description: "You don't have enough sushi to start fishing quest",
+        status: 'error',
+        duration: 15000,
+        isClosable: true,
+      })
+    }
+
+    return sushiList?.length > 2
+  }, [toast])
+
   const startQuest = useCallback(async () => {
+    if (!checkRequirementBeforeStartQuest()) {
+      return
+    }
     setTimeLeft(duration)
     toggleLoadingModal(true)
     const fishing = await startFishing()
@@ -49,7 +70,7 @@ function FishingModal(props: Props) {
     } else {
       toggleLoadingModal(false)
     }
-  }, [])
+  }, [checkRequirementBeforeStartQuest, duration, toggleLoadingModal])
 
   const handleExitBtn = () => {
     toggleModal()
@@ -242,24 +263,6 @@ function FishingModal(props: Props) {
               : styles.modalFinish
           }
         >
-          {/* {typeofModal !== TYPE_OF_MODAL.FINISH && (
-            <h3 className={styles.sellBoard}>
-              {typeofModal === TYPE_OF_MODAL.FINISH && <img
-                src='/images/professions/openian/questFinish.png'
-                alt="Fish board"
-              />}
-            </h3>
-          )} */}
-
-          {/* {typeofModal === TYPE_OF_MODAL.FINISH && (
-            <h3 className={styles.sellBoard}>
-              {typeofModal === TYPE_OF_MODAL.FINISH && <img
-                src='/images/professions/openian/questFinish.png'
-                alt="Fish board"
-              />}
-            </h3>
-          )} */}
-
           <Button
             className={`${styles.closeBtn} click-cursor ${
               typeofModal !== TYPE_OF_MODAL.FINISH && styles.btnFishing

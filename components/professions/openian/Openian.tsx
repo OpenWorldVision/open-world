@@ -42,12 +42,9 @@ function Openian() {
     setIsOpenMining(!isOpenMining)
   }, [isOpenMining])
 
-  const toggleLoadingModal = useCallback(
-    (state) => {
-      setIsLoading(state)
-    },
-    [isLoading]
-  )
+  const toggleLoadingModal = useCallback((state) => {
+    setIsLoading(state)
+  }, [])
 
   const onUpdateInventory = () => {
     setUpdateInventory(!updateInventory)
