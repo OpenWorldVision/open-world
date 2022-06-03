@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js'
 
 import Web3 from 'web3'
 
@@ -23,7 +23,7 @@ const getOpenWorldContract = async () => {
       openWorldContract.addressBSC,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   } else if (chainId === 1666700000) {
@@ -32,7 +32,7 @@ const getOpenWorldContract = async () => {
       openWorldContract.addressHarmony,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   }
@@ -46,11 +46,9 @@ export const getBalanceOpen = async () => {
       .balanceOf(accounts[0])
       .call({ from: accounts[0] })
     balance = new BigNumber(balance)
-    
-    return Number(balance.c[0]/10000).toFixed(2)
-  }
-  catch (err){  
-  }
+
+    return Number(balance.c[0] / 10000).toFixed(2)
+  } catch (err) {}
 }
 
 // const GasLimit = 800000
