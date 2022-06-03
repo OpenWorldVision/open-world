@@ -50,7 +50,6 @@ export default function Layout({ children, home }) {
         setIsLoading(false)
       }, 2000)
     }
-
     router.events.on('routeChangeStart', () => {
       setIsLoading(true)
     })
@@ -84,7 +83,7 @@ export default function Layout({ children, home }) {
       return <BtnWorldMap backToWorldMap={handleBackToWorldMap} />
     }
   }
-
+  console.log(isConnected)
   return (
     <div
       style={{
