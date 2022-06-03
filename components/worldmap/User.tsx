@@ -12,14 +12,28 @@ export default function User() {
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
   const [isOpenTutorial, setIsOpenTutorial] = useState(false)
-  const profile = useSelector((state: any) => {
-    return state.ProfileStore.profile
-  })
+  const [career, setCaeer] = useState('None')
+  const profile = useSelector((state: any) => { return state.ProfileStore.profile })
   const dispatch = useDispatch()
 
   const getDataProfile = useCallback(async () => {
     const _profile = await getProfile()
     dispatch(setProfile({ profile: _profile }))
+
+    switch (_profile?._profession) {
+      case '1':
+        setCaeer('Openian')
+        break
+      case '2':
+        setCaeer('Supplier')
+        break
+      case '3':
+        setCaeer('Blacksmith')
+        break
+      default:
+        setCaeer('None')
+        break
+    }
   }, [])
 
   useEffect(() => {
@@ -66,13 +80,13 @@ export default function User() {
                 0.00 OPEN
               </li>
               {/* Career : Openian or Supplier or BlackSmith */}
-              <li>Career: None</li>
-              <li
-                css={{
-                  display: 'flex',
-                  marginTop: '10px',
-                }}
-              >
+              <li>
+                Career: {career}
+              </li>
+              <li css={{
+                display: 'flex',
+                marginTop: '10px'
+              }}>
                 <div style={{ width: '30px' }}>
                   <img
                     src="./images/icons/inventory.png"
