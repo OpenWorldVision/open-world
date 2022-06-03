@@ -18,7 +18,6 @@ export default function BuyerBoard(props: Props) {
   const [myOpen, setMyOpen] = useState(100)
   const [notiContent, setNotiContent] = useState({})
   const [isShowNoti, setIsShowNoti] = useState(false)
-  console.log('hahaha', buyDetail)
 
   const handleHiddenModal = useCallback(() => {
     toggleModalBuyModal()
