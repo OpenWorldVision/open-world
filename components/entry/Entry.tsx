@@ -14,7 +14,6 @@ import {
 import styles from '@components/entry/entry.module.css'
 import { chainName } from 'utils/chainName'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
-import { getWeb3Client } from '@lib/web3'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import Head from 'next/head'
@@ -170,11 +169,16 @@ export default function Entry() {
       </Head>
       {isOpen && (
         <div className={styles.main}>
-          <img src={'/images/common/gameLogo.webp'} alt={'logo'} />
+          <img
+            src={'/images/common/gameLogo.webp'}
+            alt={'logo'}
+            className={styles.entryLogo}
+          />
+
+          <div className={styles.entryBackground} />
           <Button
             style={_styles.buttonStyle}
             className="click-cursor"
-            // onClick={connectWallet}
             onClick={() => {
               dispatch(updateIsOpenEntry({ isOpen: false }))
             }}
