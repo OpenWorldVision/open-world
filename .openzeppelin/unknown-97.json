@@ -69,6 +69,11 @@
       "address": "0x7210aEaF0c7d74366E37cfB37073cB630Ac86B5b",
       "txHash": "0x1d04a2cfc6e44decf760b011931fd5e70adc03330c3006deef1b7c284fcd2818",
       "kind": "transparent"
+    },
+    {
+      "address": "0xae46953433ebE48698c6D86a49fA154eDCad99C3",
+      "txHash": "0x8a9e589b359477232366d17fe5769da1ad38535de7860160ecc582031866ad4f",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -7593,7 +7598,7 @@
           {
             "contract": "AccessControlUpgradeable",
             "label": "_roles",
-            "type": "t_mapping(t_bytes32,t_struct(RoleData)5389_storage)",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)5218_storage)",
             "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
           },
           {
@@ -7605,7 +7610,7 @@
           {
             "contract": "NFTMarket",
             "label": "openToken",
-            "type": "t_contract(IERC20)10082",
+            "type": "t_contract(IERC20)9911",
             "src": "NFTMarket.sol:64"
           },
           {
@@ -7629,19 +7634,19 @@
           {
             "contract": "NFTMarket",
             "label": "listedTokenIDs",
-            "type": "t_mapping(t_address,t_struct(UintSet)11127_storage)",
+            "type": "t_mapping(t_address,t_struct(UintSet)10956_storage)",
             "src": "NFTMarket.sol:71"
           },
           {
             "contract": "NFTMarket",
             "label": "listingsItem",
-            "type": "t_mapping(t_uint256,t_struct(UintSet)11127_storage)",
+            "type": "t_mapping(t_uint256,t_struct(UintSet)10956_storage)",
             "src": "NFTMarket.sol:72"
           },
           {
             "contract": "NFTMarket",
             "label": "listedTokenTypes",
-            "type": "t_struct(AddressSet)11006_storage",
+            "type": "t_struct(AddressSet)10835_storage",
             "src": "NFTMarket.sol:74"
           },
           {
@@ -7671,18 +7676,18 @@
           {
             "contract": "NFTMarket",
             "label": "allowedTokenTypes",
-            "type": "t_struct(AddressSet)11006_storage",
+            "type": "t_struct(AddressSet)10835_storage",
             "src": "NFTMarket.sol:85"
           },
           {
             "contract": "NFTMarket",
             "label": "listingsId",
-            "type": "t_struct(UintSet)11127_storage",
+            "type": "t_struct(UintSet)10956_storage",
             "src": "NFTMarket.sol:87"
           }
         ],
         "types": {
-          "t_contract(IERC20)10082": {
+          "t_contract(IERC20)9911": {
             "label": "contract IERC20"
           },
           "t_contract(Item)627": {
@@ -7731,19 +7736,19 @@
           "t_array(t_uint256)dyn_storage": {
             "label": "uint256[]"
           },
-          "t_mapping(t_address,t_struct(UintSet)11127_storage)": {
+          "t_mapping(t_address,t_struct(UintSet)10956_storage)": {
             "label": "mapping(address => struct EnumerableSet.UintSet)"
           },
-          "t_struct(UintSet)11127_storage": {
+          "t_struct(UintSet)10956_storage": {
             "label": "struct EnumerableSet.UintSet",
             "members": [
               {
                 "label": "_inner",
-                "type": "t_struct(Set)10741_storage"
+                "type": "t_struct(Set)10570_storage"
               }
             ]
           },
-          "t_struct(Set)10741_storage": {
+          "t_struct(Set)10570_storage": {
             "label": "struct EnumerableSet.Set",
             "members": [
               {
@@ -7765,15 +7770,15 @@
           "t_mapping(t_bytes32,t_uint256)": {
             "label": "mapping(bytes32 => uint256)"
           },
-          "t_mapping(t_uint256,t_struct(UintSet)11127_storage)": {
+          "t_mapping(t_uint256,t_struct(UintSet)10956_storage)": {
             "label": "mapping(uint256 => struct EnumerableSet.UintSet)"
           },
-          "t_struct(AddressSet)11006_storage": {
+          "t_struct(AddressSet)10835_storage": {
             "label": "struct EnumerableSet.AddressSet",
             "members": [
               {
                 "label": "_inner",
-                "type": "t_struct(Set)10741_storage"
+                "type": "t_struct(Set)10570_storage"
               }
             ]
           },
@@ -7789,15 +7794,15 @@
           "t_int128": {
             "label": "int128"
           },
-          "t_mapping(t_bytes32,t_struct(RoleData)5389_storage)": {
+          "t_mapping(t_bytes32,t_struct(RoleData)5218_storage)": {
             "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
           },
-          "t_struct(RoleData)5389_storage": {
+          "t_struct(RoleData)5218_storage": {
             "label": "struct AccessControlUpgradeable.RoleData",
             "members": [
               {
                 "label": "members",
-                "type": "t_struct(AddressSet)8456_storage"
+                "type": "t_struct(AddressSet)8285_storage"
               },
               {
                 "label": "adminRole",
@@ -7805,16 +7810,16 @@
               }
             ]
           },
-          "t_struct(AddressSet)8456_storage": {
+          "t_struct(AddressSet)8285_storage": {
             "label": "struct EnumerableSetUpgradeable.AddressSet",
             "members": [
               {
                 "label": "_inner",
-                "type": "t_struct(Set)8191_storage"
+                "type": "t_struct(Set)8020_storage"
               }
             ]
           },
-          "t_struct(Set)8191_storage": {
+          "t_struct(Set)8020_storage": {
             "label": "struct EnumerableSetUpgradeable.Set",
             "members": [
               {
@@ -7826,6 +7831,257 @@
                 "type": "t_mapping(t_bytes32,t_uint256)"
               }
             ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "33154702bee3c8e94855d9882fd19758b30512a1594361c25c9b794d49aca2c9": {
+      "address": "0xa9748E36a77E7978a0545b7ae3aF62C947B32E40",
+      "txHash": "0x188cf09f0c9f01e02015e4c86f4c4a90385409ee002051abf4d96d1e85b0a1b7",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)5297_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "Profiles",
+            "label": "addressToIndex",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "Profile.sol:11"
+          },
+          {
+            "contract": "Profiles",
+            "label": "nameToIndex",
+            "type": "t_mapping(t_string_memory_ptr,t_uint256)",
+            "src": "Profile.sol:12"
+          },
+          {
+            "contract": "Profiles",
+            "label": "addresses",
+            "type": "t_array(t_address)dyn_storage",
+            "src": "Profile.sol:13"
+          },
+          {
+            "contract": "Profiles",
+            "label": "heroesNftContract",
+            "type": "t_contract(HeroCore)400",
+            "src": "Profile.sol:15"
+          },
+          {
+            "contract": "Profiles",
+            "label": "minLength",
+            "type": "t_uint8",
+            "src": "Profile.sol:17"
+          },
+          {
+            "contract": "Profiles",
+            "label": "maxLength",
+            "type": "t_uint8",
+            "src": "Profile.sol:18"
+          },
+          {
+            "contract": "Profiles",
+            "label": "maxPic",
+            "type": "t_uint8",
+            "src": "Profile.sol:19"
+          },
+          {
+            "contract": "Profiles",
+            "label": "requireBalanceProfession",
+            "type": "t_uint256",
+            "src": "Profile.sol:20"
+          },
+          {
+            "contract": "Profiles",
+            "label": "governanceToken",
+            "type": "t_address",
+            "src": "Profile.sol:21"
+          },
+          {
+            "contract": "Profiles",
+            "label": "profiles",
+            "type": "t_mapping(t_uint256,t_struct(Profile)4196_storage)",
+            "src": "Profile.sol:50"
+          },
+          {
+            "contract": "Profiles",
+            "label": "points",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "Profile.sol:52"
+          },
+          {
+            "contract": "Profiles",
+            "label": "timestampStamina",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "Profile.sol:59"
+          }
+        ],
+        "types": {
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_string_memory_ptr,t_uint256)": {
+            "label": "mapping(string => uint256)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_contract(HeroCore)400": {
+            "label": "contract HeroCore"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_mapping(t_uint256,t_struct(Profile)4196_storage)": {
+            "label": "mapping(uint256 => struct Profiles.Profile)"
+          },
+          "t_struct(Profile)4196_storage": {
+            "label": "struct Profiles.Profile",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "owner",
+                "type": "t_address"
+              },
+              {
+                "label": "name",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "created",
+                "type": "t_uint64"
+              },
+              {
+                "label": "picId",
+                "type": "t_uint8"
+              },
+              {
+                "label": "heroId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "set",
+                "type": "t_bool"
+              },
+              {
+                "label": "profession",
+                "type": "t_enum(Profession)4177"
+              },
+              {
+                "label": "stamina",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_enum(Profession)4177": {
+            "label": "enum Profiles.Profession",
+            "members": [
+              "UNKNOWN",
+              "OPENER",
+              "SUPPLIER",
+              "BLACKSMITH"
+            ]
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)5297_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)5297_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)8364_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)8364_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)8099_storage"
+              }
+            ]
+          },
+          "t_struct(Set)8099_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
           },
           "t_array(t_uint256)49_storage": {
             "label": "uint256[49]"

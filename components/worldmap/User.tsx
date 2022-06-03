@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
-import { isProfessionExist, getProfile } from 'utils/profileContract'
+import { getProfile, getStamina } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
@@ -19,7 +19,11 @@ export default function User(props: Props) {
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
   const [isOpenTutorial, setIsOpenTutorial] = useState(false)
   const [career, setCaeer] = useState('None')
-  const profile = useSelector((state: any) => { return state.ProfileStore.profile })
+  const profile = useSelector((state: any) => {
+    return state.ProfileStore.profile
+  })
+  const [staminaPoint, setStaminaPoint] = useState(0)
+
   const dispatch = useDispatch()
 
   const getDataProfile = useCallback(async () => {
@@ -40,11 +44,18 @@ export default function User(props: Props) {
         setCaeer('None')
         break
     }
-  }, [])
+  }, [dispatch])
 
+  const handleGetStamina = useCallback(async () => {
+    const stamina = await getStamina()
+    if (stamina) {
+      setStaminaPoint(stamina)
+    }
+  }, [])
 
   useEffect(() => {
     getDataProfile()
+    handleGetStamina()
   }, [])
 
   const handleOpenTutorial = useCallback(() => {
@@ -65,9 +76,12 @@ export default function User(props: Props) {
           }}
         >
           <img
-            src={`/images/profile/hero/${profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
-              }.webp`}
+            src={`/images/profile/hero/${
+              profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
+            }.webp`}
             alt="img"
+            width={77}
+            height={77}
           />
         </button>
         {isOpenAvatar && (
@@ -77,36 +91,45 @@ export default function User(props: Props) {
               <li
                 css={{
                   display: 'flex',
-                  alignItems: 'center'
+                  alignItems: 'center',
                 }}
               >
                 <div style={{ width: '30px' }}>
-                  <img src="./favicon.ico" alt="img" width={25} height={25} />
+                  <Image src="/favicon.ico" alt="img" width={25} height={25} />
                 </div>
-                {!balance && <Spinner
-                  sx={{ marginRight: '6px' }}
-                  thickness='5px'
-                  speed='0.65s'
-                  emptyColor='#745FFB'
-                  color='#E14C90'
-                  size='sm'
-                />}
-                {balance && <span style={{
-                  display: 'block',
-                  marginRight: '10px'
-                }}>{balance}</span>} OPEN
+                {!balance && (
+                  <Spinner
+                    sx={{ marginRight: '6px' }}
+                    thickness="5px"
+                    speed="0.65s"
+                    emptyColor="#745FFB"
+                    color="#E14C90"
+                    size="sm"
+                  />
+                )}
+                {balance && (
+                  <span
+                    style={{
+                      display: 'block',
+                      marginRight: '10px',
+                    }}
+                  >
+                    {balance}
+                  </span>
+                )}{' '}
+                OPEN
               </li>
               {/* Career : Openian or Supplier or BlackSmith */}
-              <li>
-                Career: {career}
-              </li>
-              <li css={{
-                display: 'flex',
-                marginTop: '10px'
-              }}>
+              <li>Career: {career}</li>
+              <li
+                css={{
+                  display: 'flex',
+                  marginTop: '10px',
+                }}
+              >
                 <div style={{ width: '30px' }}>
-                  <img
-                    src="./images/icons/inventory.png"
+                  <Image
+                    src="/images/icons/inventory.png"
                     alt="img"
                     width={25}
                     height={25}
@@ -123,8 +146,8 @@ export default function User(props: Props) {
                   }}
                 >
                   <div style={{ width: '30px' }}>
-                    <img
-                      src="./images/icons/stamina-point.png"
+                    <Image
+                      src="/images/icons/stamina-point.png"
                       alt="img"
                       width={15}
                       height={15}
@@ -132,29 +155,7 @@ export default function User(props: Props) {
                   </div>
                   Stamina Point:
                 </div>
-                <div>100/100</div>
-              </li>
-              <li
-                css={{
-                  marginTop: '10px',
-                }}
-              >
-                <div
-                  css={{
-                    display: 'flex',
-                  }}
-                >
-                  <div style={{ width: '30px' }}>
-                    <img
-                      src="./images/icons/health-point.png"
-                      alt="img"
-                      width={25}
-                      height={25}
-                    />
-                  </div>
-                  Health Point:
-                </div>
-                <div>100/100</div>
+                <div>{staminaPoint}/100</div>
               </li>
             </ul>
             <button
@@ -221,9 +222,10 @@ const UserCSS = styled.div({
       left: '10px',
     },
     '> button': {
-      width: '100px',
       height: '110px',
-      display: 'block',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       backgroundImage: 'url(/images/worldmap/Frame.webp)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'contain',

@@ -11,7 +11,7 @@ const openWorldTokenContract = {
 
 const professionsContract = {
   addressHarmony: '0x87461de8692ead1de9ee628ff25d97ae393ea162',
-  addressBSC: '0xE6046d1363F7Bebff6cB98c72094c89fF8ee500D',
+  addressBSC: '0xae46953433ebE48698c6D86a49fA154eDCad99C3',
   jsonInterface: require('../build/contracts/Profiles.json'),
 }
 

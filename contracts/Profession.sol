@@ -41,24 +41,12 @@ contract Profession is AccessControlUpgradeable {
     profiles = Profiles(_profile);
   }
 
-  function startFishing(uint256 _idSushi1, uint256 _idSushi2)
-    public
-    returns (bool)
-  {
-    require(
-      item.ownerOf(_idSushi1) == msg.sender &&
-        item.ownerOf(_idSushi2) == msg.sender,
-      'Not own sushi'
-    );
-    require(item.get(_idSushi1) == 4 && item.get(_idSushi2) == 4, 'Not sushi');
-    item.burn(_idSushi1);
-    item.burn(_idSushi2);
+  function startFishing() public returns (bool) {
     (uint256 startTime, ) = getFishingQuest(msg.sender);
     require(startTime == 0, 'Not finish last quest');
     uint256 oldStamina = profiles.getStaminaByAddress(msg.sender);
     require(oldStamina >= fishingStaminaRequire, 'Not enough stamina');
     openianFishingQuest[msg.sender] = Quest(block.timestamp, false);
-    profiles.setStamina(msg.sender, oldStamina.sub(fishingStaminaRequire));
     return true;
   }
 
@@ -67,32 +55,19 @@ contract Profession is AccessControlUpgradeable {
     require(!finish, 'This quest is finish');
     require(block.timestamp >= startTime.add(fishingDuration), 'Wait more');
     item.mint(msg.sender, 1);
-    item.mint(msg.sender, 1);
     openianFishingQuest[msg.sender] = Quest(0, true);
     return true;
   }
 
-  function startMining(uint256 _idHammer1, uint256 _idHammer2)
-    public
-    returns (bool)
-  {
-    require(
-      item.ownerOf(_idHammer1) == msg.sender &&
-        item.ownerOf(_idHammer2) == msg.sender,
-      'Not own hammer'
-    );
-    require(
-      item.get(_idHammer1) == 3 && item.get(_idHammer2) == 3,
-      'Not hammer'
-    );
+  function startMining(uint256 _idHammer1) public returns (bool) {
+    require(item.ownerOf(_idHammer1) == msg.sender, 'Not own hammer');
+    require(item.get(_idHammer1) == 3, 'Not hammer');
     item.burn(_idHammer1);
-    item.burn(_idHammer2);
     (uint256 startTime, ) = getMiningQuest(msg.sender);
     require(startTime == 0, 'Not finish last quest');
     uint256 oldStamina = profiles.getStaminaByAddress(msg.sender);
     require(oldStamina >= miningStaminaRequire, 'Not enough stamina');
     openianMiningQuest[msg.sender] = Quest(block.timestamp, false);
-    profiles.setStamina(msg.sender, oldStamina.sub(miningStaminaRequire));
     return true;
   }
 
@@ -101,44 +76,35 @@ contract Profession is AccessControlUpgradeable {
     require(!finish, 'This quest is finish');
     require(block.timestamp >= startTime.add(fishingDuration), 'Wait more');
     item.mint(msg.sender, 2);
-    item.mint(msg.sender, 2);
     openianMiningQuest[msg.sender] = Quest(0, true);
     return true;
   }
 
-  function makeSushi(uint256 idUpgrade, uint256 idBurn) public {
-    require(
-      item.ownerOf(idUpgrade) == msg.sender &&
-        item.ownerOf(idBurn) == msg.sender,
-      'Not owner of token'
-    );
-    require(item.get(idUpgrade) == 1 && item.get(idBurn) == 1, 'Not fish');
-    item.burn(idBurn);
-    item.setTrait(idUpgrade, 4);
+  function makeSushi(uint256 idBurn) public {
+    require(item.ownerOf(idBurn) == msg.sender, 'Not owner of token');
+    require(item.get(idBurn) == 1, 'Not fish');
+    item.mint(msg.sender, 4);
+    item.setTrait(idBurn, 4);
   }
 
   function makeMultiSushi(uint256[] calldata _ids) public {
-    require(_ids.length > 2 && _ids.length.mod(2) == 0, 'Invalid');
-    for (uint256 index = 0; index < _ids.length; index += 2) {
-      makeSushi(_ids[index], _ids[index + 1]);
+    require(_ids.length > 1, 'Invalid');
+    for (uint256 index = 0; index < _ids.length; index++) {
+      makeSushi(_ids[index]);
     }
   }
 
-  function makeHammer(uint256 idUpgrade, uint256 idBurn) public {
-    require(
-      item.ownerOf(idUpgrade) == msg.sender &&
-        item.ownerOf(idBurn) == msg.sender,
-      'Not owner of token'
-    );
-    require(item.get(idUpgrade) == 2 && item.get(idBurn) == 2, 'Not fish');
-    item.burn(idBurn);
-    item.setTrait(idUpgrade, 3);
+  function makeHammer(uint256 idBurn) public {
+    require(item.ownerOf(idBurn) == msg.sender, 'Not owner of token');
+    require(item.get(idBurn) == 2, 'Not fish');
+    item.mint(msg.sender, 3);
+    item.setTrait(idBurn, 3);
   }
 
   function makeMultiHammer(uint256[] calldata _ids) public {
-    require(_ids.length > 2 && _ids.length.mod(2) == 0, 'Invalid');
-    for (uint256 index = 0; index < _ids.length; index += 2) {
-      makeHammer(_ids[index], _ids[index + 1]);
+    require(_ids.length > 1, 'Invalid');
+    for (uint256 index = 0; index < _ids.length; index++) {
+      makeHammer(_ids[index]);
     }
   }
 

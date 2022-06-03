@@ -5,6 +5,7 @@ import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import './HeroCore.sol';
 
 contract Profiles is AccessControlUpgradeable {
+  using SafeMath for uint256;
   uint256 public constant MAX_STAMINA = 100;
 
   mapping(address => uint256) public addressToIndex;
@@ -54,6 +55,8 @@ contract Profiles is AccessControlUpgradeable {
   bytes32 public constant POINTS_ROLE = keccak256('POINTS_ROLE');
   bytes32 public constant PROFESSION_OPERATOR =
     keccak256('PROFESSION_OPERATOR');
+
+  mapping(address => uint256) timestampStamina;
 
   event ProfileCreated(
     uint256 profileId,
@@ -413,5 +416,21 @@ contract Profiles is AccessControlUpgradeable {
     Profile memory profile = profiles[addressToIndex[_address]];
     points[profile.id] += _points;
     return true;
+  }
+
+  function getStamina(address _account) public view returns (uint256 stamina) {
+    uint256 timestamp = timestampStamina[_account];
+    uint256 current = block.timestamp;
+
+    if (timestamp == 0) {
+      require(profileExists(_account), 'no profile found');
+      Profile memory profile = profiles[addressToIndex[_account]];
+      timestamp = profile.created;
+    }
+    uint256 diff = current.sub(timestamp).div(3600).mul(42).div(10);
+    if (diff > MAX_STAMINA) {
+      return 0;
+    }
+    return MAX_STAMINA.sub(diff);
   }
 }
