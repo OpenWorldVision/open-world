@@ -34,7 +34,7 @@ export const sellSushi = async (ids: Array<number>, price: number) => {
 
   try {
     const data = await contract.methods
-      .addListing(nftAddress, ids, price)
+      .addListing(nftAddress, ids, web3.utils.toWei(`${price}`, 'ether'))
       .send({ from: accounts[0] })
     return data
   } catch (error) {
