@@ -72,7 +72,7 @@ export default function Layout({ children, home }) {
       return <BtnWorldMap backToWorldMap={handleBackToWorldMap} />
     }
   }
-  return <Entry />
+
   return (
     <div
       style={{
