@@ -170,7 +170,7 @@ export default function Entry() {
       </Head>
       {isOpen && (
         <div className={styles.main}>
-          <img src={'/images/common/gameLogo.png'} alt={'logo'} />
+          <img src={'/images/common/gameLogo.webp'} alt={'logo'} />
           <Button
             style={_styles.buttonStyle}
             className="click-cursor"
