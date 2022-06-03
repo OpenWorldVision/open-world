@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, Input, list } from '@chakra-ui/react'
+import { Button, Input } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import styles from './sellSushi.module.css'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 

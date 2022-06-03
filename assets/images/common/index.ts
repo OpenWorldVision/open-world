@@ -1,5 +1,5 @@
 import mute from './mute.png'
-import gameLogo from './gameLogo.png'
+import gameLogo from './gameLogo.webp'
 import notplay from './notplay.svg'
 import play from './play.svg'
 import sound from './sound.png'
