@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 import Web3 from 'web3'
 import { getOpenWorldContract } from './openWorldContract'
 
@@ -34,7 +34,7 @@ export const sellSushi = async (ids: Array<number>, price: number) => {
 
   try {
     const data = await contract.methods
-      .addListing(nftAddress, ids, web3.utils.toWei(`${price}`, 'ether'))
+      .addListing(nftAddress, ids, ethers.utils.parseEther(`${price}`))
       .send({ from: accounts[0] })
     return data
   } catch (error) {
@@ -62,7 +62,7 @@ export async function getListingIDs(): Promise<Listing[]> {
         listFull.push({
           id: listIds?.ids[index],
           items: listIds?.items[index],
-          price: listIds?.prices[index],
+          price: ethers.utils.formatEther(listIds?.prices[index]),
           seller: listIds?.sellers[index],
           trait: listIds?.trait[index],
         })
@@ -78,24 +78,24 @@ export const purchaseItems = async (
   transactionId: number,
   itemIds: Array<number>
 ) => {
-  const openWorldContract = await getOpenWorldContract()
-  const currentAddress = await window.ethereum.selectedAddress
-
-  const allowance: BigNumber = await openWorldContract.allowance(
-    currentAddress,
-    nftMarketContract.addressBSC
-  )
-
-  if (allowance.lt(BigNumber.from(web3.utils.toWei('1000000', 'ether')))) {
-    await openWorldContract.approve(
-      nftMarketContract.addressBSC,
-      web3.utils.toWei('100000000', 'ether')
-    )
-  }
-  const contract = await getNFTMarketContract()
-  const accounts = await web3.eth.getAccounts()
-
   try {
+    const openWorldContract = await getOpenWorldContract()
+    const currentAddress = await window.ethereum.selectedAddress
+
+    const allowance: BigNumber = await openWorldContract.allowance(
+      currentAddress,
+      nftMarketContract.addressBSC
+    )
+
+    if (allowance.lt(BigNumber.from(web3.utils.toWei('1000000', 'ether')))) {
+      await openWorldContract.approve(
+        nftMarketContract.addressBSC,
+        web3.utils.toWei('100000000', 'ether')
+      )
+    }
+    const contract = await getNFTMarketContract()
+    const accounts = await web3.eth.getAccounts()
+
     const result = await contract.methods
       ?.purchaseListing(nftAddress, transactionId, itemIds)
       .send({ from: accounts[0] })
@@ -104,5 +104,3 @@ export const purchaseItems = async (
     return null
   }
 }
-
-// const
