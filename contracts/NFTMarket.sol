@@ -497,9 +497,8 @@ contract NFTMarket is
     for (uint256 index = 0; index < _ids.length; index++) {
       listedTokenIDs[address(_tokenAddress)].remove(_ids[index]);
       _tokenAddress.safeTransferFrom(address(this), msg.sender, _ids[index]);
+      _updateListedTokenTypes(_tokenAddress);
     }
-
-    _updateListedTokenTypes(_tokenAddress);
 
     emit CancelledListing(msg.sender, _tokenAddress, _id);
   }
@@ -521,9 +520,8 @@ contract NFTMarket is
       listedTokenIDs[address(_tokenAddress)].remove(_ids[index]);
       listingsItem[_id].remove(_ids[index]);
       _tokenAddress.safeTransferFrom(address(this), msg.sender, _ids[index]);
+      _updateListedTokenTypes(_tokenAddress);
     }
-
-    _updateListedTokenTypes(_tokenAddress);
 
     openToken.safeTransferFrom(msg.sender, taxRecipient, taxAmount);
     openToken.safeTransferFrom(
@@ -531,7 +529,6 @@ contract NFTMarket is
       listing.seller,
       finalPrice.sub(taxAmount)
     );
-    _tokenAddress.safeTransferFrom(address(this), msg.sender, _id);
 
     if (listingsItem[_id].length() == 0) {
       delete listings[address(_tokenAddress)][_id];
