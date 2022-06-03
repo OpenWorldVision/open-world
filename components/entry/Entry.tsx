@@ -30,6 +30,7 @@ export default function Entry() {
   const [playSound, setPlaySound] = useState(false)
   const [nameOfChain, setNameOfChain] = useState('Binance Smart Chain')
   const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
+  const [checkIsConnect, setCheckIsConnect] = useState(false)
 
   const dispatch = useDispatch()
   const isOpen = useSelector((state: any) => { return state.isOpenEntryPage.isOpen })
@@ -49,7 +50,8 @@ export default function Entry() {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
-                dispatch(updateIsConnected({ isConnected: true }))
+                // dispatch(updateIsConnected({ isConnected: true }))
+                setCheckIsConnect(true)
               })
               .catch(() => {
                 dispatch(updateIsConnected({ isConnected: false }))
@@ -58,14 +60,16 @@ export default function Entry() {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
-                dispatch(updateIsConnected({ isConnected: true }))
+                // dispatch(updateIsConnected({ isConnected: true }))
+                setCheckIsConnect(true)
                 window.ethereum
                   .request({
                     method: 'wallet_switchEthereumChain',
                     params: [{ chainId: '0x63564c40' }],
                   })
                   .then(() => {
-                    dispatch(updateIsConnected({ isConnected: true }))
+                    // dispatch(updateIsConnected({ isConnected: true }))
+                    setCheckIsConnect(true)
                   })
                   .catch((error) => {
                     window.ethereum.request({
@@ -167,14 +171,83 @@ export default function Entry() {
     }
   }
 
-  
+  const handleClickPlay = () => {
+    // dispatch(updateIsOpenEntry({ isOpen: false }))
+    if(checkIsConnect){
+      dispatch(updateIsConnected({ isConnected: true }))
+    }
+  }
 
   return (
     <>
       <Head>
         <title>Open World</title>
       </Head>
-      {isOpen && (
+      <div className={styles.main}>
+          <img src={'/images/common/gameLogo.png'} alt={'logo'} />
+          <Button
+            style={_styles.buttonStyle}
+            className='click-cursor'
+            // onClick={connectWallet}
+            onClick={handleClickPlay}
+          >
+            <Text style={_styles.buttonText}>PLAY</Text>
+          </Button>
+          <div className={styles.bottomContainer}>
+            <div>
+              <div className={styles.rowView}>
+                <div
+                  className='click-cursor'
+                  style={{ marginRight: '1rem' }}
+                  onClick={() => setPlay('music')}
+                >
+                  <img
+                    src={
+                      playMusic
+                        ? '/images/common/play.svg'
+                        : '/images/common/notplay.svg'
+                    }
+                    alt={'musicPlay'}
+                    className={styles.iconStyle}
+                  />
+                </div>
+                <div className='click-cursor' onClick={() => setPlay('sound')}>
+                  <img
+                    src={
+                      playSound
+                        ? '/images/common/sound.png'
+                        : '/images/common/mute.png'
+                    }
+                    alt={'soundPlay'}
+                    className={styles.iconStyle}
+                  />
+                </div>
+              </div>
+              <Text color={'#019C44'} fontSize={12}>
+                {nameOfChain}
+              </Text>
+            </div>
+          </div>
+          <Modal isOpen={openModalAddWallet} onClose={onCloseModal} isCentered>
+            <ModalOverlay>
+              <ModalContent>
+                <ModalHeader>Please add your wallet</ModalHeader>
+                <ModalCloseButton />
+                <ModalFooter>
+                  <Button
+                    backgroundColor={'#019C44'}
+                    variant="ghost"
+                    onClick={onAddMetamask}
+                    textColor={'#fff'}
+                  >
+                    Add Metamask
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </ModalOverlay>
+          </Modal>
+        </div>
+      {/* {isOpen && (
         <div className={styles.main}>
           <img src={'/images/common/gameLogo.png'} alt={'logo'} />
           <Button
@@ -239,7 +312,7 @@ export default function Entry() {
             </ModalOverlay>
           </Modal>
         </div>
-      )}
+      )} */}
     </>
   )
 }
