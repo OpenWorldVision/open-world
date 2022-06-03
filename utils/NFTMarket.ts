@@ -1,4 +1,6 @@
+import { BigNumber } from 'ethers'
 import Web3 from 'web3'
+import { getOpenWorldContract } from './openWorldContract'
 
 const web3 = new Web3(Web3.givenProvider)
 
@@ -30,15 +32,12 @@ export const sellSushi = async (ids: Array<number>, price: number) => {
   const contract = await getNFTMarketContract()
   const accounts = await web3.eth.getAccounts()
 
-  console.log('2124', ids)
-
   try {
     const data = await contract.methods
       .addListing(nftAddress, ids, price)
       .send({ from: accounts[0] })
     return data
   } catch (error) {
-    console.log('e4witi', error)
     return null
   }
 }
@@ -79,8 +78,23 @@ export const purchaseItems = async (
   transactionId: number,
   itemIds: Array<number>
 ) => {
+  const openWorldContract = await getOpenWorldContract()
+  const currentAddress = await window.ethereum.selectedAddress
+
+  const allowance: BigNumber = await openWorldContract.allowance(
+    currentAddress,
+    nftMarketContract.addressBSC
+  )
+
+  if (allowance.lt(BigNumber.from(web3.utils.toWei('1000000', 'ether')))) {
+    await openWorldContract.approve(
+      nftMarketContract.addressBSC,
+      web3.utils.toWei('100000000', 'ether')
+    )
+  }
   const contract = await getNFTMarketContract()
   const accounts = await web3.eth.getAccounts()
+
   try {
     const result = await contract.methods
       ?.purchaseListing(nftAddress, transactionId, itemIds)

@@ -22,7 +22,7 @@ const heroCoreContract = {
 }
 
 // Create contracts
-const getOpeWorldContract = async () => {
+export const getOpeWorldContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
 
   return new ethers.Contract(
