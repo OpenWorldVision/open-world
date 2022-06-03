@@ -131,6 +131,18 @@ contract NFTMarket is
     _;
   }
 
+  modifier isListedMulti(IERC721 _tokenAddress, uint256[] calldata ids) {
+    require(ids.length > 0, 'Invalid');
+    for (uint256 i; i < ids.length; i++) {
+      require(
+        listedTokenTypes.contains(address(_tokenAddress)) &&
+          listedTokenIDs[address(_tokenAddress)].contains(ids[i]),
+        'Token ID not listed'
+      );
+    }
+    _;
+  }
+
   modifier isNotListed(IERC721 _tokenAddress, uint256 id) {
     require(
       !listedTokenTypes.contains(address(_tokenAddress)) ||
@@ -474,9 +486,9 @@ contract NFTMarket is
   function cancelListing(IERC721 _tokenAddress, uint256 _id)
     public
     userNotBanned
-    isListed(_tokenAddress, _id)
     isSellerOrAdmin(_tokenAddress, _id)
   {
+    require(listingsId.contains(_id), 'Invalid listing');
     uint256[] memory _ids = listings[address(_tokenAddress)][_id].items;
     delete listings[address(_tokenAddress)][_id];
     delete listingsItem[_id];
@@ -496,7 +508,7 @@ contract NFTMarket is
     IERC721 _tokenAddress,
     uint256 _id,
     uint256[] calldata _buyItemIds
-  ) public userNotBanned isListed(_tokenAddress, _id) {
+  ) public userNotBanned isListedMulti(_tokenAddress, _buyItemIds) {
     uint256 finalPrice = getFinalPrice(_tokenAddress, _id, _buyItemIds);
 
     Listing memory listing = listings[address(_tokenAddress)][_id];
