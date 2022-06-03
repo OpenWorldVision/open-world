@@ -78,7 +78,6 @@ export default function BuyerBoard(props: Props) {
                   cursor:
                     'url(/images/worldmap/SelectCursor.webp), auto !important',
                 }}
-                disabled={numberItem === 0}
                 onClick={handleConfirmBuy}
                 className={styles.btnConfirm}
               ></Button>
@@ -87,7 +86,7 @@ export default function BuyerBoard(props: Props) {
             <div
               style={{ backgroundColor: 'transparent' }}
               className="overlay"
-              onClick={() => toggleModalBuyModal()}
+              onClick={toggleModalBuyModal}
             ></div>
           </div>
         )}
