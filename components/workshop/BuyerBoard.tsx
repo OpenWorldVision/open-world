@@ -1,7 +1,5 @@
 import { Button } from '@chakra-ui/react'
 import styles from './BuyerBoard.module.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { useCallback, useEffect, useState } from 'react'
 import NotificationBuyItem from './NotificationBuyItem'
 import React from 'react'
