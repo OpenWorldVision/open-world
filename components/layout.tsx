@@ -29,18 +29,17 @@ export default function Layout({ children, home }) {
   const isConnected = useSelector((state: any) => {
     return state.IsConnectedStore.isConnected
   })
-  const checkConnect = async () => {
-    setCurrentURL(window.location.href)
-    const web3Client = await getWeb3Client()
-    if (!web3Client) {
-      dispatch(updateIsConnected({ isConnected: false }))
-    }
-  }
+
+  const isProfileExist = useSelector((state: any) => {
+    return state.ProfileStore.isConnected
+  })
+  
   const [currentURL, setCurrentURL] = useState('')
   useEffect(() => {
-    checkConnect()
     setCurrentURL(window.location.href)
-
+    if(!isProfileExist){
+      dispatch(updateIsConnected({ isConnected: false }))
+    }
     router.events.on('routeChangeStart', () => {
       setIsLoading(true)
     })
