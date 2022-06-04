@@ -9,11 +9,13 @@ import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 import Image from 'next/image'
 import {
   Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
   Text,
   useDisclosure,
   Wrap,
   WrapItem,
-  Spinner,
 } from '@chakra-ui/react'
 import RefillStaminaModal from './RefillStaminaModal'
 import { PlusSquareIcon } from '@chakra-ui/icons'
@@ -26,7 +28,6 @@ export default function User(props: Props) {
   const { balance } = props
 
   const { isOpen, onToggle } = useDisclosure()
-  const [isOpenAvatar, setIsOpenAvatar] = useState(false)
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
   const [isOpenTutorial, setIsOpenTutorial] = useState(false)
@@ -72,10 +73,6 @@ export default function User(props: Props) {
     setIsOpenTutorial(true)
   }, [])
 
-  const handleClickAvatar = useCallback(() => {
-    setIsOpenAvatar((isOpenAvatarPrev) => !isOpenAvatarPrev)
-  }, [])
-
   const handleClickProfile = useCallback(() => {
     setIsOpenUserInfo(true)
   }, [])
@@ -83,116 +80,120 @@ export default function User(props: Props) {
   return (
     <UserCSS>
       <div className="user-avatar">
-        <Button
-          _hover={{
-            backgroundColor: 'transparent',
-          }}
-          _focus={{
-            border: 'none',
-            backgroundColor: 'transparent',
-          }}
-          _active={{
-            backgroundColor: 'transparent',
-          }}
-          bgColor="transparent"
-          border="none"
-          outline="transparent"
-          className="click-cursor"
-          margin="auto"
-          onClick={handleClickAvatar}
-        >
-          <img
-            src={`/images/profile/hero/${
-              profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
-            }.webp`}
-            alt="img"
-            width={77}
-            height={77}
-          />
-        </Button>
-        {isOpenAvatar && (
-          <div className="user-info">
-            <div>{profile?._name}</div>
-            <ul>
-              <Wrap>
-                <WrapItem>
-                  <Image src="/favicon.ico" alt="img" width={25} height={25} />
-                </WrapItem>
-                <WrapItem alignItems="center">
-                  {balance ? (
-                    <Text> {balance} OPEN</Text>
-                  ) : (
-                    <Spinner
-                      sx={{ marginRight: '6px' }}
-                      thickness="5px"
-                      speed="0.65s"
-                      emptyColor="#745FFB"
-                      color="#E14C90"
-                      size="sm"
-                    />
-                  )}
-                </WrapItem>
-              </Wrap>
-              {/* Career : Openian or Supplier or BlackSmith */}
-              <Text>Career: {career}</Text>
-              <Wrap>
-                <WrapItem>
-                  <Image
-                    src="/images/icons/inventory.png"
-                    alt="img"
-                    width={20}
-                    height={20}
-                  />
-                </WrapItem>
-                <WrapItem>
-                  <Text>Inventory</Text>
-                </WrapItem>
-              </Wrap>
-
-              <Wrap
-                alignItems="center"
-                justifyContent="center"
-                borderTop="none"
-              >
-                <WrapItem alignItems="center">
-                  <Image
-                    src="/images/icons/stamina-point.png"
-                    alt="img"
-                    width={15}
-                    height={15}
-                  />
-                </WrapItem>
-                <WrapItem>
-                  <Text>Stamina Point</Text>
-                </WrapItem>
-
-                <WrapItem alignItems="center">
-                  <Text fontWeight={500}>{staminaPoint}/100</Text>
-                </WrapItem>
-                <WrapItem>
-                  <Button
-                    onClick={onToggle}
-                    size="xs"
-                    colorScheme="yellow"
-                    leftIcon={<PlusSquareIcon />}
-                    variant="solid"
-                  >
-                    Recover
-                  </Button>
-                </WrapItem>
-              </Wrap>
-            </ul>
+        <Popover placement="bottom">
+          <PopoverTrigger>
             <Button
-              cursor={'url(/images/worldmap/click-cursor.png)'}
-              onClick={handleClickProfile}
-              className="btn-profile click-cursor"
-              colorScheme="yellow"
-              bgColor="#E8BE8A"
+              _hover={{
+                backgroundColor: 'transparent',
+              }}
+              _focus={{
+                border: 'none',
+                backgroundColor: 'transparent',
+              }}
+              _active={{
+                backgroundColor: 'transparent',
+              }}
+              bgColor="transparent"
+              border="none"
+              outline="transparent"
+              className="click-cursor"
+              margin="auto"
             >
-              Profile
+              <Image
+                src={`/images/profile/hero/${
+                  profile?._picId && profile?._picId < 14
+                    ? profile?._picId
+                    : 'none'
+                }.webp`}
+                alt="img"
+                width={77}
+                height={77}
+              />
             </Button>
-          </div>
-        )}
+          </PopoverTrigger>
+
+          <PopoverContent
+            border="none"
+            _focus={{ boxShadow: 'none' }}
+            width={220}
+          >
+            <div className="user-info">
+              <div>{profile?._name}</div>
+              <ul>
+                <Wrap>
+                  <WrapItem>
+                    <Image
+                      src="/favicon.ico"
+                      alt="img"
+                      width={25}
+                      height={25}
+                    />
+                  </WrapItem>
+                  <WrapItem alignItems="center">
+                    <Text> 0.00 OPEN</Text>
+                  </WrapItem>
+                </Wrap>
+                {/* Career : Openian or Supplier or BlackSmith */}
+                <Text>Career: {career}</Text>
+                <Wrap>
+                  <WrapItem>
+                    <Image
+                      src="/images/icons/inventory.png"
+                      alt="img"
+                      width={20}
+                      height={20}
+                    />
+                  </WrapItem>
+                  <WrapItem>
+                    <Text>Inventory</Text>
+                  </WrapItem>
+                </Wrap>
+
+                <Wrap
+                  alignItems="center"
+                  justifyContent="center"
+                  borderTop="none"
+                >
+                  <WrapItem alignItems="center">
+                    <Image
+                      src="/images/icons/stamina-point.png"
+                      alt="img"
+                      width={15}
+                      height={15}
+                    />
+                  </WrapItem>
+                  <WrapItem>
+                    <Text>Stamina Point</Text>
+                  </WrapItem>
+
+                  <WrapItem alignItems="center">
+                    <Text fontWeight={500}>{staminaPoint}/100</Text>
+                  </WrapItem>
+                  <WrapItem>
+                    <Button
+                      onClick={onToggle}
+                      size="xs"
+                      colorScheme="yellow"
+                      leftIcon={<PlusSquareIcon />}
+                      variant="solid"
+                    >
+                      Recover
+                    </Button>
+                  </WrapItem>
+                </Wrap>
+              </ul>
+              <Button
+                cursor={'url(/images/worldmap/click-cursor.png)'}
+                onClick={handleClickProfile}
+                className="btn-profile click-cursor"
+                colorScheme="yellow"
+                bgColor="#E8BE8A"
+              >
+                Profile
+              </Button>
+            </div>
+          </PopoverContent>
+        </Popover>
         {isOpenUserInfo && (
           <UserInfo
             setIsOpenUserInfo={setIsOpenUserInfo}
@@ -259,10 +260,6 @@ const UserCSS = styled.div({
       },
     },
     '.user-info': {
-      position: 'absolute',
-      top: '70px',
-      left: 0,
-      width: '200px',
       backgroundImage: 'url(/images/profile/frame.png)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '100% 100%',
