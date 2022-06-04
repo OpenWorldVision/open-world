@@ -1,41 +1,49 @@
 import {
   Button,
   Link,
-  styled,
   Table,
   TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
+  Text,
   Th,
   Thead,
   Tr,
 } from '@chakra-ui/react'
 import styles from '@components/foodcourt/foodcourt.module.css'
 
-import { useCallback, useEffect, useState } from 'react'
-import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import BuyerBoard from '@components/foodcourt/BuyerBoard'
 import Head from 'next/head'
-import { getListingIDs } from 'utils/NFTMarket'
+import { useCallback, useEffect, useState } from 'react'
+import { cancelListingItem, getListingIDs } from 'utils/NFTMarket'
 
 export default function FoodCourt() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-  const [isItemBoard, setIsItemBoard] = useState<'sushi' | 'fish'>('sushi')
+  const [isItemBoard, setIsItemBoard] = useState<'sushi' | 'fish' | 'mine'>(
+    'sushi'
+  )
   const [listItemsBoard, setListItemsBoard] = useState([])
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageFoodCourt, setPageFoodCourt] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
 
   const handleGetSushiList = async () => {
-    const data = await getListingIDs()
+    const data = await getListingIDs(false)
     setListItemsBoard(data.filter((listing) => listing.trait === '4'))
   }
 
   const handleGetFishList = async () => {
-    const data = await getListingIDs()
+    const data = await getListingIDs(false)
     setListItemsBoard(data.filter((listing) => listing.trait === '1'))
+  }
+
+  const handleGetMyList = async () => {
+    const data = await getListingIDs(true)
+    const myFoodCourtList = data?.filter(
+      (item) => item?.trait === '1' || item?.trait === '4'
+    )
+    setListItemsBoard(myFoodCourtList)
   }
 
   useEffect(() => {
@@ -51,8 +59,10 @@ export default function FoodCourt() {
       setIsItemBoard(item)
       if (item === 'sushi') {
         handleGetSushiList()
-      } else {
+      } else if (item === 'fish') {
         handleGetFishList()
+      } else {
+        handleGetMyList()
       }
     },
     []
@@ -83,6 +93,16 @@ export default function FoodCourt() {
       toggleBuyModal()
     },
     [toggleBuyModal]
+  )
+
+  const handleCancelItem = useCallback(
+    (item) => async () => {
+      const data = await cancelListingItem(item?.id)
+      if (data) {
+        handleGetMyList()
+      }
+    },
+    []
   )
 
   useEffect(() => {
@@ -199,10 +219,7 @@ export default function FoodCourt() {
                               </Td>
                               <Td sx={{ textAlign: 'center' }}>
                                 <Button
-                                  onClick={handleBuyItem(
-                                    item.available,
-                                    item.price
-                                  )}
+                                  onClick={handleBuyItem(item)}
                                   className={`${styles.buyBtnItem} click-cursor`}
                                 ></Button>
                               </Td>

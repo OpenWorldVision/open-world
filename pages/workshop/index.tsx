@@ -1,24 +1,22 @@
 import {
   Button,
   Link,
-  styled,
   Table,
   TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
+  Text,
   Th,
   Thead,
   Tr,
 } from '@chakra-ui/react'
 import styles from '@components/workshop/workshop.module.css'
 
-import { useCallback, useEffect, useState } from 'react'
-import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import BuyerBoard from '@components/workshop/BuyerBoard'
 import Head from 'next/head'
-import { getListingIDs } from 'utils/NFTMarket'
+import { useCallback, useEffect, useState } from 'react'
+import { cancelListingItem, getListingIDs } from 'utils/NFTMarket'
 
 const listOre = [
   {
@@ -109,20 +107,30 @@ const listHammer = [
 export default function WorkShop() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-  const [isItemBoard, setIsItemBoard] = useState<'ore' | 'hammer'>('ore')
+  const [isItemBoard, setIsItemBoard] = useState<'ore' | 'hammer' | 'mine'>(
+    'ore'
+  )
   const [listItemsBoard, setListItemsBoard] = useState([])
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageWorkShop, setPageWorkShop] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
 
   const handleGetHammerList = async () => {
-    const data = await getListingIDs()
+    const data = await getListingIDs(false)
     setListItemsBoard(data.filter((listing) => listing.trait === '3'))
   }
 
   const handleGetOreList = async () => {
-    const data = await getListingIDs()
+    const data = await getListingIDs(false)
     setListItemsBoard(data.filter((listing) => listing.trait === '2'))
+  }
+
+  const handleGetMyList = async () => {
+    const data = await getListingIDs(true)
+    const myOreList = data?.filter(
+      (item) => item?.trait === '2' || item?.trait === '3'
+    )
+    setListItemsBoard(myOreList)
   }
 
   useEffect(() => {
@@ -138,8 +146,19 @@ export default function WorkShop() {
       setIsItemBoard(item)
       if (item === 'ore') {
         handleGetOreList()
-      } else {
+      } else if (item === 'hammer') {
         handleGetHammerList()
+      } else {
+        handleGetMyList()
+      }
+    },
+    []
+  )
+  const handleCancelItem = useCallback(
+    (item) => async () => {
+      const data = await cancelListingItem(item?.id)
+      if (data) {
+        handleGetMyList()
       }
     },
     []
@@ -149,7 +168,7 @@ export default function WorkShop() {
     if (listItemsBoard.slice(pageWorkShop * 5).length !== 0) {
       setPageWorkShop(pageWorkShop + 1)
     }
-  }, [pageWorkShop])
+  }, [listItemsBoard, pageWorkShop])
 
   const handlePreviousPage = useCallback(() => {
     if (pageWorkShop > 1) {
@@ -196,7 +215,14 @@ export default function WorkShop() {
             <div className={styles.navWorkShop}></div>
           </div>
           <div>
-            <Button className={`${styles.buyBtn} click-cursor`}></Button>
+            <Button
+              className={`${styles.buyButtonCustom} click-cursor`}
+              backgroundColor={'#52241E'}
+              onClick={handleSelectItemBoard('mine')}
+              _hover={{ bg: '#52241E' }}
+            >
+              <Text color={'#fff'}>My Workshop</Text>
+            </Button>
             <Button
               onClick={handleSelectItemBoard('ore')}
               className={`click-cursor ${styles.foodBtn}`}
@@ -282,10 +308,21 @@ export default function WorkShop() {
                                 </div>
                               </Td>
                               <Td sx={{ textAlign: 'center' }}>
-                                <Button
-                                  onClick={handleBuyItem(item)}
-                                  className={`${styles.buyBtnItem} click-cursor`}
-                                ></Button>
+                                {isItemBoard === 'mine' ? (
+                                  <Button
+                                    backgroundColor={'#1e4882'}
+                                    onClick={handleCancelItem(item)}
+                                    className={`${styles.customButton} click-cursor`}
+                                    _hover={{ bg: '#52241E' }}
+                                  >
+                                    <Text color={'#fff'}>Cancel</Text>
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    onClick={handleBuyItem(item)}
+                                    className={`${styles.buyBtnItem} click-cursor`}
+                                  ></Button>
+                                )}
                               </Td>
                             </Tr>
                           </>
