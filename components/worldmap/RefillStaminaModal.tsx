@@ -40,10 +40,15 @@ function RefillStaminaModal(props: Props) {
     onClose,
   } = useDisclosure()
   const [amountSushi, setAmountSushi] = useState(0)
-
+  const [success, setSuccess] = useState(false)
   const toast = useToast()
 
   const handleUseSushi = useCallback(async () => {
+    if (success) {
+      onClose()
+      setSuccess(false)
+      return
+    }
     try {
       onToggleLoading()
       const availableSushi = await fetchAmountItemByTrait(4)
@@ -78,11 +83,12 @@ function RefillStaminaModal(props: Props) {
           })
         }
       )
+      setSuccess(true)
     } catch (e) {
     } finally {
       onClose()
     }
-  }, [amountSushi, onClose, onToggleLoading, toast])
+  }, [amountSushi, onClose, onToggleLoading, success, toast])
 
   const handleChangeAmountSushi = useCallback((_: string, value: number) => {
     setAmountSushi(value)
@@ -121,54 +127,74 @@ function RefillStaminaModal(props: Props) {
               bgColor: '#F1D999',
             }}
           />
-          <ModalBody>
-            <Center mb={10}>
-              <Image
-                src="/images/inventory/sushi.png"
-                width={50}
-                height={50}
-                alt="sushi"
-              />
-            </Center>
-            <Center>
-              <Wrap align="center">
-                <WrapItem>
-                  <Text fontSize="md" color="white">
-                    AMOUNT
-                  </Text>
-                </WrapItem>
-                <WrapItem>
-                  <NumberInput
-                    color="white"
-                    onChange={handleChangeAmountSushi}
-                    min={0}
-                  >
-                    <NumberInputField
-                      backgroundColor="#2e1c0e"
-                      borderColor="#2e1c0e"
-                      borderRadius={20}
-                    />
-                    <NumberInputStepper borderRadius={20}>
-                      <NumberIncrementStepper
-                        backgroundColor="transparent"
+          {success && (
+            <ModalBody>
+              <Center mb={8}>
+                <Text fontSize="xl" color="white">
+                  SUCCESS !!
+                </Text>
+              </Center>
+              <Center>
+                <Text fontSize="md" color="white">
+                  You gain 50 Stamina Point !
+                </Text>
+              </Center>
+            </ModalBody>
+          )}
+          {!success && (
+            <ModalBody>
+              <Center mb={10}>
+                <Image
+                  src="/images/inventory/sushi.png"
+                  width={40}
+                  height={40}
+                  alt="sushi"
+                />
+              </Center>
+              <Center>
+                <Wrap align="center">
+                  <WrapItem>
+                    <Text fontSize="md" color="white">
+                      AMOUNT
+                    </Text>
+                  </WrapItem>
+                  <WrapItem>
+                    <NumberInput
+                      color="white"
+                      onChange={handleChangeAmountSushi}
+                      min={0}
+                    >
+                      <NumberInputField
+                        backgroundColor="#2e1c0e"
                         borderColor="#2e1c0e"
                         borderRadius={20}
                       />
-                      <NumberDecrementStepper
-                        backgroundColor="transparent"
-                        borderColor="#2e1c0e"
-                        borderRadius={20}
-                      />
-                    </NumberInputStepper>
-                  </NumberInput>
-                </WrapItem>
-              </Wrap>
-            </Center>
-          </ModalBody>
+                      <NumberInputStepper borderRadius={20}>
+                        <NumberIncrementStepper
+                          backgroundColor="transparent"
+                          borderColor="#2e1c0e"
+                          borderRadius={20}
+                        />
+                        <NumberDecrementStepper
+                          backgroundColor="transparent"
+                          borderColor="#2e1c0e"
+                          borderRadius={20}
+                        />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </WrapItem>
+                </Wrap>
+              </Center>
+            </ModalBody>
+          )}
           <ModalFooter alignItems="center" justifyContent="center">
             <Center>
-              <Button onClick={handleUseSushi} disabled={loading}>
-                USE
+              <Button
+                onClick={handleUseSushi}
+                disabled={loading}
+                colorScheme="yellow"
+              >
+                {success ? 'CONFIRM' : 'USE'}
               </Button>
             </Center>
           </ModalFooter>
