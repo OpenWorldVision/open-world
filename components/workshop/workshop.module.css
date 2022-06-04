@@ -210,10 +210,10 @@
 .backBtn {
   display: block;
   position: fixed;
-  top: 30px;
+  bottom: 30px;
   left: 35px;
-  width: 160px;
-  height: 50px;
+  width: 180px;
+  height: 60px;
   background-image: url('/images/professions/back-btn.webp');
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -222,6 +222,12 @@
 
 
 @media only screen and (max-width: 675px) {
+  .backBtn {
+    width: 110px !important;
+    height: 40px !important;
+    bottom: 20px;
+    left: 15px;
+  }
   .workShopContainer{
     overflow-y: scroll;
   }

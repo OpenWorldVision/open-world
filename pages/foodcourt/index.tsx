@@ -4,6 +4,7 @@ import styles from '@components/foodcourt/foodcourt.module.css'
 import { useCallback, useEffect, useState } from 'react'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import BuyerBoard from '@components/foodcourt/BuyerBoard'
+import Head from 'next/head'
 
 const listSushi = [
   {
@@ -148,6 +149,10 @@ export default function FoodCourt() {
   }, [])
 
   return (
+    <>
+    <Head>
+      <title>Foodcourt</title>
+    </Head>
     <div className={styles.foodCourtContainer}>
       <div className={styles.foodCourtBg}>
         <div className={styles.foodCourtTitleContainer}>
@@ -213,6 +218,7 @@ export default function FoodCourt() {
         </Link>
       </div>
     </div>
+  </>
 
   )
 } 

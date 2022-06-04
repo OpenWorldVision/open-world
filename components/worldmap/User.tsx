@@ -196,7 +196,7 @@ const UserCSS = styled.div({
     position: 'fixed',
     top: '30px',
     left: '50px',
-    zIndex: '2000',
+    zIndex: '999998',
     width: '200px',
     '@media(max-width: 720px)': {
       top: '10px',
