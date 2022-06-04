@@ -6,8 +6,14 @@ import { isProfessionExist, getProfile } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
+import { Spinner } from '@chakra-ui/react'
 
-export default function User() {
+type Props = {
+  balance: number
+}
+
+export default function User(props: Props) {
+  const { balance } = props
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
@@ -36,6 +42,7 @@ export default function User() {
     }
   }, [])
 
+
   useEffect(() => {
     getDataProfile()
   }, [])
@@ -43,7 +50,6 @@ export default function User() {
   const handleOpenTutorial = useCallback(() => {
     setIsOpenTutorial(true)
   }, [])
-
   return (
     <UserCSS>
       <div className="user-avatar">
@@ -59,9 +65,8 @@ export default function User() {
           }}
         >
           <img
-            src={`/images/profile/hero/${
-              profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
-            }.webp`}
+            src={`/images/profile/hero/${profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
+              }.webp`}
             alt="img"
           />
         </button>
@@ -72,12 +77,24 @@ export default function User() {
               <li
                 css={{
                   display: 'flex',
+                  alignItems: 'center'
                 }}
               >
                 <div style={{ width: '30px' }}>
                   <img src="./favicon.ico" alt="img" width={25} height={25} />
                 </div>
-                0.00 OPEN
+                {!balance && <Spinner
+                  sx={{ marginRight: '6px' }}
+                  thickness='5px'
+                  speed='0.65s'
+                  emptyColor='#745FFB'
+                  color='#E14C90'
+                  size='sm'
+                />}
+                {balance && <span style={{
+                  display: 'block',
+                  marginRight: '10px'
+                }}>{balance}</span>} OPEN
               </li>
               {/* Career : Openian or Supplier or BlackSmith */}
               <li>
@@ -160,6 +177,7 @@ export default function User() {
             isOpenUserInfo={isOpenUserInfo}
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             profile={profile}
+            balance={balance}
           />
         )}
         {profile === false && (

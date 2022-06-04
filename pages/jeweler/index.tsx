@@ -36,11 +36,11 @@ import {
 import { Spinner } from '@chakra-ui/react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 
-export default function Jeweler(props) {
+export default function Open(props) {
   const [modalLockedJewel, setModalLockedJewel] = useState(false)
   const [modalInfo, setModalInfo] = useState(false)
   const [modalLila, setModalLila] = useState(false)
-  const [modalJeweler, setModalJeweler] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
   const [modalDeposit, setModalDeposit] = useState(false)
   const [modalClaim, setModalClaim] = useState(false)
   const [modalWaitClaim, setModalWaitClaim] = useState(false)
@@ -71,8 +71,8 @@ export default function Jeweler(props) {
     setModalLila(false)
   }
 
-  const modalCloseJeweler = () => {
-    setModalJeweler(false)
+  const modalCloseOpen = () => {
+    setModalOpen(false)
   }
 
   const modalCloseDeposit = () => {
@@ -97,9 +97,9 @@ export default function Jeweler(props) {
         <title>{siteTitle}</title>
       </Head>
       <VStack>
-        <JewelerPage>
+        <OpenPage>
           <div>
-            <div className="container-jeweler">
+            <div className="container-Opener">
               <TransformWrapper
                 maxScale={2}
                 minScale={0.25}
@@ -110,7 +110,7 @@ export default function Jeweler(props) {
                 centerOnInit={true}
               >
                 <TransformComponent>
-                  <div className="jeweler container transform-component">
+                  <div className="Opener container transform-component">
                     <ButtonAnimate
                       top={185.868}
                       left={671.216}
@@ -119,12 +119,12 @@ export default function Jeweler(props) {
                     <ButtonAnimate
                       top={514.868}
                       left={656.216}
-                      contentButton="Jeweler"
+                      contentButton="Open"
                     />
                     <div className="info-info">
                       <button className="btn-info-info cursor-btn">
                         <img
-                          src="/images/jeweler/text_bubble_excl_mark.png"
+                          src="/images/Opener/text_bubble_excl_mark.png"
                           alt=""
                         />
                       </button>
@@ -138,21 +138,21 @@ export default function Jeweler(props) {
                       height={145}
                       top={246.027}
                       left={567.919}
-                      src="/images/jeweler/bank-desk3.png"
+                      src="/images/Opener/bank-desk3.png"
                     />
                     <TableLayout
                       width={178}
                       height={108}
                       top={604}
                       left={569.919}
-                      src="/images/jeweler/bank-desk2.png"
+                      src="/images/Opener/bank-desk2.png"
                     />
                     <TableLayout
                       width={214}
                       height={143}
                       top={600}
                       left={210.919}
-                      src="/images/jeweler/bank-desk3.png"
+                      src="/images/Opener/bank-desk3.png"
                     />
                     <button
                       onClick={() => {
@@ -162,9 +162,9 @@ export default function Jeweler(props) {
                     ></button>
                     <button
                       onClick={() => {
-                        setModalJeweler(true)
+                        setModalOpen(true)
                       }}
-                      className="layout-btn cursor-btn btn-jeweler"
+                      className="layout-btn cursor-btn btn-Opener"
                     ></button>
                     <button
                       onClick={() => {
@@ -220,7 +220,7 @@ export default function Jeweler(props) {
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
-                    Locked JEWEL Management
+                    Locked OPEN Management
                   </ModalHeader>
                   <ModalCloseButton
                     style={{ boxShadow: 'none' }}
@@ -236,7 +236,7 @@ export default function Jeweler(props) {
                           <div className="head">Manager Greg</div>
                           <div className="body">
                             Thank you for being a valued client! If you have
-                            locked JEWEL, I can assist you with transferring it
+                            locked OPEN, I can assist you with transferring it
                             to another wallet. I can only transfer the full
                             balance, so make sure you want to move everything!
                           </div>
@@ -244,42 +244,42 @@ export default function Jeweler(props) {
                         <div className="introduce">
                           <div>
                             This function will transfer all of your wallet and
-                            locked JEWEL from one wallet to another. You can use
+                            locked Open from one wallet to another. You can use
                             this function if your wallet has been compromised or
                             if you are moving to a hardware wallet.
                           </div>
                           <div>
                             You can only transfer the full balance of your
-                            locked JEWEL. Only wallets with active DeFi Kingdoms
-                            accounts may receive locked JEWEL.
+                            locked Open. Only wallets with active DeFi Kingdoms
+                            accounts may receive locked Open.
                           </div>
                           <div>
                             All unclaimed rewards should be claimed prior to
-                            transfer. Additionally, all JEWEL in the
+                            transfer. Additionally, all Open in the
                             transferring wallet will be moved to the new wallet
                             when using this feature. If you do not wish to move
-                            your unlocked JEWEL, deposit it with the Jeweler
-                            before using this transfer option. xJEWEL will not
+                            your unlocked Open, deposit it with the Open
+                            before using this transfer option. xOpen will not
                             be transferred and will need to be sent manually.
                           </div>
                           <div>
                             The recipient wallet address must be different from
                             the current wallet. If you try to transfer locked
-                            JEWEL to the same wallet that it is already in, it
+                            Open to the same wallet that it is already in, it
                             will be lost forever.
                           </div>
                         </div>
                         <div className="total-locked">
-                          <p>Total Locked JEWEL</p>
+                          <p>Total Locked Open</p>
                           <p>
-                            <img src="/images/jeweler/cute-jewel.png" alt="" />
+                            <img src="/images/Opener/cute-Open.png" alt="" />
                             0.00
                           </p>
                         </div>
                         <div className="total-wallet">
-                          <p>Total Locked JEWEL</p>
+                          <p>Total Locked Open</p>
                           <p>
-                            <img src="/images/jeweler/cute-jewel.png" alt="" />
+                            <img src="/images/Opener/cute-Open.png" alt="" />
                             0.00
                           </p>
                         </div>
@@ -308,7 +308,7 @@ export default function Jeweler(props) {
                               way to cancel or undo this transfer, so be sure
                               that you entered the correct wallet address and
                               that it is not the same wallet that contains the
-                              locked JEWEL that you are attempting to move.
+                              locked Open that you are attempting to move.
                             </p>
                             <input
                               onChange={handleChangeInput}
@@ -320,7 +320,7 @@ export default function Jeweler(props) {
                             disabled={checkButtonTransferLock}
                             className={`btn-transfer-locked cursor-btn ${addClassOpacityButton}`}
                           >
-                            TRANSFER LOCKED JEWEL
+                            TRANSFER LOCKED Open
                           </button>
                         </div>
                       </div>
@@ -368,10 +368,10 @@ export default function Jeweler(props) {
                         style={{ height: '100%' }}
                       >
                         <div className="border_content">
-                          <div className="head">Jeweler Micah</div>
+                          <div className="head">Open Micah</div>
                           <div className="body">
                             Welcome to Adelyn, the greatest city in Serendale!
-                            You can deposit your JEWEL here at the Jeweler, and
+                            You can deposit your Open here at the Open, and
                             visit the Marketplace to trade tokens. Lazarus the
                             Druid is also there; he can help you acquire seeds
                             which you can plant in the Gardens to participate in
@@ -381,7 +381,7 @@ export default function Jeweler(props) {
                             You can find Heroes for sale in the Tavern, or visit
                             the Portal to Summon new ones. Again, welcome, and
                             enjoy your stay! If you need more information about
-                            anything you find here, visit docs.defikingdoms.com
+                            anything you find here, visit docs.com
                             to learn more.
                           </div>
                         </div>
@@ -427,7 +427,7 @@ export default function Jeweler(props) {
                     <div className="modal__body__container">
                       <div className="modal_body_content">
                         <i className="title">* mumble mumble *</i>
-                        <div>So many bills... not enough JEWEL...</div>
+                        <div>So many bills... not enough Open...</div>
                       </div>
                     </div>
                   </ModalBody>
@@ -435,8 +435,8 @@ export default function Jeweler(props) {
               </Modal>
               <Modal
                 blockScrollOnMount={false}
-                isOpen={modalJeweler}
-                onClose={modalCloseJeweler}
+                isOpen={modalOpen}
+                onClose={modalCloseOpen}
               >
                 <ModalOverlay
                   style={{
@@ -460,7 +460,7 @@ export default function Jeweler(props) {
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
-                    Jeweler
+                    Open
                   </ModalHeader>
                   <ModalCloseButton
                     style={{ boxShadow: 'none' }}
@@ -468,12 +468,12 @@ export default function Jeweler(props) {
                   />
                   <ModalBody>
                     <div className="modal__body__container">
-                      <div className="modal_body_content modal-jeweler">
-                        <div className="popup-jeweler-head">
+                      <div className="modal_body_content modal-Opener">
+                        <div className="popup-Opener-head">
                           <div className="border_content">
-                            <h1>Jeweler Ian</h1>
+                            <h1>Open Ian</h1>
                             <p>
-                              You can stake your JEWEL tokens here. We provide
+                              You can stake your Open tokens here. We provide
                               rewards for those who do. You may withdraw at any
                               time.
                             </p>
@@ -505,41 +505,41 @@ export default function Jeweler(props) {
                             </button>
                           </div>
                         </div>
-                        <div className="popup-jeweler-body">
+                        <div className="popup-Opener-body">
                           <div className="TVL">
                             <span>🏆</span>TVL:<span>$539,932,790</span>
                           </div>
                           <div className="dex-fee">
                             <div className="dex-fee-head">
-                              <div>Jeweler - DEX fee sharing</div>
+                              <div>Open - DEX fee sharing</div>
                               <div>
-                                Stake your JEWEL tokens and earn 1/3rd of
+                                Stake your Open tokens and earn 1/3rd of
                                 generated trading fees.
                               </div>
                             </div>
                             <div className="dex-fee-body bordered-box bordered-box-hero">
-                              <div className="jeweler-balance">
-                                Your xJEWEL Balance
-                                <div>(1 xJEWEL = 1.716 JEWEL)</div>
+                              <div className="Opener-balance">
+                                Your xOpen Balance
+                                <div>(1 xOpen = 1.716 Open)</div>
                               </div>
                               <div className="quantity">
                                 <img
-                                  src="/images/jeweler/mid-jewel.png"
+                                  src="/images/Opener/mid-Open.png"
                                   alt=""
                                 />
                                 <div>0.0000</div>
                               </div>
                               <div className="your-token">
-                                You have <span>0.00</span> JEWEL tokens
-                                available to deposit to the Jeweler.
+                                You have <span>0.00</span> Open tokens
+                                available to deposit to the Open.
                               </div>
                             </div>
                           </div>
-                          <div className="popup-jeweler-body-msg">
+                          <div className="popup-Opener-body-msg">
                             <span>💡</span>
-                            Your JEWEL tokens grow as the xJEWEL multiplier goes
+                            Your Open tokens grow as the xOpen multiplier goes
                             up. Tokens are 100% unlocked when they are claimed.
-                            The Jeweler does not have any withdrawal fees.
+                            The Open does not have any withdrawal fees.
                           </div>
                         </div>
                       </div>
@@ -656,7 +656,7 @@ export default function Jeweler(props) {
                               </button>
                             </div>
                             <button
-                              className="cursor-btn btn-deposit-jewel"
+                              className="cursor-btn btn-deposit-Open"
                               style={{
                                 fontSize: '1.3rem',
                                 display: 'flex',
@@ -668,14 +668,14 @@ export default function Jeweler(props) {
                             >
                               <img
                                 style={{ width: '22px', marginRight: '10px' }}
-                                src="/images/jeweler/JEWEL.png"
+                                src="/images/Opener/Open.png"
                               />
-                              JEWEL
+                              Open
                             </button>
                           </div>
                         </div>
                         <div
-                          className="quantity-jeweler"
+                          className="quantity-Opener"
                           style={{
                             textAlign: 'center',
                             padding: '20px 0',
@@ -683,7 +683,7 @@ export default function Jeweler(props) {
                             color: 'rgb(195, 197, 203)',
                           }}
                         >
-                          (~<span>000</span>xJEWEL)
+                          (~<span>000</span>xOpen)
                         </div>
                         <div
                           className="btn-deposit-container"
@@ -827,7 +827,7 @@ export default function Jeweler(props) {
                             }}
                           >
                             When you claim rewards, collected LP fees will be
-                            used to market buy JEWEL.
+                            used to market buy Open.
                           </p>
 
                           <p
@@ -837,13 +837,13 @@ export default function Jeweler(props) {
                               marginTop: '30px',
                             }}
                           >
-                            The purchased JEWEL tokens will then be distributed
-                            to the Jeweler stakers as a reward.
+                            The purchased Open tokens will then be distributed
+                            to the Open stakers as a reward.
                           </p>
                         </div>
                       </div>
                       <button
-                        className={'cursor-btn btn-claim-jeweler'}
+                        className={'cursor-btn btn-claim-Opener'}
                         onClick={() => {
                           setModalWaitClaim(true), setModalClaim(false)
                         }}
@@ -892,7 +892,7 @@ export default function Jeweler(props) {
                   }}
                 >
                   <ModalHeader style={{ background: 'rgba(0, 0, 0, 0.9)' }}>
-                    Jeweler
+                    Open
                   </ModalHeader>
                   <ModalCloseButton
                     style={{ boxShadow: 'none' }}
@@ -927,7 +927,7 @@ export default function Jeweler(props) {
                             marginTop: '30px',
                           }}
                         >
-                          Claiming Jeweler rewards
+                          Claiming Open rewards
                         </div>
                         <div
                           style={{
@@ -1051,7 +1051,7 @@ export default function Jeweler(props) {
                               </button>
                             </div>
                             <button
-                              className="cursor-btn btn-deposit-jewel"
+                              className="cursor-btn btn-deposit-Open"
                               style={{
                                 fontSize: '1.3rem',
                                 display: 'flex',
@@ -1063,9 +1063,9 @@ export default function Jeweler(props) {
                             >
                               <img
                                 style={{ width: '22px', marginRight: '10px' }}
-                                src="/images/jeweler/JEWEL.png"
+                                src="/images/Opener/Open.png"
                               />
-                              JEWEL
+                              Open
                             </button>
                           </div>
                         </div>
@@ -1077,7 +1077,7 @@ export default function Jeweler(props) {
                             color: 'rgb(195, 197, 203)',
                           }}
                         >
-                          (~<span>000</span>xJEWEL)
+                          (~<span>000</span>xOpen)
                         </div>
                         <div
                           style={{
@@ -1105,14 +1105,14 @@ export default function Jeweler(props) {
               </Modal>
             </div>
           </div>
-        </JewelerPage>
+        </OpenPage>
       </VStack>
     </Layout>
   )
 }
 
-const JewelerPage = styled.div({
-  '.container-jeweler': {
+const OpenPage = styled.div({
+  '.container-Opener': {
     backgroundColor: '#131313',
     height: '100vh',
     width: '100vw',
@@ -1123,9 +1123,9 @@ const JewelerPage = styled.div({
     alignItems: 'center',
     cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
     overflow: 'hidden',
-    '.jeweler': {
+    '.Opener': {
       position: 'absolute',
-      backgroundImage: 'url(/images/jeweler/bank-bg.png)',
+      backgroundImage: 'url(/images/Opener/bank-bg.png)',
       minWidth: '1318px',
       height: '992.97px',
       zIndex: '1',
@@ -1165,7 +1165,7 @@ const JewelerPage = styled.div({
         left: '629.176px',
         top: '180.672px',
       },
-      '.btn-jeweler': {
+      '.btn-Opener': {
         left: '614.176px',
         top: '514px',
       },
