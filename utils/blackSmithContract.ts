@@ -126,7 +126,6 @@ export const fetchAmountItemByTrait = async (hammer: number) => {
     const listFilteredNumber = listFiltered.map((item) => Number(item))
     return listFilteredNumber
   } catch (err) {
-    console.log(err)
     return false
   }
 }
@@ -139,7 +138,6 @@ export const makeHammer = async (listOre: Array<number>) => {
     await contract.methods.makeMultiHammer(listOre).send({ from: accounts[0] })
     return true
   } catch (err) {
-    console.log(err)
     return false
   }
 }
@@ -165,7 +163,6 @@ export const sellHammer = async (arrayHammer: Array<number>, price: number) => {
       .send({ from: accounts[0] })
     return true
   } catch (err) {
-    console.log(err)
     return false
   }
 }

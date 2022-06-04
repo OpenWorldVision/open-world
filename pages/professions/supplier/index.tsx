@@ -68,7 +68,6 @@ function Supplier() {
       setIsLoading(true)
       const listSushiSell = []
       listSushiSell.push(parseInt(listSushi[0]))
-      console.log('21213', listSushiSell)
       const data = await sellSushi(listSushiSell, valueSushi)
       if (data) {
         setTypeModal(TYPE_OF_MODAL.FINISH)
