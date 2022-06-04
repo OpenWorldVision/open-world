@@ -59,7 +59,7 @@ const NotFoundPage = styled.div({
     height: '100vh',
     overflow: 'hidden',
     position: 'relative',
-    zIndex: '10000',
+    zIndex: '999999',
     '.world_map': {
       position: 'absolute',
       minWidth: '40960px',

@@ -6,12 +6,11 @@ import User from '@components/worldmap/User'
 import Entry from '@components/entry/Entry'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import BtnWorldMap from './worldmap/BtnWorldMap'
-import { getWeb3Client } from '@lib/web3'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import LoadingModal from './LoadingModal'
 import { motion } from 'framer-motion'
+import { getBalanceOpen } from 'utils/checkBalanceOpen'
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -24,6 +23,7 @@ const variants = {
 export default function Layout({ children, home }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [balance, setBalance] = useState(null)
 
   const dispatch = useDispatch()
   const isConnected = useSelector((state: any) => {
@@ -33,9 +33,16 @@ export default function Layout({ children, home }) {
   const isProfileExist = useSelector((state: any) => {
     return state.ProfileStore.isConnected
   })
-  
+
+  const getBalance = async () => {
+    const balance = await getBalanceOpen()
+    
+    setBalance(balance)
+  }
+
   const [currentURL, setCurrentURL] = useState('')
   useEffect(() => {
+    getBalance()
     setCurrentURL(window.location.href)
     if(!isProfileExist){
       dispatch(updateIsConnected({ isConnected: false }))
@@ -48,30 +55,6 @@ export default function Layout({ children, home }) {
       setIsLoading(false)
     })
   }, [])
-
-  const handleBackToWorldMap = () => {
-    setCurrentURL('')
-  }
-
-  const checkCurrentPage = () => {
-    const isArena = currentURL.includes('battleArena')
-    const isCastle = currentURL.includes('castle')
-    const isFoodCourt = currentURL.includes('foodCourt')
-    const isMarketPlace = currentURL.includes('marketplace')
-    const isProfessions = currentURL.includes('professions')
-    const isWorkshop = currentURL.includes('workshop')
-    if (
-      // isArena ||
-      // isFoodCourt ||
-      // isMarketPlace ||
-      isCastle
-      // isProfessions
-      // isWorkshop
-    ) {
-      return <BtnWorldMap backToWorldMap={handleBackToWorldMap} />
-    }
-  }
-
   return (
     <div
       style={{
@@ -111,10 +94,9 @@ export default function Layout({ children, home }) {
           {!window.location.href.includes('market') && (
             <>
               <Menu />
-              <User />
+              <User balance={balance}/>
             </>
           )}
-          {checkCurrentPage()}
         </motion.main>
       )}
       {!home && (

@@ -8,7 +8,7 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  min-width: 1568px;
+  min-width: 1858px;
   background-color: #131313;
 }
 
@@ -29,31 +29,31 @@
 .backBtn {
   display: block;
   position: absolute;
-  top: 30px;
+  bottom: 30px;
   left: 35px;
-  width: 160px;
-  height: 50px;
+  width: 180px;
+  height: 60px;
   background-image: url('/images/professions/back-btn.webp');
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
-.sellHammer{
+.sellHammer {
   background-image: url('/images/professions/blacksmith/sell-hammer.png') !important;
-  background-repeat: no-repeat  !important;
-  background-size: 100% 100%  !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
   background-color: transparent !important;
   /* background-position: center center; */
-  height: 45px  !important;
-  width: 200px  !important;
+  height: 45px !important;
+  width: 200px !important;
   /* left: 330px; */
-  left: 30%  !important;
+  left: 30% !important;
   bottom: 23% !important;
   /* bottom: 160px; */
   position: absolute !important;
 }
 
-.sellHammer::before{
+.sellHammer::before {
   content: '';
   position: absolute;
   bottom: -150px;
@@ -61,7 +61,7 @@
   height: 200px;
 }
 
-.forgeHammer{
+.forgeHammer {
   background-image: url('/images/professions/blacksmith/forge-hammer.png') !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
@@ -76,7 +76,7 @@
   position: absolute !important;
 }
 
-.forgeHammer::before{
+.forgeHammer::before {
   content: '';
   position: absolute;
   bottom: -200px;
@@ -174,8 +174,11 @@
   }
 }
 
-@media (max-width: 1857px) {
-  .blackSmithContainer {
-    width: 1858px;
+@media (max-width: 767px) {
+  .backBtn {
+    width: 110px !important;
+    height: 40px !important;
+    bottom: 20px;
+    left: 15px;
   }
 }
