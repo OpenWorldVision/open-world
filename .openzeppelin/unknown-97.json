@@ -8091,6 +8091,625 @@
           }
         }
       }
+    },
+    "3eff66d9188962b67f48e0b3203d0b75a7a24e6ee988c7811621c44895a5c124": {
+      "address": "0x623a1FCffAD6978f5a36B1092761e3F74074b151",
+      "txHash": "0x1dd55a6d3c284bcc20412715e82032c2540171f6aa442c886e734902011724c8",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)5464_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "Profession",
+            "label": "openianFishingQuest",
+            "type": "t_mapping(t_address,t_struct(Quest)3601_storage)",
+            "src": "Profession.sol:16"
+          },
+          {
+            "contract": "Profession",
+            "label": "openianMiningQuest",
+            "type": "t_mapping(t_address,t_struct(Quest)3601_storage)",
+            "src": "Profession.sol:17"
+          },
+          {
+            "contract": "Profession",
+            "label": "fishingDuration",
+            "type": "t_uint256",
+            "src": "Profession.sol:19"
+          },
+          {
+            "contract": "Profession",
+            "label": "miningDuration",
+            "type": "t_uint256",
+            "src": "Profession.sol:20"
+          },
+          {
+            "contract": "Profession",
+            "label": "fishingStaminaRequire",
+            "type": "t_uint256",
+            "src": "Profession.sol:22"
+          },
+          {
+            "contract": "Profession",
+            "label": "miningStaminaRequire",
+            "type": "t_uint256",
+            "src": "Profession.sol:23"
+          },
+          {
+            "contract": "Profession",
+            "label": "fishRequireMakeSushi",
+            "type": "t_uint256",
+            "src": "Profession.sol:25"
+          },
+          {
+            "contract": "Profession",
+            "label": "oreRequireMakeHammer",
+            "type": "t_uint256",
+            "src": "Profession.sol:26"
+          },
+          {
+            "contract": "Profession",
+            "label": "item",
+            "type": "t_contract(Item)627",
+            "src": "Profession.sol:31"
+          },
+          {
+            "contract": "Profession",
+            "label": "profiles",
+            "type": "t_contract(Profiles)5424",
+            "src": "Profession.sol:32"
+          }
+        ],
+        "types": {
+          "t_mapping(t_address,t_struct(Quest)3601_storage)": {
+            "label": "mapping(address => struct Profession.Quest)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_struct(Quest)3601_storage": {
+            "label": "struct Profession.Quest",
+            "members": [
+              {
+                "label": "startTime",
+                "type": "t_uint256"
+              },
+              {
+                "label": "finish",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_contract(Item)627": {
+            "label": "contract Item"
+          },
+          "t_contract(Profiles)5424": {
+            "label": "contract Profiles"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)5464_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)5464_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)8531_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)8531_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)8266_storage"
+              }
+            ]
+          },
+          "t_struct(Set)8266_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "489929fe512c266b6352d128021a3a0c23ced40d8b10f3cdfe0ed31b94e41f6e": {
+      "address": "0xb4dCeF2cBf0D6137e06095C4e93b387859a8E857",
+      "txHash": "0x0acdc2b87cdd19fdb02b3d64140d4c59eb99985822bbc43703636dfa6b90d829",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)5464_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "Profiles",
+            "label": "addressToIndex",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "Profile.sol:11"
+          },
+          {
+            "contract": "Profiles",
+            "label": "nameToIndex",
+            "type": "t_mapping(t_string_memory_ptr,t_uint256)",
+            "src": "Profile.sol:12"
+          },
+          {
+            "contract": "Profiles",
+            "label": "addresses",
+            "type": "t_array(t_address)dyn_storage",
+            "src": "Profile.sol:13"
+          },
+          {
+            "contract": "Profiles",
+            "label": "heroesNftContract",
+            "type": "t_contract(HeroCore)400",
+            "src": "Profile.sol:15"
+          },
+          {
+            "contract": "Profiles",
+            "label": "minLength",
+            "type": "t_uint8",
+            "src": "Profile.sol:17"
+          },
+          {
+            "contract": "Profiles",
+            "label": "maxLength",
+            "type": "t_uint8",
+            "src": "Profile.sol:18"
+          },
+          {
+            "contract": "Profiles",
+            "label": "maxPic",
+            "type": "t_uint8",
+            "src": "Profile.sol:19"
+          },
+          {
+            "contract": "Profiles",
+            "label": "requireBalanceProfession",
+            "type": "t_uint256",
+            "src": "Profile.sol:20"
+          },
+          {
+            "contract": "Profiles",
+            "label": "governanceToken",
+            "type": "t_address",
+            "src": "Profile.sol:21"
+          },
+          {
+            "contract": "Profiles",
+            "label": "profiles",
+            "type": "t_mapping(t_uint256,t_struct(Profile)4316_storage)",
+            "src": "Profile.sol:50"
+          },
+          {
+            "contract": "Profiles",
+            "label": "points",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "src": "Profile.sol:52"
+          },
+          {
+            "contract": "Profiles",
+            "label": "timestampStamina",
+            "type": "t_mapping(t_address,t_uint256)",
+            "src": "Profile.sol:59"
+          }
+        ],
+        "types": {
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_string_memory_ptr,t_uint256)": {
+            "label": "mapping(string => uint256)"
+          },
+          "t_string_storage": {
+            "label": "string"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_contract(HeroCore)400": {
+            "label": "contract HeroCore"
+          },
+          "t_uint8": {
+            "label": "uint8"
+          },
+          "t_mapping(t_uint256,t_struct(Profile)4316_storage)": {
+            "label": "mapping(uint256 => struct Profiles.Profile)"
+          },
+          "t_struct(Profile)4316_storage": {
+            "label": "struct Profiles.Profile",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_uint256"
+              },
+              {
+                "label": "owner",
+                "type": "t_address"
+              },
+              {
+                "label": "name",
+                "type": "t_string_storage"
+              },
+              {
+                "label": "created",
+                "type": "t_uint64"
+              },
+              {
+                "label": "picId",
+                "type": "t_uint8"
+              },
+              {
+                "label": "heroId",
+                "type": "t_uint256"
+              },
+              {
+                "label": "set",
+                "type": "t_bool"
+              },
+              {
+                "label": "profession",
+                "type": "t_enum(Profession)4297"
+              },
+              {
+                "label": "stamina",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_enum(Profession)4297": {
+            "label": "enum Profiles.Profession",
+            "members": [
+              "UNKNOWN",
+              "OPENER",
+              "SUPPLIER",
+              "BLACKSMITH"
+            ]
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)5464_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)5464_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)8531_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)8531_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)8266_storage"
+              }
+            ]
+          },
+          "t_struct(Set)8266_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "9bb6fe60c7c1a8b748510153d605cd44a339ff44c06670bd1469c4f68c418246": {
+      "address": "0x4b91780210396Af8176cBfc94BBb811cDBB94Ec3",
+      "txHash": "0x46dea95587073822627f38e0c69e31f3aef42cb86858e0b498fe2cab78d8f813",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)5485_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "Profession",
+            "label": "openianFishingQuest",
+            "type": "t_mapping(t_address,t_struct(Quest)3601_storage)",
+            "src": "Profession.sol:16"
+          },
+          {
+            "contract": "Profession",
+            "label": "openianMiningQuest",
+            "type": "t_mapping(t_address,t_struct(Quest)3601_storage)",
+            "src": "Profession.sol:17"
+          },
+          {
+            "contract": "Profession",
+            "label": "fishingDuration",
+            "type": "t_uint256",
+            "src": "Profession.sol:19"
+          },
+          {
+            "contract": "Profession",
+            "label": "miningDuration",
+            "type": "t_uint256",
+            "src": "Profession.sol:20"
+          },
+          {
+            "contract": "Profession",
+            "label": "fishingStaminaRequire",
+            "type": "t_uint256",
+            "src": "Profession.sol:22"
+          },
+          {
+            "contract": "Profession",
+            "label": "miningStaminaRequire",
+            "type": "t_uint256",
+            "src": "Profession.sol:23"
+          },
+          {
+            "contract": "Profession",
+            "label": "fishRequireMakeSushi",
+            "type": "t_uint256",
+            "src": "Profession.sol:25"
+          },
+          {
+            "contract": "Profession",
+            "label": "oreRequireMakeHammer",
+            "type": "t_uint256",
+            "src": "Profession.sol:26"
+          },
+          {
+            "contract": "Profession",
+            "label": "item",
+            "type": "t_contract(Item)627",
+            "src": "Profession.sol:31"
+          },
+          {
+            "contract": "Profession",
+            "label": "profiles",
+            "type": "t_contract(Profiles)5445",
+            "src": "Profession.sol:32"
+          }
+        ],
+        "types": {
+          "t_mapping(t_address,t_struct(Quest)3601_storage)": {
+            "label": "mapping(address => struct Profession.Quest)"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_struct(Quest)3601_storage": {
+            "label": "struct Profession.Quest",
+            "members": [
+              {
+                "label": "startTime",
+                "type": "t_uint256"
+              },
+              {
+                "label": "finish",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_contract(Item)627": {
+            "label": "contract Item"
+          },
+          "t_contract(Profiles)5445": {
+            "label": "contract Profiles"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)5485_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_struct(RoleData)5485_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)8552_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)8552_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)8287_storage"
+              }
+            ]
+          },
+          "t_struct(Set)8287_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
     }
   }
 }

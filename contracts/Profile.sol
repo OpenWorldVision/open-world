@@ -348,16 +348,6 @@ contract Profiles is AccessControlUpgradeable {
     );
   }
 
-  function getStaminaByAddress(address profileAddress)
-    public
-    view
-    returns (uint256 stamina)
-  {
-    require(profileExists(profileAddress), 'no profile found');
-    Profile memory profile = profiles[addressToIndex[profileAddress]];
-    return profile.stamina;
-  }
-
   /// @dev Gets the Profile by name.
   function getProfileByName(string memory name)
     public
@@ -432,5 +422,26 @@ contract Profiles is AccessControlUpgradeable {
       return 0;
     }
     return MAX_STAMINA.sub(diff);
+  }
+
+  function getStaminaTimestamp(address _account)
+    public
+    view
+    returns (uint256 _timestamp)
+  {
+    _timestamp = timestampStamina[_account];
+    if (_timestamp == 0) {
+      require(profileExists(_account), 'no profile found');
+      Profile memory profile = profiles[addressToIndex[_account]];
+      _timestamp = profile.created;
+    }
+  }
+
+  function setStaminaTimestamp(address _account, uint256 _timestamp) public {
+    require(hasRole(PROFESSION_OPERATOR, msg.sender), 'Access denied');
+    if (_timestamp > block.timestamp) {
+      _timestamp = block.timestamp;
+    }
+    timestampStamina[_account] = _timestamp;
   }
 }

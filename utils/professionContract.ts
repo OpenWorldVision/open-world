@@ -172,5 +172,15 @@ export const finishMining = async () => {
     return null
   }
 }
-
-// Sell
+export async function refillStamina(sushiIds: string[]) {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+  try {
+    const data = await contract.methods
+      .refillStamina(accounts[0], sushiIds)
+      .send({ from: accounts[0] })
+    return data
+  } catch (error) {
+    return null
+  }
+}

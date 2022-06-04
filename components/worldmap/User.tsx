@@ -6,7 +6,9 @@ import { getProfile, getStamina } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
-import { Spinner } from '@chakra-ui/react'
+import Image from 'next/image'
+import { Button, useDisclosure, Spinner } from '@chakra-ui/react'
+import RefillStaminaModal from './RefillStaminaModal'
 
 type Props = {
   balance: number
@@ -14,6 +16,8 @@ type Props = {
 
 export default function User(props: Props) {
   const { balance } = props
+
+  const { isOpen, onToggle } = useDisclosure()
   const [isOpenAvatar, setIsOpenAvatar] = useState(false)
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
@@ -156,6 +160,7 @@ export default function User(props: Props) {
                   Stamina Point:
                 </div>
                 <div>{staminaPoint}/100</div>
+                <Button onClick={onToggle}>+</Button>
               </li>
             </ul>
             <button
@@ -205,6 +210,7 @@ export default function User(props: Props) {
             isOpenTutorial={isOpenTutorial}
           />
         )}
+        <RefillStaminaModal isOpen={isOpen} onToggle={onToggle} />
       </div>
     </UserCSS>
   )

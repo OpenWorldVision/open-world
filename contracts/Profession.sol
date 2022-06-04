@@ -44,7 +44,7 @@ contract Profession is AccessControlUpgradeable {
   function startFishing() public returns (bool) {
     (uint256 startTime, ) = getFishingQuest(msg.sender);
     require(startTime == 0, 'Not finish last quest');
-    uint256 oldStamina = profiles.getStaminaByAddress(msg.sender);
+    uint256 oldStamina = profiles.getStamina(msg.sender);
     require(oldStamina >= fishingStaminaRequire, 'Not enough stamina');
     openianFishingQuest[msg.sender] = Quest(block.timestamp, false);
     return true;
@@ -65,7 +65,7 @@ contract Profession is AccessControlUpgradeable {
     item.burn(_idHammer1);
     (uint256 startTime, ) = getMiningQuest(msg.sender);
     require(startTime == 0, 'Not finish last quest');
-    uint256 oldStamina = profiles.getStaminaByAddress(msg.sender);
+    uint256 oldStamina = profiles.getStamina(msg.sender);
     require(oldStamina >= miningStaminaRequire, 'Not enough stamina');
     openianMiningQuest[msg.sender] = Quest(block.timestamp, false);
     return true;
@@ -134,5 +134,37 @@ contract Profession is AccessControlUpgradeable {
   function setFishingDuration(uint256 _duration) public {
     require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
     fishingDuration = _duration;
+  }
+
+  function refillStamina(address _account, uint256[] calldata _sushiIds)
+    public
+  {
+    require(_sushiIds.length > 0, 'No sushi use');
+    uint256 staminaRefill = 0;
+    for (uint256 index = 0; index < _sushiIds.length; index++) {
+      require(
+        item.ownerOf(_sushiIds[index]) == msg.sender &&
+          item.get(_sushiIds[index]) == 4,
+        'Invalid sushi'
+      );
+      item.burn(_sushiIds[index]);
+      staminaRefill += 50;
+    }
+    uint256 currentStamina = profiles.getStamina(_account);
+    uint256 secondPerStamina = 857;
+    uint256 timestamp = 0;
+    if (currentStamina == 0) {
+      timestamp = block.timestamp.sub(secondPerStamina.mul(staminaRefill));
+    } else {
+      timestamp = profiles.getStaminaTimestamp(_account).add(
+        secondPerStamina.mul(staminaRefill)
+      );
+    }
+    profiles.setStaminaTimestamp(_account, timestamp);
+  }
+
+  function setProfiles(address _profile) public {
+    require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
+    profiles = Profiles(_profile);
   }
 }
