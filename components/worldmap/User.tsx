@@ -6,6 +6,7 @@ import { isProfessionExist, getProfile } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
+import { Spinner } from '@chakra-ui/react'
 
 type Props = {
   balance: number
@@ -76,14 +77,24 @@ export default function User(props: Props) {
               <li
                 css={{
                   display: 'flex',
+                  alignItems: 'center'
                 }}
               >
                 <div style={{ width: '30px' }}>
                   <img src="./favicon.ico" alt="img" width={25} height={25} />
                 </div>
-                <span css={{
-                  marginRight: '5px'
-                }}>{balance}</span> OPEN
+                {!balance && <Spinner
+                  sx={{ marginRight: '6px' }}
+                  thickness='5px'
+                  speed='0.65s'
+                  emptyColor='#745FFB'
+                  color='#E14C90'
+                  size='sm'
+                />}
+                {balance && <span style={{
+                  display: 'block',
+                  marginRight: '10px'
+                }}>{balance}</span>} OPEN
               </li>
               {/* Career : Openian or Supplier or BlackSmith */}
               <li>

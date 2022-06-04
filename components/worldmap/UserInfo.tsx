@@ -1,5 +1,6 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import styled from '@emotion/styled'
+import { Spinner } from '@chakra-ui/react'
 
 export default function Menu({
   setIsOpenUserInfo,
@@ -8,7 +9,6 @@ export default function Menu({
   profile,
   balance
 }) {
-
   const handleCloseModalUserInfo = useCallback(
     (e: any) => {
       if (e.target !== e.currentTarget) return
@@ -63,16 +63,24 @@ export default function Menu({
             </div>
             <div>
               <img src="/favicon.ico" alt="img" />
-              <span style={{
+              {!balance && <Spinner
+                sx={{marginTop: '30px'}}
+                thickness='7px'
+                speed='0.65s'
+                emptyColor='#745FFB'
+                color='#E14C90'
+                size='xl'
+              />}
+              {balance && <span style={{
                 display: 'block',
                 margin: '0 auto'
-              }}>{balance}</span>
+              }}>{balance}</span>}
             </div>
             <div>
-              <div>
+              {/* <div>
                 <div>Balance:</div>
                 <div>0.00</div>
-              </div>
+              </div> */}
               {/* <div>
                 <div>Pending Rewards:</div>
                 <div>0.00</div>
