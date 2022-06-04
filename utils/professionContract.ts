@@ -30,13 +30,9 @@ export const startFishing = async () => {
   try {
     const contract = await getProfessionContract()
     const accounts = await web3.eth.getAccounts()
-    const sushiList = await fetchAmountItemByTrait(4)
-    if (sushiList?.length < 2) {
-      return
-    }
 
     const data = await contract.methods
-      .startFishing(sushiList[0], sushiList[1])
+      .startFishing()
       .send({ from: accounts[0] })
     return data
   } catch (e) {

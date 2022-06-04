@@ -12,7 +12,6 @@ function Openian() {
   const [isOpenMining, setIsOpenMining] = useState(false)
   const [isOpenStore, setIsOpenStore] = useState(false)
   const [isOpenFishing, setIsOpenFishing] = useState(false)
-  const [haveQuest, setHaveQuest] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [updateInventory, setUpdateInventory] = useState(false)
 

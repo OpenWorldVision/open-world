@@ -135,7 +135,7 @@ function RefillStaminaModal(props: Props) {
               </Center>
               <Center>
                 <Text fontSize="md" color="white">
-                  You gain 50 Stamina Point !
+                  You gain {amountSushi * 50} Stamina Point !
                 </Text>
               </Center>
             </ModalBody>
@@ -161,7 +161,8 @@ function RefillStaminaModal(props: Props) {
                     <NumberInput
                       color="white"
                       onChange={handleChangeAmountSushi}
-                      min={0}
+                      min={1}
+                      max={2}
                     >
                       <NumberInputField
                         backgroundColor="#2e1c0e"
@@ -183,6 +184,11 @@ function RefillStaminaModal(props: Props) {
                     </NumberInput>
                   </WrapItem>
                 </Wrap>
+              </Center>
+              <Center>
+                <Text color={'white'} fontSize="xs" mt={4}>
+                  * You can use max 2 sushi to recover stamina
+                </Text>
               </Center>
             </ModalBody>
           )}

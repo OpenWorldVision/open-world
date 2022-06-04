@@ -170,6 +170,7 @@ export default function User(props: Props) {
                       colorScheme="yellow"
                       leftIcon={<PlusSquareIcon />}
                       variant="solid"
+                      disabled={staminaPoint === 100}
                     >
                       Recover
                     </Button>

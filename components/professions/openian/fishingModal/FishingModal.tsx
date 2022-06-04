@@ -10,6 +10,7 @@ import {
 import styles from './fishingModal.module.css'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
+import { getStamina } from 'utils/profileContract'
 
 type Props = {
   isOpen: boolean
@@ -39,18 +40,20 @@ function FishingModal(props: Props) {
   const toast = useToast()
 
   const checkRequirementBeforeStartQuest = useCallback(async () => {
-    const sushiList = await fetchAmountItemByTrait(4)
-    if (sushiList?.length < 2) {
+    const stamina = await getStamina()
+
+    if (Number(stamina) < 50) {
       toast({
         title: 'Fishing Quest',
-        description: "You don't have enough sushi to start fishing quest",
+        description:
+          "Fishing quest requires at least 50 stamina to start. You don't have enough stamina to start fishing quest.",
         status: 'error',
         duration: 15000,
         isClosable: true,
       })
     }
 
-    return sushiList?.length > 2
+    return Number(stamina) >= 50
   }, [toast])
 
   const startQuest = useCallback(async () => {
