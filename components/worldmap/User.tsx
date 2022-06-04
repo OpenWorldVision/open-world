@@ -263,7 +263,7 @@ const UserCSS = styled.div({
       backgroundImage: 'url(/images/profile/frame.png)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '100% 100%',
-      backgroundColor: 'rgb(0,0,0,.6)',
+      backgroundColor: 'rgb(0,0,0,.8)',
       fontSize: '14px',
       color: 'white',
       padding: '35px 20px 10px 20px',
