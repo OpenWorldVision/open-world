@@ -216,12 +216,10 @@ export default function User(props: Props) {
             handleOpenTutorial={handleOpenTutorial}
           />
         )}
-        {isOpenTutorial && (
-          <ProfessionsTutorial
-            setIsOpenTutorial={setIsOpenTutorial}
-            isOpenTutorial={isOpenTutorial}
-          />
-        )}
+        <ProfessionsTutorial
+          onClose={() => setIsOpenTutorial(false)}
+          isOpenTutorial={isOpenTutorial}
+        />
         <RefillStaminaModal isOpen={isOpen} onToggle={onToggle} />
       </div>
     </UserCSS>

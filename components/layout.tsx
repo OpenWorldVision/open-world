@@ -34,7 +34,7 @@ export default function Layout({ children, home }) {
 
   const getBalance = async () => {
     const balance = await getBalanceOpen()
-    
+
     setBalance(balance)
   }
 
@@ -98,7 +98,7 @@ export default function Layout({ children, home }) {
           {!window.location.href.includes('market') && (
             <>
               <Menu />
-              <User balance={balance}/>
+              <User balance={balance} />
             </>
           )}
         </motion.main>

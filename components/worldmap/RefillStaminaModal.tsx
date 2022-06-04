@@ -110,6 +110,9 @@ function RefillStaminaModal(props: Props) {
           bgSize="100% 100%"
           bgColor="rgb(0,0,0,.8)"
           padding={8}
+          containerProps={{
+            zIndex: 9999,
+          }}
         >
           <ModalHeader alignItems="center" justifyContent="center">
             <Text fontSize="xl" color="white" textAlign="center">
