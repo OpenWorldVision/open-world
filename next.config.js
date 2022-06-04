@@ -5,7 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const withOptimizedImages = require('next-optimized-images')
 
-module.exports = withOptimizedImages({
+module.exports = withBundleAnalyzer({
   handleImages: ['jpeg', 'png', 'svg', 'webp'],
   images: {
     // limit of 25 deviceSizes values
