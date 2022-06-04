@@ -84,8 +84,8 @@ export const mintProfessionNFT = async (trait) => {
   const currentAddress = await window.ethereum.selectedAddress
 
   const allowance = await OpenWorld.allowance(
-    heroCoreContract.addressBSC,
-    currentAddress
+    currentAddress,
+    heroCoreContract.addressBSC
   )
 
   if (allowance < web3.utils.toWei('1000000', 'ether')) {
@@ -97,7 +97,7 @@ export const mintProfessionNFT = async (trait) => {
   try {
     await Herocore.mint(currentAddress, trait)
     return true
-  } catch {
+  } catch (e) {
     return false
   }
 }
