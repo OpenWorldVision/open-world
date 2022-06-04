@@ -6,8 +6,6 @@ import User from '@components/worldmap/User'
 import Entry from '@components/entry/Entry'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import BtnWorldMap from './worldmap/BtnWorldMap'
-import { getWeb3Client } from '@lib/web3'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import LoadingModal from './LoadingModal'
@@ -32,25 +30,23 @@ export default function Layout({ children, home }) {
     return state.IsConnectedStore.isConnected
   })
 
+  const isProfileExist = useSelector((state: any) => {
+    return state.ProfileStore.isConnected
+  })
+
   const getBalance = async () => {
     const balance = await getBalanceOpen()
     
     setBalance(balance)
   }
 
-  const checkConnect = async () => {
-    setCurrentURL(window.location.href)
-    const web3Client = await getWeb3Client()
-    if (!web3Client) {
-      dispatch(updateIsConnected({ isConnected: false }))
-    }
-  }
   const [currentURL, setCurrentURL] = useState('')
   useEffect(() => {
-    checkConnect()
     getBalance()
     setCurrentURL(window.location.href)
-
+    if(!isProfileExist){
+      dispatch(updateIsConnected({ isConnected: false }))
+    }
     router.events.on('routeChangeStart', () => {
       setIsLoading(true)
     })

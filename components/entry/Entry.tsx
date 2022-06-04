@@ -24,6 +24,7 @@ export default function Entry() {
   const [playSound, setPlaySound] = useState(false)
   const [nameOfChain, setNameOfChain] = useState('Binance Smart Chain')
   const [openModalAddWallet, setOpenModalAddWallet] = useState(false)
+  const [checkIsConnect, setCheckIsConnect] = useState(false)
 
   const dispatch = useDispatch()
   const isOpen = useSelector((state: any) => {
@@ -44,7 +45,7 @@ export default function Entry() {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
-                dispatch(updateIsConnected({ isConnected: true }))
+                setCheckIsConnect(true)
               })
               .catch(() => {
                 dispatch(updateIsConnected({ isConnected: false }))
@@ -53,14 +54,14 @@ export default function Entry() {
             window.ethereum
               .request({ method: 'eth_requestAccounts' })
               .then(() => {
-                dispatch(updateIsConnected({ isConnected: true }))
+                setCheckIsConnect(true)
                 window.ethereum
                   .request({
                     method: 'wallet_switchEthereumChain',
                     params: [{ chainId: '0x63564c40' }],
                   })
                   .then(() => {
-                    dispatch(updateIsConnected({ isConnected: true }))
+                    setCheckIsConnect(true)
                   })
                   .catch((error) => {
                     window.ethereum.request({
@@ -162,6 +163,12 @@ export default function Entry() {
     }
   }
 
+  const handleClickPlay = () => {
+    if (checkIsConnect) {
+      dispatch(updateIsConnected({ isConnected: true }))
+    }
+  }
+
   return (
     <>
       <Head>
@@ -178,9 +185,7 @@ export default function Entry() {
         <Button
           style={_styles.buttonStyle}
           className="click-cursor"
-          onClick={() => {
-            dispatch(updateIsOpenEntry({ isOpen: false }))
-          }}
+          onClick={handleClickPlay}
         >
           <Text style={_styles.buttonText}>PLAY</Text>
         </Button>
