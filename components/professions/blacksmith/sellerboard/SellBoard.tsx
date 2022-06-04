@@ -5,19 +5,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import NotificationSell from './NotificationSell'
 import { sellHammer, fetchAmountItemByTrait } from 'utils/blackSmithContract'
+import React from 'react'
 
 type Props = {
   toggleModal: (boolean) => void
+  toggleLoadingModal: (boolean) => void
+  isOpen: boolean
 }
 
 function SellModal(props: Props) {
-  const { toggleModal } = props
+  const { toggleModal, toggleLoadingModal, isOpen } = props
   const priceRef = useRef<HTMLInputElement>()
   const [price, setPrice] = useState(0)
   const [sellingAmount, setSellingAmount] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
 
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [checkSellHammer, setCheckSellHammer] = useState(false)
   const [isClickConfirm, setIsClickConfirm] = useState(false)
 
   const [listHammer, setListHammer] = useState([])
@@ -86,9 +89,21 @@ function SellModal(props: Props) {
 
   const handleConfirmSeller = async () => {
     if (price && sellingAmount) {
+      toggleLoadingModal(true)
+      const listSellHammer = listHammer.slice(0, sellingAmount)
+      const handleSellHammer = await sellHammer(listSellHammer, price)
+      if (handleSellHammer) {
+        toggleLoadingModal(false)
+        setCheckSellHammer(true)
+      }
+      else {
+        toggleLoadingModal(false)
+        setCheckSellHammer(false)
+      }
       setIsClickConfirm(true)
       setSellingAmount(0)
       setTotalAmount(0)
+      setPrice(0)
     }
   }
 
@@ -97,7 +112,7 @@ function SellModal(props: Props) {
   }, [])
 
   return (
-    <div className={`${styles.sellerBoardOverlay} overlay`}>
+    <div className={`${styles.sellerBoardOverlay} ${isOpen && styles.active} overlay`}>
       {!isClickConfirm && (
         <div className={styles.modal}>
           <h3 className={styles.sellBoard}>
@@ -161,7 +176,7 @@ function SellModal(props: Props) {
                 >
                   +
                 </Button>
-                <Button className="btn-chaka click-cursor">All</Button>
+                <Button onClick={hanleGetAllHammer} className="btn-chaka click-cursor">All</Button>
               </div>
             </div>
             <div className={styles.totalAmount}>
@@ -186,13 +201,11 @@ function SellModal(props: Props) {
       {isClickConfirm && (
         <NotificationSell
           hiddenNotification={hiddenNotification}
-          listHammer={listHammer}
-          sellingAmount={sellingAmount}
-          price={price}
+          checkSellHammer={checkSellHammer}
         />
       )}
     </div>
   )
 }
 
-export default SellModal
+export default React.memo(SellModal)

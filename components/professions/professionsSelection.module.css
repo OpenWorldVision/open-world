@@ -10,15 +10,15 @@
 }
 
 .npcCard.openianNPC {
-  background-image: url('/images/professions/npc/openianNPC.png');
+  background-image: url('/images/professions/npc/openianNPC.webp');
 }
 
 .npcCard.supplierNPC {
-  background-image: url('/images/professions/npc/supplierNPC.png');
+  background-image: url('/images/professions/npc/supplierNPC.webp');
 }
 
 .npcCard.smithNPC {
-  background-image: url('/images/professions/npc/smithNPC.png');
+  background-image: url('/images/professions/npc/smithNPC.webp');
 }
 
 .professionsText {
@@ -82,7 +82,7 @@
   left: 35px;
   width: 235px;
   height: 75px;
-  background-image: url('/images/professions/back-btn.png');
+  background-image: url('/images/professions/back-btn.webp');
   background-repeat: no-repeat;
   background-size: 100%;
 }

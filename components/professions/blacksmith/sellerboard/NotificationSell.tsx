@@ -6,58 +6,30 @@ import { sellHammer } from 'utils/blackSmithContract'
 
 type Props = {
   hiddenNotification: () => void
-  listHammer: Array<number>
-  sellingAmount: number
-  price: number
+  checkSellHammer: boolean
 }
 
 export default function NotificationSell(props: Props) {
-  const { hiddenNotification, listHammer, sellingAmount, price } = props
-  const [isLoading, setIsLoading] = useState(true)
-  const [checkSellHammer, setCheckSellHammer] = useState(false)
+  const { hiddenNotification, checkSellHammer} = props
+  
+  // const handleSellHammer = async () => {
+  //   const listSellHammer = listHammer.slice(0, sellingAmount)
+  //   const handleSellHammer = await sellHammer(listSellHammer, price)
+  //   setIsLoading(false)
+  //   if (handleSellHammer) {
+  //     setCheckSellHammer(true)
+  //   }
+  // }
 
-  const handleSellHammer = async () => {
-    const listSellHammer = listHammer.slice(0, sellingAmount)
-    const handleSellHammer = await sellHammer(listSellHammer, price)
-    setIsLoading(false)
-    if (handleSellHammer) {
-      setCheckSellHammer(true)
-    }
-  }
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 1000)
-    return () => {
-      clearTimeout(timer)
-    }
-    handleSellHammer()
-  }, [])
+  // useEffect(() => {
+  //   handleSellHammer()
+  // }, [])
 
   const handleConfirm = useCallback(() => {
     hiddenNotification()
   }, [])
   return (
     <>
-      <div className={`${!isLoading && style.loadedNotification}`}>
-        <div className={`overlay ${style.preLoaderNotification}`}>
-          <div className={style.preloaderFoldingCube}>
-            <div
-              className={`${style.preloaderCube1} ${style.preloaderCube}`}
-            ></div>
-            <div
-              className={`${style.preloaderCube2} ${style.preloaderCube}`}
-            ></div>
-            <div
-              className={`${style.preloaderCube4} ${style.preloaderCube}`}
-            ></div>
-            <div
-              className={`${style.preloaderCube3} ${style.preloaderCube}`}
-            ></div>
-          </div>
-        </div>
-      </div>
       <div className={style.notificationContainer}>
         <h3 className={style.notification}>
           <img

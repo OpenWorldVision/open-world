@@ -71,7 +71,7 @@ export default function Castle() {
               ></div>
               <div
                 className={`${style.castleBtn} ${style.landAuctionBtn} click-cursor`}
-                onClick={() => setIsLandAuctionModalOpen(true)}
+                // onClick={() => setIsLandAuctionModalOpen(true)}
               ></div>
               <Link href="/castle/shop">
                 <a

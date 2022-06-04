@@ -8,7 +8,7 @@ import Layout from '@components/layout'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import store, { persistor } from 'reducers'
-
+import { AnimatePresence } from 'framer-motion'
 
 // config.autoAddCss = false
 
@@ -23,7 +23,13 @@ export default function App({ Component, pageProps }) {
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <Layout home>
-              <Component {...pageProps} />
+              <AnimatePresence
+                exitBeforeEnter
+                initial={false}
+                onExitComplete={() => window.scrollTo(0, 0)}
+              >
+                <Component {...pageProps} />
+              </AnimatePresence>
             </Layout>
           </PersistGate>
         </Provider>

@@ -8,9 +8,11 @@
   "ignorePatterns": [
     "truffle-config.js",
     "**/migrations/*.js",
-    "hardhat.config.js"
+    "hardhat.config.js",
+    "next.config.js"
   ],
   "rules": {
-    "@typescript-eslint/ban-ts-comment": 0
+    "@typescript-eslint/ban-ts-comment": 0,
+    "no-console": 2
   }
 }

@@ -6,7 +6,7 @@
 }
 
 .foodCourtBg {
-  background-image: url('/images/foodcourt/background.png');
+  background-image: url('/images/foodcourt/background.webp');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 100vw;
@@ -214,7 +214,7 @@
   left: 35px;
   width: 160px;
   height: 50px;
-  background-image: url('/images/professions/back-btn.png');
+  background-image: url('/images/professions/back-btn.webp');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   /* z-index: 999998; */
