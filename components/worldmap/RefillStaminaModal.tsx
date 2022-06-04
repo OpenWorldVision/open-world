@@ -49,8 +49,8 @@ function RefillStaminaModal(props: Props) {
       const availableSushi = await fetchAmountItemByTrait(4)
       if (availableSushi?.length < amountSushi) {
         toast({
-          title: 'Refill stamina',
-          description: 'Not enough sushi',
+          title: 'Recover stamina',
+          description: 'Not enough sushi to recover stamina',
           duration: 10000,
           isClosable: true,
           status: 'warning',
@@ -63,7 +63,7 @@ function RefillStaminaModal(props: Props) {
         availableSushi?.slice(0, amountSushi).map((v) => `${v}`),
         (txHash) => {
           toast({
-            title: 'Refill stamina transaction is executing',
+            title: 'Recover stamina transaction is executing',
             description: (
               <Link
                 href={`https://testnet.bscscan.com/tx/${txHash}`}
