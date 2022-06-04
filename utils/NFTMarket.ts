@@ -49,7 +49,7 @@ type Listing = {
   seller: string
   trait: string
 }
-export async function getListingIDs(): Promise<Listing[]> {
+export async function getListingIDs(isMine: boolean): Promise<Listing[]> {
   const contract = await getNFTMarketContract()
   const accounts = await web3.eth.getAccounts()
   try {
@@ -68,7 +68,11 @@ export async function getListingIDs(): Promise<Listing[]> {
         })
       }
     })
-    return listFull
+    if (!isMine) {
+      return listFull.filter((item) => item?.seller !== accounts[0])
+    } else {
+      return listFull.filter((item) => item?.seller === accounts[0])
+    }
   } catch (error) {
     return []
   }
@@ -100,6 +104,21 @@ export const purchaseItems = async (
       ?.purchaseListing(nftAddress, transactionId, itemIds)
       .send({ from: accounts[0] })
     return result
+  } catch (error) {
+    return null
+  }
+}
+
+export const cancelListingItem = async (id: number) => {
+  try {
+    const contract = await getNFTMarketContract()
+    const accounts = await web3.eth.getAccounts()
+    const result = await contract.methods
+      ?.cancelListing(nftAddress, id)
+      .send({ from: accounts[0] })
+    if (result) {
+      return result
+    }
   } catch (error) {
     return null
   }
