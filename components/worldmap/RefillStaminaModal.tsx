@@ -21,7 +21,6 @@ import {
   Link,
   useDisclosure,
 } from '@chakra-ui/react'
-import Image from 'next/image'
 import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
 import { refillStamina } from 'utils/professionContract'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
@@ -144,7 +143,7 @@ function RefillStaminaModal(props: Props) {
           {!success && (
             <ModalBody>
               <Center mb={10}>
-                <Image
+                <img
                   src="/images/inventory/sushi.png"
                   width={40}
                   height={40}

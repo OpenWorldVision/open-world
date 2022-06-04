@@ -6,7 +6,6 @@ import { getProfile, getStamina } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
-import Image from 'next/image'
 import {
   Button,
   Popover,
@@ -99,7 +98,7 @@ export default function User(props: Props) {
               className="click-cursor"
               margin="auto"
             >
-              <Image
+              <img
                 src={`/images/profile/hero/${
                   profile?._picId && profile?._picId < 14
                     ? profile?._picId
@@ -122,12 +121,7 @@ export default function User(props: Props) {
               <ul>
                 <Wrap>
                   <WrapItem>
-                    <Image
-                      src="/favicon.ico"
-                      alt="img"
-                      width={25}
-                      height={25}
-                    />
+                    <img src="/favicon.ico" alt="img" width={25} height={25} />
                   </WrapItem>
                   <WrapItem alignItems="center">
                     <Text> 0.00 OPEN</Text>
@@ -137,7 +131,7 @@ export default function User(props: Props) {
                 <Text>Career: {career}</Text>
                 <Wrap>
                   <WrapItem>
-                    <Image
+                    <img
                       src="/images/icons/inventory.png"
                       alt="img"
                       width={20}
@@ -155,7 +149,7 @@ export default function User(props: Props) {
                   borderTop="none"
                 >
                   <WrapItem alignItems="center">
-                    <Image
+                    <img
                       src="/images/icons/stamina-point.png"
                       alt="img"
                       width={15}
