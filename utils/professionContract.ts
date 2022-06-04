@@ -172,13 +172,17 @@ export const finishMining = async () => {
     return null
   }
 }
-export async function refillStamina(sushiIds: string[]) {
+export async function refillStamina(
+  sushiIds: string[],
+  onTransactionHash: (txHash: string) => void
+) {
   const contract = await getProfessionContract()
   const accounts = await web3.eth.getAccounts()
   try {
     const data = await contract.methods
       .refillStamina(accounts[0], sushiIds)
       .send({ from: accounts[0] })
+      .on('transactionHash', onTransactionHash)
     return data
   } catch (error) {
     return null

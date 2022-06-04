@@ -7,8 +7,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 import Image from 'next/image'
-import { Button, useDisclosure, Spinner } from '@chakra-ui/react'
+import {
+  Button,
+  Text,
+  useDisclosure,
+  Wrap,
+  WrapItem,
+  Spinner,
+} from '@chakra-ui/react'
 import RefillStaminaModal from './RefillStaminaModal'
+import { PlusSquareIcon } from '@chakra-ui/icons'
 
 type Props = {
   balance: number
@@ -22,10 +30,8 @@ export default function User(props: Props) {
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
   const [isOpenTutorial, setIsOpenTutorial] = useState(false)
-  const [career, setCaeer] = useState('None')
-  const profile = useSelector((state: any) => {
-    return state.ProfileStore.profile
-  })
+  const [career, setCareer] = useState('None')
+  const profile = useSelector((state: any) => state.ProfileStore.profile)
   const [staminaPoint, setStaminaPoint] = useState(0)
 
   const dispatch = useDispatch()
@@ -36,16 +42,16 @@ export default function User(props: Props) {
 
     switch (_profile?._profession) {
       case '1':
-        setCaeer('Openian')
+        setCareer('Openian')
         break
       case '2':
-        setCaeer('Supplier')
+        setCareer('Supplier')
         break
       case '3':
-        setCaeer('Blacksmith')
+        setCareer('Blacksmith')
         break
       default:
-        setCaeer('None')
+        setCareer('None')
         break
     }
   }, [dispatch])
@@ -65,19 +71,35 @@ export default function User(props: Props) {
   const handleOpenTutorial = useCallback(() => {
     setIsOpenTutorial(true)
   }, [])
+
+  const handleClickAvatar = useCallback(() => {
+    setIsOpenAvatar((isOpenAvatarPrev) => !isOpenAvatarPrev)
+  }, [])
+
+  const handleClickProfile = useCallback(() => {
+    setIsOpenUserInfo(true)
+  }, [])
+
   return (
     <UserCSS>
       <div className="user-avatar">
-        <button
-          className="click-cursor"
-          css={
-            isOpenAvatar && {
-              margin: 'auto',
-            }
-          }
-          onClick={() => {
-            setIsOpenAvatar((isOpenAvatarPrev) => !isOpenAvatarPrev)
+        <Button
+          _hover={{
+            backgroundColor: 'transparent',
           }}
+          _focus={{
+            border: 'none',
+            backgroundColor: 'transparent',
+          }}
+          _active={{
+            backgroundColor: 'transparent',
+          }}
+          bgColor="transparent"
+          border="none"
+          outline="transparent"
+          className="click-cursor"
+          margin="auto"
+          onClick={handleClickAvatar}
         >
           <img
             src={`/images/profile/hero/${
@@ -87,94 +109,88 @@ export default function User(props: Props) {
             width={77}
             height={77}
           />
-        </button>
+        </Button>
         {isOpenAvatar && (
           <div className="user-info">
             <div>{profile?._name}</div>
             <ul>
-              <li
-                css={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <div style={{ width: '30px' }}>
+              <Wrap>
+                <WrapItem>
                   <Image src="/favicon.ico" alt="img" width={25} height={25} />
-                </div>
-                {!balance && (
-                  <Spinner
-                    sx={{ marginRight: '6px' }}
-                    thickness="5px"
-                    speed="0.65s"
-                    emptyColor="#745FFB"
-                    color="#E14C90"
-                    size="sm"
-                  />
-                )}
-                {balance && (
-                  <span
-                    style={{
-                      display: 'block',
-                      marginRight: '10px',
-                    }}
-                  >
-                    {balance}
-                  </span>
-                )}{' '}
-                OPEN
-              </li>
+                </WrapItem>
+                <WrapItem alignItems="center">
+                  {balance ? (
+                    <Text> {balance} OPEN</Text>
+                  ) : (
+                    <Spinner
+                      sx={{ marginRight: '6px' }}
+                      thickness="5px"
+                      speed="0.65s"
+                      emptyColor="#745FFB"
+                      color="#E14C90"
+                      size="sm"
+                    />
+                  )}
+                </WrapItem>
+              </Wrap>
               {/* Career : Openian or Supplier or BlackSmith */}
-              <li>Career: {career}</li>
-              <li
-                css={{
-                  display: 'flex',
-                  marginTop: '10px',
-                }}
-              >
-                <div style={{ width: '30px' }}>
+              <Text>Career: {career}</Text>
+              <Wrap>
+                <WrapItem>
                   <Image
                     src="/images/icons/inventory.png"
                     alt="img"
-                    width={25}
-                    height={25}
+                    width={20}
+                    height={20}
                   />
-                </div>
-                Inventory
-              </li>
+                </WrapItem>
+                <WrapItem>
+                  <Text>Inventory</Text>
+                </WrapItem>
+              </Wrap>
+
+              <Wrap
+                alignItems="center"
+                justifyContent="center"
+                borderTop="none"
+              >
+                <WrapItem alignItems="center">
+                  <Image
+                    src="/images/icons/stamina-point.png"
+                    alt="img"
+                    width={15}
+                    height={15}
+                  />
+                </WrapItem>
+                <WrapItem>
+                  <Text>Stamina Point</Text>
+                </WrapItem>
+
+                <WrapItem alignItems="center">
+                  <Text fontWeight={500}>{staminaPoint}/100</Text>
+                </WrapItem>
+                <WrapItem>
+                  <Button
+                    onClick={onToggle}
+                    size="xs"
+                    colorScheme="yellow"
+                    leftIcon={<PlusSquareIcon />}
+                    variant="solid"
+                  >
+                    Recover
+                  </Button>
+                </WrapItem>
+              </Wrap>
             </ul>
-            <ul>
-              <li>
-                <div
-                  css={{
-                    display: 'flex',
-                  }}
-                >
-                  <div style={{ width: '30px' }}>
-                    <Image
-                      src="/images/icons/stamina-point.png"
-                      alt="img"
-                      width={15}
-                      height={15}
-                    />
-                  </div>
-                  Stamina Point:
-                </div>
-                <div>{staminaPoint}/100</div>
-                <Button onClick={onToggle}>+</Button>
-              </li>
-            </ul>
-            <button
-              style={{
-                cursor:
-                  'url(/images/worldmap/click-cursor.png), auto !important',
-              }}
-              onClick={() => {
-                setIsOpenUserInfo(true)
-              }}
+            <Button
+              cursor={'url(/images/worldmap/click-cursor.png)'}
+              onClick={handleClickProfile}
               className="btn-profile click-cursor"
+              colorScheme="yellow"
+              bgColor="#E8BE8A"
             >
               Profile
-            </button>
+            </Button>
           </div>
         )}
         {isOpenUserInfo && (
@@ -247,7 +263,7 @@ const UserCSS = styled.div({
       top: '70px',
       left: 0,
       width: '200px',
-      backgroundImage: 'url(./images/profile/frame.png)',
+      backgroundImage: 'url(/images/profile/frame.png)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '100% 100%',
       backgroundColor: 'rgb(0,0,0,.6)',
@@ -258,7 +274,7 @@ const UserCSS = styled.div({
       '> div': {
         fontSize: '20px',
         textAlign: 'center',
-        backgroundImage: 'url(./images/profile/frame.png)',
+        backgroundImage: 'url(/images/profile/frame.png)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100% 100%',
         marginTop: '10px',
@@ -275,7 +291,6 @@ const UserCSS = styled.div({
           },
         },
         ':last-child': {
-          borderTop: '2px solid rgba(255, 255, 255, 0.3)',
           '@media(max-width: 720px)': {
             fontSize: '14px',
           },
@@ -283,9 +298,6 @@ const UserCSS = styled.div({
       },
       '.btn-profile': {
         width: '100%',
-        backgroundImage: 'url(./images/profile/frame.png)',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: '100% 100%',
         border: '1px solid #fbeb74',
         height: '40px',
         fontSize: '16px',
@@ -294,6 +306,14 @@ const UserCSS = styled.div({
         ':hover': {
           backgroundColor: '#fbeb74',
           color: 'black',
+        },
+        ':focus': {
+          border: 'none',
+          outline: 'none',
+        },
+        ':active': {
+          border: 'none',
+          outline: 'none',
         },
       },
     },
