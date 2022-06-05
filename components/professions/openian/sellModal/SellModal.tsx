@@ -15,18 +15,15 @@ function SellModal(props: Props) {
   const [selectedItem, setSelectedItem] = useState(-1)
   const [isRefreshInventory, setIsRefreshInventory] = useState(false)
 
-  const selectItemForSell = useCallback(
-    (item) => {
-      setSelectedItem(item)
-    },
-    [selectedItem]
-  )
+  const selectItemForSell = useCallback((item) => {
+    setSelectedItem(item)
+  }, [])
 
   const handleFinishListing = useCallback(() => {
     selectItemForSell(-1)
     setIsRefreshInventory(true)
     setTimeout(() => setIsRefreshInventory(false), 2000)
-  }, [])
+  }, [selectItemForSell])
 
   useEffect(() => {
     setIsRefreshInventory(true)

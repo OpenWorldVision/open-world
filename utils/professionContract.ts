@@ -85,7 +85,9 @@ export const finishFishing = async () => {
       .finishFishing()
       .send({ from: accounts[0] })
     return data
-  } catch (error) {}
+  } catch (error) {
+    return null
+  }
 }
 
 // Mining

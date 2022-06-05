@@ -35,7 +35,7 @@ const getItemContract = async () => {
       itemContract.addressBSC,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   } else if (chainId === 1666700000) {
@@ -44,7 +44,7 @@ const getItemContract = async () => {
       itemContract.addressHarmony,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   }
@@ -60,7 +60,7 @@ const getmarketPlaceContract = async () => {
       marketPlaceContract.addressBSC,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   } else if (chainId === 1666700000) {
@@ -69,7 +69,7 @@ const getmarketPlaceContract = async () => {
       marketPlaceContract.addressHarmony,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   }
@@ -85,7 +85,7 @@ const getprofessionsContract = async () => {
       professionsContract.addressBSC,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   } else if (chainId === 1666700000) {
@@ -94,7 +94,7 @@ const getprofessionsContract = async () => {
       professionsContract.addressHarmony,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   }
@@ -113,7 +113,6 @@ const getProfessionsEtherContract = async () => {
   }
 }
 
-
 export const fetchAmountItemByTrait = async (hammer: number) => {
   const contract = await getItemContract()
   const accounts = await web3.eth.getAccounts()
@@ -125,9 +124,7 @@ export const fetchAmountItemByTrait = async (hammer: number) => {
     const listFiltered = data.filter((item) => item !== '0')
     const listFilteredNumber = listFiltered.map((item) => Number(item))
     return listFilteredNumber
-  }
-  catch (err) {
-    console.log(err);
+  } catch (err) {
     return false
   }
 }
@@ -137,12 +134,9 @@ export const makeHammer = async (listOre: Array<number>) => {
   const accounts = await web3.eth.getAccounts()
 
   try {
-    await contract.methods
-      .makeMultiHammer(listOre)
-      .send({ from: accounts[0] })
+    await contract.methods.makeMultiHammer(listOre).send({ from: accounts[0] })
     return true
   } catch (err) {
-    console.log(err)
     return false
   }
 }
@@ -167,9 +161,7 @@ export const sellHammer = async (arrayHammer: Array<number>, price: number) => {
       .addMultiListing(itemContract.addressBSC, arrayHammer, price)
       .send({ from: accounts[0] })
     return true
-  }
-  catch (err) {
-    console.log(err)
+  } catch (err) {
     return false
   }
 }

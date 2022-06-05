@@ -88,7 +88,7 @@ function FishingModal(props: Props) {
         }
       }, 1000)
     }
-  }, [countDownStart])
+  }, [countDownStart, timeLeft])
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -110,7 +110,7 @@ function FishingModal(props: Props) {
       setCountDownStart(true)
       setCanFinish(false)
     }
-  }, [])
+  }, [duration])
 
   const handleFinish = useCallback(async () => {
     if (canFinish) {
@@ -123,14 +123,14 @@ function FishingModal(props: Props) {
       }
       toggleLoadingModal(false)
     }
-  }, [])
+  }, [canFinish, duration, toggleLoadingModal, updateInventory])
 
   const confirmResult = useCallback(() => {
     setTypeOfModal(TYPE_OF_MODAL.START)
     toggleModal()
-  }, [])
+  }, [toggleModal])
 
-  const initialize = async () => {
+  const initialize = useCallback(async () => {
     toggleLoadingModal(true)
     const checkIfFinish = await checkIfFishingFinish()
     const data = await fetchFishingQuestData()
@@ -145,11 +145,11 @@ function FishingModal(props: Props) {
       setTypeOfModal(TYPE_OF_MODAL.WAITING)
     }
     toggleLoadingModal(false)
-  }
+  }, [checkFinishFishingQuest, toggleLoadingModal])
 
   useEffect(() => {
     initialize()
-  }, [])
+  }, [initialize])
 
   const renderText = useCallback(() => {
     switch (typeofModal) {
@@ -252,7 +252,16 @@ function FishingModal(props: Props) {
         )
       }
     }
-  }, [typeofModal, timeLeft, duration, requireStamina, canFinish])
+  }, [
+    typeofModal,
+    confirmResult,
+    timeLeft,
+    handleFinish,
+    canFinish,
+    duration,
+    requireStamina,
+    startQuest,
+  ])
 
   return (
     <div
