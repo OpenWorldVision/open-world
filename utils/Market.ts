@@ -43,8 +43,16 @@ export const listMultiItems = async (ids, price) => {
   const Market = await getMarketContract()
   const Item = await getItemContract()
 
+  const account = await provider.getSigner().getAddress()
+
   try {
-    await Item.setApprovalForAll(marketContract.addressBSC, true)
+    const isApproved = await Item.isApprovedForAll(
+      account,
+      marketContract.addressBSC
+    )
+    if (!isApproved) {
+      await Item.setApprovalForAll(marketContract.addressBSC, true)
+    }
 
     const result = await Market.addMultiListing(
       itemContract.addressBSC,
@@ -58,7 +66,7 @@ export const listMultiItems = async (ids, price) => {
     } while (transactionReceipt === null)
 
     return transactionReceipt.status
-  } catch {
+  } catch (e) {
     return null
   }
 }

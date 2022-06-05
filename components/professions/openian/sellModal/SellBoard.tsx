@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { fetchUserInventoryItemAmount, fetchListItemIds } from 'utils/Item'
 import { listMultiItems } from 'utils/Market'
-import LoadingModal from '@components/LoadingModal';
+import LoadingModal from '@components/LoadingModal'
 import ListingResultModal from '../../ListingResultModal'
 
 type Props = {
@@ -123,7 +123,7 @@ function SellBoard(props: Props) {
       setIsLoading(false)
       return result
     }
-  }, [selectedItem, price, sellingAmount, totalAmount])
+  }, [price, sellingAmount, selectedItemIds, handleFinishListing])
 
   const toggleListingModal = useCallback(async (state) => {
     setListingResult(state)
@@ -132,15 +132,18 @@ function SellBoard(props: Props) {
   return (
     <>
       {isLoading && <LoadingModal />}
-      {listingResult !== undefined &&
-       <ListingResultModal
-        isSuccess={listingResult}
-        toggleModal={() => toggleListingModal(undefined)}
-      />
-      }
+      {listingResult !== undefined && (
+        <ListingResultModal
+          isSuccess={listingResult}
+          toggleModal={() => toggleListingModal(undefined)}
+        />
+      )}
       <div className={modalStyle.modal}>
         <h3 className={modalStyle.board}>
-          <img src="/images/professions/openian/sellboard.png" alt="Sell board" />
+          <img
+            src="/images/professions/openian/sellboard.png"
+            alt="Sell board"
+          />
         </h3>
 
         <Button className={styles.closeBtn} onClick={toggleModal}>
