@@ -14,9 +14,9 @@ import {
 import styles from '@components/foodcourt/foodcourt.module.css'
 
 import BuyerBoard from '@components/foodcourt/BuyerBoard'
-import Head from 'next/head'
 import { useCallback, useEffect, useState } from 'react'
 import { cancelListingItem, getListingIDs } from 'utils/NFTMarket'
+import LoadingModal from '@components/LoadingModal'
 
 export default function FoodCourt() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -27,6 +27,7 @@ export default function FoodCourt() {
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageFoodCourt, setPageFoodCourt] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleGetSushiList = async () => {
     const data = await getListingIDs(false)
@@ -97,7 +98,9 @@ export default function FoodCourt() {
 
   const handleCancelItem = useCallback(
     (item) => async () => {
+      setIsLoading(true)
       const data = await cancelListingItem(item?.id)
+      setIsLoading(false)
       if (data) {
         handleGetMyList()
       }
@@ -121,9 +124,7 @@ export default function FoodCourt() {
 
   return (
     <>
-      <Head>
-        <title>Foodcourt</title>
-      </Head>
+      {isLoading && <LoadingModal />}
       <div className={styles.foodCourtContainer}>
         <div className={styles.foodCourtBg}>
           <div className={styles.foodCourtTitleContainer}>
@@ -132,7 +133,14 @@ export default function FoodCourt() {
             <div className={styles.navFoodCourt}></div>
           </div>
           <div>
-            <Button className={`${styles.buyBtn} click-cursor`}></Button>
+            <Button
+              className={`${styles.buyButtonCustom} click-cursor`}
+              backgroundColor={'#52241E'}
+              onClick={handleSelectItemBoard('mine')}
+              _hover={{ bg: '#52241E' }}
+            >
+              <Text color={'#fff'}>My FoodCourt</Text>
+            </Button>
             <Button
               onClick={handleSelectItemBoard('sushi')}
               className={`click-cursor ${styles.foodBtn}`}
@@ -214,14 +222,25 @@ export default function FoodCourt() {
                               </Td>
                               <Td>
                                 <div className={styles.columnItem}>
-                                  {item.available}
+                                  {item.items?.length}
                                 </div>
                               </Td>
                               <Td sx={{ textAlign: 'center' }}>
-                                <Button
-                                  onClick={handleBuyItem(item)}
-                                  className={`${styles.buyBtnItem} click-cursor`}
-                                ></Button>
+                                {isItemBoard === 'mine' ? (
+                                  <Button
+                                    backgroundColor={'#1e4882'}
+                                    onClick={handleCancelItem(item)}
+                                    className={`${styles.customButton} click-cursor`}
+                                    _hover={{ bg: '#1e4882' }}
+                                  >
+                                    <Text color={'#fff'}>Cancel</Text>
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    onClick={handleBuyItem(item)}
+                                    className={`${styles.buyBtnItem} click-cursor`}
+                                  ></Button>
+                                )}
                               </Td>
                             </Tr>
                           </>
