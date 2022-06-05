@@ -14,7 +14,11 @@ import styles from '@components/foodcourt/foodcourt.module.css'
 
 import BuyerBoard from '@components/foodcourt/BuyerBoard'
 import { useCallback, useEffect, useState } from 'react'
-import { cancelListingItem, getListingIDs } from 'utils/NFTMarket'
+import {
+  cancelListingItem,
+  getListingIDs,
+  purchaseItems,
+} from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
 
@@ -31,12 +35,20 @@ export default function FoodCourt() {
 
   const handleGetSushiList = async () => {
     const data = await getListingIDs(false)
-    setListItemsBoard(data.filter((listing) => listing.trait === '4'))
+    setListItemsBoard(
+      data.filter(
+        (listing) => listing.trait === '4' && listing?.items?.length !== 0
+      )
+    )
   }
 
   const handleGetFishList = async () => {
     const data = await getListingIDs(false)
-    setListItemsBoard(data.filter((listing) => listing.trait === '1'))
+    setListItemsBoard(
+      data.filter(
+        (listing) => listing.trait === '1' && listing?.items?.length === 0
+      )
+    )
   }
 
   const handleGetMyList = async () => {
@@ -106,6 +118,23 @@ export default function FoodCourt() {
       }
     },
     []
+  )
+
+  const _handlePurchaseItem = useCallback(
+    async (id: number, listIds: Array<number>) => {
+      setIsLoading(true)
+      const data = await purchaseItems(id, listIds)
+      if (data) {
+        setIsLoading(false)
+        if (isItemBoard === 'sushi') {
+          handleGetSushiList()
+        } else {
+          handleGetFishList()
+        }
+        return data
+      }
+    },
+    [isItemBoard]
   )
 
   useEffect(() => {
@@ -255,6 +284,7 @@ export default function FoodCourt() {
             isOpen={isOpenBuyBoard}
             toggleModalBuyModal={toggleBuyModal}
             buyDetail={buyDetail}
+            handlePurchaseItem={_handlePurchaseItem}
           />
           <BackButton />
         </div>
