@@ -1,6 +1,5 @@
 import {
   Button,
-  Link,
   Table,
   TableCaption,
   TableContainer,
@@ -17,6 +16,7 @@ import BuyerBoard from '@components/foodcourt/BuyerBoard'
 import { useCallback, useEffect, useState } from 'react'
 import { cancelListingItem, getListingIDs } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
+import BackButton from '@components/BackButton'
 
 export default function FoodCourt() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -256,9 +256,7 @@ export default function FoodCourt() {
             toggleModalBuyModal={toggleBuyModal}
             buyDetail={buyDetail}
           />
-          <Link href="/">
-            <a className={`${styles.backBtn} click-cursor`}></a>
-          </Link>
+          <BackButton />
         </div>
       </div>
     </>

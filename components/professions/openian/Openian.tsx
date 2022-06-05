@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import styles from './openian.module.css'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
-import Link from 'next/link'
 import SellModal from './sellModal/SellModal'
 import FishingModal from './fishingModal/FishingModal'
 import MiningModal from './miningModal/MiningModal'
 import LoadingModal from '@components/LoadingModal'
+import BackButton from '@components/BackButton'
 
 function Openian() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -90,9 +90,7 @@ function Openian() {
           </TransformComponent>
         </TransformWrapper>
 
-        <Link href="/">
-          <a className={`${styles.backBtn} click-cursor`}></a>
-        </Link>
+        <BackButton />
 
         <SellModal
           isOpen={isOpenStore}
