@@ -31,7 +31,7 @@ export default function Layout({ children, home }) {
   })
 
   const isProfileExist = useSelector((state: any) => {
-    return state.ProfileStore.isConnected
+    return state.ProfileStore.profile
   })
 
   const getBalance = async () => {
@@ -39,7 +39,7 @@ export default function Layout({ children, home }) {
 
     setBalance(balance)
   }
-
+  
   const [currentURL, setCurrentURL] = useState('')
   useEffect(() => {
     getBalance()
