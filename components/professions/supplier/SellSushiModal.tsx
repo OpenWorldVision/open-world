@@ -1,5 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, Input } from '@chakra-ui/react'
+import {
+  Button,
+  Input,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+} from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useState } from 'react'
 import styles from './sellSushi.module.css'
@@ -113,14 +121,27 @@ function SellSushiModal(props: Props) {
                     <div className={styles.titleText}>Selling Amount</div>
                   </div>
                   <div className={styles.flex1WithFlexEnd}>
-                    <Input
-                      color={'#fff'}
+                    <NumberInput
+                      min={0}
+                      max={listSushi?.length}
                       width={150}
                       height={50}
-                      onChange={onChangeQuantity}
-                      defaultValue={quantitySushi}
-                      backgroundColor={'#3d2316'}
-                    />
+                      defaultValue={1}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </div>
+                </div>
+                <div className={styles.rowView2}>
+                  <div className={styles.flex1}>
+                    <div className={styles.titleText}>Your Sushi Amount</div>
+                  </div>
+                  <div className={styles.flex1WithFlexEnd}>
+                    {listSushi?.length}
                   </div>
                 </div>
               </div>

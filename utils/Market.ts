@@ -1,5 +1,7 @@
 import { ethers } from 'ethers'
-
+import Web3 from 'web3'
+import { nftMarketContract } from './NFTMarket'
+const web3 = new Web3(Web3.givenProvider)
 
 const itemContract = {
   addressBSC: '0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492',
@@ -7,7 +9,7 @@ const itemContract = {
 }
 
 const marketContract = {
-  addressBSC: '0xF65a2cd87d3b0Fa43C10979c2E60BAA40Bb03C1d',
+  addressBSC: '0x7210aEaF0c7d74366E37cfB37073cB630Ac86B5b',
   jsonInterface: require('../build/contracts/NFTMarket.json'),
 }
 
@@ -43,14 +45,18 @@ export const listMultiItems = async (ids, price) => {
   const Market = await getMarketContract()
   const Item = await getItemContract()
 
-  try {
-    await Item.setApprovalForAll(marketContract.addressBSC, true)
+  const account = await provider.getSigner().getAddress()
 
-    const result = await Market.addMultiListing(
-      itemContract.addressBSC,
-      ids,
-      price
+  try {
+    const isApproved = await Item.isApprovedForAll(
+      account,
+      marketContract.addressBSC
     )
+    if (!isApproved) {
+      await Item.setApprovalForAll(marketContract.addressBSC, true)
+    }
+
+    const result = await Market.addListing(itemContract.addressBSC, ids, price)
 
     let transactionReceipt = null
     do {
@@ -58,7 +64,7 @@ export const listMultiItems = async (ids, price) => {
     } while (transactionReceipt === null)
 
     return transactionReceipt.status
-  } catch {
+  } catch (error) {
     return null
   }
 }

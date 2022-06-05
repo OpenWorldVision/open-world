@@ -10,7 +10,7 @@ module.exports = async function (deployer, network) {
     nftMarketProxy = ''
   }
   if (network === 'bsctestnet') {
-    nftMarketProxy = '0xF65a2cd87d3b0Fa43C10979c2E60BAA40Bb03C1d'
+    nftMarketProxy = '0x7210aEaF0c7d74366E37cfB37073cB630Ac86B5b'
   }
   await upgradeProxy(nftMarketProxy, NFTMarket, {
     deployer,

@@ -44,10 +44,10 @@
 .backBtn {
   display: block !important;
   position: absolute !important;
-  top: 30px;
+  bottom: 30px;
   left: 35px;
-  width: 235px !important;
-  height: 75px !important;
+  width: 180px !important;
+  height: 60px !important;
   background-color: transparent !important;
   background-image: url('/images/professions/back-btn.webp') !important;
   background-repeat: no-repeat !important;
@@ -87,7 +87,7 @@
   .backBtn {
     width: 100px !important;
     height: 75px !important;
-    top: 15px;
+    bottom: 0;
     left: 15px;
   }
 }

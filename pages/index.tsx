@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import style from '@components/worldmap/worldMap.module.css'
 import Navigation from '@components/worldmap/Navigation'

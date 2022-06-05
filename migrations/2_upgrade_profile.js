@@ -9,8 +9,10 @@ module.exports = async function (deployer, network) {
   if (network === 'harmony') {
     profileProxy = '0x707Ea5fC3Fc92c3B802Ecb9E1428E6F4FF03282f'
   }
-  // const profile = await Profiles.at(profileProxy)
-  // profile.setRequireBalanceProfession(1000)
+  if (network === 'bsctestnet') {
+    profileProxy = '0xae46953433ebE48698c6D86a49fA154eDCad99C3'
+  }
+
   await upgradeProxy(profileProxy, Profiles, {
     deployer,
   })

@@ -1,4 +1,5 @@
 import Web3 from 'web3'
+import { fetchAmountItemByTrait } from './blackSmithContract'
 
 const web3 = new Web3(Web3.givenProvider)
 
@@ -26,15 +27,15 @@ const getProfessionContract = async () => {
 }
 
 export const startFishing = async () => {
-  const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
-
   try {
+    const contract = await getProfessionContract()
+    const accounts = await web3.eth.getAccounts()
+
     const data = await contract.methods
       .startFishing()
       .send({ from: accounts[0] })
     return data
-  } catch {
+  } catch (e) {
     return null
   }
 }
@@ -89,12 +90,17 @@ export const finishFishing = async () => {
 
 // Mining
 export const startMining = async () => {
-  const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
-
   try {
+    const contract = await getProfessionContract()
+    const accounts = await web3.eth.getAccounts()
+    const hammerList = await fetchAmountItemByTrait(3)
+
+    if (hammerList?.length < 2) {
+      return
+    }
+
     const data = await contract.methods
-      .startMining()
+      .startMining(hammerList[0], hammerList[1])
       .send({ from: accounts[0] })
     return data
   } catch {
@@ -162,5 +168,19 @@ export const finishMining = async () => {
     return null
   }
 }
-
-// Sell
+export async function refillStamina(
+  sushiIds: string[],
+  onTransactionHash: (txHash: string) => void
+) {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+  try {
+    const data = await contract.methods
+      .refillStamina(accounts[0], sushiIds)
+      .send({ from: accounts[0] })
+      .on('transactionHash', onTransactionHash)
+    return data
+  } catch (error) {
+    return null
+  }
+}
