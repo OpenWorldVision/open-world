@@ -220,7 +220,11 @@ export default function User(props: Props) {
           onClose={() => setIsOpenTutorial(false)}
           isOpenTutorial={isOpenTutorial}
         />
-        <RefillStaminaModal isOpen={isOpen} onToggle={onToggle} />
+        <RefillStaminaModal
+          isOpen={isOpen}
+          onToggle={onToggle}
+          onSuccess={handleGetStamina}
+        />
       </div>
     </UserCSS>
   )

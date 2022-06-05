@@ -29,10 +29,11 @@ import LoadingModal from '@components/LoadingModal'
 type Props = {
   isOpen: boolean
   onToggle: () => void
+  onSuccess: () => void
 }
 
 function RefillStaminaModal(props: Props) {
-  const { isOpen, onToggle } = props
+  const { isOpen, onToggle, onSuccess } = props
   const {
     isOpen: loading,
     onToggle: onToggleLoading,
@@ -82,12 +83,13 @@ function RefillStaminaModal(props: Props) {
           })
         }
       )
+      onSuccess()
       setSuccess(true)
     } catch (e) {
     } finally {
       onClose()
     }
-  }, [amountSushi, onClose, onToggleLoading, success, toast])
+  }, [amountSushi, onClose, onSuccess, onToggleLoading, success, toast])
 
   const handleChangeAmountSushi = useCallback((_: string, value: number) => {
     setAmountSushi(value)
