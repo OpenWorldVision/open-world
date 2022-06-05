@@ -37,7 +37,7 @@ export default function MiningModal(props: Props) {
 
   const checkRequirementBeforeStartQuest = useCallback(async () => {
     const hammerList = await fetchAmountItemByTrait(3)
-    if (hammerList?.length < 2) {
+    if (hammerList?.length < 1) {
       toast({
         title: 'Mining Quest',
         description: "You don't have enough hammer to start mining quest",
@@ -47,29 +47,31 @@ export default function MiningModal(props: Props) {
       })
     }
 
-    return hammerList?.length > 2
+    return hammerList?.length >= 1
   }, [toast])
 
   const startQuest = useCallback(async () => {
-    if (!checkRequirementBeforeStartQuest()) {
-      return
-    }
-    setTimeLeft(duration)
-    toggleLoadingModal(true)
-    const mining = await startMining()
-    setTimeout(() => {
+    try {
+      const isOk = await checkRequirementBeforeStartQuest()
+      if (!isOk) {
+        return
+      }
+      setTimeLeft(duration)
+      toggleLoadingModal(true)
+      const mining = await startMining()
+
+      if (mining) {
+        const data = await checkIfMiningFinish()
+        setCountDownStart(true)
+        setIsFinished(data.finish)
+        setIsStartQuest(true)
+        setCanFinish(false)
+      }
+    } catch (e) {
+    } finally {
       toggleLoadingModal(false)
-    }, 1000)
-    if (mining !== null) {
-      const data = await checkIfMiningFinish()
-      setCountDownStart(true)
-      setIsFinished(data.finish)
-      setIsStartQuest(true)
-      setCanFinish(false)
-    } else {
-      toggleLoadingModal(false)
     }
-  }, [])
+  }, [checkRequirementBeforeStartQuest, duration, toggleLoadingModal])
 
   useEffect(() => {
     if (countDownStart) {

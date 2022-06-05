@@ -47,6 +47,7 @@
     "redux-persist": "^6.0.0",
     "remark": "^14.0.1",
     "remark-html": "^15.0.0",
+    "usehooks-ts": "^2.5.4",
     "web3": "^1.7.1",
     "web3modal": "^1.9.5",
     "webp-loader": "^0.6.0"
