@@ -1,37 +1,31 @@
-import { VStack } from '@chakra-ui/react'
 import styled from '@emotion/styled'
-import { MapInteractionCSS } from 'react-map-interaction'
 import { keyframes } from '@emotion/react'
 import Link from 'next/link'
 import Head from 'next/head'
+import { Wrap, Text } from '@chakra-ui/react'
 
-const valueDefaultInitial = {
-  scale: 1.2,
-  translation: {
-    x: -510,
-    y: -2650,
-  },
-}
-export default function Home({ allPostsData }) {
+export default function ErrorPage() {
   return (
     <>
       <Head>
         <title>Open World</title>
       </Head>
       <NotFoundPage>
-        <div className="containerWorldMap">
+        <Wrap className="containerWorldMap">
           <div className="modal">
             <div className="modal-content">
               <img src="/images/worldmap/OW-logo.png" alt="logo" />
-              <div>Coming Soon</div>
-              <Link href="/">
+              <Text fontSize="5xl" fontWeight="bold">
+                Coming Soon
+              </Text>
+              <Link href="/" passHref>
                 <button className="click-cursor">
-                  <a>BACK TO WORLD MAP</a>
+                  <Text fontWeight="bold">BACK TO WORLD MAP</Text>
                 </button>
               </Link>
             </div>
           </div>
-        </div>
+        </Wrap>
       </NotFoundPage>
     </>
   )
@@ -51,7 +45,7 @@ const NotFoundPage = styled.div({
     cursor: 'url(/images/worldmap/SelectCursor.webp), auto',
   },
   '.containerWorldMap': {
-    backgroundImage: 'url(/images/background/game-bg.jpg)',
+    backgroundImage: 'url(/images/background/game-bg.webp)',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     cursor: 'url(/images/worldmap/CursorDefault.webp), auto',
@@ -59,7 +53,7 @@ const NotFoundPage = styled.div({
     height: '100vh',
     overflow: 'hidden',
     position: 'relative',
-    zIndex: '10000',
+    zIndex: '999999',
     '.world_map': {
       position: 'absolute',
       minWidth: '40960px',
@@ -84,10 +78,6 @@ const NotFoundPage = styled.div({
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    div: {
-      fontSize: '50px',
-      color: '#fff',
-    },
     button: {
       backgroundImage: 'linear-gradient(to right, #f85474 ,#8937f1)',
       minWidth: '300px',
@@ -95,9 +85,6 @@ const NotFoundPage = styled.div({
       borderRadius: '15px',
       marginTop: '50px',
       fontWeight: 'bold',
-      a: {
-        textDecoration: 'none',
-      },
       ':hover': {
         backgroundImage: 'linear-gradient(to right, #f85474 ,#8937f1)',
         color: 'black',

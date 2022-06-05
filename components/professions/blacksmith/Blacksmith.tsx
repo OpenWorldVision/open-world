@@ -1,11 +1,11 @@
 import { Button } from '@chakra-ui/react'
 import styles from './blacksmith.module.css'
-import Link from 'next/link'
-import SellBoard from './sellerboard/SellBoard'
 import { useCallback, useEffect, useState } from 'react'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
-import ForgeHammer from './forgehammer/ForgeHammer';
+import ForgeHammer from './forgehammer/ForgeHammer'
 import LoadingModal from '@components/LoadingModal'
+import BackButton from '@components/BackButton'
+import Inventory from '@components/Inventory'
 
 export default function Blacksmith() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -43,7 +43,7 @@ export default function Blacksmith() {
   )
 
   const toggleLoadingModal = useCallback(
-    (state)  => {
+    (state) => {
       setIsLoading(state)
     },
     [isLoading]
@@ -84,13 +84,21 @@ export default function Blacksmith() {
             </div>
           </TransformComponent>
         </TransformWrapper>
-        <Link href="/">
-          <a className={`${styles.backBtn} click-cursor`}></a>
-        </Link>
+        <BackButton />
       </div>
-
-      {<SellBoard isOpen={isSellBoard} toggleModal={toggleSellBoardModal} toggleLoadingModal={toggleLoadingModal} />}
-      {<ForgeHammer isOpen={isForgeHammer} toggleModal={toggleForgeHammerModal} toggleLoadingModal={toggleLoadingModal} />}
+      {isSellBoard && (
+        <Inventory
+          setIsOpenInventory={toggleSellBoardModal}
+          isOpenInventory={isSellBoard}
+        />
+      )}
+      {
+        <ForgeHammer
+          isOpen={isForgeHammer}
+          toggleModal={toggleForgeHammerModal}
+          toggleLoadingModal={toggleLoadingModal}
+        />
+      }
     </>
   )
 }

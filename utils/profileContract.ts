@@ -6,7 +6,7 @@ const GasLimit = 800000
 
 const profilesContract = {
   addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
-  addressBSC: '0xe6046d1363f7bebff6cb98c72094c89ff8ee500d',
+  addressBSC: '0xae46953433ebE48698c6D86a49fA154eDCad99C3',
   jsonInterface: require('../build/contracts/Profiles.json'),
 }
 
@@ -20,7 +20,7 @@ const getProfileContract = async () => {
       profilesContract.addressBSC,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   } else if (chainId === 1666700000) {
@@ -29,7 +29,7 @@ const getProfileContract = async () => {
       profilesContract.addressHarmony,
       {
         gas: GasLimit,
-        from: accounts[0]
+        from: accounts[0],
       }
     )
   }
@@ -41,6 +41,18 @@ export const getProfile = async () => {
   try {
     return await contract.methods
       .getProfileByAddress(accounts[0])
+      .call({ from: accounts[0] })
+  } catch {
+    return false
+  }
+}
+
+export async function getStamina() {
+  const contract = await getProfileContract()
+  const accounts = await web3.eth.getAccounts()
+  try {
+    return await contract.methods
+      .getStamina(accounts[0])
       .call({ from: accounts[0] })
   } catch {
     return false
@@ -72,7 +84,10 @@ export const isProfessionExist = async () => {
   }
 }
 
-export const changePictureProfile = async (profileId: number, pictureId: number) => {
+export const changePictureProfile = async (
+  profileId: number,
+  pictureId: number
+) => {
   const contract = await getProfileContract()
   const accounts = await web3.eth.getAccounts()
   try {
@@ -89,9 +104,7 @@ export const checkNameTaken = async (nameStr: string) => {
   const contract = await getProfileContract()
   const accounts = await web3.eth.getAccounts()
   try {
-    return await contract.methods
-      .nameTaken(nameStr)
-      .call({ from: accounts[0] })
+    return await contract.methods.nameTaken(nameStr).call({ from: accounts[0] })
   } catch {
     return false
   }

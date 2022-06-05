@@ -116,7 +116,7 @@ export default function Inventory({
                     } else {
                       return <div key={value} className="container-item" />
                     }
-                  }): <div>Loadding ...</div>}
+                  }): <div>Loading ...</div>}
                 </div>
               </div>
             </div>
@@ -158,7 +158,7 @@ export default function Inventory({
 const InventoryCSS = styled.div({
   '.modal-inventory': {
     position: 'fixed',
-    zIndex: 1,
+    zIndex: 10,
     left: 0,
     top: 0,
     minWidth: '100vw',

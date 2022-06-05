@@ -1,40 +1,53 @@
 import { useCallback } from 'react'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-
+type Props = {
+  isOpenTutorial: boolean
+  onClose: () => void
+}
 export default function ProfessionsTutorial({
-  setIsOpenTutorial,
-  isOpenTutorial
-}) {
+  onClose,
+  isOpenTutorial,
+}: Props) {
   const router = useRouter()
 
   const handleCloseModalProfessionsTutorial = useCallback(
     (e) => {
       if (e.target !== e.currentTarget) return
-      setIsOpenTutorial(false)
-    }, [isOpenTutorial]
+      onClose()
+    },
+    [onClose]
   )
-
+  if (!isOpenTutorial) {
+    return null
+  }
   return (
     <ProfessionsTutorialCSS>
       <div
         className="modal-professions-tutorial"
-        onClick={(e) => {
-          handleCloseModalProfessionsTutorial(e)
-        }}
+        onClick={handleCloseModalProfessionsTutorial}
       >
         <div className="modal-content">
           <div className="main">
             <div className="container">
-              <button
-                className='close click-cursor'
-                onClick={() => { setIsOpenTutorial(false) }}
-              >
+              <button className="close click-cursor" onClick={onClose}>
                 <img src="./images/icons/close.png" alt="img" />
               </button>
-              <div className="header">THE VERY FIRST THING YOU NEED TO DO IN OPENWORLD IS CHOOSE A CAREER FOR YOUR AVATAR.</div>
-              <div className="body">LETS GO CHECK OUT PROFESSIONS BUILDING WHERE YOU CAN SEE ALL THE CAREERS THAT NOW AVAILABLE IN OPENWORLD. SEE ONE FITS YOUR STYLE, DONT BE HESITATE TO CHOOSE IT</div>
-              <button onClick={() => { router.push('/professions') }} className="btn-go-professions click-cursor"></button>
+              <div className="header">
+                THE VERY FIRST THING YOU NEED TO DO IN OPENWORLD IS CHOOSE A
+                CAREER FOR YOUR AVATAR.
+              </div>
+              <div className="body">
+                LETS GO CHECK OUT PROFESSIONS BUILDING WHERE YOU CAN SEE ALL THE
+                CAREERS THAT NOW AVAILABLE IN OPENWORLD. SEE ONE FITS YOUR
+                STYLE, DONT BE HESITATE TO CHOOSE IT
+              </div>
+              <button
+                onClick={() => {
+                  router.push('/professions')
+                }}
+                className="btn-go-professions click-cursor"
+              ></button>
             </div>
           </div>
         </div>
@@ -80,7 +93,7 @@ const ProfessionsTutorialCSS = styled.div({
           position: 'relative',
           '@media(max-width: 720px)': {
             padding: '10px',
-            paddingTop: '50px'
+            paddingTop: '50px',
           },
           '.close': {
             position: 'absolute',
@@ -112,11 +125,11 @@ const ProfessionsTutorialCSS = styled.div({
             '@media(max-width: 720px)': {
               width: '280px',
               height: '100px',
-              marginBottom: '20px'
+              marginBottom: '20px',
             },
-          }
-        }
-      }
+          },
+        },
+      },
     },
   },
 })

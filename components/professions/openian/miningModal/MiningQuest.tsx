@@ -1,7 +1,5 @@
 import { Button } from '@chakra-ui/button'
-import { useEffect, useState } from 'react'
 import style from './Mining.module.css'
-import { fetchMiningQuestData } from 'utils/professionContract'
 
 type Props = {
   startQuest: () => void
@@ -11,7 +9,6 @@ type Props = {
 
 export default function MiningQuest(props: Props) {
   const { duration, requireStamina, startQuest } = props
-  const [harmer, setHarmer] = useState(1)
 
   return (
     <div className={style.miningQuestDetail}>
@@ -36,15 +33,14 @@ export default function MiningQuest(props: Props) {
       <div>
         <div className={style.title}>Required</div>
         <div className={style.detail}>
-          1 Hammer
+          2 Hammer
           <div className={style.harmer}></div>
         </div>
       </div>
       <Button
-        disabled={harmer === 0}
         onClick={startQuest}
         className={`${style.startQuestBtn} click-cursor`}
-      ></Button>
+      />
     </div>
   )
 }

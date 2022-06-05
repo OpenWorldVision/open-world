@@ -2,20 +2,40 @@ import { useState, useEffect, useCallback } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
-import { isProfessionExist, getProfile } from 'utils/profileContract'
+import { getProfile, getStamina } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
 import Inventory from '../Inventory'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
+import {
+  Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+  useDisclosure,
+  Wrap,
+  WrapItem,
+} from '@chakra-ui/react'
+import RefillStaminaModal from './RefillStaminaModal'
+import { PlusSquareIcon } from '@chakra-ui/icons'
 
-export default function User() {
-  const [isOpenAvatar, setIsOpenAvatar] = useState(false)
+type Props = {
+  balance: number
+}
+
+export default function User(props: Props) {
+  const { balance } = props
+
+  const { isOpen, onToggle } = useDisclosure()
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
   const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isOpenTutorial, setIsOpenTutorial] = useState(false)
-  const [career, setCaeer] = useState('None')
-  const profile = useSelector((state: any) => { return state.ProfileStore.profile })
+  const [career, setCareer] = useState('None')
+  const profile = useSelector((state: any) => state.ProfileStore.profile)
+  const [staminaPoint, setStaminaPoint] = useState(0)
+
   const dispatch = useDispatch()
 
   const getDataProfile = useCallback(async () => {
@@ -24,148 +44,160 @@ export default function User() {
 
     switch (_profile?._profession) {
       case '1':
-        setCaeer('Openian')
+        setCareer('Openian')
         break
       case '2':
-        setCaeer('Supplier')
+        setCareer('Supplier')
         break
       case '3':
-        setCaeer('Blacksmith')
+        setCareer('Blacksmith')
         break
       default:
-        setCaeer('None')
+        setCareer('None')
         break
+    }
+  }, [dispatch])
+
+  const handleGetStamina = useCallback(async () => {
+    const stamina = await getStamina()
+    if (stamina) {
+      setStaminaPoint(stamina)
     }
   }, [])
 
   useEffect(() => {
     getDataProfile()
+    handleGetStamina()
   }, [])
 
   const handleOpenTutorial = useCallback(() => {
     setIsOpenTutorial(true)
   }, [])
 
+  const handleClickProfile = useCallback(() => {
+    setIsOpenUserInfo(true)
+  }, [])
+
   return (
     <UserCSS>
       <div className="user-avatar">
-        <button
-          className="click-cursor"
-          css={
-            isOpenAvatar && {
-              margin: 'auto',
-            }
-          }
-          onClick={() => {
-            setIsOpenAvatar((isOpenAvatarPrev) => !isOpenAvatarPrev)
-          }}
-        >
-          <img
-            src={`/images/profile/hero/${
-              profile?._picId && profile?._picId < 14 ? profile?._picId : 'none'
-            }.webp`}
-            alt="img"
-          />
-        </button>
-        {isOpenAvatar && (
-          <div className="user-info">
-            <div>{profile?._name}</div>
-            <ul>
-              <li
-                css={{
-                  display: 'flex',
-                }}
-              >
-                <div style={{ width: '30px' }}>
-                  <img src="./favicon.ico" alt="img" width={25} height={25} />
-                </div>
-                0.00 OPEN
-              </li>
-              {/* Career : Openian or Supplier or BlackSmith */}
-              <li>
-                Career: {career}
-              </li>
-              <li 
-                css={{
-                  display: 'flex',
-                  marginTop: '10px'
-                }}
-                className='click-cursor'
-                onClick={() => { setIsOpenInventory(true) }}
-              >
-                <div style={{ width: '30px' }}>
-                  <img
-                    src="./images/icons/inventory.png"
-                    alt="img"
-                    width={25}
-                    height={25}
-                  />
-                </div>
-                Inventory
-              </li>
-            </ul>
-            <ul>
-              <li>
-                <div
-                  css={{
-                    display: 'flex',
-                  }}
-                >
-                  <div style={{ width: '30px' }}>
+        <Popover placement="bottom">
+          <PopoverTrigger>
+            <Button
+              _hover={{
+                backgroundColor: 'transparent',
+              }}
+              _focus={{
+                border: 'none',
+                backgroundColor: 'transparent',
+              }}
+              _active={{
+                backgroundColor: 'transparent',
+              }}
+              bgColor="transparent"
+              border="none"
+              outline="transparent"
+              className="click-cursor"
+              margin="auto"
+            >
+              <img
+                src={`/images/profile/hero/${
+                  profile?._picId && profile?._picId < 14
+                    ? profile?._picId
+                    : 'none'
+                }.webp`}
+                alt="img"
+                width={77}
+                height={77}
+              />
+            </Button>
+          </PopoverTrigger>
+
+          <PopoverContent
+            border="none"
+            _focus={{ boxShadow: 'none' }}
+            width={220}
+          >
+            <div className="user-info">
+              <div>{profile?._name}</div>
+              <ul>
+                <Wrap>
+                  <WrapItem>
+                    <img src="/favicon.ico" alt="img" width={25} height={25} />
+                  </WrapItem>
+                  <WrapItem alignItems="center">
+                    <Text> 0.00 OPEN</Text>
+                  </WrapItem>
+                </Wrap>
+                {/* Career : Openian or Supplier or BlackSmith */}
+                <Text>Career: {career}</Text>
+                <Wrap>
+                  <WrapItem>
                     <img
-                      src="./images/icons/stamina-point.png"
+                      src="/images/icons/inventory.png"
+                      alt="img"
+                      width={20}
+                      height={20}
+                    />
+                  </WrapItem>
+                  <WrapItem>
+                    <Text className='click-cursor' onClick={() => { setIsOpenInventory(true) }}>Inventory</Text>
+                  </WrapItem>
+                </Wrap>
+
+                <Wrap
+                  alignItems="center"
+                  justifyContent="center"
+                  borderTop="none"
+                >
+                  <WrapItem alignItems="center">
+                    <img
+                      src="/images/icons/stamina-point.png"
                       alt="img"
                       width={15}
                       height={15}
                     />
-                  </div>
-                  Stamina Point:
-                </div>
-                <div>100/100</div>
-              </li>
-              <li
-                css={{
-                  marginTop: '10px',
-                }}
+                  </WrapItem>
+                  <WrapItem>
+                    <Text>Stamina Point</Text>
+                  </WrapItem>
+
+                  <WrapItem alignItems="center">
+                    <Text fontWeight={500}>{staminaPoint}/100</Text>
+                  </WrapItem>
+                  <WrapItem>
+                    <Button
+                      onClick={onToggle}
+                      size="xs"
+                      colorScheme="yellow"
+                      leftIcon={<PlusSquareIcon />}
+                      variant="solid"
+                      disabled={staminaPoint === 100}
+                    >
+                      Recover
+                    </Button>
+                  </WrapItem>
+                </Wrap>
+              </ul>
+              <Button
+                cursor={'url(/images/worldmap/click-cursor.png)'}
+                onClick={handleClickProfile}
+                className="btn-profile click-cursor"
+                colorScheme="yellow"
+                bgColor="#E8BE8A"
               >
-                <div
-                  css={{
-                    display: 'flex',
-                  }}
-                >
-                  <div style={{ width: '30px' }}>
-                    <img
-                      src="./images/icons/health-point.png"
-                      alt="img"
-                      width={25}
-                      height={25}
-                    />
-                  </div>
-                  Health Point:
-                </div>
-                <div>100/100</div>
-              </li>
-            </ul>
-            <button
-              style={{
-                cursor:
-                  'url(/images/worldmap/click-cursor.png), auto !important',
-              }}
-              onClick={() => {
-                setIsOpenUserInfo(true)
-              }}
-              className="btn-profile click-cursor"
-            >
-              Profile
-            </button>
-          </div>
-        )}
+                Profile
+              </Button>
+            </div>
+          </PopoverContent>
+        </Popover>
         {isOpenUserInfo && (
           <UserInfo
             setIsOpenUserInfo={setIsOpenUserInfo}
             isOpenUserInfo={isOpenUserInfo}
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             profile={profile}
+            balance={balance}
           />
         )}
         {profile === false && (
@@ -186,18 +218,21 @@ export default function User() {
             handleOpenTutorial={handleOpenTutorial}
           />
         )}
-        {isOpenTutorial && (
-          <ProfessionsTutorial
-            setIsOpenTutorial={setIsOpenTutorial}
-            isOpenTutorial={isOpenTutorial}
-          />
-        )}
         {isOpenInventory && (
           <Inventory
             setIsOpenInventory={setIsOpenInventory}
             isOpenInventory={isOpenInventory}
           />
         )}
+        <ProfessionsTutorial
+          onClose={() => setIsOpenTutorial(false)}
+          isOpenTutorial={isOpenTutorial}
+        />
+        <RefillStaminaModal
+          isOpen={isOpen}
+          onToggle={onToggle}
+          onSuccess={handleGetStamina}
+        />
       </div>
     </UserCSS>
   )
@@ -208,16 +243,17 @@ const UserCSS = styled.div({
     position: 'fixed',
     top: '30px',
     left: '50px',
-    zIndex: '2000',
+    zIndex: '999998',
     width: '200px',
     '@media(max-width: 720px)': {
       top: '10px',
       left: '10px',
     },
     '> button': {
-      width: '100px',
       height: '110px',
-      display: 'block',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       backgroundImage: 'url(/images/worldmap/Frame.webp)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'contain',
@@ -229,14 +265,10 @@ const UserCSS = styled.div({
       },
     },
     '.user-info': {
-      position: 'absolute',
-      top: '70px',
-      left: 0,
-      width: '200px',
-      backgroundImage: 'url(./images/profile/frame.png)',
+      backgroundImage: 'url(/images/profile/frame.png)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '100% 100%',
-      backgroundColor: 'rgb(0,0,0,.6)',
+      backgroundColor: 'rgb(0,0,0,.8)',
       fontSize: '14px',
       color: 'white',
       padding: '35px 20px 10px 20px',
@@ -244,7 +276,7 @@ const UserCSS = styled.div({
       '> div': {
         fontSize: '20px',
         textAlign: 'center',
-        backgroundImage: 'url(./images/profile/frame.png)',
+        backgroundImage: 'url(/images/profile/frame.png)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: '100% 100%',
         marginTop: '10px',
@@ -261,7 +293,6 @@ const UserCSS = styled.div({
           },
         },
         ':last-child': {
-          borderTop: '2px solid rgba(255, 255, 255, 0.3)',
           '@media(max-width: 720px)': {
             fontSize: '14px',
           },
@@ -269,9 +300,6 @@ const UserCSS = styled.div({
       },
       '.btn-profile': {
         width: '100%',
-        backgroundImage: 'url(./images/profile/frame.png)',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: '100% 100%',
         border: '1px solid #fbeb74',
         height: '40px',
         fontSize: '16px',
@@ -280,6 +308,14 @@ const UserCSS = styled.div({
         ':hover': {
           backgroundColor: '#fbeb74',
           color: 'black',
+        },
+        ':focus': {
+          border: 'none',
+          outline: 'none',
+        },
+        ':active': {
+          border: 'none',
+          outline: 'none',
         },
       },
     },

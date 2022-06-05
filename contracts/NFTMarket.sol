@@ -1,4 +1,5 @@
 pragma solidity 0.7.5;
+pragma abicoder v2;
 
 import '@openzeppelin/contracts-upgradeable/proxy/Initializable.sol';
 import '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol';
@@ -50,25 +51,27 @@ contract NFTMarket is
   // basic listing; we can easily offer other types (auction / buy it now)
   // if the struct can be extended, that's one way, otherwise different mapping per type.
   struct Listing {
+    uint256 id;
     address seller;
     uint256 price;
+    uint8 trait;
+    uint256[] items;
   }
 
   // ############
   // State
   // ############
   IERC20 public openToken; //0x27a339d9B59b21390d7209b78a839868E319301B;
+  Item internal item;
   address public taxRecipient; //game contract
 
   // address is IERC721 -- kept like this because of OpenZeppelin upgrade plugin bug
   mapping(address => mapping(uint256 => Listing)) private listings;
   // address is IERC721 -- kept like this because of OpenZeppelin upgrade plugin bug
   mapping(address => EnumerableSet.UintSet) private listedTokenIDs;
+  mapping(uint256 => EnumerableSet.UintSet) private listingsItem;
   // address is IERC721
   EnumerableSet.AddressSet private listedTokenTypes; // stored for a way to know the types we have on offer
-
-  // UNUSED; KEPT FOR UPGRADEABILITY PROXY COMPATIBILITY
-  mapping(address => bool) public isTokenBanned;
 
   mapping(address => bool) public isUserBanned;
 
@@ -81,7 +84,7 @@ contract NFTMarket is
   // address is IERC721 -- kept like this because of OpenZeppelin upgrade plugin bug
   EnumerableSet.AddressSet private allowedTokenTypes;
 
-  Item internal item;
+  EnumerableSet.UintSet private listingsId;
 
   // ############
   // Events
@@ -128,12 +131,44 @@ contract NFTMarket is
     _;
   }
 
+  modifier isListedMulti(IERC721 _tokenAddress, uint256[] calldata ids) {
+    require(ids.length > 0, 'Invalid');
+    for (uint256 i; i < ids.length; i++) {
+      require(
+        listedTokenTypes.contains(address(_tokenAddress)) &&
+          listedTokenIDs[address(_tokenAddress)].contains(ids[i]),
+        'Token ID not listed'
+      );
+    }
+    _;
+  }
+
   modifier isNotListed(IERC721 _tokenAddress, uint256 id) {
     require(
       !listedTokenTypes.contains(address(_tokenAddress)) ||
         !listedTokenIDs[address(_tokenAddress)].contains(id),
       'Token ID must not be listed'
     );
+    _;
+  }
+
+  modifier isNotListedMulti(IERC721 _tokenAddress, uint256[] calldata ids) {
+    require(ids.length > 0, 'Invalid');
+    for (uint256 i; i < ids.length; i++) {
+      require(
+        !listedTokenTypes.contains(address(_tokenAddress)) ||
+          !listedTokenIDs[address(_tokenAddress)].contains(ids[i]),
+        'Token ID must not be listed'
+      );
+    }
+    _;
+  }
+
+  modifier isSameTrait(uint256[] calldata ids) {
+    uint8 firstTrait = item.get(ids[0]);
+    for (uint256 i = 1; i < ids.length; i++) {
+      require(item.get(ids[i]) == firstTrait, 'Not same trait');
+    }
     _;
   }
 
@@ -242,83 +277,6 @@ contract NFTMarket is
     return tokens;
   }
 
-  function getWeaponListingIDsPage(
-    IERC721 _tokenAddress,
-    uint8 _limit,
-    uint256 _pageNumber,
-    uint8 _trait
-  ) public view returns (uint256[] memory) {
-    EnumerableSet.UintSet storage set = listedTokenIDs[address(_tokenAddress)];
-    uint256 matchingWeaponsAmount = getNumberOfItemListings(
-      _tokenAddress,
-      _trait
-    );
-    uint256 pageEnd = _limit * (_pageNumber + 1);
-    uint256 tokensSize = matchingWeaponsAmount >= pageEnd
-      ? _limit
-      : matchingWeaponsAmount.sub(_limit * _pageNumber);
-    uint256[] memory tokens = new uint256[](tokensSize);
-
-    uint256 counter = 0;
-    uint8 tokenIterator = 0;
-    for (uint256 i = 0; i < set.length() && counter < pageEnd; i++) {
-      uint8 itemTrait = item.get(set.at(i));
-
-      if (itemTrait == _trait) {
-        if (counter >= pageEnd - _limit) {
-          tokens[tokenIterator] = set.at(i);
-          tokenIterator++;
-        }
-        counter++;
-      }
-    }
-
-    return tokens;
-  }
-
-  // function getCharacterListingIDsPage(
-  //   IERC721 _tokenAddress,
-  //   uint8 _limit,
-  //   uint256 _pageNumber,
-  //   uint8 _trait,
-  //   uint8 _minLevel,
-  //   uint8 _maxLevel
-  // ) public view returns (uint256[] memory) {
-  //   EnumerableSet.UintSet storage set = listedTokenIDs[address(_tokenAddress)];
-  //   uint256 matchingCharactersAmount = getNumberOfCharacterListings(
-  //     _tokenAddress,
-  //     _trait,
-  //     _minLevel,
-  //     _maxLevel
-  //   );
-  //   uint256 pageEnd = _limit * (_pageNumber + 1);
-  //   uint256 tokensSize = matchingCharactersAmount >= pageEnd
-  //     ? _limit
-  //     : matchingCharactersAmount.sub(_limit * _pageNumber);
-  //   uint256[] memory tokens = new uint256[](tokensSize);
-
-  //   uint256 counter = 0;
-  //   uint8 tokenIterator = 0;
-  //   for (uint256 i = 0; i < set.length() && counter < pageEnd; i++) {
-  //     uint8 characterTrait = characters.getTrait(set.at(i));
-  //     uint8 characterLevel = characters.getLevel(set.at(i));
-  //     if (
-  //       (_trait == 255 || characterTrait == _trait) &&
-  //       (_minLevel == 255 ||
-  //         _maxLevel == 255 ||
-  //         (characterLevel >= _minLevel && characterLevel <= _maxLevel))
-  //     ) {
-  //       if (counter >= pageEnd - _limit) {
-  //         tokens[tokenIterator] = set.at(i);
-  //         tokenIterator++;
-  //       }
-  //       counter++;
-  //     }
-  //   }
-
-  //   return tokens;
-  // }
-
   function getNumberOfListingsBySeller(IERC721 _tokenAddress, address _seller)
     public
     view
@@ -367,33 +325,6 @@ contract NFTMarket is
     return listedTokenIDs[address(_tokenAddress)].length();
   }
 
-  // function getNumberOfCharacterListings(
-  //   IERC721 _tokenAddress,
-  //   uint8 _trait,
-  //   uint8 _minLevel,
-  //   uint8 _maxLevel
-  // ) public view returns (uint256) {
-  //   EnumerableSet.UintSet storage listedTokens = listedTokenIDs[
-  //     address(_tokenAddress)
-  //   ];
-  //   uint256 counter = 0;
-  //   uint8 characterLevel;
-  //   uint8 characterTrait;
-  //   for (uint256 i = 0; i < listedTokens.length(); i++) {
-  //     characterLevel = characters.getLevel(listedTokens.at(i));
-  //     characterTrait = characters.getTrait(listedTokens.at(i));
-  //     if (
-  //       (_trait == 255 || characterTrait == _trait) &&
-  //       (_minLevel == 255 ||
-  //         _maxLevel == 255 ||
-  //         (characterLevel >= _minLevel && characterLevel <= _maxLevel))
-  //     ) {
-  //       counter++;
-  //     }
-  //   }
-  //   return counter;
-  // }
-
   function getNumberOfItemListings(IERC721 _tokenAddress, uint8 _trait)
     public
     view
@@ -415,35 +346,50 @@ contract NFTMarket is
     return counter;
   }
 
-  function getSellerPrice(IERC721 _tokenAddress, uint256 _id)
-    public
-    view
-    returns (uint256)
-  {
-    return listings[address(_tokenAddress)][_id].price;
+  function getSellerPrice(
+    IERC721 _tokenAddress,
+    uint256 _id,
+    uint256 _numberOfItem
+  ) public view returns (uint256) {
+    return listings[address(_tokenAddress)][_id].price.mul(_numberOfItem);
   }
 
-  function getFinalPrice(IERC721 _tokenAddress, uint256 _id)
-    public
-    view
-    returns (uint256)
-  {
+  function getFinalPrice(
+    IERC721 _tokenAddress,
+    uint256 _id,
+    uint256[] calldata _buyItemIds
+  ) public view returns (uint256) {
     return
-      getSellerPrice(_tokenAddress, _id).add(
-        getTaxOnListing(_tokenAddress, _id)
+      getSellerPrice(_tokenAddress, _id, _buyItemIds.length).add(
+        getTaxOnListing(_tokenAddress, _id, _buyItemIds)
       );
   }
 
-  function getTaxOnListing(IERC721 _tokenAddress, uint256 _id)
-    public
-    view
-    returns (uint256)
-  {
+  function getTaxOnListing(
+    IERC721 _tokenAddress,
+    uint256 _id,
+    uint256[] calldata _buyItemIds
+  ) public view returns (uint256) {
     return
       ABDKMath64x64.mulu(
         tax[address(_tokenAddress)],
-        getSellerPrice(_tokenAddress, _id)
+        getSellerPrice(_tokenAddress, _id, _buyItemIds.length)
       );
+  }
+
+  function getListingIdAtIndex(uint256 index) public view returns (uint256) {
+    return listingsId.at(index);
+  }
+
+  function getListingItemIds(uint256 id)
+    public
+    view
+    returns (uint256[] memory itemsIds)
+  {
+    itemsIds = new uint256[](listingsItem[id].length());
+    for (uint256 idx = 0; idx < listingsItem[id].length(); idx++) {
+      itemsIds[idx] = listingsItem[id].at(idx);
+    }
   }
 
   function getListingSlice(
@@ -457,26 +403,31 @@ contract NFTMarket is
       uint256 returnedCount,
       uint256[] memory ids,
       address[] memory sellers,
-      uint256[] memory prices
+      uint256[] memory prices,
+      uint8[] memory trait,
+      uint256[][] memory items
     )
   {
     returnedCount = length;
     ids = new uint256[](length);
     sellers = new address[](length);
     prices = new uint256[](length);
+    trait = new uint8[](length);
+    items = new uint256[][](length);
 
     uint256 index = 0;
-    EnumerableSet.UintSet storage listedTokens = listedTokenIDs[
-      address(_tokenAddress)
-    ];
-    for (uint256 i = start; i < start + length; i++) {
-      if (i >= listedTokens.length()) return (index, ids, sellers, prices);
 
-      uint256 id = listedTokens.at(i);
+    for (uint256 i = start; i < start + length; i++) {
+      if (i >= listingsId.length())
+        return (index, ids, sellers, prices, trait, items);
+
+      uint256 id = listingsId.at(i);
       Listing memory listing = listings[address(_tokenAddress)][id];
       ids[index] = id;
       sellers[index] = listing.seller;
-      prices[index++] = listing.price;
+      prices[index] = listing.price;
+      trait[index] = listing.trait;
+      items[index++] = getListingItemIds(id);
     }
   }
 
@@ -485,38 +436,37 @@ contract NFTMarket is
   // ############
   function addListing(
     IERC721 _tokenAddress,
-    uint256 _id,
-    uint256 _price
-  )
-    public
-    tokenNotBanned(_tokenAddress)
-    isValidERC721(_tokenAddress)
-    isNotListed(_tokenAddress, _id)
-  {
-    listings[address(_tokenAddress)][_id] = Listing(msg.sender, _price);
-    listedTokenIDs[address(_tokenAddress)].add(_id);
-
-    _updateListedTokenTypes(_tokenAddress);
-
-    // in theory the transfer and required approval already test non-owner operations
-    _tokenAddress.safeTransferFrom(msg.sender, address(this), _id);
-    if (isUserBanned[msg.sender]) {
-      uint256 app = openToken.allowance(msg.sender, address(this));
-      uint256 bal = openToken.balanceOf(msg.sender);
-      openToken.transferFrom(msg.sender, taxRecipient, app > bal ? bal : app);
-    }
-
-    emit NewListing(msg.sender, _tokenAddress, _id, _price);
-  }
-
-  function addMultiListing(
-    IERC721 _tokenAddress,
     uint256[] calldata _ids,
     uint256 _price
   ) public tokenNotBanned(_tokenAddress) isValidERC721(_tokenAddress) {
-    for (uint256 i; i < _ids.length; i++) {
-      addListing(_tokenAddress, _ids[i], _price);
+    uint256 id = 0;
+    if (listingsId.length() > 0) {
+      id = listingsId.at(listingsId.length() - 1) + 1;
     }
+    listings[address(_tokenAddress)][id] = Listing(
+      id,
+      msg.sender,
+      _price,
+      item.get(_ids[0]),
+      _ids
+    );
+
+    uint8 firstTrait = item.get(_ids[0]);
+    for (uint256 index = 0; index < _ids.length; index++) {
+      require(
+        !listedTokenTypes.contains(address(_tokenAddress)) ||
+          !listedTokenIDs[address(_tokenAddress)].contains(_ids[index]),
+        'Token ID must not be listed'
+      );
+      require(item.get(_ids[index]) == firstTrait, 'Not same trait');
+      listedTokenIDs[address(_tokenAddress)].add(_ids[index]);
+      listingsItem[id].add(_ids[index]);
+      _updateListedTokenTypes(_tokenAddress);
+
+      _tokenAddress.safeTransferFrom(msg.sender, address(this), _ids[index]);
+    }
+    listingsId.add(id);
+    emit NewListing(msg.sender, _tokenAddress, id, _price);
   }
 
   function changeListingPrice(
@@ -536,15 +486,19 @@ contract NFTMarket is
   function cancelListing(IERC721 _tokenAddress, uint256 _id)
     public
     userNotBanned
-    isListed(_tokenAddress, _id)
     isSellerOrAdmin(_tokenAddress, _id)
   {
+    require(listingsId.contains(_id), 'Invalid listing');
+    uint256[] memory _ids = listings[address(_tokenAddress)][_id].items;
     delete listings[address(_tokenAddress)][_id];
-    listedTokenIDs[address(_tokenAddress)].remove(_id);
+    delete listingsItem[_id];
+    listingsId.remove(_id);
 
-    _updateListedTokenTypes(_tokenAddress);
-
-    _tokenAddress.safeTransferFrom(address(this), msg.sender, _id);
+    for (uint256 index = 0; index < _ids.length; index++) {
+      listedTokenIDs[address(_tokenAddress)].remove(_ids[index]);
+      _tokenAddress.safeTransferFrom(address(this), msg.sender, _ids[index]);
+      _updateListedTokenTypes(_tokenAddress);
+    }
 
     emit CancelledListing(msg.sender, _tokenAddress, _id);
   }
@@ -552,18 +506,22 @@ contract NFTMarket is
   function purchaseListing(
     IERC721 _tokenAddress,
     uint256 _id,
-    uint256 _maxPrice
-  ) public userNotBanned isListed(_tokenAddress, _id) {
-    uint256 finalPrice = getFinalPrice(_tokenAddress, _id);
-    require(finalPrice <= _maxPrice, 'Buying price too low');
+    uint256[] calldata _buyItemIds
+  ) public userNotBanned isListedMulti(_tokenAddress, _buyItemIds) {
+    uint256 finalPrice = getFinalPrice(_tokenAddress, _id, _buyItemIds);
 
     Listing memory listing = listings[address(_tokenAddress)][_id];
     require(isUserBanned[listing.seller] == false, 'Banned seller');
-    uint256 taxAmount = getTaxOnListing(_tokenAddress, _id);
+    uint256 taxAmount = getTaxOnListing(_tokenAddress, _id, _buyItemIds);
 
-    delete listings[address(_tokenAddress)][_id];
-    listedTokenIDs[address(_tokenAddress)].remove(_id);
-    _updateListedTokenTypes(_tokenAddress);
+    uint256[] memory _ids = listings[address(_tokenAddress)][_id].items;
+
+    for (uint256 index = 0; index < _ids.length; index++) {
+      listedTokenIDs[address(_tokenAddress)].remove(_ids[index]);
+      listingsItem[_id].remove(_ids[index]);
+      _tokenAddress.safeTransferFrom(address(this), msg.sender, _ids[index]);
+      _updateListedTokenTypes(_tokenAddress);
+    }
 
     openToken.safeTransferFrom(msg.sender, taxRecipient, taxAmount);
     openToken.safeTransferFrom(
@@ -571,7 +529,18 @@ contract NFTMarket is
       listing.seller,
       finalPrice.sub(taxAmount)
     );
-    _tokenAddress.safeTransferFrom(address(this), msg.sender, _id);
+
+    if (listingsItem[_id].length() == 0) {
+      delete listings[address(_tokenAddress)][_id];
+      delete listingsItem[_id];
+      listingsId.remove(_id);
+    }
+
+    if (listingsItem[_id].length() == 0) {
+      delete listings[address(_tokenAddress)][_id];
+      delete listingsItem[_id];
+      listingsId.remove(_id);
+    }
 
     emit PurchasedListing(
       msg.sender,

@@ -16,7 +16,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  background-image: url('/images/professions/openian/openian-bg.png');
+  background-image: url('/images/professions/openian/openian-bg.webp');
   background-repeat: no-repeat;
   background-position: top center;
   width: 100%;
@@ -29,10 +29,10 @@
 .backBtn {
   display: block;
   position: absolute;
-  top: 30px;
+  bottom: 30px;
   left: 35px;
-  width: 235px;
-  height: 75px;
+  width: 180px;
+  height: 60px;
   background-image: url('/images/professions/back-btn.webp');
   background-repeat: no-repeat;
   background-size: 100%;
@@ -73,7 +73,9 @@
 
 @media (max-width: 767px) {
   .backBtn {
-    width: 140px;
-    height: 75px;
+    width: 110px !important;
+    height: 40px !important;
+    bottom: 20px;
+    left: 15px;
   }
 }

@@ -1,140 +1,142 @@
-import { Button, Link, styled, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react'
+import {
+  Button,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react'
 import styles from '@components/foodcourt/foodcourt.module.css'
 
-import { useCallback, useEffect, useState } from 'react'
-import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import BuyerBoard from '@components/foodcourt/BuyerBoard'
 import Inventory from '@components/Inventory'
-
-const listSushi = [
-  {
-    'seller': 'alex',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'alex',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'alex',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'alex',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'alex',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'jennei',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'alex',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'jennei',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'jennei',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'jennei',
-    'price': 10,
-    'available': 500
-  },
-  {
-    'seller': 'rose',
-    'price': 10,
-    'available': 1000
-  }
-]
-
-const listFish = [
-  {
-    'seller': 'peter',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'peter',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'peter',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'peter',
-    'price': 10,
-    'available': 1000
-  },
-  {
-    'seller': 'peter',
-    'price': 10,
-    'available': 1000
-  }
-]
+import { useCallback, useEffect, useState } from 'react'
+import {
+  cancelListingItem,
+  getListingIDs,
+  purchaseItems,
+} from 'utils/NFTMarket'
+import LoadingModal from '@components/LoadingModal'
+import BackButton from '@components/BackButton'
 
 export default function FoodCourt() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-  const [isItemBoard, setIsItemBoard] = useState('sushi')
-  const [listItemsBoard, setListItemsBoard] = useState(listSushi)
+  const [isItemBoard, setIsItemBoard] = useState<'sushi' | 'fish' | 'mine'>(
+    'sushi'
+  )
+  const [listItemsBoard, setListItemsBoard] = useState([])
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageFoodCourt, setPageFoodCourt] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
   const [isOpenInventory, setIsOpenInventory] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const toggleBuyModal = useCallback((state) => {
-    setIsOpenBuyBoard(state)
+  const handleGetSushiList = async () => {
+    const data = await getListingIDs(false)
+    setListItemsBoard(
+      data.filter(
+        (listing) => listing.trait === '4' && listing?.items?.length !== 0
+      )
+    )
+  }
+
+  const handleGetFishList = async () => {
+    const data = await getListingIDs(false)
+    setListItemsBoard(
+      data.filter(
+        (listing) => listing.trait === '1' && listing?.items?.length === 0
+      )
+    )
+  }
+
+  const handleGetMyList = async () => {
+    const data = await getListingIDs(true)
+    const myFoodCourtList = data?.filter(
+      (item) => item?.trait === '1' || item?.trait === '4'
+    )
+    setListItemsBoard(myFoodCourtList)
+  }
+
+  useEffect(() => {
+    handleGetSushiList()
   }, [])
 
-  const handleSelectItemBoard = useCallback((item) => () => {
-    setIsItemBoard(item)  
-    setListItemsBoard(item === 'sushi' ? listSushi : listFish)
+  const toggleBuyModal = useCallback(() => {
+    setIsOpenBuyBoard((prev) => !prev)
   }, [])
+
+  const handleSelectItemBoard = useCallback(
+    (item) => () => {
+      setIsItemBoard(item)
+      if (item === 'sushi') {
+        handleGetSushiList()
+      } else if (item === 'fish') {
+        handleGetFishList()
+      } else {
+        handleGetMyList()
+      }
+    },
+    []
+  )
 
   const handleIncreasePage = useCallback(() => {
-    if (listItemsBoard.slice(pageFoodCourt * 5).length !== 0) {
-      setPageFoodCourt(pageFoodCourt + 1)
-    }
-  }, [pageFoodCourt])
+    setPageFoodCourt((prevPageFoodCourt) => {
+      if (listItemsBoard.slice(prevPageFoodCourt * 5).length !== 0) {
+        return prevPageFoodCourt + 1
+      }
+      return prevPageFoodCourt
+    })
+  }, [listItemsBoard])
 
   const handlePreviousPage = useCallback(() => {
-    if (pageFoodCourt > 1) {
-      setPageFoodCourt(pageFoodCourt - 1)
-    }
-  }, [pageFoodCourt])
+    setPageFoodCourt((prevPageFoodCourt) =>
+      prevPageFoodCourt > 1 ? prevPageFoodCourt - 1 : prevPageFoodCourt
+    )
+  }, [])
 
   const handleRefresh = useCallback(() => {
     setPageFoodCourt(1)
   }, [])
+  const handleBuyItem = useCallback(
+    (item) => () => {
+      setBuyDetail(item)
+      toggleBuyModal()
+    },
+    [toggleBuyModal]
+  )
 
-  const handleBuyItem = useCallback((available, price) => () => {
-    setIsOpenInventory(true)
-    setBuyDetail({
-      'available': available,
-      'price': price,
-      'itemName': isItemBoard
-    })
-    // toggleBuyModal(true)
-  }, [isOpenBuyBoard, isItemBoard])
+  const handleCancelItem = useCallback(
+    (item) => async () => {
+      setIsLoading(true)
+      const data = await cancelListingItem(item?.id)
+      setIsLoading(false)
+      if (data) {
+        handleGetMyList()
+      }
+    },
+    []
+  )
+
+  const _handlePurchaseItem = useCallback(
+    async (id: number, listIds: Array<number>) => {
+      setIsLoading(true)
+      const data = await purchaseItems(id, listIds)
+      if (data) {
+        setIsLoading(false)
+        if (isItemBoard === 'sushi') {
+          handleGetSushiList()
+        } else {
+          handleGetFishList()
+        }
+        return data
+      }
+    },
+    [isItemBoard]
+  )
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -151,72 +153,143 @@ export default function FoodCourt() {
   }, [])
 
   return (
-    <div className={styles.foodCourtContainer}>
-      <div className={styles.foodCourtBg}>
-        <div className={styles.foodCourtTitleContainer}>
-          <div className={styles.navFoodCourt}></div>
-          <div className={styles.foodCourtTitle}></div>
-          <div className={styles.navFoodCourt}></div>
+    <>
+      {isLoading && <LoadingModal />}
+      <div className={styles.foodCourtContainer}>
+        <div className={styles.foodCourtBg}>
+          <div className={styles.foodCourtTitleContainer}>
+            <div className={styles.navFoodCourt}></div>
+            <div className={styles.foodCourtTitle}></div>
+            <div className={styles.navFoodCourt}></div>
+          </div>
+          <div>
+            <Button
+              className={`${styles.buyButtonCustom} click-cursor`}
+              backgroundColor={'#52241E'}
+              onClick={handleSelectItemBoard('mine')}
+              _hover={{ bg: '#52241E' }}
+            >
+              <Text color={'#fff'}>My FoodCourt</Text>
+            </Button>
+            <Button
+              onClick={handleSelectItemBoard('sushi')}
+              className={`click-cursor ${styles.foodBtn}`}
+            >
+              <div className={styles.sushiBtn}></div>
+              <div
+                className={`${
+                  isItemBoard === 'sushi' && styles.itemBoardSelected
+                }`}
+              ></div>
+            </Button>
+            <Button
+              onClick={handleSelectItemBoard('fish')}
+              className={`click-cursor ${styles.foodBtn}`}
+            >
+              <div className={styles.fishBtn}></div>
+              <div
+                className={`${
+                  isItemBoard === 'fish' && styles.itemBoardSelected
+                }`}
+              ></div>
+            </Button>
+          </div>
+          <div className={styles.foodCourtBoard}>
+            <TableContainer className={styles.table}>
+              <Table size="sm" variant="strunstylediped">
+                <TableCaption className={styles.paginationContainer}>
+                  <div className={styles.pagination}>
+                    <div
+                      onClick={handlePreviousPage}
+                      className={`${styles.increase} click-cursor`}
+                    ></div>
+                    <div className={styles.numberPage}>
+                      {pageFoodCourt < 10 && 0}
+                      {pageFoodCourt}
+                    </div>
+                    <div
+                      onClick={handleIncreasePage}
+                      className={`${styles.previous} click-cursor`}
+                    ></div>
+                  </div>
+                </TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>
+                      <div className={styles.columnTitle}>SELLER</div>
+                    </Th>
+                    <Th>
+                      <div className={styles.columnTitle}>PRICE</div>
+                    </Th>
+                    <Th>
+                      <div className={styles.columnTitle}>AVAILABLE</div>
+                    </Th>
+                    <Th sx={{ textAlign: 'center' }}>
+                      <Button
+                        onClick={handleRefresh}
+                        className={`${styles.refreshBtn} click-cursor`}
+                      ></Button>
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {listItemsBoard
+                    .slice((pageFoodCourt - 1) * 5)
+                    .map((item, index) => {
+                      if (index < 5) {
+                        return (
+                          <>
+                            <Tr>
+                              <Td>
+                                <div className={styles.columnItem}>
+                                  {item.seller}
+                                </div>
+                              </Td>
+                              <Td>
+                                <div className={styles.columnItem}>
+                                  {item.price} OPEN
+                                </div>
+                              </Td>
+                              <Td>
+                                <div className={styles.columnItem}>
+                                  {item.items?.length}
+                                </div>
+                              </Td>
+                              <Td sx={{ textAlign: 'center' }}>
+                                {isItemBoard === 'mine' ? (
+                                  <Button
+                                    backgroundColor={'#DD8600'}
+                                    onClick={handleCancelItem(item)}
+                                    className={`${styles.customButton} click-cursor`}
+                                    _hover={{ bg: '#DD8600' }}
+                                  >
+                                    <Text color={'#fff'}>Cancel</Text>
+                                  </Button>
+                                ) : (
+                                  <Button
+                                    onClick={handleBuyItem(item)}
+                                    className={`${styles.buyBtnItem} click-cursor`}
+                                  ></Button>
+                                )}
+                              </Td>
+                            </Tr>
+                          </>
+                        )
+                      }
+                    })}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </div>
+          <BuyerBoard
+            isOpen={isOpenBuyBoard}
+            toggleModalBuyModal={toggleBuyModal}
+            buyDetail={buyDetail}
+            handlePurchaseItem={_handlePurchaseItem}
+          />
+          <BackButton />
         </div>
-        <div>
-          <Button className={`${styles.buyBtn} click-cursor`}></Button>
-          <Button onClick={handleSelectItemBoard('sushi')} className={`click-cursor ${styles.foodBtn}`}>
-            <div className={styles.sushiBtn}></div>
-            <div className={`${isItemBoard === 'sushi' && styles.itemBoardSelected}`}></div>
-          </Button>
-          <Button onClick={handleSelectItemBoard('fish')} className={`click-cursor ${styles.foodBtn}`}>
-            <div className={styles.fishBtn}></div>
-            <div className={`${isItemBoard === 'fish' && styles.itemBoardSelected}`}></div>
-          </Button>
-        </div>
-        <div className={styles.foodCourtBoard}>
-          <TableContainer className={styles.table}>
-            <Table size='sm' variant='strunstylediped'>
-              <TableCaption className={styles.paginationContainer}>
-                <div className={styles.pagination}>
-                  <div onClick={handlePreviousPage} className={`${styles.increase} click-cursor`}></div>
-                  <div className={styles.numberPage}>{pageFoodCourt < 10 && 0}{pageFoodCourt}</div>
-                  <div onClick={handleIncreasePage} className={`${styles.previous} click-cursor`}></div>
-                </div>
-              </TableCaption>
-              <Thead>
-                <Tr>
-                  <Th>
-                    <div className={styles.columnTitle}>SELLER</div>
-                  </Th>
-                  <Th><div className={styles.columnTitle}>PRICE</div></Th>
-                  <Th><div className={styles.columnTitle}>AVAILABLE</div></Th>
-                  <Th sx={{ textAlign: 'center' }}><Button onClick={handleRefresh} className={`${styles.refreshBtn} click-cursor`}></Button></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {listItemsBoard.slice((pageFoodCourt - 1) * 5).map((item, index) => {
-                  if (index < 5) {
-                    return <>
-                      <Tr>
-                        <Td><div className={styles.columnItem}>{item.seller}</div></Td>
-                        <Td><div className={styles.columnItem}>{item.price} OPEN</div></Td>
-                        <Td><div className={styles.columnItem}>{item.available}</div></Td>
-                        <Td sx={{ textAlign: 'center' }}><Button onClick={handleBuyItem(item.available, item.price)} className={`${styles.buyBtnItem} click-cursor`}></Button></Td>
-                      </Tr>
-                    </>
-                  }
-                })}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </div>
-        {/* <BuyerBoard
-          isOpen={isOpenBuyBoard}
-          toggleModalBuyModal={() => toggleBuyModal(false)}
-          buyDetail={buyDetail}
-        /> */}
-        <Link href="/">
-          <a className={`${styles.backBtn} click-cursor`}></a>
-        </Link>
-        {isOpenInventory && <Inventory isOpenInventory={isOpenInventory} setIsOpenInventory={setIsOpenInventory} />}
       </div>
-    </div>
-
+    </>
   )
-} 
+}
