@@ -41,18 +41,7 @@ contract Profession is AccessControlUpgradeable {
     profiles = Profiles(_profile);
   }
 
-  function startFishing(uint256 _idSushi1, uint256 _idSushi2)
-    public
-    returns (bool)
-  {
-    require(
-      item.ownerOf(_idSushi1) == msg.sender &&
-        item.ownerOf(_idSushi2) == msg.sender,
-      'Not own sushi'
-    );
-    require(item.get(_idSushi1) == 4 && item.get(_idSushi2) == 4, 'Not sushi');
-    item.burn(_idSushi1);
-    item.burn(_idSushi2);
+  function startFishing() public returns (bool) {
     (uint256 startTime, ) = getFishingQuest(msg.sender);
     require(startTime == 0, 'Not finish last quest');
     uint256 oldStamina = profiles.getStamina(msg.sender);
@@ -60,6 +49,7 @@ contract Profession is AccessControlUpgradeable {
     openianFishingQuest[msg.sender] = Quest(block.timestamp, false);
     return true;
   }
+
 
   function finishFishing() public returns (bool) {
     (uint256 startTime, bool finish) = getFishingQuest(msg.sender);
