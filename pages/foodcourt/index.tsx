@@ -228,10 +228,10 @@ export default function FoodCourt() {
                               <Td sx={{ textAlign: 'center' }}>
                                 {isItemBoard === 'mine' ? (
                                   <Button
-                                    backgroundColor={'#1e4882'}
+                                    backgroundColor={'#DD8600'}
                                     onClick={handleCancelItem(item)}
                                     className={`${styles.customButton} click-cursor`}
-                                    _hover={{ bg: '#1e4882' }}
+                                    _hover={{ bg: '#DD8600' }}
                                   >
                                     <Text color={'#fff'}>Cancel</Text>
                                   </Button>
