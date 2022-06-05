@@ -90,20 +90,18 @@ export const finishFishing = async () => {
 
 // Mining
 export const startMining = async () => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+  const hammerList = await fetchAmountItemByTrait(3)
+  if (hammerList?.length <= 1) {
+    return
+  }
   try {
-    const contract = await getProfessionContract()
-    const accounts = await web3.eth.getAccounts()
-    const hammerList = await fetchAmountItemByTrait(3)
-
-    if (hammerList?.length < 2) {
-      return
-    }
-
     const data = await contract.methods
-      .startMining(hammerList[0], hammerList[1])
+      .startMining(hammerList[0])
       .send({ from: accounts[0] })
     return data
-  } catch {
+  } catch (e) {
     return null
   }
 }
