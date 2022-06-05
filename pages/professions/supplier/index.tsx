@@ -1,8 +1,6 @@
 import styles from '../../../components/professions/supplier.module.css'
 import Head from 'next/head'
-import FishingModal, {
-  TYPE_OF_MODAL,
-} from '@components/professions/openian/fishingModal/FishingModal'
+import { TYPE_OF_MODAL } from '@components/professions/openian/fishingModal/FishingModal'
 import { useCallback, useEffect, useState } from 'react'
 import MakeSushiModal from '@components/professions/supplier/MakeSushiModal'
 import {
@@ -14,7 +12,7 @@ import { dispatchMakeSushi } from '../../../utils/professionContract'
 import SellSushiModal from '@components/professions/supplier/SellSushiModal'
 import { sellSushi } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
-import Link from 'next/link'
+import BackButton from '@components/BackButton'
 
 function Supplier() {
   const [showMakeSushi, setShowMakeSushi] = useState(false)
@@ -144,9 +142,7 @@ function Supplier() {
       </div>
       {renderModal()}
       {isLoading ? <LoadingModal /> : null}
-      <Link href="/">
-        <a className={`${styles.backBtn} click-cursor`}></a>
-      </Link>
+      <BackButton />
     </div>
   )
 }

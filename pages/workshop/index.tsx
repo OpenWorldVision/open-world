@@ -1,6 +1,5 @@
 import {
   Button,
-  Link,
   Table,
   TableCaption,
   TableContainer,
@@ -17,92 +16,7 @@ import BuyerBoard from '@components/workshop/BuyerBoard'
 import Head from 'next/head'
 import { useCallback, useEffect, useState } from 'react'
 import { cancelListingItem, getListingIDs } from 'utils/NFTMarket'
-
-const listOre = [
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'jennei',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'alex',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'jennei',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'jennei',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'jennei',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'rose',
-    price: 10,
-    available: 1000,
-  },
-]
-
-const listHammer = [
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-  {
-    seller: 'peter',
-    price: 10,
-    available: 1000,
-  },
-]
+import BackButton from '@components/BackButton'
 
 export default function WorkShop() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -338,9 +252,7 @@ export default function WorkShop() {
             toggleModalBuyModal={() => toggleBuyModal(false)}
             buyDetail={buyDetail}
           />
-          <Link href="/">
-            <a className={`${styles.backBtn} click-cursor`}></a>
-          </Link>
+          <BackButton />
         </div>
       </div>
     </>
