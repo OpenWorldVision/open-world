@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react'
+import { Button, useToast } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
@@ -9,6 +9,8 @@ import {
 } from 'utils/professionContract'
 import styles from './fishingModal.module.css'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
+import { getStamina } from 'utils/profileContract'
 
 type Props = {
   isOpen: boolean
@@ -35,7 +37,29 @@ function FishingModal(props: Props) {
 
   const miningInterval = useRef<ReturnType<typeof setInterval>>(null)
 
+  const toast = useToast()
+
+  const checkRequirementBeforeStartQuest = useCallback(async () => {
+    const stamina = await getStamina()
+
+    if (Number(stamina) < 50) {
+      toast({
+        title: 'Fishing Quest',
+        description:
+          "Fishing quest requires at least 50 stamina to start. You don't have enough stamina to start fishing quest.",
+        status: 'error',
+        duration: 15000,
+        isClosable: true,
+      })
+    }
+
+    return Number(stamina) >= 50
+  }, [toast])
+
   const startQuest = useCallback(async () => {
+    if (!checkRequirementBeforeStartQuest()) {
+      return
+    }
     setTimeLeft(duration)
     toggleLoadingModal(true)
     const fishing = await startFishing()
@@ -49,7 +73,7 @@ function FishingModal(props: Props) {
     } else {
       toggleLoadingModal(false)
     }
-  }, [])
+  }, [checkRequirementBeforeStartQuest, duration, toggleLoadingModal])
 
   const handleExitBtn = () => {
     toggleModal()
@@ -99,7 +123,7 @@ function FishingModal(props: Props) {
       }
       toggleLoadingModal(false)
     }
-  }, [])
+  }, [canFinish, duration, toggleLoadingModal, updateInventory])
 
   const confirmResult = useCallback(() => {
     setTypeOfModal(TYPE_OF_MODAL.START)
@@ -242,24 +266,6 @@ function FishingModal(props: Props) {
               : styles.modalFinish
           }
         >
-          {/* {typeofModal !== TYPE_OF_MODAL.FINISH && (
-            <h3 className={styles.sellBoard}>
-              {typeofModal === TYPE_OF_MODAL.FINISH && <img
-                src='/images/professions/openian/questFinish.png'
-                alt="Fish board"
-              />}
-            </h3>
-          )} */}
-
-          {/* {typeofModal === TYPE_OF_MODAL.FINISH && (
-            <h3 className={styles.sellBoard}>
-              {typeofModal === TYPE_OF_MODAL.FINISH && <img
-                src='/images/professions/openian/questFinish.png'
-                alt="Fish board"
-              />}
-            </h3>
-          )} */}
-
           <Button
             className={`${styles.closeBtn} click-cursor ${
               typeofModal !== TYPE_OF_MODAL.FINISH && styles.btnFishing

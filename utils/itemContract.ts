@@ -1,4 +1,5 @@
 import Web3 from 'web3'
+import { nftMarketContract } from './NFTMarket'
 
 const web3 = new Web3(Web3.givenProvider)
 
@@ -42,7 +43,7 @@ export const setApprovedAll = async () => {
   const accounts = await web3.eth.getAccounts()
   try {
     const approved = await contract.methods
-      .setApprovalForAll('0xf65a2cd87d3b0fa43c10979c2e60baa40bb03c1d', true)
+      .setApprovalForAll(nftMarketContract.addressBSC, true)
       .send({ from: accounts[0] })
     return approved
   } catch (error) {}
@@ -53,10 +54,7 @@ export const getApprovalAll = async () => {
   const accounts = await web3.eth.getAccounts()
   try {
     const isApproved = await contract.methods
-      ?.isApprovedForAll(
-        accounts[0],
-        '0xf65a2cd87d3b0fa43c10979c2e60baa40bb03c1d'
-      )
+      ?.isApprovedForAll(accounts[0], nftMarketContract.addressBSC)
       .call({ from: accounts[0] })
     return isApproved
   } catch (error) {}

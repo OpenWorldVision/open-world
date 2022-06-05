@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import style from './Mining.module.css'
-import { Button } from '@chakra-ui/react'
+import { Button, useToast } from '@chakra-ui/react'
 
 import ResultMining from './ResultMining'
 import MiningWait from './MiningWait'
@@ -12,6 +12,7 @@ import {
   fetchMiningQuestData,
   finishMining,
 } from 'utils/professionContract'
+import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
 
 type Props = {
   isOpen: boolean
@@ -32,8 +33,27 @@ export default function MiningModal(props: Props) {
   const [timeLeft, setTimeLeft] = useState(10)
 
   const miningInterval = useRef<ReturnType<typeof setInterval>>(null)
+  const toast = useToast()
+
+  const checkRequirementBeforeStartQuest = useCallback(async () => {
+    const hammerList = await fetchAmountItemByTrait(3)
+    if (hammerList?.length < 2) {
+      toast({
+        title: 'Mining Quest',
+        description: "You don't have enough hammer to start mining quest",
+        status: 'error',
+        duration: 15000,
+        isClosable: true,
+      })
+    }
+
+    return hammerList?.length > 2
+  }, [toast])
 
   const startQuest = useCallback(async () => {
+    if (!checkRequirementBeforeStartQuest()) {
+      return
+    }
     setTimeLeft(duration)
     toggleLoadingModal(true)
     const mining = await startMining()
@@ -100,7 +120,7 @@ export default function MiningModal(props: Props) {
     setIsStartQuest(false)
     setIsFinished(false)
     toggleModal()
-  }, [])
+  }, [toggleModal])
 
   const initialize = async () => {
     toggleLoadingModal(true)

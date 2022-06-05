@@ -1,10 +1,25 @@
 import style from '../../components/professions/professions.module.css'
-import ProfessionsSelection from '@components/professions/ProfessionsSelection'
-import Openian from '@components/professions/openian/Openian'
-import Blacksmith from '@components/professions/blacksmith/Blacksmith'
 import { useSelector } from 'react-redux'
 import Head from 'next/head'
-import Supplier from './supplier'
+import dynamic from 'next/dynamic'
+import LoadingModal from '@components/LoadingModal'
+
+const ProfessionsSelection = dynamic(
+  () => import('@components/professions/ProfessionsSelection'),
+  { loading: () => <LoadingModal fullBlack /> }
+)
+const Openian = dynamic(
+  () => import('@components/professions/openian/Openian'),
+  { loading: () => <LoadingModal fullBlack /> }
+)
+const Blacksmith = dynamic(
+  () => import('@components/professions/blacksmith/Blacksmith'),
+  { loading: () => <LoadingModal fullBlack /> }
+)
+
+const Supplier = dynamic(() => import('./supplier'), {
+  loading: () => <LoadingModal fullBlack />,
+})
 
 function Professions() {
   const profile = useSelector((state: any) => {

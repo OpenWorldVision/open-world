@@ -141,7 +141,7 @@ export default function Entry() {
               },
             },
           })
-        } catch (error: unknown) { }
+        } catch (error: unknown) {}
       }
     }
   }
