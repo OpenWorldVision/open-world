@@ -55,7 +55,11 @@ export const listMultiItems = async (ids, price) => {
       await Item.setApprovalForAll(marketContract.addressBSC, true)
     }
 
-    const result = await Market.addListing(itemContract.addressBSC, ids, price)
+    const result = await Market.addListing(
+      itemContract.addressBSC,
+      ids,
+      ethers.utils.parseEther(`${price}`)
+    )
 
     let transactionReceipt = null
     do {

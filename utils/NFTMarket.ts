@@ -54,7 +54,7 @@ export async function getListingIDs(isMine: boolean): Promise<Listing[]> {
   const accounts = await web3.eth.getAccounts()
   try {
     const listIds = await contract.methods
-      .getListingSlice(nftAddress, 0, 20)
+      .getListingSlice(nftAddress, 0, 30)
       .call({ from: accounts[0] })
     const listFull = []
     listIds?.sellers?.forEach((sellerAddress, index) => {

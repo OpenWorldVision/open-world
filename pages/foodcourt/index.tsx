@@ -46,7 +46,7 @@ export default function FoodCourt() {
     const data = await getListingIDs(false)
     setListItemsBoard(
       data.filter(
-        (listing) => listing.trait === '1' && listing?.items?.length === 0
+        (listing) => listing.trait === '1' && listing?.items?.length !== 0
       )
     )
   }
@@ -163,14 +163,6 @@ export default function FoodCourt() {
           </div>
           <div>
             <Button
-              className={`${styles.buyButtonCustom} click-cursor`}
-              backgroundColor={'#52241E'}
-              onClick={handleSelectItemBoard('mine')}
-              _hover={{ bg: '#52241E' }}
-            >
-              <Text color={'#fff'}>My FoodCourt</Text>
-            </Button>
-            <Button
               onClick={handleSelectItemBoard('sushi')}
               className={`click-cursor ${styles.foodBtn}`}
             >
@@ -191,6 +183,14 @@ export default function FoodCourt() {
                   isItemBoard === 'fish' && styles.itemBoardSelected
                 }`}
               ></div>
+            </Button>
+            <Button
+              className={`${styles.buyButtonCustom} click-cursor`}
+              backgroundColor={'#52241E'}
+              onClick={handleSelectItemBoard('mine')}
+              _hover={{ bg: '#52241E' }}
+            >
+              <Text color={'#fff'}>My FoodCourt</Text>
             </Button>
           </div>
           <div className={styles.foodCourtBoard}>

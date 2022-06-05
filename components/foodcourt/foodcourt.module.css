@@ -52,6 +52,9 @@
 }
 
 .buyBtn {
+  background-image: url('/images/foodcourt/buy-btn.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
   width: 105px !important;
   height: 62px !important;
 }
@@ -63,7 +66,7 @@
   width: 60px !important;
   height: 65px !important;
   position: relative;
-  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .sushiBtn {
