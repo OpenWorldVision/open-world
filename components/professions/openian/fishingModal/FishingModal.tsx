@@ -123,7 +123,7 @@ function FishingModal(props: Props) {
       }
       toggleLoadingModal(false)
     }
-  }, [])
+  }, [canFinish, duration, toggleLoadingModal, updateInventory])
 
   const confirmResult = useCallback(() => {
     setTypeOfModal(TYPE_OF_MODAL.START)
