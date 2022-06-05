@@ -8,10 +8,11 @@ type Props = {
   isOpen: boolean
   toggleModalBuyModal: () => void
   buyDetail: any
+  handlePurchaseItem: any
 }
 
 export default function BuyerBoard(props: Props) {
-  const { isOpen, toggleModalBuyModal, buyDetail } = props
+  const { isOpen, toggleModalBuyModal, buyDetail, handlePurchaseItem } = props
 
   const [numberItem, setNumberItem] = useState(0)
   const [totalOpen, setTotalOpen] = useState(0)
@@ -26,14 +27,20 @@ export default function BuyerBoard(props: Props) {
   }, [toggleModalBuyModal])
 
   const handleConfirmBuy = useCallback(async () => {
-    setIsShowNoti(true)
     setNumberItem(0)
     setTotalOpen(0)
-    const data = await purchaseItems(parseInt(buyDetail?.id), buyDetail?.items)
+    const data = await handlePurchaseItem(
+      parseInt(buyDetail?.id),
+      buyDetail?.items
+    )
     if (data) {
+      setIsShowNoti(true)
+      setNotiContent({
+        value: 'SUCCESS',
+      })
       //handle success
     }
-  }, [buyDetail])
+  }, [buyDetail?.id, buyDetail?.items, handlePurchaseItem])
 
   const handleShowNoti = useCallback(() => {
     setIsShowNoti(false)

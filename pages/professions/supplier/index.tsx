@@ -139,10 +139,11 @@ function Supplier() {
             ></div>
           </div>
         </div>
+        <BackButton />
       </div>
+
       {renderModal()}
       {isLoading ? <LoadingModal /> : null}
-      <BackButton />
     </div>
   )
 }

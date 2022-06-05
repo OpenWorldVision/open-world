@@ -15,8 +15,13 @@ import styles from '@components/workshop/workshop.module.css'
 import BuyerBoard from '@components/workshop/BuyerBoard'
 import Head from 'next/head'
 import { useCallback, useEffect, useState } from 'react'
-import { cancelListingItem, getListingIDs } from 'utils/NFTMarket'
+import {
+  cancelListingItem,
+  getListingIDs,
+  purchaseItems,
+} from 'utils/NFTMarket'
 import BackButton from '@components/BackButton'
+import LoadingModal from '@components/LoadingModal'
 
 export default function WorkShop() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -28,6 +33,7 @@ export default function WorkShop() {
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageWorkShop, setPageWorkShop] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleGetHammerList = async () => {
     const data = await getListingIDs(false)
@@ -116,8 +122,26 @@ export default function WorkShop() {
     }
   }, [])
 
+  const _handlePurchaseItem = useCallback(
+    async (id: number, listIds: Array<number>) => {
+      setIsLoading(true)
+      const data = await purchaseItems(id, listIds)
+      if (data) {
+        setIsLoading(false)
+        if (isItemBoard === 'ore') {
+          handleGetOreList()
+        } else {
+          handleGetHammerList()
+        }
+        return data
+      }
+    },
+    [isItemBoard]
+  )
+
   return (
     <>
+      {isLoading && <LoadingModal />}
       <Head>
         <title>Workshop</title>
       </Head>
@@ -251,6 +275,7 @@ export default function WorkShop() {
             isOpen={isOpenBuyBoard}
             toggleModalBuyModal={() => toggleBuyModal(false)}
             buyDetail={buyDetail}
+            handlePurchaseItem={_handlePurchaseItem}
           />
           <BackButton />
         </div>
