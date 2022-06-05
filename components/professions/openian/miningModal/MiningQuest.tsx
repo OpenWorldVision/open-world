@@ -33,7 +33,7 @@ export default function MiningQuest(props: Props) {
       <div>
         <div className={style.title}>Required</div>
         <div className={style.detail}>
-          2 Hammer
+          1 Hammer
           <div className={style.harmer}></div>
         </div>
       </div>

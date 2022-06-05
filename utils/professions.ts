@@ -110,17 +110,18 @@ export const fetchUserProfessionNFT = async () => {
 
   for (let i = 0; i < index.toNumber(); i++) {
     const heroId = await contract.tokenOfOwnerByIndex(currentAddress, i)
-    nftList.push(await contract.getTrait(heroId.toNumber()))
+    const trait = await contract.getTrait(heroId.toNumber())
+    nftList.push({ heroId: heroId.toNumber(), trait })
   }
 
   return nftList
 }
 
-export const activateProfession = async (profession) => {
+export const activateProfession = async (profession, heroId) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   const contract = await getProfessionsContract()
   try {
-    const result = await contract.setProfession(profession)
+    const result = await contract.setProfession(profession, heroId)
 
     let transactionReceipt = null
     do {
@@ -128,7 +129,7 @@ export const activateProfession = async (profession) => {
     } while (transactionReceipt === null)
 
     return transactionReceipt.status
-  } catch {
+  } catch (e) {
     return false
   }
 }
