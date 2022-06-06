@@ -1,13 +1,16 @@
 const Profession = artifacts.require('Profession')
 const HeroCore = artifacts.require('HeroCore')
 const OpenWorld = artifacts.require('OpenWorld')
+const Profiles = artifacts.require('Profiles')
+const Item = artifacts.require('Item')
 
 module.exports = async function (deployer, network, accounts) {
-  let professionProxy, heroAddress, profilesAddress
+  let professionProxy, heroAddress, profilesAddress, itemAddress
   if (network === 'harmonyTestnet') {
     professionProxy = '0xC5Cc7a45Dd43AE5a50bB5487C79f37fFeb0B4616'
     heroAddress = '0x4DADfE6D1cC2595bF31FF3d478E654179c524F7c'
     profilesAddress = '0xdA7Ac2056FeC83f1A9E1a1a3F339fcaA696618c3'
+    itemAddress = '0xBd69df7fFcB9d7F071bb2124E1Eb8734bBDA8E0B'
   }
   if (network === 'harmony') {
     professionProxy = '0x707Ea5fC3Fc92c3B802Ecb9E1428E6F4FF03282f'
@@ -37,4 +40,15 @@ module.exports = async function (deployer, network, accounts) {
   await hero.setHeroPrice(1, '100000000000000000000')
   await hero.setHeroPrice(2, '5000000000000000000000')
   await hero.setHeroPrice(3, '2000000000000000000000')
+
+  const profiles = await Profiles.at(profilesAddress)
+  await profiles.setHeroes(heroAddress)
+
+  const item = await Item.at(itemAddress)
+  const PROFESSION_OPERATOR = await item.PROFESSION_OPERATOR()
+  await item.grantRole(PROFESSION_OPERATOR, accounts[0])
+  await item.grantRole(PROFESSION_OPERATOR, professionProxy)
+  // for (let i = 0; i < 10; i++) {
+  //   await item.mint('0x2CC6D07871A1c0655d6A7c9b0Ad24bED8f940517', 4)
+  // }
 }
