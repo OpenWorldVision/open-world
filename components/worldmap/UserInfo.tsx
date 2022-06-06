@@ -7,32 +7,29 @@ export default function Menu({
   isOpenUserInfo,
   setIsOpenCreateProfile,
   profile,
-  balance
+  balance,
 }) {
   const handleCloseModalUserInfo = useCallback(
     (e: any) => {
       if (e.target !== e.currentTarget) return
       setIsOpenUserInfo(false)
     },
-    [isOpenUserInfo]
+    [setIsOpenUserInfo]
   )
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(profile?._owner);
+    navigator.clipboard.writeText(profile?._owner)
   }
-
+  if (!isOpenUserInfo) {
+    return null
+  }
   return (
     <UserInfoCSS>
-      <div
-        onClick={(e) => {
-          handleCloseModalUserInfo(e)
-        }}
-        className="modal-user-info"
-      >
+      <div onClick={handleCloseModalUserInfo} className="modal-user-info">
         <div className="modal-content-user-info">
           <div className="modal-content-user-info-header">
             <button
-              className='click-cursor'
+              className="click-cursor"
               onClick={() => {
                 setIsOpenUserInfo(false)
               }}
@@ -49,7 +46,7 @@ export default function Menu({
           <div className="modal-content-user-info-body">
             <div>
               <button
-                className='click-cursor'
+                className="click-cursor"
                 css={{
                   marginBottom: '10px',
                 }}
@@ -63,70 +60,36 @@ export default function Menu({
             </div>
             <div>
               <img src="/favicon.ico" alt="img" />
-              {!balance && <Spinner
-                sx={{marginTop: '30px'}}
-                thickness='7px'
-                speed='0.65s'
-                emptyColor='#745FFB'
-                color='#E14C90'
-                size='xl'
-              />}
-              {balance && <span style={{
-                display: 'block',
-                margin: '0 auto'
-              }}>{balance}</span>}
+              {!balance && (
+                <Spinner
+                  sx={{ marginTop: '30px' }}
+                  thickness="7px"
+                  speed="0.65s"
+                  emptyColor="#745FFB"
+                  color="#E14C90"
+                  size="xl"
+                />
+              )}
+              {balance && (
+                <span
+                  style={{
+                    display: 'block',
+                    margin: '0 auto',
+                  }}
+                >
+                  {balance}
+                </span>
+              )}
             </div>
-            <div>
-              {/* <div>
-                <div>Balance:</div>
-                <div>0.00</div>
-              </div> */}
-              {/* <div>
-                <div>Pending Rewards:</div>
-                <div>0.00</div>
-              </div>
-              <div>
-                <div>Pending Locked Rewards:</div>
-                <div>0.00</div>
-              </div> */}
-            </div>
-            {/* <div>
-              <div>
-                <div>Locked Balance:</div>
-                <div>0.00</div>
-              </div>
-              <div>
-                <div>Total Balance:</div>
-                <div>0.00</div>
-              </div>
-            </div>
-            <div>
-              <div>
-                <div>Open in circulation:</div>
-                <div>76,698,795</div>
-              </div>
-              <div>
-                <div>Open total supply:</div>
-                <div>353,410,348</div>
-              </div>
-            </div>
-            <div>
-              <div>
-                <div>Open price:</div>
-                <div>$9.8635</div>
-              </div>
-              <div>
-                <div>Open circ. market cap:</div>
-                <div>$756,180,680</div>
-              </div>
-              <div>
-                <div>Open total market cap:</div>
-                <div>$3,484,456,825</div>
-              </div>
-            </div> */}
+
             <div>
               <div>Account Details</div>
-              <button onClick={handleCopy} className='click-cursor'>{`${profile?._owner.slice(0, 6)} ... ${profile?._owner.slice(-4)}`}</button>
+              <button
+                onClick={handleCopy}
+                className="click-cursor"
+              >{`${profile?._owner.slice(0, 6)} ... ${profile?._owner.slice(
+                -4
+              )}`}</button>
             </div>
           </div>
         </div>
@@ -138,13 +101,13 @@ export default function Menu({
 const UserInfoCSS = styled.div({
   '.modal-user-info': {
     position: 'fixed',
-    zIndex: 1,
+    zIndex: 15,
     left: 0,
     top: 0,
     width: '100%',
     height: '100%',
     overflow: 'auto',
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
     color: 'white',
     overflowX: 'hidden',
     overflowY: 'hidden',
@@ -153,7 +116,7 @@ const UserInfoCSS = styled.div({
     alignItems: 'center',
     justifyContent: 'center',
     '.modal-content-user-info': {
-      backgroundImage: 'url(./images/profile/frame.png)',
+      backgroundImage: 'url(/images/profile/frame.png)',
       backgroundRepeat: 'no-repeat',
       backgroundSize: '100% 100%',
       backgroundColor: 'rgb(0,0,0,.6)',
@@ -237,15 +200,15 @@ const UserInfoCSS = styled.div({
           },
         },
         '> div:nth-child(3), > div:nth-child(4), > div:nth-child(5), > div:nth-child(6)':
-        {
-          padding: '8px 20px',
-          borderBottom: '1px solid rgb(55,55,55)',
-          '> div': {
-            display: 'flex',
-            justifyContent: 'space-between',
-            margin: '10px 0',
+          {
+            padding: '8px 20px',
+            borderBottom: '1px solid rgb(55,55,55)',
+            '> div': {
+              display: 'flex',
+              justifyContent: 'space-between',
+              margin: '10px 0',
+            },
           },
-        },
         '> div:nth-child(7)': {
           padding: '8px 20px',
           paddingBottom: '30px',
