@@ -1,3 +1,4 @@
+import { getAddresses } from 'constants/addresses'
 import { ethers } from 'ethers'
 
 const itemContract = {
@@ -5,32 +6,12 @@ const itemContract = {
   jsonInterface: require('../build/contracts/Item.json'),
 }
 
-const marketContract = {
-  addressBSC: '0xF65a2cd87d3b0Fa43C10979c2E60BAA40Bb03C1d',
-  jsonInterface: require('../build/contracts/NFTMarket.json'),
-}
-
-// Create contract
-const getMarketContract = async () => {
+export const getItemContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-  const chainId = window?.ethereum?.chainId
-  const currentAddress = await window.ethereum.selectedAddress
-
-  if (chainId === '0x61') {
-    return new ethers.Contract(
-      marketContract.addressBSC,
-      marketContract.jsonInterface.abi,
-      provider.getSigner(currentAddress)
-    )
-  }
-}
-
-const getItemContract = async () => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-  // const chainId = await window?.ethereum?.chainId
-
+  const { chainId } = await provider.getNetwork()
+  const itemAddress = getAddresses(chainId).ITEM
   return new ethers.Contract(
-    itemContract.addressBSC,
+    itemAddress,
     itemContract.jsonInterface.abi,
     provider.getSigner()
   )

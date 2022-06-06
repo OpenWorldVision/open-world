@@ -1,101 +1,59 @@
+import { getAddresses } from 'constants/addresses'
 import { ethers } from 'ethers'
 import Web3 from 'web3'
+import profilesInterface from '../build/contracts/Profiles.json'
+import { getOpenWorldContract } from './openWorldContract'
+import heroInterface from '../build/contracts/HeroCore.json'
 
 const web3 = new Web3(Web3.givenProvider)
 
-// Contracts
-const openWorldTokenContract = {
-  addressBSC: '0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B',
-  jsonInterface: require('../build/contracts/ERC20.json'),
-}
-
-const professionsContract = {
-  addressHarmony: '0x87461de8692ead1de9ee628ff25d97ae393ea162',
-  addressBSC: '0xae46953433ebE48698c6D86a49fA154eDCad99C3',
-  jsonInterface: require('../build/contracts/Profiles.json'),
-}
-
-const heroCoreContract = {
-  addressHarmony: '0xE8977C9E35a8aCa6cB179681433062d38043FB58',
-  addressBSC: '0x585ded8E0Dd7DCfad02F13b94571E24cA59A3234',
-  jsonInterface: require('../build/contracts/HeroCore.json'),
-}
-
-// Create contracts
-export const getOpeWorldContract = async () => {
+const getProfilesContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
+  const chainId = await web3.eth.getChainId()
+  const profileAddress = getAddresses(chainId).PROFILES
 
   return new ethers.Contract(
-    openWorldTokenContract.addressBSC,
-    openWorldTokenContract.jsonInterface.abi,
+    profileAddress,
+    profilesInterface.abi,
     provider.getSigner()
   )
 }
 
-const getProfessionsContract = async () => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-  const chainId = window?.ethereum?.chainId
-
-  if (chainId === '0x61') {
-    return new ethers.Contract(
-      professionsContract.addressBSC,
-      professionsContract.jsonInterface.abi,
-      provider.getSigner()
-    )
-  } else {
-    return new ethers.Contract(
-      professionsContract.addressHarmony,
-      professionsContract.jsonInterface.abi,
-      provider.getSigner()
-    )
-  }
-}
-
 const getHeroCoreContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-  const chainId = window?.ethereum?.chainId
+  const { chainId } = await provider.getNetwork()
+  const heroAddress = getAddresses(chainId).HERO_CORE
 
-  if (chainId === '0x61') {
-    return new ethers.Contract(
-      heroCoreContract.addressBSC,
-      heroCoreContract.jsonInterface.abi,
-      provider.getSigner()
-    )
-  } else {
-    return new ethers.Contract(
-      heroCoreContract.addressHarmony,
-      heroCoreContract.jsonInterface.abi,
-      provider.getSigner()
-    )
-  }
+  return new ethers.Contract(
+    heroAddress,
+    heroInterface.abi,
+    provider.getSigner()
+  )
 }
 
 // Call Methods
 export const fetchRequireBalanceProfession = async () => {
-  const contract = await getProfessionsContract()
+  const contract = await getProfilesContract()
   const balance = await contract.requireBalanceProfession()
 
   return balance.toNumber()
 }
 
 export const mintProfessionNFT = async (trait) => {
-  const Herocore = await getHeroCoreContract()
-  const OpenWorld = await getOpeWorldContract()
+  const HeroCore = await getHeroCoreContract()
+  const OpenWorld = await getOpenWorldContract()
   const currentAddress = await window.ethereum.selectedAddress
 
-  const allowance = await OpenWorld.allowance(
-    currentAddress,
-    heroCoreContract.addressBSC
-  )
+  const allowance = await OpenWorld.allowance(currentAddress, HeroCore.address)
 
   if (allowance < web3.utils.toWei('1000000', 'ether')) {
     await OpenWorld.approve(
-      heroCoreContract.addressBSC,
+      HeroCore.address,
       web3.utils.toWei('1000000', 'ether')
     )
   }
   try {
-    await Herocore.mint(currentAddress, trait)
+    await HeroCore.mint(currentAddress, trait)
     return true
   } catch (e) {
     return false
@@ -119,7 +77,7 @@ export const fetchUserProfessionNFT = async () => {
 
 export const activateProfession = async (profession, heroId) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-  const contract = await getProfessionsContract()
+  const contract = await getProfilesContract()
   try {
     const result = await contract.setProfession(profession, heroId)
 

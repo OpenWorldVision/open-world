@@ -39,7 +39,7 @@ export default function FoodCourt() {
     const data = await getListingIDs(false)
     setListItemsBoard(
       data.filter(
-        (listing) => listing.trait === '4' && listing?.items?.length !== 0
+        (listing) => listing.trait === 4 && listing?.items?.length !== 0
       )
     )
   }
@@ -48,7 +48,7 @@ export default function FoodCourt() {
     const data = await getListingIDs(false)
     setListItemsBoard(
       data.filter(
-        (listing) => listing.trait === '1' && listing?.items?.length !== 0
+        (listing) => listing.trait === 1 && listing?.items?.length !== 0
       )
     )
   }
@@ -56,7 +56,7 @@ export default function FoodCourt() {
   const handleGetMyList = async () => {
     const data = await getListingIDs(true)
     const myFoodCourtList = data?.filter(
-      (item) => item?.trait === '1' || item?.trait === '4'
+      (item) => item?.trait === 1 || item?.trait === 4
     )
     setListItemsBoard(myFoodCourtList)
   }

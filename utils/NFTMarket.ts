@@ -1,41 +1,23 @@
+import { getAddresses } from 'constants/addresses'
 import { BigNumber, ethers } from 'ethers'
 import Web3 from 'web3'
 import { getOpenWorldContract } from './openWorldContract'
+import { getMarketContract } from './Market'
 
 const web3 = new Web3(Web3.givenProvider)
 
-export const nftMarketContract = {
-  addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
-  addressBSC: '0x7210aEaF0c7d74366E37cfB37073cB630Ac86B5b',
-  jsonInterface: require('../build/contracts/NFTMarket.json'),
-}
-
-const nftAddress = '0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492'
-
-const getNFTMarketContract = async () => {
-  const chainId = await web3.eth.getChainId()
-
-  if (chainId === 97) {
-    return new web3.eth.Contract(
-      nftMarketContract.jsonInterface.abi,
-      nftMarketContract.addressBSC
-    )
-  } else if (chainId === 1666700000) {
-    return new web3.eth.Contract(
-      nftMarketContract.jsonInterface.abi,
-      nftMarketContract.addressHarmony
-    )
-  }
-}
-
 export const sellSushi = async (ids: Array<number>, price: number) => {
-  const contract = await getNFTMarketContract()
-  const accounts = await web3.eth.getAccounts()
+  const contract = await getMarketContract()
+  const chainId = await web3.eth.getChainId()
+  const itemAddress = getAddresses(chainId).ITEM
 
   try {
-    const data = await contract.methods
-      .addListing(nftAddress, ids, ethers.utils.parseEther(`${price}`))
-      .send({ from: accounts[0] })
+    const data = await contract.addListing(
+      itemAddress,
+      ids,
+      ethers.utils.parseEther(`${price}`)
+    )
+
     return data
   } catch (error) {
     return null
@@ -47,15 +29,15 @@ type Listing = {
   items: string[]
   price: string
   seller: string
-  trait: string
+  trait: number
 }
 export async function getListingIDs(isMine: boolean): Promise<Listing[]> {
-  const contract = await getNFTMarketContract()
+  const contract = await getMarketContract()
   const accounts = await web3.eth.getAccounts()
+  const chainId = await web3.eth.getChainId()
+  const itemAddress = getAddresses(chainId).ITEM
   try {
-    const listIds = await contract.methods
-      .getListingSlice(nftAddress, 0, 30)
-      .call({ from: accounts[0] })
+    const listIds = await contract.getListingSlice(itemAddress, 0, 30)
     const listFull = []
     listIds?.sellers?.forEach((sellerAddress, index) => {
       if (sellerAddress !== NULL_ADDRESS) {
@@ -85,24 +67,29 @@ export const purchaseItems = async (
   try {
     const openWorldContract = await getOpenWorldContract()
     const currentAddress = await window.ethereum.selectedAddress
+    const chainId = await web3.eth.getChainId()
+    const itemAddress = getAddresses(chainId).ITEM
+    const marketAddress = getAddresses(chainId).MARKETPLACE
 
     const allowance: BigNumber = await openWorldContract.allowance(
       currentAddress,
-      nftMarketContract.addressBSC
+      marketAddress
     )
 
     if (allowance.lt(BigNumber.from(web3.utils.toWei('1000000', 'ether')))) {
       await openWorldContract.approve(
-        nftMarketContract.addressBSC,
+        marketAddress,
         web3.utils.toWei('100000000', 'ether')
       )
     }
-    const contract = await getNFTMarketContract()
-    const accounts = await web3.eth.getAccounts()
+    const contract = await getMarketContract()
 
-    const result = await contract.methods
-      ?.purchaseListing(nftAddress, transactionId, itemIds)
-      .send({ from: accounts[0] })
+    const result = await contract.purchaseListing(
+      itemAddress,
+      transactionId,
+      itemIds
+    )
+
     return result
   } catch (error) {
     return null
@@ -111,11 +98,12 @@ export const purchaseItems = async (
 
 export const cancelListingItem = async (id: number) => {
   try {
-    const contract = await getNFTMarketContract()
-    const accounts = await web3.eth.getAccounts()
-    const result = await contract.methods
-      ?.cancelListing(nftAddress, id)
-      .send({ from: accounts[0] })
+    const contract = await getMarketContract()
+    const chainId = await web3.eth.getChainId()
+    const itemAddress = getAddresses(chainId).ITEM
+
+    const result = await contract?.cancelListing(itemAddress, id)
+
     if (result) {
       return result
     }

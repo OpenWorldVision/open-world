@@ -1,29 +1,16 @@
+import { getAddresses } from 'constants/addresses'
 import Web3 from 'web3'
 import { fetchAmountItemByTrait } from './blackSmithContract'
+import professionInterface from '../build/contracts/Profession.json'
 
 const web3 = new Web3(Web3.givenProvider)
 
-const professionContract = {
-  addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
-  addressBSC: '0xf1FB61D2f353C8e612E201Ed8bb9Fb6FB4CC8673',
-  jsonInterface: require('../build/contracts/Profession.json'),
-}
-
 // Fishing
-const getProfessionContract = async () => {
+export const getProfessionContract = async () => {
   const chainId = await web3.eth.getChainId()
-
-  if (chainId === 97) {
-    return new web3.eth.Contract(
-      professionContract.jsonInterface.abi,
-      professionContract.addressBSC
-    )
-  } else if (chainId === 1666700000) {
-    return new web3.eth.Contract(
-      professionContract.jsonInterface.abi,
-      professionContract.addressHarmony
-    )
-  }
+  const professionAddress = getAddresses(chainId).PROFESSION
+  // @ts-ignore
+  return new web3.eth.Contract(professionInterface.abi, professionAddress)
 }
 
 export const startFishing = async () => {
