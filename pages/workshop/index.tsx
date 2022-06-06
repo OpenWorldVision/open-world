@@ -103,11 +103,10 @@ export default function WorkShop() {
     setPageWorkShop(1)
   }, [])
 
-
   const handleBuyItem = useCallback(
     (item) => () => {
       setBuyDetail(item)
-      // toggleBuyModal(true)
+      toggleBuyModal(true)
     },
     [toggleBuyModal]
   )
@@ -284,7 +283,12 @@ export default function WorkShop() {
           <Link href="/">
             <a className={`${styles.backBtn} click-cursor`}></a>
           </Link>
-          {isOpenInventory && <Inventory isOpenInventory={isOpenInventory} setIsOpenInventory={setIsOpenInventory} />}
+          {isOpenInventory && (
+            <Inventory
+              isOpenInventory={isOpenInventory}
+              setIsOpenInventory={setIsOpenInventory}
+            />
+          )}
           <BackButton />
         </div>
       </div>

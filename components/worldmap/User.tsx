@@ -141,7 +141,14 @@ export default function User(props: Props) {
                     />
                   </WrapItem>
                   <WrapItem>
-                    <Text className='click-cursor' onClick={() => { setIsOpenInventory(true) }}>Inventory</Text>
+                    <Text
+                      className="click-cursor"
+                      onClick={() => {
+                        setIsOpenInventory(true)
+                      }}
+                    >
+                      Inventory
+                    </Text>
                   </WrapItem>
                 </Wrap>
 
@@ -191,15 +198,15 @@ export default function User(props: Props) {
             </div>
           </PopoverContent>
         </Popover>
-        {isOpenUserInfo && (
-          <UserInfo
-            setIsOpenUserInfo={setIsOpenUserInfo}
-            isOpenUserInfo={isOpenUserInfo}
-            setIsOpenCreateProfile={setIsOpenCreateProfile}
-            profile={profile}
-            balance={balance}
-          />
-        )}
+
+        <UserInfo
+          setIsOpenUserInfo={setIsOpenUserInfo}
+          isOpenUserInfo={isOpenUserInfo}
+          setIsOpenCreateProfile={setIsOpenCreateProfile}
+          profile={profile}
+          balance={balance}
+        />
+
         {profile === false && (
           <CreateProfile
             setIsOpenCreateProfile={setIsOpenCreateProfile}
@@ -248,6 +255,7 @@ const UserCSS = styled.div({
     '@media(max-width: 720px)': {
       top: '10px',
       left: '10px',
+      width: '100px',
     },
     '> button': {
       height: '110px',
@@ -262,6 +270,14 @@ const UserCSS = styled.div({
         width: '76px',
         height: '76px',
         borderRadius: '50%',
+      },
+      '@media(max-width: 720px)': {
+        height: '82px',
+        img: {
+          width: '52px',
+          height: '52px',
+          borderRadius: '50%',
+        },
       },
     },
     '.user-info': {

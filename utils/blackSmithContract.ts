@@ -51,7 +51,7 @@ const getItemContract = async () => {
   }
 }
 
-const getmarketPlaceContract = async () => {
+const getMarketplaceContract = async () => {
   const chainId = await web3.eth.getChainId()
   const accounts = await web3.eth.getAccounts()
 
@@ -76,7 +76,7 @@ const getmarketPlaceContract = async () => {
   }
 }
 
-const getprofessionsContract = async () => {
+const getProfessionsContract = async () => {
   const chainId = await web3.eth.getChainId()
   const accounts = await web3.eth.getAccounts()
 
@@ -131,7 +131,7 @@ export const fetchAmountItemByTrait = async (hammer: number) => {
 }
 
 export const makeHammer = async (listOre: Array<number>) => {
-  const contract = await getprofessionsContract()
+  const contract = await getProfessionsContract()
   const accounts = await web3.eth.getAccounts()
 
   try {
@@ -143,7 +143,7 @@ export const makeHammer = async (listOre: Array<number>) => {
 }
 
 export const sellHammer = async (arrayHammer: Array<number>, price: number) => {
-  const contract = await getmarketPlaceContract()
+  const contract = await getMarketplaceContract()
   const accounts = await web3.eth.getAccounts()
   const item = await getItemContract()
 

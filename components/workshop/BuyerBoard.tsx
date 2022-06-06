@@ -83,7 +83,7 @@ export default function BuyerBoard(props: Props) {
               <Button
                 sx={{
                   cursor:
-                    'url(/images/worldmap/SelectCursor.png), auto !important',
+                    'url(/images/worldmap/SelectCursor.webp), auto !important',
                 }}
                 onClick={handleConfirmBuy}
                 className={styles.btnConfirm}
@@ -93,7 +93,7 @@ export default function BuyerBoard(props: Props) {
             <div
               style={{ backgroundColor: 'transparent' }}
               className="overlay"
-              onClick={() => toggleModalBuyModal()}
+              onClick={toggleModalBuyModal}
             ></div>
           </div>
         )}

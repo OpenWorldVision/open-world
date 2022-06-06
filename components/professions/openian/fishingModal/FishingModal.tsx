@@ -57,7 +57,8 @@ function FishingModal(props: Props) {
   }, [toast])
 
   const startQuest = useCallback(async () => {
-    if (!checkRequirementBeforeStartQuest()) {
+    const isOk = await checkRequirementBeforeStartQuest()
+    if (!isOk) {
       return
     }
     setTimeLeft(duration)
@@ -208,12 +209,12 @@ function FishingModal(props: Props) {
               {canFinish ? (
                 <img
                   src={`/images/professions/openian/finishFishing.png`}
-                  alt="Fisnish"
+                  alt="Finish"
                 />
               ) : (
                 <img
                   src={`/images/professions/openian/finish-disable-btn.png`}
-                  alt="Fisnish"
+                  alt="Finish"
                 />
               )}
             </Button>
