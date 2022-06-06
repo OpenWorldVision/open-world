@@ -1,38 +1,20 @@
+import { getAddresses } from 'constants/addresses'
 import Web3 from 'web3'
+import profilesInterface from '../build/contracts/Profiles.json'
 
 const web3 = new Web3(Web3.givenProvider)
 
 const GasLimit = 800000
 
-const profilesContract = {
-  addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
-  addressBSC: '0xae46953433ebE48698c6D86a49fA154eDCad99C3',
-  jsonInterface: require('../build/contracts/Profiles.json'),
-}
-
 const getProfileContract = async () => {
   const chainId = await web3.eth.getChainId()
   const accounts = await web3.eth.getAccounts()
-
-  if (chainId === 97) {
-    return new web3.eth.Contract(
-      profilesContract.jsonInterface.abi,
-      profilesContract.addressBSC,
-      {
-        gas: GasLimit,
-        from: accounts[0],
-      }
-    )
-  } else if (chainId === 1666700000) {
-    return new web3.eth.Contract(
-      profilesContract.jsonInterface.abi,
-      profilesContract.addressHarmony,
-      {
-        gas: GasLimit,
-        from: accounts[0],
-      }
-    )
-  }
+  const profileAddress = getAddresses(chainId).PROFILES
+  // @ts-ignore
+  return new web3.eth.Contract(profilesInterface.abi, profileAddress, {
+    gas: GasLimit,
+    from: accounts[0],
+  })
 }
 
 export const getProfile = async () => {

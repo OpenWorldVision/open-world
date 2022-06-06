@@ -40,18 +40,18 @@ export default function WorkShop() {
 
   const handleGetHammerList = async () => {
     const data = await getListingIDs(false)
-    setListItemsBoard(data.filter((listing) => listing.trait === '3'))
+    setListItemsBoard(data.filter((listing) => listing.trait === 3))
   }
 
   const handleGetOreList = async () => {
     const data = await getListingIDs(false)
-    setListItemsBoard(data.filter((listing) => listing.trait === '2'))
+    setListItemsBoard(data.filter((listing) => listing.trait === 2))
   }
 
   const handleGetMyList = async () => {
     const data = await getListingIDs(true)
     const myOreList = data?.filter(
-      (item) => item?.trait === '2' || item?.trait === '3'
+      (item) => item?.trait === 2 || item?.trait === 3
     )
     setListItemsBoard(myOreList)
   }

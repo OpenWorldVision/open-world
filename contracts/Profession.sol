@@ -167,4 +167,10 @@ contract Profession is AccessControlUpgradeable {
     require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
     profiles = Profiles(_profile);
   }
+
+  function setFishingMiningStaminaRequire(uint256 _stamina) public {
+    require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
+    fishingStaminaRequire = _stamina;
+    miningStaminaRequire = _stamina;
+  }
 }
