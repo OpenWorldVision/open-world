@@ -1,24 +1,27 @@
 const { deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades')
-const HeroCore = artifacts.require('HeroCore')
 const Item = artifacts.require('Item')
 const Profession = artifacts.require('Profession')
+const Profiles = artifacts.require('Profiles')
 
 module.exports = async function (deployer, network) {
-  let govToken, profileAddress
+  let govToken, profileAddress, itemAddress
 
   if (network === 'harmonyTestnet') {
-    govToken = '0x6c14d24eae373ae930768adbfa75c406119bf569'
-    profileAddress = ''
+    govToken = '0x81d46b953ea84204AC1CaB75A4cB188E2529DCFB'
+    profileAddress = '0xdA7Ac2056FeC83f1A9E1a1a3F339fcaA696618c3'
+    itemAddress = '0xBd69df7fFcB9d7F071bb2124E1Eb8734bBDA8E0B'
   }
   if (network === 'harmony') {
     govToken = ''
     profileAddress = ''
+    itemAddress = ''
   }
   if (network === 'bsctestnet') {
     govToken = '0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B'
     profileAddress = '0xE6046d1363F7Bebff6cB98c72094c89fF8ee500D'
+    itemAddress = '0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492'
   }
-  const item = await Item.at('0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492')
+  const item = await Item.at(itemAddress)
 
   const profession = await deployProxy(
     Profession,
@@ -28,4 +31,7 @@ module.exports = async function (deployer, network) {
 
   const PROFESSION_OPERATOR = await item.PROFESSION_OPERATOR()
   await item.grantRole(PROFESSION_OPERATOR, profession.address)
+
+  const profile = await Profiles.at(profileAddress)
+  await profile.grantRole(PROFESSION_OPERATOR, profession.address)
 }
