@@ -34,7 +34,7 @@ module.exports = async function (deployer, network, accounts) {
   await hero.setTraitAmount(2, 10)
   await hero.setTraitAmount(3, 20)
 
-  await hero.setHeroPrice(1, 100)
-  await hero.setHeroPrice(2, 5000)
-  await hero.setHeroPrice(3, 2000)
+  await hero.setHeroPrice(1, '100000000000000000000')
+  await hero.setHeroPrice(2, '5000000000000000000000')
+  await hero.setHeroPrice(3, '2000000000000000000000')
 }
