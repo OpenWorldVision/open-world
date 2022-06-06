@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/button'
 import style from './forgeHammer.module.css'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import NotificationForge from './NotificationForge'
 import ResultForgeHammer from './ResultForgeHammer'
 import { fetchAmountItemByTrait, makeHammer } from 'utils/blackSmithContract'
@@ -15,13 +15,12 @@ export default function ForgeHammer(props: Props) {
   const { toggleModal, toggleLoadingModal, isOpen } = props
 
   const [numberHammer, setNumberHammer] = useState(0)
-  const [numberOreNeed, setNumberOreNeed] = useState(0)
   const [numberYourOre, setNumberYourOre] = useState([])
-
   const [isStartQuest, setIsStartQuest] = useState(false)
   const [isStartQuestFail, setIsStartQuestFail] = useState(false)
+  const [checkIsSuccess, setCheckIsSuccess] = useState(false)
 
-  const [checkIsSucess, setCheckIsSuccess] = useState(false)
+  const numberOreNeed = useMemo(() => numberHammer / 2, [numberHammer])
 
   const getListYourOre = async () => {
     const listYourOre = await fetchAmountItemByTrait(2)
@@ -33,16 +32,15 @@ export default function ForgeHammer(props: Props) {
   }, [])
 
   const handleNext = useCallback(() => {
-    setNumberHammer(numberHammer + 1)
-    setNumberOreNeed(numberOreNeed + 2)
-  }, [numberHammer])
+    setNumberHammer((prevNumberHammer) => prevNumberHammer + 2)
+  }, [])
 
   const handlePrev = useCallback(() => {
-    if (numberHammer > 0) {
-      setNumberHammer(numberHammer - 1)
-      setNumberOreNeed(numberOreNeed - 2)
-    }
-  }, [numberHammer])
+    setNumberHammer((prevNumberHammer) =>
+      prevNumberHammer <= 0 ? prevNumberHammer : prevNumberHammer - 2
+    )
+  }, [])
+
   const handleStartQuest = async () => {
     toggleLoadingModal(true)
     if (numberOreNeed <= numberYourOre.length && numberHammer !== 0) {
@@ -65,10 +63,10 @@ export default function ForgeHammer(props: Props) {
     setIsStartQuest(false)
   }, [])
 
-  const handleToggleModal = () => {
+  const handleToggleModal = useCallback(() => {
     toggleModal(false)
     setCheckIsSuccess(false)
-  }
+  }, [toggleModal])
 
   return (
     <>
@@ -86,7 +84,7 @@ export default function ForgeHammer(props: Props) {
               ></Button>
             </div>
             <div className={style.forgeHammerBody}>
-              <div className={style.artItem}></div>
+              <div className={style.artItem} />
             </div>
             <div className={style.forgeHammerFooter}>
               <div className={style.title}>Description</div>
@@ -105,13 +103,13 @@ export default function ForgeHammer(props: Props) {
                     <div
                       onClick={handleNext}
                       className={`${style.next} click-cursor`}
-                    ></div>
+                    />
                     <div
                       onClick={handlePrev}
                       className={`${style.prev} click-cursor`}
-                    ></div>
+                    />
                   </div>
-                  <div className={style.hammer}></div>
+                  <div className={style.hammer} />
                 </div>
               </div>
               <div className={style.oreNeed}>
@@ -124,22 +122,24 @@ export default function ForgeHammer(props: Props) {
                     }`}
                     type="text"
                   />
-                  <div className={style.ore}></div>
+                  <div className={style.ore} />
                 </div>
               </div>
               <div>
                 <div className={style.title}>Note</div>
-                <div className={style.detail}>2 Ore makes 1 Hammer</div>
+                <div className={style.detail}>1 Ore makes 2 Hammer</div>
               </div>
               <Button
                 sx={{
                   cursor:
                     'url(/images/worldmap/SelectCursor.webp), auto !important',
                 }}
-                disabled={numberHammer === 0}
+                disabled={
+                  numberHammer === 0 || numberOreNeed > numberYourOre.length
+                }
                 onClick={handleStartQuest}
                 className={style.startQuestBtn}
-              ></Button>
+              />
             </div>
           </div>
         )}
@@ -148,7 +148,7 @@ export default function ForgeHammer(props: Props) {
           <ResultForgeHammer
             hiddenPopupResult={hiddenPopupResult}
             hammerReceived={numberHammer}
-            checkIsSucess={checkIsSucess}
+            checkIsSuccess={checkIsSuccess}
             toggleModal={toggleModal}
           />
         )}

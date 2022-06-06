@@ -1,24 +1,24 @@
 import { Button, Divider } from '@chakra-ui/react'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import style from './resultForgeHammer.module.css'
 
 type Props = {
   hammerReceived: number
   hiddenPopupResult: () => void
-  checkIsSucess: boolean
+  checkIsSuccess: boolean
   toggleModal: (boolean) => void
 }
 
 export default function ResultForgeHammer(props: Props) {
-  const { hammerReceived, checkIsSucess, hiddenPopupResult, toggleModal } = props
+  const { hammerReceived, checkIsSuccess, hiddenPopupResult, toggleModal } =
+    props
 
-  const handleConfirm = () => {
-    if (!checkIsSucess) {
-      hiddenPopupResult()
-    }
-  }
-  const handleToggleModal = () =>{
+  const handleConfirm = useCallback(() => {
+    hiddenPopupResult()
+  }, [hiddenPopupResult])
+
+  const handleToggleModal = () => {
     toggleModal(false)
   }
   return (
@@ -31,13 +31,29 @@ export default function ResultForgeHammer(props: Props) {
           />
         </h3>
         <div className={style.frameHead}>
-          <Button onClick={handleToggleModal} className={`${style.exitBtn} click-cursor`}></Button>
+          <Button
+            onClick={handleToggleModal}
+            className={`${style.exitBtn} click-cursor`}
+          />
         </div>
         <div className={style.content}>
-          {checkIsSucess ? <><div className={style.title}>You Get</div><div className={style.received}>X{hammerReceived} <div className={style.hammer}></div></div><div className={style.helpText}>All the Hammers you make will be stored at your Inventory</div></>
-            : <div className={style.title}>FAILED!!</div>
-          }
-          <Button onClick={handleConfirm} className={`${style.btnConfirm} click-cursor`}></Button>
+          {checkIsSuccess ? (
+            <>
+              <div className={style.title}>You Get</div>
+              <div className={style.received}>
+                X{hammerReceived} <div className={style.hammer}></div>
+              </div>
+              <div className={style.helpText}>
+                All the Hammers you make will be stored at your Inventory
+              </div>
+            </>
+          ) : (
+            <div className={style.title}>FAILED!!</div>
+          )}
+          <Button
+            onClick={handleConfirm}
+            className={`${style.btnConfirm} click-cursor`}
+          />
         </div>
       </div>
     </>
