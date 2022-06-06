@@ -145,12 +145,23 @@ export const checkIfMiningFinish = async () => {
   return { ...data }
 }
 
-export const dispatchMakeSushi = async (itemId1: number, itemId2: number) => {
+export const dispatchMakeSushi = async (itemId1: number) => {
   const contract = await getProfessionContract()
   const accounts = await web3.eth.getAccounts()
   try {
     const data = await contract.methods
-      .makeSushi(itemId1, itemId2)
+      .makeSushi(itemId1)
+      .send({ from: accounts[0] })
+    return data
+  } catch (error) {}
+}
+
+export const dispatchMakeMultiSushi = async (itemIds: Array<number>) => {
+  const contract = await getProfessionContract()
+  const accounts = await web3.eth.getAccounts()
+  try {
+    const data = await contract.methods
+      .makeMultiSushi(itemIds)
       .send({ from: accounts[0] })
     return data
   } catch (error) {}

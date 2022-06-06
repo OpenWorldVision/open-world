@@ -9,7 +9,7 @@ type Props = {
   isOpen: boolean
   toggleModal: () => void
   listFishArray: any
-  onStartCook: (sushi: number, idNumber1: number, idNumber2: number) => void
+  onStartCook: (sushi: number) => void
   typeModal: string
 }
 
@@ -27,10 +27,10 @@ function MakeSushiModal(props: Props) {
 
   const startCook = useCallback(async () => {
     //
-    onStartCook(valueFish, listFishArray[0], listFishArray[1])
+    onStartCook(valueFish)
 
     // set
-  }, [listFishArray, onStartCook, valueFish])
+  }, [onStartCook, valueFish])
 
   const onPressUp = useCallback(() => {
     setErrorText('')
@@ -53,6 +53,11 @@ function MakeSushiModal(props: Props) {
     }
   }, [valueFish, listFishArray?.length])
 
+  const closeModalFinish = useCallback(() => {
+    setValueFish(1)
+    toggleModal()
+  }, [toggleModal])
+
   const renderText = useCallback(() => {
     switch (typeModal) {
       case TYPE_OF_MODAL.FINISH: {
@@ -60,7 +65,9 @@ function MakeSushiModal(props: Props) {
           <div className={styles.descriptionFinish}>
             <div className={styles.titleTextFinish}>You got</div>
             <div className={styles.rowView}>
-              <div className={styles.valueTextFinish}>x2</div>
+              <div className={styles.valueTextFinish}>{`x${
+                valueFish * 2
+              }`}</div>
               <img
                 src={`/images/professions/openian/sushiNFT.png`}
                 alt="Confirm"
@@ -72,7 +79,7 @@ function MakeSushiModal(props: Props) {
             </div>
             <Button
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
-              onClick={toggleModal}
+              onClick={closeModalFinish}
             >
               <img
                 src={`/images/professions/openian/confirm-btn.png`}
@@ -224,12 +231,12 @@ function MakeSushiModal(props: Props) {
     }
   }, [
     typeModal,
-    toggleModal,
     valueFish,
+    closeModalFinish,
     onPressUp,
     onPressDown,
-    startCook,
     errorText,
+    startCook,
   ])
 
   return (

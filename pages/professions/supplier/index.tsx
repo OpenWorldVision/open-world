@@ -8,7 +8,7 @@ import {
   getNFTsByTrait,
   setApprovedAll,
 } from 'utils/itemContract'
-import { dispatchMakeSushi } from '../../../utils/professionContract'
+import { dispatchMakeMultiSushi } from '../../../utils/professionContract'
 import SellSushiModal from '@components/professions/supplier/SellSushiModal'
 import { sellSushi } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
@@ -47,17 +47,20 @@ function Supplier() {
     return isApproved
   }, [])
 
-  const _onStartCook = useCallback(async () => {
-    setTypeModal(TYPE_OF_MODAL.START)
-    setIsLoading(true)
-    const data = await dispatchMakeSushi(listFish[0], listFish[1])
-
-    if (data?.status) {
-      setTypeModal(TYPE_OF_MODAL.FINISH)
+  const _onStartCook = useCallback(
+    async (valueFish) => {
+      const listFishBurn = listFish.slice(0, valueFish)
+      setTypeModal(TYPE_OF_MODAL.START)
+      setIsLoading(true)
+      const data = await dispatchMakeMultiSushi(listFishBurn)
       setIsLoading(false)
-    }
-    getListItemByTrait()
-  }, [getListItemByTrait, listFish])
+      if (data?.status) {
+        setTypeModal(TYPE_OF_MODAL.FINISH)
+      }
+      getListItemByTrait()
+    },
+    [getListItemByTrait, listFish]
+  )
 
   const _onSellSushi = useCallback(
     async (valueSushi) => {
