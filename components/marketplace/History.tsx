@@ -73,7 +73,7 @@ export default function History() {
                                 <div>100 OPEN</div>
                                 <div>SELLING</div>
                                 <div>
-                                <img src="./images/marketplace/market/history-cancel.png" alt="img" />
+                                <img src="./images/marketplace/history-cancel.png" alt="img" />
                                 </div>
                             </div>
                         ))}
@@ -84,20 +84,20 @@ export default function History() {
                 <div className={styles.pagination}>
                     <img 
                         onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                        src="./images/marketplace/market/triangle-left.png" 
+                        src="./images/marketplace/triangle-left.png" 
                         alt="img" 
                     />
                     <div>{page < 10 ? `0${page}` : page}</div>
                     <img
                         onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(test.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                        src="./images/marketplace/market/triangle-right.png" 
+                        src="./images/marketplace/triangle-right.png" 
                         alt="img" 
                     />
                 </div>
             </div>
             <Link href='/'>
                 <a className={styles.back}>
-                    <img src="./images/marketplace/market/back.png" alt="img" />
+                    <img src="./images/marketplace/back.png" alt="img" />
                 </a>
             </Link>
         </div>

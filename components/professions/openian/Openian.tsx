@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import styles from './openian.module.css'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
-import SellModal from './sellModal/SellModal'
 import FishingModal from './fishingModal/FishingModal'
 import MiningModal from './miningModal/MiningModal'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
+import Inventory from '@components/Inventory'
 
 function Openian() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -92,11 +92,12 @@ function Openian() {
 
         <BackButton />
 
-        <SellModal
-          isOpen={isOpenStore}
-          toggleModal={() => toggleSellModal(false)}
-          updateInventory={updateInventory}
-        />
+        {isOpenStore && (
+          <Inventory
+            setIsOpenInventory={toggleSellModal}
+            isOpenInventory={isOpenStore}
+          />
+        )}
 
         <FishingModal
           isOpen={isOpenFishing}

@@ -22,6 +22,8 @@ import {
 } from 'utils/NFTMarket'
 import BackButton from '@components/BackButton'
 import LoadingModal from '@components/LoadingModal'
+import Link from 'next/link'
+import Inventory from '@components/Inventory'
 
 export default function WorkShop() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -33,6 +35,7 @@ export default function WorkShop() {
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageWorkShop, setPageWorkShop] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
+  const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleGetHammerList = async () => {
@@ -100,10 +103,11 @@ export default function WorkShop() {
     setPageWorkShop(1)
   }, [])
 
+
   const handleBuyItem = useCallback(
     (item) => () => {
       setBuyDetail(item)
-      toggleBuyModal(true)
+      // toggleBuyModal(true)
     },
     [toggleBuyModal]
   )
@@ -277,6 +281,10 @@ export default function WorkShop() {
             buyDetail={buyDetail}
             handlePurchaseItem={_handlePurchaseItem}
           />
+          <Link href="/">
+            <a className={`${styles.backBtn} click-cursor`}></a>
+          </Link>
+          {isOpenInventory && <Inventory isOpenInventory={isOpenInventory} setIsOpenInventory={setIsOpenInventory} />}
           <BackButton />
         </div>
       </div>

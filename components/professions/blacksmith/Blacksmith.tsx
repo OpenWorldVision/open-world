@@ -1,11 +1,11 @@
 import { Button } from '@chakra-ui/react'
 import styles from './blacksmith.module.css'
-import SellBoard from './sellerboard/SellBoard'
 import { useCallback, useEffect, useState } from 'react'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import ForgeHammer from './forgehammer/ForgeHammer'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
+import Inventory from '@components/Inventory'
 
 export default function Blacksmith() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -86,14 +86,12 @@ export default function Blacksmith() {
         </TransformWrapper>
         <BackButton />
       </div>
-
-      {
-        <SellBoard
-          isOpen={isSellBoard}
-          toggleModal={toggleSellBoardModal}
-          toggleLoadingModal={toggleLoadingModal}
+      {isSellBoard && (
+        <Inventory
+          setIsOpenInventory={toggleSellBoardModal}
+          isOpenInventory={isSellBoard}
         />
-      }
+      )}
       {
         <ForgeHammer
           isOpen={isForgeHammer}

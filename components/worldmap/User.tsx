@@ -5,6 +5,7 @@ import CreateProfile from '@components/worldmap/CreateProfile'
 import { getProfile, getStamina } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
+import Inventory from '../Inventory'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 import {
   Button,
@@ -29,6 +30,7 @@ export default function User(props: Props) {
   const { isOpen, onToggle } = useDisclosure()
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
+  const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isOpenTutorial, setIsOpenTutorial] = useState(false)
   const [career, setCareer] = useState('None')
   const profile = useSelector((state: any) => state.ProfileStore.profile)
@@ -139,7 +141,7 @@ export default function User(props: Props) {
                     />
                   </WrapItem>
                   <WrapItem>
-                    <Text>Inventory</Text>
+                    <Text className='click-cursor' onClick={() => { setIsOpenInventory(true) }}>Inventory</Text>
                   </WrapItem>
                 </Wrap>
 
@@ -214,6 +216,12 @@ export default function User(props: Props) {
             isOpenCreateProfile={isOpenCreateProfile}
             getDataProfile={getDataProfile}
             handleOpenTutorial={handleOpenTutorial}
+          />
+        )}
+        {isOpenInventory && (
+          <Inventory
+            setIsOpenInventory={setIsOpenInventory}
+            isOpenInventory={isOpenInventory}
           />
         )}
         <ProfessionsTutorial
