@@ -11,6 +11,7 @@ import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import LoadingModal from './LoadingModal'
 import { motion } from 'framer-motion'
 import { getBalanceOpen } from 'utils/checkBalanceOpen'
+import { getWeb3Client } from '@lib/web3'
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -24,29 +25,28 @@ export default function Layout({ children, home }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [balance, setBalance] = useState(null)
-
   const dispatch = useDispatch()
-  const isConnected = useSelector((state: any) => {
-    return state.IsConnectedStore.isConnected
-  })
 
   const isProfileExist = useSelector((state: any) => {
     return state.ProfileStore.profile
   })
+  const isConnected = useSelector(
+    (state: any) => state.IsConnectedStore.isConnected
+  )
+
+  const checkConnect = async () => {
+    const web3Client = await getWeb3Client()
+    dispatch(updateIsConnected({ isConnected: !!web3Client }))
+  }
 
   const getBalance = async () => {
     const balance = await getBalanceOpen()
-
     setBalance(balance)
   }
-  
-  const [currentURL, setCurrentURL] = useState('')
+
   useEffect(() => {
     getBalance()
-    setCurrentURL(window.location.href)
-    if(!isProfileExist){
-      dispatch(updateIsConnected({ isConnected: false }))
-    }
+    checkConnect()
     router.events.on('routeChangeStart', () => {
       setIsLoading(true)
     })

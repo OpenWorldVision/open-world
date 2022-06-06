@@ -14,7 +14,7 @@ import {
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 import LoadingModal from '@components/LoadingModal'
 
-const npcs = ['openian', 'supplier', 'blacksmith']
+const NPCList = ['openian', 'supplier', 'blacksmith']
 
 const npcText = [
   [
@@ -64,26 +64,34 @@ function ProfessionsModal(props: Props) {
     return parseFloat(balance)
   }
 
+  const onActivateProfession = useCallback(async () => {
+    if (!canActivate) {
+      return
+    }
+    setIsLoading(true)
+    const professionNft = NPCList.indexOf(npc) + 1
+    const heroes = await fetchUserProfessionNFT()
+    const hero = heroes.find((hero) => professionNft === hero.trait)
 
-  const onActivateProfession = async () => {
-    if (canActivate) {
-      setIsLoading(true)
-      const professionNft = npcs.indexOf(npc) + 1
-      const check = await activateProfession(professionNft)
-      setIsLoading(false)
+    if (hero) {
+      const check = await activateProfession(professionNft, hero.heroId)
       getResult(check)
     }
-  }
+    setIsLoading(false)
+  }, [canActivate, getResult, npc])
 
-  const checkIfHasNTF = async () => {
+  const checkIfHasNTF = useCallback(async () => {
     const nftList = await fetchUserProfessionNFT()
-    const check = nftList.includes(npcs.indexOf(npc) + 1)
+    const check = nftList.some(
+      (hero) => NPCList.indexOf(npc) + 1 === hero.trait
+    )
+
     setHaveNFT(check)
     return check
-  }
+  }, [npc])
 
   const getCurrentNpcText = () => {
-    setCurrentNpcText(npcText[npcs.indexOf(npc)])
+    setCurrentNpcText(npcText[NPCList.indexOf(npc)])
   }
 
   const checkIfCanActive = useCallback(async () => {
@@ -94,7 +102,7 @@ function ProfessionsModal(props: Props) {
     } else {
       setCanActivate(checkNFT && checkBalance >= requireBalance)
     }
-  }, [haveNFT, currentOPEN])
+  }, [checkIfHasNTF, npc, requireBalance])
 
   const initialize = async () => {
     await getRequireBalanceProfession()
@@ -140,7 +148,9 @@ function ProfessionsModal(props: Props) {
               <div className={`${style.npcCard} ${style[`${npc}NPC`]}`}></div>
             </GridItem>
             <GridItem rowSpan={3} colSpan={2}>
-              <div className={`${inheritStyle.professionsText} ${style.npcText}`}>
+              <div
+                className={`${inheritStyle.professionsText} ${style.npcText}`}
+              >
                 <span>
                   {currentNpcText.map((line) => (
                     <>
@@ -149,7 +159,10 @@ function ProfessionsModal(props: Props) {
                   ))}
                 </span>
 
-                <span>You can buy NFT {npc.charAt(0).toUpperCase() + npc.slice(1)} at Castle / Shop</span>
+                <span>
+                  You can buy NFT {npc.charAt(0).toUpperCase() + npc.slice(1)}{' '}
+                  at Castle / Shop
+                </span>
 
                 <div className={style.btnGroup}>
                   <Button
@@ -158,7 +171,8 @@ function ProfessionsModal(props: Props) {
                     } click-cursor`}
                   >
                     <span>
-                      Have {npc !== 'openian' ? 'a' : 'an'} {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
+                      Have {npc !== 'openian' ? 'a' : 'an'}{' '}
+                      {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
                     </span>
                   </Button>
                   {npc !== 'openian' && (

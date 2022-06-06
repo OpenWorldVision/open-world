@@ -124,7 +124,7 @@ export default function User(props: Props) {
                     <img src="/favicon.ico" alt="img" width={25} height={25} />
                   </WrapItem>
                   <WrapItem alignItems="center">
-                    <Text> 0.00 OPEN</Text>
+                    <Text> {balance} OPEN</Text>
                   </WrapItem>
                 </Wrap>
                 {/* Career : Openian or Supplier or BlackSmith */}

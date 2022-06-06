@@ -161,7 +161,10 @@ contract Profiles is AccessControlUpgradeable {
     return true;
   }
 
-  function setProfession(Profession _profession) public returns (bool success) {
+  function setProfession(Profession _profession, uint256 _heroId)
+    public
+    returns (bool success)
+  {
     require(profileExists(msg.sender), 'profile must exist');
     Profile storage profile = profiles[addressToIndex[msg.sender]];
     require(profile.profession == Profession.UNKNOWN, 'Profession already set');
@@ -169,6 +172,12 @@ contract Profiles is AccessControlUpgradeable {
       IERC20(governanceToken).balanceOf(msg.sender) > requireBalanceProfession,
       'Not enough balance'
     );
+    require(
+      heroesNftContract.getTrait(_heroId) == uint8(_profession) &&
+        heroesNftContract.ownerOf(_heroId) == msg.sender,
+      'Invalid'
+    );
+
     profile.profession = _profession;
     return true;
   }
