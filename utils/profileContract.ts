@@ -1,4 +1,5 @@
 import { getAddresses } from 'constants/addresses'
+import { BigNumber } from 'ethers'
 import Web3 from 'web3'
 import profilesInterface from '../build/contracts/Profiles.json'
 
@@ -33,11 +34,16 @@ export async function getStamina() {
   const contract = await getProfileContract()
   const accounts = await web3.eth.getAccounts()
   try {
-    return await contract.methods
+    const stamina = await contract.methods
       .getStamina(accounts[0])
       .call({ from: accounts[0] })
-  } catch {
-    return false
+
+    if (BigNumber.from(stamina).gt(BigNumber.from('100'))) {
+      return 100
+    }
+    return stamina
+  } catch (e) {
+    return 0
   }
 }
 
