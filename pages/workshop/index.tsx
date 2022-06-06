@@ -158,14 +158,6 @@ export default function WorkShop() {
           </div>
           <div>
             <Button
-              className={`${styles.buyButtonCustom} click-cursor`}
-              backgroundColor={'#52241E'}
-              onClick={handleSelectItemBoard('mine')}
-              _hover={{ bg: '#52241E' }}
-            >
-              <Text color={'#fff'}>My Workshop</Text>
-            </Button>
-            <Button
               onClick={handleSelectItemBoard('ore')}
               className={`click-cursor ${styles.foodBtn}`}
             >
@@ -186,6 +178,14 @@ export default function WorkShop() {
                   isItemBoard === 'hammer' && styles.itemBoardSelected
                 }`}
               ></div>
+            </Button>
+            <Button
+              className={`${styles.buyButtonCustom} click-cursor`}
+              backgroundColor={'#52241E'}
+              onClick={handleSelectItemBoard('mine')}
+              _hover={{ bg: '#52241E' }}
+            >
+              <Text color={'#fff'}>My Workshop</Text>
             </Button>
           </div>
           <div className={styles.workShopBoard}>
