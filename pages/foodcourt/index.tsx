@@ -13,6 +13,7 @@ import {
 import styles from '@components/foodcourt/foodcourt.module.css'
 
 import BuyerBoard from '@components/foodcourt/BuyerBoard'
+import Inventory from '@components/Inventory'
 import { useCallback, useEffect, useState } from 'react'
 import {
   cancelListingItem,
@@ -31,6 +32,7 @@ export default function FoodCourt() {
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageFoodCourt, setPageFoodCourt] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
+  const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleGetSushiList = async () => {
@@ -99,7 +101,6 @@ export default function FoodCourt() {
   const handleRefresh = useCallback(() => {
     setPageFoodCourt(1)
   }, [])
-
   const handleBuyItem = useCallback(
     (item) => () => {
       setBuyDetail(item)
