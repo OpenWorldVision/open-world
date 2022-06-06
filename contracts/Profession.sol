@@ -88,7 +88,7 @@ contract Profession is AccessControlUpgradeable {
   }
 
   function makeMultiSushi(uint256[] calldata _ids) public {
-    require(_ids.length > 1, 'Invalid');
+    require(_ids.length > 0, 'Invalid');
     for (uint256 index = 0; index < _ids.length; index++) {
       makeSushi(_ids[index]);
     }
