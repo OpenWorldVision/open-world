@@ -27,6 +27,9 @@ export default function Layout({ children, home }) {
   const [balance, setBalance] = useState(null)
   const dispatch = useDispatch()
 
+  const isProfileExist = useSelector((state: any) => {
+    return state.ProfileStore.profile
+  })
   const isConnected = useSelector(
     (state: any) => state.IsConnectedStore.isConnected
   )
