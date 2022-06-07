@@ -10,7 +10,7 @@ import {
 } from 'utils/itemContract'
 import { dispatchMakeMultiSushi } from '../../../utils/professionContract'
 import SellSushiModal from '@components/professions/supplier/SellSushiModal'
-import { sellSushi } from 'utils/NFTMarket'
+import { listMultiItems } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
 
@@ -69,7 +69,7 @@ function Supplier() {
       setIsLoading(true)
       const listSushiSell = []
       listSushiSell.push(parseInt(listSushi[0]))
-      const data = await sellSushi(listSushiSell, valueSushi)
+      const data = await listMultiItems(listSushiSell, valueSushi)
       if (data) {
         setTypeModal(TYPE_OF_MODAL.FINISH)
         getListSushi()

@@ -7,6 +7,15 @@ import marketInterface from '../build/contracts/NFTMarket.json'
 
 const web3 = new Web3(Web3.givenProvider)
 
+const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
+type Listing = {
+  id: string
+  items: string[]
+  price: string
+  seller: string
+  trait: number
+}
+
 export const getMarketContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   const { chainId } = await provider.getNetwork()
@@ -19,33 +28,6 @@ export const getMarketContract = async () => {
   )
 }
 
-export const sellSushi = async (ids: Array<number>, price: number) => {
-  const contract = await getMarketContract()
-  const chainId = await web3.eth.getChainId()
-  const itemAddress = getAddresses(chainId).ITEM
-
-  try {
-    const tx = await contract.addListing(
-      itemAddress,
-      ids,
-      ethers.utils.parseEther(`${price}`)
-    )
-
-    const receipt = await tx.wait()
-
-    return receipt
-  } catch (error) {
-    return null
-  }
-}
-const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
-type Listing = {
-  id: string
-  items: string[]
-  price: string
-  seller: string
-  trait: number
-}
 export async function getListingIDs(isMine: boolean): Promise<Listing[]> {
   const contract = await getMarketContract()
   const accounts = await web3.eth.getAccounts()
