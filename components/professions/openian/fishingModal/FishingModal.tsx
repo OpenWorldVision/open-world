@@ -13,8 +13,7 @@ import { getStamina } from 'utils/profileContract'
 import WaitingModal from './WaitingModal'
 import FinishModal from './FinishModal'
 import DefaultModal from './DefaultModal'
-import { addHours, fromUnixTime, intervalToDuration } from 'date-fns'
-import { isBefore } from 'date-fns/esm'
+import { addHours, fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
 
 type Props = {
   isOpen: boolean
