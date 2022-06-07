@@ -25,4 +25,5 @@ module.exports = async function (deployer, network) {
   const GAME_ADMIN = await marketplace.GAME_ADMIN()
   await marketplace.grantRole(GAME_ADMIN, taxRecipient)
   await marketplace.setItem(itemAddress)
+  await marketplace.allowToken(itemAddress)
 }

@@ -2,10 +2,22 @@ import { getAddresses } from 'constants/addresses'
 import { BigNumber, ethers } from 'ethers'
 import Web3 from 'web3'
 import { getOpenWorldContract } from './openWorldContract'
-import { getMarketContract } from './Market'
 import { getItemContract } from './Item'
+import marketInterface from '../build/contracts/NFTMarket.json'
 
 const web3 = new Web3(Web3.givenProvider)
+
+export const getMarketContract = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
+  const { chainId } = await provider.getNetwork()
+  const marketAddress = getAddresses(chainId).MARKETPLACE
+
+  return new ethers.Contract(
+    marketAddress,
+    marketInterface.abi,
+    provider.getSigner()
+  )
+}
 
 export const sellSushi = async (ids: Array<number>, price: number) => {
   const contract = await getMarketContract()
@@ -13,13 +25,15 @@ export const sellSushi = async (ids: Array<number>, price: number) => {
   const itemAddress = getAddresses(chainId).ITEM
 
   try {
-    const data = await contract.addListing(
+    const tx = await contract.addListing(
       itemAddress,
       ids,
       ethers.utils.parseEther(`${price}`)
     )
 
-    return data
+    const receipt = await tx.wait()
+
+    return receipt
   } catch (error) {
     return null
   }
@@ -78,18 +92,20 @@ export const purchaseItems = async (
     )
 
     if (allowance.lt(BigNumber.from(web3.utils.toWei('1000000', 'ether')))) {
-      await openWorldContract.approve(
+      const tx = await openWorldContract.approve(
         marketContract.address,
         web3.utils.toWei('100000000', 'ether')
       )
+      await tx.wait()
     }
-    const result = await marketContract.purchaseListing(
+    const tx2 = await marketContract.purchaseListing(
       itemContract.address,
       transactionId,
       itemIds
     )
+    const receipt = await tx2.wait()
 
-    return result
+    return receipt
   } catch (error) {
     onError?.(error.reason)
     return null
@@ -102,11 +118,39 @@ export const cancelListingItem = async (id: number) => {
     const chainId = await web3.eth.getChainId()
     const itemAddress = getAddresses(chainId).ITEM
 
-    const result = await contract?.cancelListing(itemAddress, id)
+    const tx = await contract?.cancelListing(itemAddress, id)
+    const receipt = await tx.wait()
 
-    if (result) {
-      return result
+    if (receipt) {
+      return receipt
     }
+  } catch (error) {
+    return null
+  }
+}
+
+export const listMultiItems = async (ids, price) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
+  const Market = await getMarketContract()
+  const Item = await getItemContract()
+
+  const account = await provider.getSigner().getAddress()
+
+  try {
+    const isApproved = await Item.isApprovedForAll(account, Market.address)
+    if (!isApproved) {
+      const tx = await Item.setApprovalForAll(Market.address, true)
+      await tx.wait()
+    }
+
+    const tx2 = await Market.addListing(
+      Item.address,
+      ids,
+      ethers.utils.parseEther(`${price}`)
+    )
+    const receipt = await tx2.wait()
+
+    return receipt
   } catch (error) {
     return null
   }

@@ -59,9 +59,4 @@ module.exports = async function (deployer, network, accounts) {
   // for (let i = 0; i < 50; i++) {
   //   await item.mint('0x33EDbEc831AD335f26fFC06EB07311cC99F50084', 3)
   // }
-  const nftMarket = await NFTMarket.at(nftMarketAddress)
-  const GAME_ADMIN = await nftMarket.GAME_ADMIN()
-  await nftMarket.grantRole(GAME_ADMIN, accounts[0])
-  await nftMarket.setItem(itemAddress)
-  await nftMarket.allowToken(itemAddress)
 }

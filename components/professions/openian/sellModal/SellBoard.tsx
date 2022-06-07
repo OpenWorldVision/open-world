@@ -5,10 +5,10 @@ import modalStyle from './sellModal.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 import { fetchUserInventoryItemAmount, fetchListItemIds } from 'utils/Item'
-import { listMultiItems } from 'utils/Market'
 import LoadingModal from '@components/LoadingModal'
 import ListingResultModal from '../../ListingResultModal'
 import { getApprovalAll, setApprovedAll } from 'utils/itemContract'
+import { listMultiItems } from 'utils/NFTMarket'
 
 type Props = {
   selectedItem: number

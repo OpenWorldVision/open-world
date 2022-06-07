@@ -1,7 +1,7 @@
 import { getAddresses } from 'constants/addresses'
 import Web3 from 'web3'
 import { getItemContract } from './itemContract'
-import { getMarketContract } from './Market'
+import { getMarketContract } from './NFTMarket'
 import { getProfessionContract } from './professionContract'
 
 const web3 = new Web3(Web3.givenProvider)
