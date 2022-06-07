@@ -3,6 +3,7 @@ import { BigNumber, ethers } from 'ethers'
 import Web3 from 'web3'
 import { getOpenWorldContract } from './openWorldContract'
 import { getMarketContract } from './Market'
+import { getItemContract } from './Item'
 
 const web3 = new Web3(Web3.givenProvider)
 
@@ -68,25 +69,22 @@ export const purchaseItems = async (
   try {
     const openWorldContract = await getOpenWorldContract()
     const currentAddress = await window.ethereum.selectedAddress
-    const chainId = await web3.eth.getChainId()
-    const itemAddress = getAddresses(chainId).ITEM
-    const marketAddress = getAddresses(chainId).MARKETPLACE
+    const itemContract = await getItemContract()
+    const marketContract = await getMarketContract()
 
     const allowance: BigNumber = await openWorldContract.allowance(
       currentAddress,
-      marketAddress
+      marketContract.address
     )
 
     if (allowance.lt(BigNumber.from(web3.utils.toWei('1000000', 'ether')))) {
       await openWorldContract.approve(
-        marketAddress,
+        marketContract.address,
         web3.utils.toWei('100000000', 'ether')
       )
     }
-    const contract = await getMarketContract()
-
-    const result = await contract.purchaseListing(
-      itemAddress,
+    const result = await marketContract.purchaseListing(
+      itemContract.address,
       transactionId,
       itemIds
     )
