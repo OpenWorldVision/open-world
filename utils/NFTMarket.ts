@@ -62,7 +62,8 @@ export async function getListingIDs(isMine: boolean): Promise<Listing[]> {
 
 export const purchaseItems = async (
   transactionId: number,
-  itemIds: Array<number>
+  itemIds: number[],
+  onError?: (error: string) => void
 ) => {
   try {
     const openWorldContract = await getOpenWorldContract()
@@ -92,6 +93,7 @@ export const purchaseItems = async (
 
     return result
   } catch (error) {
+    onError?.(error.reason)
     return null
   }
 }

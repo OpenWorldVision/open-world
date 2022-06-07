@@ -9,11 +9,11 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react'
 import styles from '@components/foodcourt/foodcourt.module.css'
 
 import BuyerBoard from '@components/foodcourt/BuyerBoard'
-import Inventory from '@components/Inventory'
 import { useCallback, useEffect, useState } from 'react'
 import {
   cancelListingItem,
@@ -24,7 +24,6 @@ import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
 
 export default function FoodCourt() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [isItemBoard, setIsItemBoard] = useState<'sushi' | 'fish' | 'mine'>(
     'sushi'
   )
@@ -32,8 +31,8 @@ export default function FoodCourt() {
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageFoodCourt, setPageFoodCourt] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
-  const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const toast = useToast()
 
   const handleGetSushiList = async () => {
     const data = await getListingIDs(false)
@@ -121,10 +120,21 @@ export default function FoodCourt() {
     []
   )
 
-  const _handlePurchaseItem = useCallback(
+  const handlePurchaseItem = useCallback(
     async (id: number, listIds: Array<number>) => {
       setIsLoading(true)
-      const data = await purchaseItems(id, listIds)
+      const data = await purchaseItems(id, listIds, (error) => {
+        toast({
+          title: 'Error',
+          description: error,
+          duration: 15000,
+          isClosable: true,
+          status: 'error',
+          position: 'bottom-right',
+        })
+        setIsLoading(false)
+      })
+
       if (data) {
         setIsLoading(false)
         if (isItemBoard === 'sushi') {
@@ -135,22 +145,8 @@ export default function FoodCourt() {
         return data
       }
     },
-    [isItemBoard]
+    [isItemBoard, toast]
   )
-
-  useEffect(() => {
-    const checkWindowWidth = () => {
-      setWindowWidth(window.innerWidth)
-    }
-
-    checkWindowWidth()
-
-    window.addEventListener('resize', checkWindowWidth)
-
-    return () => {
-      window.removeEventListener('resize', checkWindowWidth)
-    }
-  }, [])
 
   return (
     <>
@@ -202,7 +198,7 @@ export default function FoodCourt() {
                     <div
                       onClick={handlePreviousPage}
                       className={`${styles.increase} click-cursor`}
-                    ></div>
+                    />
                     <div className={styles.numberPage}>
                       {pageFoodCourt < 10 && 0}
                       {pageFoodCourt}
@@ -210,7 +206,7 @@ export default function FoodCourt() {
                     <div
                       onClick={handleIncreasePage}
                       className={`${styles.previous} click-cursor`}
-                    ></div>
+                    />
                   </div>
                 </TableCaption>
                 <Thead>
@@ -238,42 +234,40 @@ export default function FoodCourt() {
                     .map((item, index) => {
                       if (index < 5) {
                         return (
-                          <>
-                            <Tr>
-                              <Td>
-                                <div className={styles.columnItem}>
-                                  {item.seller}
-                                </div>
-                              </Td>
-                              <Td>
-                                <div className={styles.columnItem}>
-                                  {item.price} OPEN
-                                </div>
-                              </Td>
-                              <Td>
-                                <div className={styles.columnItem}>
-                                  {item.items?.length}
-                                </div>
-                              </Td>
-                              <Td sx={{ textAlign: 'center' }}>
-                                {isItemBoard === 'mine' ? (
-                                  <Button
-                                    backgroundColor={'#DD8600'}
-                                    onClick={handleCancelItem(item)}
-                                    className={`${styles.customButton} click-cursor`}
-                                    _hover={{ bg: '#DD8600' }}
-                                  >
-                                    <Text color={'#fff'}>Cancel</Text>
-                                  </Button>
-                                ) : (
-                                  <Button
-                                    onClick={handleBuyItem(item)}
-                                    className={`${styles.buyBtnItem} click-cursor`}
-                                  ></Button>
-                                )}
-                              </Td>
-                            </Tr>
-                          </>
+                          <Tr key={`${item.seller}${index}`}>
+                            <Td>
+                              <div className={styles.columnItem}>
+                                {item.seller}
+                              </div>
+                            </Td>
+                            <Td>
+                              <div className={styles.columnItem}>
+                                {item.price} OPEN
+                              </div>
+                            </Td>
+                            <Td>
+                              <div className={styles.columnItem}>
+                                {item.items?.length}
+                              </div>
+                            </Td>
+                            <Td sx={{ textAlign: 'center' }}>
+                              {isItemBoard === 'mine' ? (
+                                <Button
+                                  backgroundColor={'#DD8600'}
+                                  onClick={handleCancelItem(item)}
+                                  className={`${styles.customButton} click-cursor`}
+                                  _hover={{ bg: '#DD8600' }}
+                                >
+                                  <Text color={'#fff'}>Cancel</Text>
+                                </Button>
+                              ) : (
+                                <Button
+                                  onClick={handleBuyItem(item)}
+                                  className={`${styles.buyBtnItem} click-cursor`}
+                                />
+                              )}
+                            </Td>
+                          </Tr>
                         )
                       }
                     })}
@@ -285,7 +279,7 @@ export default function FoodCourt() {
             isOpen={isOpenBuyBoard}
             toggleModalBuyModal={toggleBuyModal}
             buyDetail={buyDetail}
-            handlePurchaseItem={_handlePurchaseItem}
+            handlePurchaseItem={handlePurchaseItem}
           />
           <BackButton />
         </div>

@@ -56,13 +56,12 @@ module.exports = async function (deployer, network, accounts) {
   const PROFESSION_OPERATOR = await item.PROFESSION_OPERATOR()
   await item.grantRole(PROFESSION_OPERATOR, accounts[0])
   await item.grantRole(PROFESSION_OPERATOR, professionProxy)
-
+  // for (let i = 0; i < 50; i++) {
+  //   await item.mint('0x4177ff645ff3A0Fda109C1eEF1c2F2D437504672', 4)
+  // }
   const nftMarket = await NFTMarket.at(nftMarketAddress)
   const GAME_ADMIN = await nftMarket.GAME_ADMIN()
   await nftMarket.grantRole(GAME_ADMIN, accounts[0])
   await nftMarket.setItem(itemAddress)
   await nftMarket.allowToken(itemAddress)
-  // for (let i = 0; i < 10; i++) {
-  //   await item.mint('0x2CC6D07871A1c0655d6A7c9b0Ad24bED8f940517', 4)
-  // }
 }

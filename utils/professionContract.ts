@@ -53,7 +53,7 @@ export const fetchFishingQuestData = async () => {
   }
 }
 
-export const checkIfFishingFinish = async () => {
+export const getFishingQuest = async () => {
   const contract = await getProfessionContract()
   const accounts = await web3.eth.getAccounts()
 
@@ -61,7 +61,7 @@ export const checkIfFishingFinish = async () => {
     .getFishingQuest(accounts[0])
     .call({ from: accounts[0] })
 
-  return { ...data }
+  return data
 }
 
 export const finishFishing = async () => {
