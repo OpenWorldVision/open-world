@@ -26,8 +26,6 @@ import Link from 'next/link'
 import Inventory from '@components/Inventory'
 
 export default function WorkShop() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
   const [isItemBoard, setIsItemBoard] = useState<'ore' | 'hammer' | 'mine'>(
     'ore'
   )
@@ -111,24 +109,12 @@ export default function WorkShop() {
     [toggleBuyModal]
   )
 
-  useEffect(() => {
-    const checkWindowWidth = () => {
-      setWindowWidth(window.innerWidth)
-    }
-
-    checkWindowWidth()
-
-    window.addEventListener('resize', checkWindowWidth)
-
-    return () => {
-      window.removeEventListener('resize', checkWindowWidth)
-    }
-  }, [])
-
   const _handlePurchaseItem = useCallback(
     async (id: number, listIds: Array<number>) => {
       setIsLoading(true)
-      const data = await purchaseItems(id, listIds)
+      const data = await purchaseItems(id, listIds, () => {
+        setIsLoading(false)
+      })
       if (data) {
         setIsLoading(false)
         if (isItemBoard === 'ore') {

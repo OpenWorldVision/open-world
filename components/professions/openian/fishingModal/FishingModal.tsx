@@ -1,16 +1,19 @@
 import { Button, useToast } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
-  checkIfFishingFinish,
+  getFishingQuest,
   fetchFishingQuestData,
   finishFishing,
   startFishing,
 } from 'utils/professionContract'
 import styles from './fishingModal.module.css'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
-import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
 import { getStamina } from 'utils/profileContract'
+import WaitingModal from './WaitingModal'
+import FinishModal from './FinishModal'
+import DefaultModal from './DefaultModal'
+import { addHours, fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
 
 type Props = {
   isOpen: boolean
@@ -32,12 +35,44 @@ function FishingModal(props: Props) {
   const [duration, setDuration] = useState(10)
 
   const [canFinish, setCanFinish] = useState(false)
-  const [countDownStart, setCountDownStart] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(10)
-
-  const miningInterval = useRef<ReturnType<typeof setInterval>>(null)
+  const [timeLeft, setTimeLeft] = useState<Duration>(null)
+  const [loading, setLoading] = useState(true)
 
   const toast = useToast()
+
+  const initialize = useCallback(async () => {
+    const fishingQuest = await getFishingQuest()
+    const data = await fetchFishingQuestData()
+
+    const endTime = fromUnixTime(
+      fishingQuest?.startTime.toNumber() + data.duration
+    )
+
+    setRequireStamina(data.requireStamina)
+    setDuration(data.duration)
+    const isFinished = isBefore(endTime, new Date()) && !fishingQuest.finish
+    setCanFinish(isFinished)
+    setTimeLeft(
+      !isFinished
+        ? intervalToDuration({
+            start: new Date(),
+            end: endTime,
+          })
+        : intervalToDuration({ start: 0, end: 0 })
+    )
+    setTypeOfModal(
+      fishingQuest.startTime.toNumber() === 0
+        ? TYPE_OF_MODAL.START
+        : TYPE_OF_MODAL.WAITING
+    )
+    setLoading(false)
+  }, [])
+
+  useEffect(() => {
+    if (isOpen) {
+      initialize()
+    }
+  }, [initialize, isOpen])
 
   const checkRequirementBeforeStartQuest = useCallback(async () => {
     const stamina = await getStamina()
@@ -56,62 +91,29 @@ function FishingModal(props: Props) {
     return Number(stamina) >= 50
   }, [toast])
 
-  const startQuest = useCallback(async () => {
+  const handleStartQuest = useCallback(async () => {
     const isOk = await checkRequirementBeforeStartQuest()
     if (!isOk) {
       return
     }
-    setTimeLeft(duration)
+    setTimeLeft(
+      intervalToDuration({
+        start: new Date(),
+        end: addHours(new Date(), 12),
+      })
+    )
     toggleLoadingModal(true)
     const fishing = await startFishing()
     setTimeout(() => {
       toggleLoadingModal(false)
     }, 1000)
     if (fishing !== null) {
-      setCountDownStart(true)
       setTypeOfModal(TYPE_OF_MODAL.WAITING)
       setCanFinish(false)
     } else {
       toggleLoadingModal(false)
     }
-  }, [checkRequirementBeforeStartQuest, duration, toggleLoadingModal])
-
-  const handleExitBtn = () => {
-    toggleModal()
-    setTypeOfModal(TYPE_OF_MODAL.START)
-  }
-
-  useEffect(() => {
-    if (countDownStart) {
-      miningInterval.current = setInterval(() => {
-        if (timeLeft > 0) {
-          setTimeLeft((timeLeft) => timeLeft - 1)
-        }
-      }, 1000)
-    }
-  }, [countDownStart])
-
-  useEffect(() => {
-    if (timeLeft <= 0) {
-      setCanFinish(true)
-      clearInterval(miningInterval.current)
-      setCountDownStart(false)
-    }
-  }, [timeLeft])
-
-  const checkFinishFishingQuest = useCallback(async () => {
-    const data = await checkIfFishingFinish()
-    const NOW = new Date().getTime()
-    const endTime = (parseInt(data?.startTime) + duration * 1000) * 1000
-
-    if (endTime <= NOW && !data.finish) {
-      setCanFinish(true)
-    } else {
-      setTimeLeft(Math.round((endTime - NOW) / 1000000))
-      setCountDownStart(true)
-      setCanFinish(false)
-    }
-  }, [])
+  }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
 
   const handleFinish = useCallback(async () => {
     if (canFinish) {
@@ -120,140 +122,52 @@ function FishingModal(props: Props) {
       if (finish) {
         updateInventory()
         setTypeOfModal(TYPE_OF_MODAL.FINISH)
-        setTimeLeft(duration)
       }
       toggleLoadingModal(false)
     }
-  }, [canFinish, duration, toggleLoadingModal, updateInventory])
+  }, [canFinish, toggleLoadingModal, updateInventory])
 
   const confirmResult = useCallback(() => {
     setTypeOfModal(TYPE_OF_MODAL.START)
     toggleModal()
-  }, [])
-
-  const initialize = async () => {
-    toggleLoadingModal(true)
-    const checkIfFinish = await checkIfFishingFinish()
-    const data = await fetchFishingQuestData()
-    setRequireStamina(data.requireStamina)
-    setDuration(data.duration)
-
-    checkFinishFishingQuest()
-
-    if (checkIfFinish.startTime === '0') {
-      setTypeOfModal(TYPE_OF_MODAL.START)
-    } else {
-      setTypeOfModal(TYPE_OF_MODAL.WAITING)
-    }
-    toggleLoadingModal(false)
-  }
-
-  useEffect(() => {
-    initialize()
-  }, [])
+  }, [toggleModal])
 
   const renderText = useCallback(() => {
-    switch (typeofModal) {
-      case TYPE_OF_MODAL.FINISH: {
-        return (
-          <div className={styles.descriptionFinish}>
-            <h3 className={styles.sellBoard}>
-              {typeofModal === TYPE_OF_MODAL.FINISH && (
-                <img
-                  src="/images/professions/openian/questFinish.png"
-                  alt="Fish board"
-                />
-              )}
-            </h3>
-            <div className={styles.titleTextFinish}>You Caught</div>
-            <div className={styles.rowView}>
-              <div className={styles.valueTextFinish}>x2</div>
-              <img
-                src={`/images/professions/openian/fishNFT.png`}
-                alt="Confirm"
-                className={styles.fishNFT}
-              />
-            </div>
-            <div className={styles.noteText}>
-              All the Fishes you catch will be stored in your inventory.
-            </div>
-            <Button
-              className={`btn-chaka ${styles.confirmBtn} ${styles.confirmFinishBtn} click-cursor`}
-              onClick={confirmResult}
-            >
-              <img
-                src={`/images/professions/openian/confirm-btn.png`}
-                alt="Confirm"
-              />
-            </Button>
-          </div>
-        )
-      }
-      case TYPE_OF_MODAL.WAITING: {
-        return (
-          <div className={styles.boardContent}>
-            <div className={styles.description}>
-              <div className={styles.content}>
-                <div className={styles.titleText}>Active Quest</div>
-                <div className={styles.valueText}>
-                  Openian is on Fishing Quest. Be patient!
-                </div>
-                <div className={styles.titleText}>Time Left</div>
-                <div className={styles.valueText}>{timeLeft} seconds</div>
-              </div>
-            </div>
-            <Button
-              className={`btn-chaka ${styles.confirmBtn} click-cursor`}
-              onClick={handleFinish}
-            >
-              {canFinish ? (
-                <img
-                  src={`/images/professions/openian/finishFishing.png`}
-                  alt="Finish"
-                />
-              ) : (
-                <img
-                  src={`/images/professions/openian/finish-disable-btn.png`}
-                  alt="Finish"
-                />
-              )}
-            </Button>
-          </div>
-        )
-      }
-      default: {
-        return (
-          <div className={styles.boardContent}>
-            <div className={`${styles.description}`}>
-              <div className={styles.content}>
-                <div className={styles.titleText}>Description</div>
-                <div className={styles.valueText}>
-                  Fish is the main ingredient for making Sushi and Suppliers are
-                  paying good money for them. Let&apos;s go catch some !!!
-                </div>
-                <div className={styles.titleText}>Base Duration</div>
-                <div className={styles.valueText}>{duration} second</div>
-                <div className={styles.titleText}>Stamina Per Attemp</div>
-                <div className={styles.valueText}>
-                  {requireStamina} Stamina{' '}
-                  <div className={styles.iconStamina}></div>
-                </div>
-              </div>
-            </div>
-            <Button
-              className={`btn-chaka ${styles.confirmBtn} click-cursor`}
-              onClick={startQuest}
-            >
-              <img
-                src={`/images/professions/openian/startFishing.png`}
-                alt="Start Quest"
-              />
-            </Button>
-          </div>
-        )
-      }
+    if (loading) {
+      return null
     }
-  }, [typeofModal, timeLeft, duration, requireStamina, canFinish])
+    if (typeofModal === TYPE_OF_MODAL.FINISH) {
+      return <FinishModal onConfirm={confirmResult} loading={loading} />
+    }
+    if (typeofModal === TYPE_OF_MODAL.WAITING) {
+      return (
+        <WaitingModal
+          canFinish={canFinish}
+          onFinish={handleFinish}
+          timeLeft={timeLeft}
+          loading={loading}
+        />
+      )
+    }
+    return (
+      <DefaultModal
+        duration={duration}
+        onStartQuest={handleStartQuest}
+        requireStamina={requireStamina}
+        loading={loading}
+      />
+    )
+  }, [
+    typeofModal,
+    duration,
+    handleStartQuest,
+    requireStamina,
+    loading,
+    confirmResult,
+    canFinish,
+    handleFinish,
+    timeLeft,
+  ])
 
   return (
     <div
@@ -271,7 +185,7 @@ function FishingModal(props: Props) {
             className={`${styles.closeBtn} click-cursor ${
               typeofModal !== TYPE_OF_MODAL.FINISH && styles.btnFishing
             }`}
-            onClick={handleExitBtn}
+            onClick={toggleModal}
           >
             <FontAwesomeIcon icon={faTimesCircle} />
           </Button>
@@ -295,7 +209,7 @@ function FishingModal(props: Props) {
           </div>
         </div>
 
-        <div className="overlay" onClick={toggleModal}></div>
+        <div className="overlay" onClick={toggleModal} />
       </div>
     </div>
   )
