@@ -45,7 +45,7 @@ function FishingModal(props: Props) {
     const data = await fetchFishingQuestData()
 
     const endTime = fromUnixTime(
-      Number(fishingQuest?.startTime) + data.duration
+      fishingQuest?.startTime.toNumber() + data.duration
     )
 
     setRequireStamina(data.requireStamina)
@@ -56,12 +56,12 @@ function FishingModal(props: Props) {
       !isFinished
         ? intervalToDuration({
             start: new Date(),
-            end: fromUnixTime(Number(fishingQuest?.startTime) + data.duration),
+            end: endTime,
           })
         : intervalToDuration({ start: 0, end: 0 })
     )
     setTypeOfModal(
-      fishingQuest.startTime === '0'
+      fishingQuest.startTime.toNumber() === 0
         ? TYPE_OF_MODAL.START
         : TYPE_OF_MODAL.WAITING
     )

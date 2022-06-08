@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 import { fetchUserInventoryItemAmount } from 'utils/Item'
 import { listMultiItems } from 'utils/NFTMarket'
 
-export default function Inventory({ isOpenInventory, setIsOpenInventory }) {
+function Inventory({ isOpenInventory, setIsOpenInventory }) {
   const [valueItemSelect, setValueItemSelect] = useState(null)
   const [price, setPrice] = useState(null)
   const [amountItems, setAmountItems] = useState(null)
@@ -45,53 +45,55 @@ export default function Inventory({ isOpenInventory, setIsOpenInventory }) {
     setData(result)
   }
 
-  async function handleSelling() {
-    setData(null)
-    setValueItemSelect(null)
+  const handleSelling = useCallback(async () => {
     let result = false
-    if (valueItemSelect.indexItem === 'fishAmount') {
+    if (valueItemSelect?.indexItem === 'fishAmount') {
       result = await listMultiItems(
-        data.fishItems.slice(0, Number(amountItems)),
+        data?.fishItems.slice(0, Number(amountItems)),
         price
       )
-    } else if (valueItemSelect.indexItem === 'oreAmount') {
+    } else if (valueItemSelect?.indexItem === 'oreAmount') {
       result = await listMultiItems(
-        data.oreItems.slice(0, Number(amountItems)),
+        data?.oreItems.slice(0, Number(amountItems)),
         price
       )
-    } else if (valueItemSelect.indexItem === 'hammerAmount') {
+    } else if (valueItemSelect?.indexItem === 'hammerAmount') {
       result = await listMultiItems(
-        data.hammerItems.slice(0, Number(amountItems)),
+        data?.hammerItems.slice(0, Number(amountItems)),
         price
       )
-    } else if (valueItemSelect.indexItem === 'sushiAmount') {
+    } else if (valueItemSelect?.indexItem === 'sushiAmount') {
       result = await listMultiItems(
-        data.sushiItems.slice(0, Number(amountItems)),
+        data?.sushiItems.slice(0, Number(amountItems)),
         price
       )
     }
-    if (result) {
-      getItemsIndex()
-      setIsOpenNotify({ type: true })
-    } else setIsOpenNotify({ type: false })
-  }
+
+    getItemsIndex()
+    setIsOpenNotify({ type: !!result })
+    setData(null)
+    setValueItemSelect(null)
+  }, [
+    amountItems,
+    data?.fishItems,
+    data?.hammerItems,
+    data?.oreItems,
+    data?.sushiItems,
+    price,
+    valueItemSelect?.indexItem,
+  ])
 
   const handleCloseModalInventory = useCallback(
     (e: any) => {
       if (e.target !== e.currentTarget) return
       setIsOpenInventory(null)
     },
-    [isOpenInventory]
+    [setIsOpenInventory]
   )
 
   return (
     <InventoryCSS>
-      <div
-        onClick={(e) => {
-          handleCloseModalInventory(e)
-        }}
-        className="modal-inventory"
-      >
+      <div onClick={handleCloseModalInventory} className="modal-inventory">
         <div className="modal-content">
           {isOpenNotify ? (
             <div className="main">
@@ -128,27 +130,35 @@ export default function Inventory({ isOpenInventory, setIsOpenInventory }) {
                   />
                   <div className="container-items">
                     {data ? (
-                      [...items, ...Array(16 - items.length)].map((value) => {
-                        if (value) {
-                          return (
-                            <div
-                              key={value.indexItem}
-                              className="container-item click-cursor"
-                            >
-                              <img
-                                onClick={() => {
-                                  setValueItemSelect(value), setAmountItems('')
-                                }}
-                                src={`/images/inventory/items/${value.indexItem}.png`}
-                                alt="img"
+                      [...items, ...Array(16 - items.length)].map(
+                        (value, index) => {
+                          if (value) {
+                            return (
+                              <div
+                                key={`${value.indexItem}${index}`}
+                                className="container-item click-cursor"
+                              >
+                                <img
+                                  onClick={() => {
+                                    setValueItemSelect(value)
+                                    setAmountItems('')
+                                  }}
+                                  src={`/images/inventory/items/${value.indexItem}.png`}
+                                  alt="img"
+                                />
+                                <div>{value.amount}</div>
+                              </div>
+                            )
+                          } else {
+                            return (
+                              <div
+                                key={`${value}${index}`}
+                                className="container-item"
                               />
-                              <div>{value.amount}</div>
-                            </div>
-                          )
-                        } else {
-                          return <div key={value} className="container-item" />
+                            )
+                          }
                         }
-                      })
+                      )
                     ) : (
                       <div>Loading ...</div>
                     )}
@@ -256,6 +266,8 @@ export default function Inventory({ isOpenInventory, setIsOpenInventory }) {
     </InventoryCSS>
   )
 }
+
+export default Inventory
 
 const InventoryCSS = styled.div({
   '.modal-inventory': {
