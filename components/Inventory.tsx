@@ -249,9 +249,7 @@ function Inventory({ isOpenInventory, setIsOpenInventory }) {
                   {valueItemSelect && price > 0 && amountItems > 0 && (
                     <div className="container-2-btn-confirm click-cursor">
                       <img
-                        onClick={() => {
-                          handleSelling()
-                        }}
+                        onClick={handleSelling}
                         src="/images/inventory/confirm-seller-board.png"
                         alt="img"
                       />
