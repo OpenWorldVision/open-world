@@ -8,7 +8,7 @@ import {
   getNFTsByTrait,
   setApprovedAll,
 } from 'utils/itemContract'
-import { dispatchMakeMultiSushi } from '../../../utils/professionContract'
+import { makeMultiSushi } from '../../../utils/professionContract'
 import SellSushiModal from '@components/professions/supplier/SellSushiModal'
 import { listMultiItems } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
@@ -52,7 +52,7 @@ function Supplier() {
       const listFishBurn = listFish.slice(0, valueFish)
       setTypeModal(TYPE_OF_MODAL.START)
       setIsLoading(true)
-      const data = await dispatchMakeMultiSushi(listFishBurn)
+      const data = await makeMultiSushi(listFishBurn)
       setIsLoading(false)
       if (data?.status) {
         setTypeModal(TYPE_OF_MODAL.FINISH)

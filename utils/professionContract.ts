@@ -121,14 +121,16 @@ export async function getMiningQuest(): Promise<{
   return data
 }
 
-export const dispatchMakeMultiSushi = async (itemIds: Array<number>) => {
+export const makeMultiSushi = async (itemIds: number[]) => {
   const contract = await getProfessionContract()
 
   try {
     const tx = await contract.makeMultiSushi(itemIds)
     const receipt = await tx.wait()
     return receipt
-  } catch (error) {}
+  } catch (error) {
+    return null
+  }
 }
 
 export const finishMining = async () => {
