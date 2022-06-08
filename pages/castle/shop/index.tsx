@@ -9,6 +9,7 @@ import {
   fetchProfessionsNFTPrices,
 } from 'utils/professions'
 import LoadingModal from '@components/LoadingModal'
+import useTransactionState from 'hooks/useTransactionState'
 
 function Shop() {
   const [nftsAmount, setNftsAmount] = useState({
@@ -24,12 +25,22 @@ function Shop() {
   const [fetchAmountInterval, setFetchAmountInterval] = useState(null)
   const [fetchPricesInterval, setFetchPricesInterval] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const handleTxStateChange = useTransactionState()
 
   const mintProfessionsNFT = async (trait) => {
+    const title = 'Purchase NFT card'
     setIsLoading(true)
-    const checkMintResult = await mintProfessionNFT(trait)
-    if (checkMintResult) {
+    const data = await mintProfessionNFT(
+      trait,
+      (txHash) => {
+        handleTxStateChange(title, txHash, 2)
+      }
+    )
+    if (data) {
+      handleTxStateChange(title, data.transactionHash, data.status)
       await fetchNFTAmount()
+    } else {
+      handleTxStateChange(title, '', 3)
     }
     setIsLoading(false)
   }
@@ -76,7 +87,7 @@ function Shop() {
         <title>Shop</title>
       </Head>
 
-      {/* Loading */}
+      {/* Loading modal */}
       {isLoading && <LoadingModal />}
 
       <div className={style.shopContainer}>

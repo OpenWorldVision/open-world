@@ -660,3 +660,7 @@ option{
 .btn-chaka:focus {
   box-shadow: none !important;
 }
+
+#chakra-toast-manager-bottom {
+  z-index: 999999 !important;
+}

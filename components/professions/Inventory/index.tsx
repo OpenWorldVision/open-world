@@ -8,6 +8,8 @@ import React, {
 import styled from '@emotion/styled'
 import { fetchUserInventoryItemAmount } from 'utils/Item'
 import { listMultiItems } from 'utils/NFTMarket'
+import useTransactionState from 'hooks/useTransactionState'
+
 import {
   Button,
   Modal,
@@ -35,6 +37,7 @@ function Inventory(_, ref) {
   const [amountItems, setAmountItems] = useState(null)
   const [isOpenNotify, setIsOpenNotify] = useState(null)
   const [data, setData] = useState(null)
+  const handleTxStateChange = useTransactionState()
 
   useImperativeHandle(
     ref,
@@ -55,10 +58,21 @@ function Inventory(_, ref) {
   }, [])
 
   const handleSelling = useCallback(async () => {
+    const title = 'Sell item(s)'
+
     const result = await listMultiItems(
       selectedItem?.ids?.slice(0, Number(amountItems)),
-      price
+      price,
+      (txHash) => {
+        handleTxStateChange(title, txHash, 2)
+      }
     )
+
+    if (result) {
+      handleTxStateChange(title, result.transactionHash, result.status)
+    } else {
+      handleTxStateChange(title, '', 3)
+    }
 
     getItemsIndex()
     setIsOpenNotify({ type: !!result })

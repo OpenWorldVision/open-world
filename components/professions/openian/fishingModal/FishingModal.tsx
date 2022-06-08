@@ -14,6 +14,7 @@ import WaitingModal from './WaitingModal'
 import FinishModal from './FinishModal'
 import DefaultModal from './DefaultModal'
 import { addHours, fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
+import useTransactionState from 'hooks/useTransactionState'
 
 type Props = {
   isOpen: boolean
@@ -37,8 +38,8 @@ function FishingModal(props: Props) {
   const [canFinish, setCanFinish] = useState(false)
   const [timeLeft, setTimeLeft] = useState<Duration>(null)
   const [loading, setLoading] = useState(true)
-
   const toast = useToast()
+  const handleTxStateChange = useTransactionState()
 
   const initialize = useCallback(async () => {
     const fishingQuest = await getFishingQuest()
@@ -92,6 +93,7 @@ function FishingModal(props: Props) {
   }, [toast])
 
   const handleStartQuest = useCallback(async () => {
+    const title = 'Start fishing quest'
     const isOk = await checkRequirementBeforeStartQuest()
     if (!isOk) {
       return
@@ -103,25 +105,36 @@ function FishingModal(props: Props) {
       })
     )
     toggleLoadingModal(true)
-    const fishing = await startFishing()
+
+    const fishing = await startFishing((txHash) => {
+      handleTxStateChange(title, txHash, 2)
+    })
     setTimeout(() => {
       toggleLoadingModal(false)
     }, 1000)
     if (fishing !== null) {
       setTypeOfModal(TYPE_OF_MODAL.WAITING)
       setCanFinish(false)
+      handleTxStateChange(title, fishing.transactionHash, fishing.status)
     } else {
       toggleLoadingModal(false)
+      handleTxStateChange(title, '', 3)
     }
   }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
 
   const handleFinish = useCallback(async () => {
+    const title = 'Finish fishing quest'
     if (canFinish) {
       toggleLoadingModal(true)
-      const finish = await finishFishing()
+      const finish = await finishFishing((txHash) => {
+        handleTxStateChange(title, txHash, 2)
+      })
       if (finish) {
+        handleTxStateChange(title, finish.transactionHash, finish.status)
         updateInventory()
         setTypeOfModal(TYPE_OF_MODAL.FINISH)
+      } else {
+        handleTxStateChange(title, '', 3)
       }
       toggleLoadingModal(false)
     }

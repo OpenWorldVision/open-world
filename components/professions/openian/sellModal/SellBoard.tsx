@@ -9,6 +9,7 @@ import LoadingModal from '@components/LoadingModal'
 import ListingResultModal from '../../ListingResultModal'
 import { getApprovalAll, setApprovedAll } from 'utils/itemContract'
 import { listMultiItems } from 'utils/NFTMarket'
+import useTransactionState from 'hooks/useTransactionState'
 
 type Props = {
   selectedItem: number
@@ -27,6 +28,8 @@ function SellBoard(props: Props) {
   const [selectedItemIds, setSelectedItemIds] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [listingResult, setListingResult] = useState(undefined)
+  const handleTxStateChange = useTransactionState()
+
 
   const fetchSelectedItemAmount = async () => {
     const itemAmount = await fetchUserInventoryItemAmount()
@@ -118,17 +121,26 @@ function SellBoard(props: Props) {
   }, [])
 
   const listToMarket = useCallback(async () => {
+    const title = 'Sell item(s)'
     if (price !== 0 && sellingAmount !== 0) {
       setIsLoading(true)
       getApprovedStatus()
 
       const itemSellIds = selectedItemIds.slice(0, sellingAmount)
-      const result = await listMultiItems(itemSellIds, price)
+      const result = await listMultiItems(
+        itemSellIds,
+        price,
+        (txHash) => {
+          handleTxStateChange(title, txHash, 2)
+        }
+      )
       if (result !== null) {
         handleFinishListing()
         setListingResult(true)
+        handleTxStateChange(title, result.transactionHash, result.status)
       } else {
         setListingResult(false)
+        handleTxStateChange(title, '', 3)
       }
       priceRef.current.value = '0'
       setPrice(0)
