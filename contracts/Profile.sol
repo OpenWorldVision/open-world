@@ -456,4 +456,8 @@ contract Profiles is AccessControlUpgradeable {
     }
     timestampStamina[_account] = _timestamp;
   }
+
+  function totalProfiles() public view returns (uint256) {
+    return addresses.length;
+  }
 }
