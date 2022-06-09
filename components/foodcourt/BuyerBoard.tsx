@@ -1,8 +1,14 @@
-import { Button } from '@chakra-ui/react'
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
+  Text,
+} from '@chakra-ui/react'
 import styles from './BuyerBoard.module.css'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import NotificationBuyItem from './NotificationBuyItem'
-import { purchaseItems } from 'utils/NFTMarket'
 
 type Props = {
   isOpen: boolean
@@ -11,24 +17,16 @@ type Props = {
   handlePurchaseItem: any
 }
 
-export default function BuyerBoard(props: Props) {
+function BuyerBoard(props: Props) {
   const { isOpen, toggleModalBuyModal, buyDetail, handlePurchaseItem } = props
-
-  const [numberItem, setNumberItem] = useState(0)
-  const [totalOpen, setTotalOpen] = useState(0)
-  const [myOpen, setMyOpen] = useState(100)
   const [notiContent, setNotiContent] = useState({})
   const [isShowNoti, setIsShowNoti] = useState(false)
 
   const handleHiddenModal = useCallback(() => {
     toggleModalBuyModal()
-    setNumberItem(0)
-    setTotalOpen(0)
   }, [toggleModalBuyModal])
 
   const handleConfirmBuy = useCallback(async () => {
-    setNumberItem(0)
-    setTotalOpen(0)
     const data = await handlePurchaseItem(
       parseInt(buyDetail?.id),
       buyDetail?.items
@@ -48,62 +46,68 @@ export default function BuyerBoard(props: Props) {
   }, [toggleModalBuyModal])
 
   return (
-    <>
-      <div
-        className={`overlay ${styles.modalOverlay} ${isOpen && styles.active}`}
-      >
-        {!isShowNoti && (
-          <div className={styles.modal}>
-            <h3 className={styles.sellBoard}>
-              <img src="/images/foodcourt/buyer-board.png" alt="Buyer board" />
-            </h3>
+    <Modal
+      isOpen={isOpen}
+      onClose={toggleModalBuyModal}
+      closeOnOverlayClick
+      isCentered
+      size="xl"
+    >
+      <ModalOverlay />
+      <ModalContent>
+        <ModalBody padding={0}>
+          {!isShowNoti && (
+            <div className={styles.modal}>
+              <h3 className={styles.sellBoard}>
+                <img
+                  src="/images/foodcourt/buyer-board.png"
+                  alt="Buyer board"
+                />
+              </h3>
 
-            <div
-              className={`${styles.closeBtn} click-cursor`}
-              onClick={handleHiddenModal}
-            ></div>
+              <div
+                className={`${styles.closeBtn} click-cursor`}
+                onClick={handleHiddenModal}
+              />
 
-            <div className={styles.boardContent}>
-              <h3>SELECTED ITEM:</h3>
-              <div className={`${styles.selectedItem}`}>
-                {buyDetail['trait'] === '1' ? (
-                  <img src="/images/foodcourt/fish.png" alt="Fish" />
-                ) : (
-                  <img src="/images/foodcourt/sushi.png" alt="Sushi" />
-                )}
-              </div>
-
-              <div className={styles.haveToPay}>
-                <div className={styles.helpText}>I Have To Pay</div>
-                <div className={styles.priceTotal}>
-                  {buyDetail?.price * buyDetail?.items?.length}
-                  <div>OPEN</div>
+              <div className={styles.boardContent}>
+                <Text fontSize="xl">SELECTED ITEM</Text>
+                <div className={`${styles.selectedItem}`}>
+                  {buyDetail['trait'] === 1 ? (
+                    <img src="/images/foodcourt/fish.png" alt="Fish" />
+                  ) : (
+                    <img src="/images/foodcourt/sushi.png" alt="Sushi" />
+                  )}
                 </div>
-              </div>
-              <Button
-                sx={{
-                  cursor:
-                    'url(/images/worldmap/SelectCursor.webp), auto !important',
-                }}
-                onClick={handleConfirmBuy}
-                className={styles.btnConfirm}
-              ></Button>
-            </div>
 
-            <div
-              style={{ backgroundColor: 'transparent' }}
-              className="overlay"
-              onClick={toggleModalBuyModal}
-            ></div>
-          </div>
-        )}
-        {isShowNoti && (
-          <NotificationBuyItem
-            notiContent={notiContent}
-            handleHiddenNoti={handleShowNoti}
-          />
-        )}
-      </div>
-    </>
+                <div className={styles.haveToPay}>
+                  <div className={styles.helpText}>I Have To Pay</div>
+                  <div className={styles.priceTotal}>
+                    {buyDetail?.price * buyDetail?.items?.length}
+                    <div>OPEN</div>
+                  </div>
+                </div>
+                <Button
+                  sx={{
+                    cursor:
+                      'url(/images/worldmap/SelectCursor.webp), auto !important',
+                  }}
+                  onClick={handleConfirmBuy}
+                  className={styles.btnConfirm}
+                />
+              </div>
+            </div>
+          )}
+          {isShowNoti && (
+            <NotificationBuyItem
+              notiContent={notiContent}
+              handleHiddenNoti={handleShowNoti}
+            />
+          )}
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   )
 }
+
+export default BuyerBoard
