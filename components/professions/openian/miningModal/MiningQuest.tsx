@@ -21,7 +21,7 @@ export default function MiningQuest(props: Props) {
       </div>
       <div>
         <div className={style.title}>Base Duration</div>
-        <div className={style.detail}>{duration} secconds</div>
+        <div className={style.detail}>{duration / 3600} hours</div>
       </div>
       <div>
         <div className={style.title}>Stamina Per Attemp</div>
@@ -33,7 +33,7 @@ export default function MiningQuest(props: Props) {
       <div>
         <div className={style.title}>Required</div>
         <div className={style.detail}>
-          2 Hammer
+          1 Hammer
           <div className={style.harmer}></div>
         </div>
       </div>

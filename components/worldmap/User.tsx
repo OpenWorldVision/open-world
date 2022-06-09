@@ -5,6 +5,7 @@ import CreateProfile from '@components/worldmap/CreateProfile'
 import { getProfile, getStamina } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
+import Inventory from '../Inventory'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 import {
   Button,
@@ -29,6 +30,7 @@ export default function User(props: Props) {
   const { isOpen, onToggle } = useDisclosure()
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
+  const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isOpenTutorial, setIsOpenTutorial] = useState(false)
   const [career, setCareer] = useState('None')
   const profile = useSelector((state: any) => state.ProfileStore.profile)
@@ -124,7 +126,7 @@ export default function User(props: Props) {
                     <img src="/favicon.ico" alt="img" width={25} height={25} />
                   </WrapItem>
                   <WrapItem alignItems="center">
-                    <Text> 0.00 OPEN</Text>
+                    <Text> {balance} OPEN</Text>
                   </WrapItem>
                 </Wrap>
                 {/* Career : Openian or Supplier or BlackSmith */}
@@ -139,7 +141,14 @@ export default function User(props: Props) {
                     />
                   </WrapItem>
                   <WrapItem>
-                    <Text>Inventory</Text>
+                    <Text
+                      className="click-cursor"
+                      onClick={() => {
+                        setIsOpenInventory(true)
+                      }}
+                    >
+                      Inventory
+                    </Text>
                   </WrapItem>
                 </Wrap>
 
@@ -189,15 +198,15 @@ export default function User(props: Props) {
             </div>
           </PopoverContent>
         </Popover>
-        {isOpenUserInfo && (
-          <UserInfo
-            setIsOpenUserInfo={setIsOpenUserInfo}
-            isOpenUserInfo={isOpenUserInfo}
-            setIsOpenCreateProfile={setIsOpenCreateProfile}
-            profile={profile}
-            balance={balance}
-          />
-        )}
+
+        <UserInfo
+          setIsOpenUserInfo={setIsOpenUserInfo}
+          isOpenUserInfo={isOpenUserInfo}
+          setIsOpenCreateProfile={setIsOpenCreateProfile}
+          profile={profile}
+          balance={balance}
+        />
+
         {profile === false && (
           <CreateProfile
             setIsOpenCreateProfile={setIsOpenCreateProfile}
@@ -214,6 +223,12 @@ export default function User(props: Props) {
             isOpenCreateProfile={isOpenCreateProfile}
             getDataProfile={getDataProfile}
             handleOpenTutorial={handleOpenTutorial}
+          />
+        )}
+        {isOpenInventory && (
+          <Inventory
+            setIsOpenInventory={setIsOpenInventory}
+            isOpenInventory={isOpenInventory}
           />
         )}
         <ProfessionsTutorial
@@ -240,6 +255,7 @@ const UserCSS = styled.div({
     '@media(max-width: 720px)': {
       top: '10px',
       left: '10px',
+      width: '100px',
     },
     '> button': {
       height: '110px',
@@ -254,6 +270,14 @@ const UserCSS = styled.div({
         width: '76px',
         height: '76px',
         borderRadius: '50%',
+      },
+      '@media(max-width: 720px)': {
+        height: '82px',
+        img: {
+          width: '52px',
+          height: '52px',
+          borderRadius: '50%',
+        },
       },
     },
     '.user-info': {

@@ -22,10 +22,10 @@ import {
 } from 'utils/NFTMarket'
 import BackButton from '@components/BackButton'
 import LoadingModal from '@components/LoadingModal'
+import Link from 'next/link'
+import Inventory from '@components/Inventory'
 
 export default function WorkShop() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
   const [isItemBoard, setIsItemBoard] = useState<'ore' | 'hammer' | 'mine'>(
     'ore'
   )
@@ -33,22 +33,23 @@ export default function WorkShop() {
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageWorkShop, setPageWorkShop] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
+  const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleGetHammerList = async () => {
     const data = await getListingIDs(false)
-    setListItemsBoard(data.filter((listing) => listing.trait === '3'))
+    setListItemsBoard(data.filter((listing) => listing.trait === 3))
   }
 
   const handleGetOreList = async () => {
     const data = await getListingIDs(false)
-    setListItemsBoard(data.filter((listing) => listing.trait === '2'))
+    setListItemsBoard(data.filter((listing) => listing.trait === 2))
   }
 
   const handleGetMyList = async () => {
     const data = await getListingIDs(true)
     const myOreList = data?.filter(
-      (item) => item?.trait === '2' || item?.trait === '3'
+      (item) => item?.trait === 2 || item?.trait === 3
     )
     setListItemsBoard(myOreList)
   }
@@ -108,24 +109,12 @@ export default function WorkShop() {
     [toggleBuyModal]
   )
 
-  useEffect(() => {
-    const checkWindowWidth = () => {
-      setWindowWidth(window.innerWidth)
-    }
-
-    checkWindowWidth()
-
-    window.addEventListener('resize', checkWindowWidth)
-
-    return () => {
-      window.removeEventListener('resize', checkWindowWidth)
-    }
-  }, [])
-
   const _handlePurchaseItem = useCallback(
     async (id: number, listIds: Array<number>) => {
       setIsLoading(true)
-      const data = await purchaseItems(id, listIds)
+      const data = await purchaseItems(id, listIds, () => {
+        setIsLoading(false)
+      })
       if (data) {
         setIsLoading(false)
         if (isItemBoard === 'ore') {
@@ -154,14 +143,6 @@ export default function WorkShop() {
           </div>
           <div>
             <Button
-              className={`${styles.buyButtonCustom} click-cursor`}
-              backgroundColor={'#52241E'}
-              onClick={handleSelectItemBoard('mine')}
-              _hover={{ bg: '#52241E' }}
-            >
-              <Text color={'#fff'}>My Workshop</Text>
-            </Button>
-            <Button
               onClick={handleSelectItemBoard('ore')}
               className={`click-cursor ${styles.foodBtn}`}
             >
@@ -182,6 +163,14 @@ export default function WorkShop() {
                   isItemBoard === 'hammer' && styles.itemBoardSelected
                 }`}
               ></div>
+            </Button>
+            <Button
+              className={`${styles.buyButtonCustom} click-cursor`}
+              backgroundColor={'#52241E'}
+              onClick={handleSelectItemBoard('mine')}
+              _hover={{ bg: '#52241E' }}
+            >
+              <Text color={'#fff'}>My Workshop</Text>
             </Button>
           </div>
           <div className={styles.workShopBoard}>
@@ -277,6 +266,15 @@ export default function WorkShop() {
             buyDetail={buyDetail}
             handlePurchaseItem={_handlePurchaseItem}
           />
+          <Link href="/">
+            <a className={`${styles.backBtn} click-cursor`}></a>
+          </Link>
+          {isOpenInventory && (
+            <Inventory
+              isOpenInventory={isOpenInventory}
+              setIsOpenInventory={setIsOpenInventory}
+            />
+          )}
           <BackButton />
         </div>
       </div>

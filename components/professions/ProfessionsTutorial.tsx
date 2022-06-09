@@ -18,6 +18,12 @@ export default function ProfessionsTutorial({
     },
     [onClose]
   )
+
+  const handleGoToProfession = useCallback(() => {
+    onClose()
+    router.push('/professions')
+  }, [onClose, router])
+
   if (!isOpenTutorial) {
     return null
   }
@@ -43,11 +49,9 @@ export default function ProfessionsTutorial({
                 STYLE, DONT BE HESITATE TO CHOOSE IT
               </div>
               <button
-                onClick={() => {
-                  router.push('/professions')
-                }}
+                onClick={handleGoToProfession}
                 className="btn-go-professions click-cursor"
-              ></button>
+              />
             </div>
           </div>
         </div>

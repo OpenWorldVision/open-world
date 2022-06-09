@@ -50,7 +50,6 @@ contract Profession is AccessControlUpgradeable {
     return true;
   }
 
-
   function finishFishing() public returns (bool) {
     (uint256 startTime, bool finish) = getFishingQuest(msg.sender);
     require(!finish, 'This quest is finish');
@@ -89,7 +88,7 @@ contract Profession is AccessControlUpgradeable {
   }
 
   function makeMultiSushi(uint256[] calldata _ids) public {
-    require(_ids.length > 1, 'Invalid');
+    require(_ids.length > 0, 'Invalid');
     for (uint256 index = 0; index < _ids.length; index++) {
       makeSushi(_ids[index]);
     }
@@ -97,13 +96,13 @@ contract Profession is AccessControlUpgradeable {
 
   function makeHammer(uint256 idBurn) public {
     require(item.ownerOf(idBurn) == msg.sender, 'Not owner of token');
-    require(item.get(idBurn) == 2, 'Not fish');
+    require(item.get(idBurn) == 2, 'Not ore');
     item.mint(msg.sender, 3);
     item.setTrait(idBurn, 3);
   }
 
   function makeMultiHammer(uint256[] calldata _ids) public {
-    require(_ids.length > 1, 'Invalid');
+    require(_ids.length > 0, 'Invalid');
     for (uint256 index = 0; index < _ids.length; index++) {
       makeHammer(_ids[index]);
     }
@@ -167,5 +166,11 @@ contract Profession is AccessControlUpgradeable {
   function setProfiles(address _profile) public {
     require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
     profiles = Profiles(_profile);
+  }
+
+  function setFishingMiningStaminaRequire(uint256 _stamina) public {
+    require(hasRole(MODERATOR_ROLE, msg.sender), 'Not moderator');
+    fishingStaminaRequire = _stamina;
+    miningStaminaRequire = _stamina;
   }
 }

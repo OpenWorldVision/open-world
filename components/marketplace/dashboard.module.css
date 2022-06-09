@@ -1,5 +1,5 @@
 .main {
-    background: url('../../public/images/marketplace/market/background.png');
+    background: url('../../public/images/marketplace/background.png');
     background-size: cover;
     background-repeat: no-repeat;
     color: white;
@@ -22,7 +22,7 @@
 .nav1 > input:last-child {
     width: 250px;
     height: 50px;
-    background: url('../../public/images/marketplace/market/nft-id.png');
+    background: url('../../public/images/marketplace/nft-id.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -47,7 +47,7 @@
     left: 0;
     right: 0;
     margin: auto;
-    background: url('../../public/images/marketplace/market/frame-sort-price.png');
+    background: url('../../public/images/marketplace/frame-sort-price.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -91,7 +91,7 @@
 }
 
 .itemInfo {
-    background: url('../../public/images/marketplace/market/frame-item.png');
+    background: url('../../public/images/marketplace/frame-item.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -136,7 +136,7 @@
 }
 
 .sellerBoard{
-    background: url('../../public/images/marketplace/market/seller-board.png');
+    background: url('../../public/images/marketplace/seller-board.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -162,7 +162,7 @@
 .selectedImageFrame{
     width: 120px;
     height: 120px;
-    background: url('../../public/images/marketplace/market/selected-image.png');
+    background: url('../../public/images/marketplace/selected-image.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-size: 100% 100%;

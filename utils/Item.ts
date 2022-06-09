@@ -1,3 +1,4 @@
+import { getAddresses } from 'constants/addresses'
 import { ethers } from 'ethers'
 
 const itemContract = {
@@ -5,13 +6,12 @@ const itemContract = {
   jsonInterface: require('../build/contracts/Item.json'),
 }
 
-// Create contract
-const getItemContract = async () => {
+export const getItemContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
-  // const chainId = await window?.ethereum?.chainId
-
+  const { chainId } = await provider.getNetwork()
+  const itemAddress = getAddresses(chainId).ITEM
   return new ethers.Contract(
-    itemContract.addressBSC,
+    itemAddress,
     itemContract.jsonInterface.abi,
     provider.getSigner()
   )
@@ -33,13 +33,18 @@ export const fetchUserInventoryItemAmount = async () => {
   for (let i = 1; i < 5; i++) {
     const itemIdList = await fetchListItemIds(i)
     const itemAmount = itemIdList.filter((x) => x !== 0).length
+    itemsAmount.push(itemIdList)
     itemsAmount.push(itemAmount)
   }
 
   return {
-    fishAmount: itemsAmount[0],
-    oreAmount: itemsAmount[1],
-    hammerAmount: itemsAmount[2],
-    sushiAmount: itemsAmount[3],
+    fishItems: itemsAmount[0],
+    fishAmount: itemsAmount[1],
+    oreItems: itemsAmount[2],
+    oreAmount: itemsAmount[3],
+    hammerItems: itemsAmount[4],
+    hammerAmount: itemsAmount[5],
+    sushiItems: itemsAmount[6],
+    sushiAmount: itemsAmount[7],
   }
 }

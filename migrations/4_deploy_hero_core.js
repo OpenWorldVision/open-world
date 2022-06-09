@@ -4,7 +4,7 @@ const HeroCore = artifacts.require('HeroCore')
 module.exports = async function (deployer, network) {
   let govToken
   if (network === 'harmonyTestnet') {
-    govToken = '0x6c14d24eae373ae930768adbfa75c406119bf569'
+    govToken = '0x81d46b953ea84204AC1CaB75A4cB188E2529DCFB'
   }
   if (network === 'harmony') {
     govToken = ''

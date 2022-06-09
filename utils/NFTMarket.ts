@@ -1,61 +1,40 @@
+import { getAddresses } from 'constants/addresses'
 import { BigNumber, ethers } from 'ethers'
 import Web3 from 'web3'
 import { getOpenWorldContract } from './openWorldContract'
+import { getItemContract } from './Item'
+import marketInterface from '../build/contracts/NFTMarket.json'
 
 const web3 = new Web3(Web3.givenProvider)
 
-export const nftMarketContract = {
-  addressHarmony: '0x2BE7506f18E052fe8d2Df291d9643900f4B5a829',
-  addressBSC: '0x7210aEaF0c7d74366E37cfB37073cB630Ac86B5b',
-  jsonInterface: require('../build/contracts/NFTMarket.json'),
-}
-
-const nftAddress = '0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492'
-
-const getNFTMarketContract = async () => {
-  const chainId = await web3.eth.getChainId()
-
-  if (chainId === 97) {
-    return new web3.eth.Contract(
-      nftMarketContract.jsonInterface.abi,
-      nftMarketContract.addressBSC
-    )
-  } else if (chainId === 1666700000) {
-    return new web3.eth.Contract(
-      nftMarketContract.jsonInterface.abi,
-      nftMarketContract.addressHarmony
-    )
-  }
-}
-
-export const sellSushi = async (ids: Array<number>, price: number) => {
-  const contract = await getNFTMarketContract()
-  const accounts = await web3.eth.getAccounts()
-
-  try {
-    const data = await contract.methods
-      .addListing(nftAddress, ids, ethers.utils.parseEther(`${price}`))
-      .send({ from: accounts[0] })
-    return data
-  } catch (error) {
-    return null
-  }
-}
 const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 type Listing = {
   id: string
   items: string[]
   price: string
   seller: string
-  trait: string
+  trait: number
 }
+
+export const getMarketContract = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
+  const { chainId } = await provider.getNetwork()
+  const marketAddress = getAddresses(chainId).MARKETPLACE
+
+  return new ethers.Contract(
+    marketAddress,
+    marketInterface.abi,
+    provider.getSigner()
+  )
+}
+
 export async function getListingIDs(isMine: boolean): Promise<Listing[]> {
-  const contract = await getNFTMarketContract()
+  const contract = await getMarketContract()
   const accounts = await web3.eth.getAccounts()
+  const chainId = await web3.eth.getChainId()
+  const itemAddress = getAddresses(chainId).ITEM
   try {
-    const listIds = await contract.methods
-      .getListingSlice(nftAddress, 0, 20)
-      .call({ from: accounts[0] })
+    const listIds = await contract.getListingSlice(itemAddress, 0, 30)
     const listFull = []
     listIds?.sellers?.forEach((sellerAddress, index) => {
       if (sellerAddress !== NULL_ADDRESS) {
@@ -80,45 +59,80 @@ export async function getListingIDs(isMine: boolean): Promise<Listing[]> {
 
 export const purchaseItems = async (
   transactionId: number,
-  itemIds: Array<number>
+  itemIds: number[],
+  onError?: (error: string) => void
 ) => {
   try {
     const openWorldContract = await getOpenWorldContract()
     const currentAddress = await window.ethereum.selectedAddress
+    const itemContract = await getItemContract()
+    const marketContract = await getMarketContract()
 
     const allowance: BigNumber = await openWorldContract.allowance(
       currentAddress,
-      nftMarketContract.addressBSC
+      marketContract.address
     )
 
     if (allowance.lt(BigNumber.from(web3.utils.toWei('1000000', 'ether')))) {
-      await openWorldContract.approve(
-        nftMarketContract.addressBSC,
+      const tx = await openWorldContract.approve(
+        marketContract.address,
         web3.utils.toWei('100000000', 'ether')
       )
+      await tx.wait()
     }
-    const contract = await getNFTMarketContract()
-    const accounts = await web3.eth.getAccounts()
+    const tx2 = await marketContract.purchaseListing(
+      itemContract.address,
+      transactionId,
+      itemIds
+    )
+    const receipt = await tx2.wait()
 
-    const result = await contract.methods
-      ?.purchaseListing(nftAddress, transactionId, itemIds)
-      .send({ from: accounts[0] })
-    return result
+    return receipt
   } catch (error) {
+    onError?.(error.reason)
     return null
   }
 }
 
 export const cancelListingItem = async (id: number) => {
   try {
-    const contract = await getNFTMarketContract()
-    const accounts = await web3.eth.getAccounts()
-    const result = await contract.methods
-      ?.cancelListing(nftAddress, id)
-      .send({ from: accounts[0] })
-    if (result) {
-      return result
+    const contract = await getMarketContract()
+    const chainId = await web3.eth.getChainId()
+    const itemAddress = getAddresses(chainId).ITEM
+
+    const tx = await contract?.cancelListing(itemAddress, id)
+    const receipt = await tx.wait()
+
+    if (receipt) {
+      return receipt
     }
+  } catch (error) {
+    return null
+  }
+}
+
+export const listMultiItems = async (ids, price) => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
+  const Market = await getMarketContract()
+  const Item = await getItemContract()
+
+  const account = await provider.getSigner().getAddress()
+
+  try {
+    const isApproved = await Item.isApprovedForAll(account, Market.address)
+    if (!isApproved) {
+      const tx = await Item.setApprovalForAll(Market.address, true)
+      await tx.wait()
+    }
+
+    const tx2 = await Market.addListing(
+      Item.address,
+      ids,
+      ethers.utils.parseEther(`${price}`)
+    )
+    const receipt = await tx2.wait()
+
+    return receipt
   } catch (error) {
     return null
   }
