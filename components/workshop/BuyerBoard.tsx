@@ -66,7 +66,7 @@ export default function BuyerBoard(props: Props) {
             <div className={styles.boardContent}>
               <h3>SELECTED ITEM:</h3>
               <div className={`${styles.selectedItem}`}>
-                {buyDetail['trait'] === '2' ? (
+                {buyDetail['trait'] === 2 ? (
                   <img src="/images/workshop/ore.png" alt="ore" />
                 ) : (
                   <img src="/images/workshop/hammer.png" alt="hammer" />

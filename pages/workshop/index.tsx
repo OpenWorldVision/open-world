@@ -218,7 +218,7 @@ export default function WorkShop() {
                       if (index < 5) {
                         return (
                           <>
-                            <Tr>
+                            <Tr key={index}>
                               <Td>
                                 <div className={styles.columnItem}>
                                   {item.seller}
