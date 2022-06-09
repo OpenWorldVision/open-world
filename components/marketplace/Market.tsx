@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { getListingIDs, purchaseListing } from 'utils/Market'
+import { getListingIDs, purchaseItems } from 'utils/NFTMarket'
 import styles from './market.module.css'
 
 const numOfPage = 12
@@ -19,9 +19,13 @@ export default function Market() {
     }, [])
 
     const getItems = async () => {
-        const result = await getListingIDs()
-        setDataInit(result)
-        setData(result)
+        const result = await getListingIDs(false, true)
+        if(result.length) {
+            setDataInit(result)
+            setData(result)
+        } else {
+            setStatus('No results found')
+        }
     }
 
     const sortHighest = () => {
@@ -74,14 +78,22 @@ export default function Market() {
     }
 
     const handlePurchase = async (value) => {
-        const result = await purchaseListing(value.id, value.price)
-        if (result) {
+        const result = await purchaseItems(value.id, value.items, async (error) => {
             setStatus('Loading ...')
             setDataInit([])
             setData([])
             await getItems()
-            setIsOpenNotify({ type: true })
-        } else setIsOpenNotify({ type: false })
+            setIsOpenNotify({ 
+                type: 'FAILED',
+                content: error
+            })
+        })
+        if (result) {
+            setIsOpenNotify({ 
+                type: 'SUCCESS',
+                content: 'Your Order has been Completed'
+            })
+        }
 
     }
 
@@ -124,12 +136,12 @@ export default function Market() {
         <>
             {isOpenNotify ? <div className={styles.main}>
                 <div className={styles.containerNotify}>
-                    <div className={styles.notifyHeader}>{isOpenNotify.type ? 'SUCCESS' : 'FAILED'}</div>
-                    <div className={styles.notifyBody}>{isOpenNotify.type ? 'Your Order has been Completed !' : 'Your Order has been Failed'}</div>
+                    <div className={styles.notifyHeader}>{isOpenNotify.type}</div>
+                    <div className={styles.notifyBody}>{isOpenNotify.content}</div>
                     <img
                         onClick={() => {setIsOpenNotify(null)}}
                         className={styles.notifyConfirm + ' click-cursor'}
-                        src="/images/marketplace/market/confirm-notify.png" 
+                        src="/images/marketplace/confirm-notify.png" 
                         alt="img" 
                     />
                 </div>
@@ -184,12 +196,12 @@ export default function Market() {
                             <div className={styles.itemInfo}>
                                 <div>
                                     <div>#{value.id} HALLEN</div>
-                                    <img src={`/images/marketplace/market/items/${value.trait}.png`} alt="img" />
+                                    <img src={`/images/marketplace/items/${value.trait}.png`} alt="img" />
                                 </div>
                                 <div>{value.price} OPEN</div>
                             </div>
                             {nav !== 4 && <div className={styles.itemBuy}>
-                                <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/market/buy.png" alt="img" />
+                                <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.png" alt="img" />
                             </div>}
                         </div>
                     })}
@@ -198,14 +210,14 @@ export default function Market() {
                     <div className={styles.pagination}>
                         <img 
                             onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                            src="./images/marketplace/market/triangle-left.png" 
+                            src="./images/marketplace/triangle-left.png" 
                             alt="img"
                             className='click-cursor' 
                         />
                         <div>{page < 10 ? `0${page}` : page}</div>
                         <img
                             onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                            src="./images/marketplace/market/triangle-right.png" 
+                            src="./images/marketplace/triangle-right.png" 
                             alt="img" 
                             className='click-cursor' 
                         />
@@ -213,7 +225,7 @@ export default function Market() {
                 </div>
                 <Link href='/'>
                     <a className={styles.back}>
-                        <img src="./images/marketplace/market/back.png" alt="img" />
+                        <img src="./images/marketplace/back.png" alt="img" />
                     </a>
                 </Link>
             </div>

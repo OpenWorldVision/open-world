@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { cancelListing, getListingIDsBySeller, getNumberOfItemListings } from 'utils/Market'
+import { cancelListingItem, getListingIDsBySeller, getNumberOfItemListings } from 'utils/NFTMarket'
 import styles from './history.module.css'
 
 const numOfPage = 4
@@ -28,7 +28,7 @@ export default function History() {
     }
 
     const handleCancel = async (id: number) => {
-        const result = await cancelListing(id)
+        const result = await cancelListingItem(id)
         if (result) {
             setStatus('Loading ...')
             setData([])
@@ -46,7 +46,7 @@ export default function History() {
                     <img
                         onClick={() => {setIsOpenNotify(null)}}
                         className={styles.notifyConfirm + ' click-cursor'}
-                        src="/images/marketplace/market/confirm-notify.png" 
+                        src="/images/marketplace/confirm-notify.png" 
                         alt="img" 
                     />
                 </div>
@@ -98,10 +98,10 @@ export default function History() {
                     <div className={styles.boardInfo}>
                         <div className={styles.boardInfoHeader}>
                             <div>NFT ID</div>
-                            <div>DATE</div>
-                            <div>BUYER</div>
+                            {/* <div>DATE</div> */}
+                            {/* <div>BUYER</div> */}
                             <div>PRICE</div>
-                            <div>STATUS</div>
+                            {/* <div>STATUS</div> */}
                             <div>ACTION</div>
                         </div>
                         <div className={styles.boardInfoItems}>
@@ -109,12 +109,12 @@ export default function History() {
                             {data.slice((page - 1)*numOfPage, (page - 1)*numOfPage + numOfPage).map(value => (
                                 <div key={value} className={styles.boardInfoItem}>
                                     <div>#{value.id}</div>
-                                    <div>05/30/2022</div>
-                                    <div>UNKNOWN</div>
+                                    {/* <div>05/30/2022</div> */}
+                                    {/* <div>UNKNOWN</div> */}
                                     <div>{value.price} OPEN</div>
-                                    <div>SELLING</div>
+                                    {/* <div>SELLING</div> */}
                                     <div>
-                                        <img className='click-cursor' onClick={() => {handleCancel(value.id)}} src="./images/marketplace/market/history-cancel.png" alt="img" />
+                                        <img className='click-cursor' onClick={() => {handleCancel(value.id)}} src="./images/marketplace/history-cancel.png" alt="img" />
                                     </div>
                                 </div>
                             ))}
@@ -125,20 +125,20 @@ export default function History() {
                     <div className={styles.pagination}>
                         <img 
                             onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                            src="./images/marketplace/market/triangle-left.png" 
+                            src="./images/marketplace/triangle-left.png" 
                             alt="img" 
                         />
                         <div>{page < 10 ? `0${page}` : page}</div>
                         <img
                             onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                            src="./images/marketplace/market/triangle-right.png" 
+                            src="./images/marketplace/triangle-right.png" 
                             alt="img" 
                         />
                     </div>
                 </div>
                 <Link href='/'>
                     <a className={styles.back}>
-                        <img src="./images/marketplace/market/back.png" alt="img" />
+                        <img src="./images/marketplace/back.png" alt="img" />
                     </a>
                 </Link>
             </div>

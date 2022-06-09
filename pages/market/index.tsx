@@ -14,7 +14,7 @@ function MarketPlace() {
   return (
       <MarketPlaceCSS>
           <Head>
-              <title>MarketPlace</title>
+              <title>Marketplace</title>
           </Head>
           <div className='nav'>
               <div className='nav-items-1'>
@@ -62,6 +62,15 @@ const MarketPlaceCSS = styled.div({
       justifyContent: 'space-between',
       img: {
         marginLeft: '100px',
+        '@media(max-width: 950px)': {
+          marginLeft: '20px',
+        },
+      },
+      '@media(max-width: 520px)': {
+        justifyContent: 'flex-end',
+        img: {
+          display: 'none'
+        }
       },
     },
     '.nav-items-2': {
@@ -75,9 +84,19 @@ const MarketPlaceCSS = styled.div({
     },
     '.nav-items-1, .nav-items-2, .nav-items-3': {
       div: {
-        padding: '25px 100px',
+        padding: '20px 100px',
         fontWeight: '700',
         fontSize: '22px',
+        '@media(max-width: 1020px)': {
+          padding: '20px 50px',
+        },
+        '@media(max-width: 640px)': {
+          padding: '20px 10px',
+        },
+        '@media(max-width: 520px)': {
+          fontSize: '18px',
+          padding: '15px 10px',
+        },
       },
       '.select': {
         color: '#FFB966',

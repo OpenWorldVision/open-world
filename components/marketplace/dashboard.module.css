@@ -8,6 +8,12 @@
     padding-top: 20px;
 }
 
+@media (max-width: 1700px) {
+    .main {
+        padding-top: 0;
+    }
+}
+
 .nav{
     padding-bottom: 10px;
 }
@@ -18,6 +24,13 @@
     margin: 0 150px;
     align-items: center;
 }
+
+@media (max-width: 650px) {
+    .nav1 {
+        margin: 0 50px;
+    }
+}
+
 
 .nav1 > input:last-child {
     width: 250px;
@@ -31,15 +44,36 @@
     color: white;
 }
 
+@media (max-width: 650px) {
+    .nav1 > input:last-child {
+        width: 200px;
+        font-size: 16px;
+    }
+}
+
 .nav2 {
     display: flex;
     margin-left: 50px;
+    margin-right: 50px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 810px) {
+    .nav2 {
+        margin: 0;
+        justify-content: center;
+    }
 }
 
 .nav2 > div {
     padding: 20px 50px;
 }
 
+@media (max-width: 810px) {
+    .nav2 > div {
+        padding: 15px;
+    }
+}
 
 .sortPriceBoard{
     position: absolute;
@@ -63,7 +97,14 @@
 
 .body{
     display: flex;
-    height: calc(100% - 380px);
+    height: calc(100% - 300px);
+    overflow: auto;
+}
+
+@media (max-width: 1040px) {
+    .body{
+        flex-wrap: wrap;
+    }
 }
 
 .body1{
@@ -74,7 +115,10 @@
     align-items: center;
     overflow: auto;
     flex: 1.5;
+    min-width: 400px;
+    height: 100%;
 }
+
 
 .loading {
     font-size: 30px;
@@ -132,7 +176,13 @@
 
 .body2 {
     flex: 1;
-    padding-right: 50px;
+    padding: 0 50px;
+}
+
+@media (max-width: 800px) {
+    .body2{
+        padding: 0 10px;
+    }
 }
 
 .sellerBoard{
@@ -143,13 +193,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px;
     font-size: 25px;
     font-weight: normal;
     max-width: 650px;
+    min-width: 500px;
     margin: auto;
-    margin-top: -45px;
+    padding: 50px 0;
 }
+
+@media (max-width: 550px) {
+    .sellerBoard{
+        min-width: 300px;
+    }
+}
+
 
 .header{
     margin-top: 30px;
@@ -205,6 +262,15 @@
     justify-content: center;
 }
 
+@media (max-width: 650px) {
+    .footer{
+        bottom: 20px;
+        right: 10px;
+        left: unset;
+        margin: unset;
+    }
+}
+
 .pagination{
     display: flex;
     align-items: center;
@@ -212,6 +278,12 @@
 
 .pagination img{
     padding: 0 20px;
+}
+
+@media (max-width: 650px) {
+    .pagination img{
+        padding: 0 10px;
+    }
 }
 
 .pagination > div{
@@ -225,10 +297,26 @@
     font-weight: normal;
 }
 
+@media (max-width: 650px) {
+    .pagination div{
+        height: 100%;
+        width: 40px;
+        font-size: 18px;
+    }
+}
+
 .back {
     position: fixed;
     bottom: 50px;
     left: 50px;
+}
+
+@media (max-width: 650px) {
+    .back{
+        bottom: 20px;
+        left: 10px;
+        width: 100px;
+    }
 }
 
 .select {
@@ -241,7 +329,7 @@
     margin: auto;
     max-width: 750px;
     max-height: 500px;
-    background-image: url(/images/marketplace/market/notify.png);
+    background-image: url(/images/marketplace/notify.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     display: flex;

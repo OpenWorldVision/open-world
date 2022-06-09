@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { addListing, getAmountItemByTrait } from 'utils/Market'
+import { getAmountItemByTrait, listMultiItems } from 'utils/NFTMarket'
 import styles from './dashboard.module.css'
 
 const numOfPage = 8
@@ -21,13 +21,17 @@ export default function DashBoard() {
 
     const getItems = async () => {
         const result = await getAmountItemByTrait()
-        setDataInit(result)
-        setData(result)
+        if(result.length) {
+            setDataInit(result)
+            setData(result)
+        } else {
+            setStatus('No results found')
+        }
     }
 
     const handleSell = async () => {
         setSelected(null)
-        const result = await addListing(selected.id, Number(priceInput))
+        const result = await listMultiItems([selected.id], Number(priceInput))
         if (result) {
             setStatus('Loading ...')
             setDataInit([])
@@ -119,7 +123,7 @@ export default function DashBoard() {
                     <img
                         onClick={() => {setIsOpenNotify(null)}}
                         className={styles.notifyConfirm + ' click-cursor'}
-                        src="/images/marketplace/market/confirm-notify.png" 
+                        src="/images/marketplace/confirm-notify.png" 
                         alt="img" 
                     />
                 </div>
@@ -166,7 +170,7 @@ export default function DashBoard() {
                                 <div onClick={() => {setSelected(value)}} className={styles.itemInfo + ' click-cursor'}>
                                     <div>
                                         <div>#{value.id} HALLEN</div>
-                                        <img src={`./images/marketplace/market/items/${value.trait}.png`} alt="img" />
+                                        <img src={`./images/marketplace/items/${value.trait}.png`} alt="img" />
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +180,7 @@ export default function DashBoard() {
                         <div className={styles.sellerBoard}>
                             <div className={styles.header}>Selected Item:</div>
                             {selected ? 
-                                <img className={styles.selectedImage} src={`./images/marketplace/market/items/${selected.trait}.png`} alt="img" /> 
+                                <img className={styles.selectedImage} src={`./images/marketplace/items/${selected.trait}.png`} alt="img" /> 
                                 : <div className={styles.selectedImageFrame} />
                             }
                             <div className={styles.priceInput}>
@@ -196,21 +200,21 @@ export default function DashBoard() {
                         <img 
                             className='click-cursor'
                             onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                            src="./images/marketplace/market/triangle-left.png" 
+                            src="/images/marketplace/triangle-left.png" 
                             alt="img" 
                         />
                         <div>{page < 10 ? `0${page}` : page}</div>
                         <img
                             className='click-cursor'
                             onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                            src="./images/marketplace/market/triangle-right.png" 
+                            src="./images/marketplace/triangle-right.png" 
                             alt="img" 
                         />
                     </div>
                 </div>
                 <Link href='/'>
                     <a className={styles.back}>
-                        <img className='click-cursor' src="./images/marketplace/market/back.png" alt="img" />
+                        <img className='click-cursor' src="./images/marketplace/back.png" alt="img" />
                     </a>
                 </Link>
             </div>
