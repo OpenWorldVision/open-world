@@ -426,11 +426,14 @@ contract Profiles is AccessControlUpgradeable {
       Profile memory profile = profiles[addressToIndex[_account]];
       timestamp = profile.created;
     }
-    uint256 diff = current.sub(timestamp).div(3600).mul(42).div(10);
-    if (diff > MAX_STAMINA) {
+    if (current >= timestamp) {
       return 0;
     }
-    return MAX_STAMINA.sub(diff);
+    uint256 currentStamina = timestamp.sub(current).div(857);
+    if (currentStamina > MAX_STAMINA) {
+      return MAX_STAMINA;
+    }
+    return currentStamina;
   }
 
   function getStaminaTimestamp(address _account)
@@ -448,7 +451,7 @@ contract Profiles is AccessControlUpgradeable {
 
   function setStaminaTimestamp(address _account, uint256 _timestamp) public {
     require(hasRole(PROFESSION_OPERATOR, msg.sender), 'Access denied');
-    if (_timestamp > block.timestamp) {
+    if (_timestamp < block.timestamp) {
       _timestamp = block.timestamp;
     }
     timestampStamina[_account] = _timestamp;
