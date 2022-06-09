@@ -7,12 +7,14 @@ import MiningWait from './MiningWait'
 import MiningQuest from './MiningQuest'
 
 import {
-  checkIfMiningFinish,
+  getMiningQuest,
   startMining,
-  fetchMiningQuestData,
+  getMiningQuestInfo,
   finishMining,
 } from 'utils/professionContract'
 import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
+import { fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
+import { getStamina } from 'utils/profileContract'
 
 type Props = {
   isOpen: boolean
@@ -29,11 +31,42 @@ export default function MiningModal(props: Props) {
   const [canFinish, setCanFinish] = useState(false)
   const [duration, setDuration] = useState(10)
   const [requireStamina, setRequireStamina] = useState(0)
-  const [countDownStart, setCountDownStart] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(10)
+  const [timeLeft, setTimeLeft] = useState<Duration>(() =>
+    intervalToDuration({ start: 0, end: 0 })
+  )
 
-  const miningInterval = useRef<ReturnType<typeof setInterval>>(null)
   const toast = useToast()
+
+  const initialize = useCallback(async () => {
+    toggleLoadingModal(true)
+    const miningQuest = await getMiningQuest()
+    const data = await getMiningQuestInfo()
+    const endTime = fromUnixTime(
+      miningQuest?.startTime.toNumber() + data.duration
+    )
+
+    setDuration(data.duration)
+    setRequireStamina(data.requireStamina)
+
+    const isFinished = isBefore(endTime, new Date()) && !miningQuest.finish
+    setCanFinish(isFinished)
+    setTimeLeft(
+      !isFinished
+        ? intervalToDuration({
+            start: new Date(),
+            end: endTime,
+          })
+        : intervalToDuration({ start: 0, end: 0 })
+    )
+
+    setIsStartQuest(miningQuest.startTime.toNumber() === 0)
+
+    toggleLoadingModal(false)
+  }, [toggleLoadingModal])
+
+  useEffect(() => {
+    initialize()
+  }, [])
 
   const checkRequirementBeforeStartQuest = useCallback(async () => {
     const hammerList = await fetchAmountItemByTrait(3)
@@ -45,9 +78,23 @@ export default function MiningModal(props: Props) {
         duration: 15000,
         isClosable: true,
       })
+      return false
+    }
+    const stamina = await getStamina()
+
+    if (Number(stamina) < 50) {
+      toast({
+        title: 'Mining Quest',
+        description:
+          "Mining quest requires at least 50 stamina to start. You don't have enough stamina to start mining quest.",
+        status: 'error',
+        duration: 15000,
+        isClosable: true,
+      })
+      return false
     }
 
-    return hammerList?.length >= 1
+    return true
   }, [toast])
 
   const startQuest = useCallback(async () => {
@@ -56,55 +103,21 @@ export default function MiningModal(props: Props) {
       if (!isOk) {
         return
       }
-      setTimeLeft(duration)
+      setTimeLeft(intervalToDuration({ start: 0, end: 0 }))
       toggleLoadingModal(true)
       const mining = await startMining()
 
       if (mining) {
-        const data = await checkIfMiningFinish()
-        setCountDownStart(true)
+        const data = await getMiningQuest()
         setIsFinished(data.finish)
-        setIsStartQuest(true)
+        setIsStartQuest(false)
         setCanFinish(false)
       }
     } catch (e) {
     } finally {
       toggleLoadingModal(false)
     }
-  }, [checkRequirementBeforeStartQuest, duration, toggleLoadingModal])
-
-  useEffect(() => {
-    if (countDownStart) {
-      miningInterval.current = setInterval(() => {
-        if (timeLeft > 0) {
-          setTimeLeft((timeLeft) => timeLeft - 1)
-        }
-      }, 1000)
-    }
-  }, [countDownStart])
-
-  useEffect(() => {
-    if (timeLeft <= 0) {
-      setCanFinish(true)
-      clearInterval(miningInterval.current)
-      setCountDownStart(false)
-    }
-  }, [timeLeft])
-
-  const checkFinishMiningQuest = useCallback(async () => {
-    const data = await checkIfMiningFinish()
-    const NOW = new Date().getTime()
-    const endTime = (parseInt(data?.startTime) + duration * 1000) * 1000
-
-    if (endTime <= NOW && !data.finish) {
-      // setTimeLeft(0)
-      setCanFinish(true)
-    } else {
-      setTimeLeft(Math.round((endTime - NOW) / 1000000))
-      setCountDownStart(true)
-      setCanFinish(false)
-    }
-  }, [])
+  }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
 
   const handleFinish = useCallback(async () => {
     toggleLoadingModal(true)
@@ -113,7 +126,7 @@ export default function MiningModal(props: Props) {
       updateInventory()
       setIsStartQuest(false)
       setIsFinished(true)
-      setTimeLeft(duration)
+      // setTimeLeft(duration)
     }
     toggleLoadingModal(false)
   }, [])
@@ -124,43 +137,19 @@ export default function MiningModal(props: Props) {
     toggleModal()
   }, [toggleModal])
 
-  const initialize = async () => {
-    toggleLoadingModal(true)
-    const checkIfFinish = await checkIfMiningFinish()
-    const data = await fetchMiningQuestData()
-
-    setDuration(data.duration)
-    setRequireStamina(data.requireStamina)
-
-    checkFinishMiningQuest()
-
-    if (checkIfFinish.startTime === '0') {
-      setIsFinished(false)
-      setIsStartQuest(false)
-    } else {
-      setIsFinished(checkIfFinish.finish)
-      setIsStartQuest(true)
-    }
-    toggleLoadingModal(false)
-  }
-
-  useEffect(() => {
-    initialize()
-  }, [])
-
   return (
     <div className={`${style.miningOverlay} ${isOpen && style.active} overlay`}>
       {!isFinished ? (
         <div className={style.frameMining}>
           <div className={style.frameHead}>
-            <Button className={style.infoBtn}></Button>
-            <Button className={style.exitBtn} onClick={toggleModal}></Button>
+            <Button className={style.infoBtn} />
+            <Button className={style.exitBtn} onClick={toggleModal} />
           </div>
           <div className={style.miningBody}>
-            <div className={style.artItem}></div>
+            <div className={style.artItem} />
           </div>
           <div className={style.miningFooter}>
-            {!isStartQuest ? (
+            {isStartQuest ? (
               <MiningQuest
                 duration={duration}
                 requireStamina={requireStamina}

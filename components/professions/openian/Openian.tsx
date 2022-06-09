@@ -49,6 +49,14 @@ function Openian() {
     setUpdateInventory(!updateInventory)
   }
 
+  if (isOpenStore) {
+    return (
+      <Inventory
+        setIsOpenInventory={toggleSellModal}
+        isOpenInventory={isOpenStore}
+      />
+    )
+  }
   return (
     <>
       {isLoading && <LoadingModal />}
@@ -91,13 +99,6 @@ function Openian() {
         </TransformWrapper>
 
         <BackButton />
-
-        {isOpenStore && (
-          <Inventory
-            setIsOpenInventory={toggleSellModal}
-            isOpenInventory={isOpenStore}
-          />
-        )}
 
         <FishingModal
           isOpen={isOpenFishing}

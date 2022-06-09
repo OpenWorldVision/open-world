@@ -85,6 +85,7 @@ contract NFTMarket is
   EnumerableSet.AddressSet private allowedTokenTypes;
 
   EnumerableSet.UintSet private listingsId;
+  uint256 public totalTx;
 
   // ############
   // Events
@@ -439,10 +440,7 @@ contract NFTMarket is
     uint256[] calldata _ids,
     uint256 _price
   ) public tokenNotBanned(_tokenAddress) isValidERC721(_tokenAddress) {
-    uint256 id = 0;
-    if (listingsId.length() > 0) {
-      id = listingsId.at(listingsId.length() - 1) + 1;
-    }
+    uint256 id = totalTx;
     listings[address(_tokenAddress)][id] = Listing(
       id,
       msg.sender,
@@ -466,6 +464,7 @@ contract NFTMarket is
       _tokenAddress.safeTransferFrom(msg.sender, address(this), _ids[index]);
     }
     listingsId.add(id);
+    totalTx += 1;
     emit NewListing(msg.sender, _tokenAddress, id, _price);
   }
 
@@ -529,12 +528,6 @@ contract NFTMarket is
       listing.seller,
       finalPrice.sub(taxAmount)
     );
-
-    if (listingsItem[_id].length() == 0) {
-      delete listings[address(_tokenAddress)][_id];
-      delete listingsItem[_id];
-      listingsId.remove(_id);
-    }
 
     if (listingsItem[_id].length() == 0) {
       delete listings[address(_tokenAddress)][_id];

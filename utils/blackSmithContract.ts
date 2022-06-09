@@ -1,7 +1,7 @@
 import { getAddresses } from 'constants/addresses'
 import Web3 from 'web3'
 import { getItemContract } from './itemContract'
-import { getMarketContract } from './Market'
+import { getMarketContract } from './NFTMarket'
 import { getProfessionContract } from './professionContract'
 
 const web3 = new Web3(Web3.givenProvider)
@@ -22,13 +22,12 @@ export const fetchAmountItemByTrait = async (hammer: number) => {
   }
 }
 
-export const makeHammer = async (listOre: Array<number>) => {
+export const makeHammer = async (listOre: number[]) => {
   const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
-
   try {
-    await contract.methods.makeMultiHammer(listOre).send({ from: accounts[0] })
-    return true
+    const tx = await contract.makeMultiHammer(listOre)
+    const receipt = await tx.wait()
+    return receipt
   } catch (err) {
     return false
   }

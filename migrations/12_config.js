@@ -30,39 +30,33 @@ module.exports = async function (deployer, network, accounts) {
     profilesAddress = ''
     nftMarketAddress = ''
   }
-  const profession = await Profession.at(professionProxy)
-  const MOD_ROLE = await profession.MODERATOR_ROLE()
-  await profession.grantRole(MOD_ROLE, accounts[0])
-  await profession.setFishingDuration(43200)
-  await profession.setMiningDuration(43200)
-  await profession.setProfiles(profilesAddress)
-  await profession.setFishingMiningStaminaRequire('50')
+  // const profession = await Profession.at(professionProxy)
+  // const MOD_ROLE = await profession.MODERATOR_ROLE()
+  // await profession.grantRole(MOD_ROLE, accounts[0])
+  // await profession.setFishingDuration(43200)
+  // await profession.setMiningDuration(43200)
+  // await profession.setProfiles(profilesAddress)
+  // await profession.setFishingMiningStaminaRequire('50')
 
-  const hero = await HeroCore.at(heroAddress)
-  const WORLD_OPERATOR = await hero.WORLD_OPERATOR()
-  await hero.grantRole(WORLD_OPERATOR, accounts[0])
-  await hero.setTraitAmount(1, 70)
-  await hero.setTraitAmount(2, 10)
-  await hero.setTraitAmount(3, 20)
+  // const hero = await HeroCore.at(heroAddress)
+  // const WORLD_OPERATOR = await hero.WORLD_OPERATOR()
+  // await hero.grantRole(WORLD_OPERATOR, accounts[0])
+  // await hero.setTraitAmount(1, 70)
+  // await hero.setTraitAmount(2, 10)
+  // await hero.setTraitAmount(3, 20)
 
-  await hero.setHeroPrice(1, '100000000000000000000')
-  await hero.setHeroPrice(2, '5000000000000000000000')
-  await hero.setHeroPrice(3, '2000000000000000000000')
+  // await hero.setHeroPrice(1, '100000000000000000000')
+  // await hero.setHeroPrice(2, '5000000000000000000000')
+  // await hero.setHeroPrice(3, '2000000000000000000000')
 
-  const profiles = await Profiles.at(profilesAddress)
-  await profiles.setHeroes(heroAddress)
+  // const profiles = await Profiles.at(profilesAddress)
+  // await profiles.setHeroes(heroAddress)
 
   const item = await Item.at(itemAddress)
   const PROFESSION_OPERATOR = await item.PROFESSION_OPERATOR()
-  await item.grantRole(PROFESSION_OPERATOR, accounts[0])
+  // await item.grantRole(PROFESSION_OPERATOR, accounts[0])
   await item.grantRole(PROFESSION_OPERATOR, professionProxy)
-
-  const nftMarket = await NFTMarket.at(nftMarketAddress)
-  const GAME_ADMIN = await nftMarket.GAME_ADMIN()
-  await nftMarket.grantRole(GAME_ADMIN, accounts[0])
-  await nftMarket.setItem(itemAddress)
-  await nftMarket.allowToken(itemAddress)
-  // for (let i = 0; i < 10; i++) {
-  //   await item.mint('0x2CC6D07871A1c0655d6A7c9b0Ad24bED8f940517', 4)
+  // for (let i = 0; i < 50; i++) {
+  //   await item.mint('0x2CC6D07871A1c0655d6A7c9b0Ad24bED8f940517', 2)
   // }
 }

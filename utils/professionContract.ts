@@ -2,26 +2,29 @@ import { getAddresses } from 'constants/addresses'
 import Web3 from 'web3'
 import { fetchAmountItemByTrait } from './blackSmithContract'
 import professionInterface from '../build/contracts/Profession.json'
+import { ethers } from 'ethers'
 
 const web3 = new Web3(Web3.givenProvider)
 
-// Fishing
 export const getProfessionContract = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   const chainId = await web3.eth.getChainId()
   const professionAddress = getAddresses(chainId).PROFESSION
   // @ts-ignore
-  return new web3.eth.Contract(professionInterface.abi, professionAddress)
+  return new ethers.Contract(
+    professionAddress,
+    professionInterface.abi,
+    provider.getSigner()
+  )
 }
 
 export const startFishing = async () => {
   try {
     const contract = await getProfessionContract()
-    const accounts = await web3.eth.getAccounts()
 
-    const data = await contract.methods
-      .startFishing()
-      .send({ from: accounts[0] })
-    return data
+    const tx = await contract.startFishing()
+    const receipt = await tx.wait()
+    return receipt
   } catch (e) {
     return null
   }
@@ -29,16 +32,10 @@ export const startFishing = async () => {
 
 export const fetchFishingQuestData = async () => {
   const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
 
   try {
-    const requireStamina = await contract.methods
-      .fishingStaminaRequire()
-      .call({ from: accounts[0] })
-
-    const duration = await contract.methods
-      .fishingDuration()
-      .call({ from: accounts[0] })
+    const requireStamina = await contract.fishingStaminaRequire()
+    const duration = await contract.fishingDuration()
 
     const fishingQuest = {
       requireStamina: parseInt(requireStamina),
@@ -53,58 +50,51 @@ export const fetchFishingQuestData = async () => {
   }
 }
 
-export const checkIfFishingFinish = async () => {
+export async function getFishingQuest(): Promise<{
+  finish: boolean
+  startTime: ethers.BigNumber
+}> {
   const contract = await getProfessionContract()
   const accounts = await web3.eth.getAccounts()
 
-  const data = await contract.methods
-    .getFishingQuest(accounts[0])
-    .call({ from: accounts[0] })
+  const data = await contract.getFishingQuest(accounts[0])
 
-  return { ...data }
+  return data
 }
 
 export const finishFishing = async () => {
   const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
+
   try {
-    const data = await contract.methods
-      .finishFishing()
-      .send({ from: accounts[0] })
-    return data
+    const tx = await contract.finishFishing()
+    const receipt = await tx.wait()
+    return receipt
   } catch (error) {}
 }
 
 // Mining
 export const startMining = async () => {
   const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
   const hammerList = await fetchAmountItemByTrait(3)
   if (hammerList?.length <= 1) {
     return
   }
   try {
-    const data = await contract.methods
-      .startMining(hammerList[0])
-      .send({ from: accounts[0] })
-    return data
+    const tx = await contract.startMining(hammerList[0])
+    const receipt = await tx.wait()
+    return receipt
   } catch (e) {
     return null
   }
 }
 
-export const fetchMiningQuestData = async () => {
+export const getMiningQuestInfo = async () => {
   const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
 
   try {
-    const requireStamina = await contract.methods
-      .miningStaminaRequire()
-      .call({ from: accounts[0] })
+    const requireStamina = await contract.miningStaminaRequire()
 
-    const duration = await contract.methods
-      .miningDuration()
-      .call({ from: accounts[0] })
+    const duration = await contract.miningDuration()
 
     const miningQuest = {
       requireStamina: parseInt(requireStamina),
@@ -119,47 +109,37 @@ export const fetchMiningQuestData = async () => {
   }
 }
 
-export const checkIfMiningFinish = async () => {
+export async function getMiningQuest(): Promise<{
+  finish: boolean
+  startTime: ethers.BigNumber
+}> {
   const contract = await getProfessionContract()
   const accounts = await web3.eth.getAccounts()
 
-  const data = await contract.methods
-    .getMiningQuest(accounts[0])
-    .call({ from: accounts[0] })
+  const data = await contract.getMiningQuest(accounts[0])
 
-  return { ...data }
+  return data
 }
 
-export const dispatchMakeSushi = async (itemId1: number) => {
+export const makeMultiSushi = async (itemIds: number[]) => {
   const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
-  try {
-    const data = await contract.methods
-      .makeSushi(itemId1)
-      .send({ from: accounts[0] })
-    return data
-  } catch (error) {}
-}
 
-export const dispatchMakeMultiSushi = async (itemIds: Array<number>) => {
-  const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
   try {
-    const data = await contract.methods
-      .makeMultiSushi(itemIds)
-      .send({ from: accounts[0] })
-    return data
-  } catch (error) {}
+    const tx = await contract.makeMultiSushi(itemIds)
+    const receipt = await tx.wait()
+    return receipt
+  } catch (error) {
+    return null
+  }
 }
 
 export const finishMining = async () => {
   const contract = await getProfessionContract()
-  const accounts = await web3.eth.getAccounts()
+
   try {
-    const data = await contract.methods
-      .finishMining()
-      .send({ from: accounts[0] })
-    return data
+    const tx = await contract.finishMining()
+    const receipt = await tx.wait()
+    return receipt
   } catch (error) {
     return null
   }
@@ -171,11 +151,14 @@ export async function refillStamina(
   const contract = await getProfessionContract()
   const accounts = await web3.eth.getAccounts()
   try {
-    const data = await contract.methods
-      .refillStamina(accounts[0], sushiIds)
-      .send({ from: accounts[0] })
-      .on('transactionHash', onTransactionHash)
-    return data
+    const tx: ethers.ContractTransaction = await contract.refillStamina(
+      accounts[0],
+      sushiIds
+    )
+    onTransactionHash(tx.hash)
+    const receipt = await tx.wait()
+
+    return receipt
   } catch (error) {
     return null
   }
