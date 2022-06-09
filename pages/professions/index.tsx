@@ -31,14 +31,14 @@ function Professions() {
       <Head>
         <title>Professions</title>
       </Head>
-      <div className={`${style.professionsOverlay} overlay game-scroll-bar`}>
-        <div className={style.professionsContainer}>
-          {profile?._profession === '0' && <ProfessionsSelection />}
-          {profile?._profession === '1' && <Openian />}
-          {profile?._profession === '2' && <Supplier />}
-          {profile?._profession === '3' && <Blacksmith />}
-        </div>
-      </div>
+      {/* <div className={`${style.professionsOverlay} overlay game-scroll-bar`}>
+        <div className={style.professionsContainer}> */}
+      {profile?._profession === '0' && <ProfessionsSelection />}
+      {profile?._profession === '1' && <Openian />}
+      {profile?._profession === '2' && <Supplier />}
+      {profile?._profession === '3' && <Blacksmith />}
+      {/* </div>
+      </div> */}
     </>
   )
 }
