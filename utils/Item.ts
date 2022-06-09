@@ -1,10 +1,12 @@
 import { getAddresses } from 'constants/addresses'
 import { ethers } from 'ethers'
+import { getMarketContract } from './NFTMarket'
+import Web3 from 'web3'
+import itemInterface from '../build/contracts/Item.json'
 
-const itemContract = {
-  addressBSC: '0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492',
-  jsonInterface: require('../build/contracts/Item.json'),
-}
+const web3 = new Web3(Web3.givenProvider)
+
+const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 export const getItemContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
@@ -12,7 +14,7 @@ export const getItemContract = async () => {
   const itemAddress = getAddresses(chainId).ITEM
   return new ethers.Contract(
     itemAddress,
-    itemContract.jsonInterface.abi,
+    itemInterface.abi,
     provider.getSigner()
   )
 }
@@ -27,24 +29,47 @@ export const fetchListItemIds = async (trait) => {
   return result
 }
 
-export const fetchUserInventoryItemAmount = async () => {
-  const itemsAmount = []
+export async function fetchUserInventoryItemAmount() {
+  const Market = await getMarketContract()
+  const accounts = await web3.eth.getAccounts()
+  const chainId = await web3.eth.getChainId()
+  const itemAddress = getAddresses(chainId).ITEM
+  try {
+    const listIds = await Market.getListingSlice(itemAddress, 0, 200)
+    const listFull = []
+    listIds?.sellers?.forEach((sellerAddress, index) => {
+      if (sellerAddress !== NULL_ADDRESS) {
+        listFull.push({
+          id: listIds?.ids[index].toNumber(),
+          seller: listIds?.sellers[index],
+          trait: listIds?.trait[index],
+        })
+      }
+    })
+    const fishItems = []
+    const oreItems = []
+    const hammerItems = []
+    const sushiItems = []
 
-  for (let i = 1; i < 5; i++) {
-    const itemIdList = await fetchListItemIds(i)
-    const itemAmount = itemIdList.filter((x) => x !== 0).length
-    itemsAmount.push(itemIdList)
-    itemsAmount.push(itemAmount)
-  }
-
-  return {
-    fishItems: itemsAmount[0],
-    fishAmount: itemsAmount[1],
-    oreItems: itemsAmount[2],
-    oreAmount: itemsAmount[3],
-    hammerItems: itemsAmount[4],
-    hammerAmount: itemsAmount[5],
-    sushiItems: itemsAmount[6],
-    sushiAmount: itemsAmount[7],
+    for (const i of listFull) {
+      if (i.seller === accounts) {
+        if (i.trait === 0) fishItems.push(i.id)
+        else if (i.trait === 1 ) oreItems.push(i.id)
+        else if (i.trait === 2 ) hammerItems.push(i.id)
+        else if (i.trait === 3 ) sushiItems.push(i.id)
+      }
+    }
+    return {
+      fishItems,
+      fishAmount: fishItems.length,
+      oreItems,
+      oreAmount: oreItems.length,
+      hammerItems,
+      hammerAmount: hammerItems.length,
+      sushiItems,
+      sushiAmount: sushiItems.length,
+    }
+  } catch (error) {
+    return []
   }
 }
