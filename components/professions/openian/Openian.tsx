@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './openian.module.css'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import FishingModal from './fishingModal/FishingModal'
 import MiningModal from './miningModal/MiningModal'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
-import Inventory from '@components/Inventory'
+import Inventory, { InventoryRef } from '@components/professions/Inventory'
 
 function Openian() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [isOpenMining, setIsOpenMining] = useState(false)
-  const [isOpenStore, setIsOpenStore] = useState(false)
   const [isOpenFishing, setIsOpenFishing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [updateInventory, setUpdateInventory] = useState(false)
+  const inventoryRef = useRef<InventoryRef>()
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -27,10 +27,6 @@ function Openian() {
     return () => {
       window.removeEventListener('resize', checkWindowWidth)
     }
-  }, [])
-
-  const toggleSellModal = useCallback((state) => {
-    setIsOpenStore(state)
   }, [])
 
   const toggleFishingModal = useCallback(() => {
@@ -49,18 +45,10 @@ function Openian() {
     setUpdateInventory(!updateInventory)
   }
 
-  if (isOpenStore) {
-    return (
-      <Inventory
-        setIsOpenInventory={toggleSellModal}
-        isOpenInventory={isOpenStore}
-      />
-    )
-  }
   return (
     <>
       {isLoading && <LoadingModal />}
-
+      <Inventory ref={inventoryRef} />
       <div className={`${styles.openianOverlay} overlay game-scroll-bar`}>
         <TransformWrapper
           initialPositionX={0}
@@ -91,8 +79,8 @@ function Openian() {
                 ></div>
                 <div
                   className={`${styles.openianSellBtn} click-cursor`}
-                  onClick={() => toggleSellModal(true)}
-                ></div>
+                  onClick={inventoryRef.current?.open}
+                />
               </div>
             </div>
           </TransformComponent>

@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
 import { getProfile, getStamina } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
 import { setProfile } from 'reduxActions/profileAction'
-import Inventory from '../Inventory'
+import Inventory, { InventoryRef } from '../professions/Inventory'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 import {
   Button,
@@ -30,11 +30,11 @@ export default function User(props: Props) {
   const { isOpen, onToggle } = useDisclosure()
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
   const [isOpenCreateProfile, setIsOpenCreateProfile] = useState(false)
-  const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isOpenTutorial, setIsOpenTutorial] = useState(false)
   const [career, setCareer] = useState('None')
   const profile = useSelector((state: any) => state.ProfileStore.profile)
   const [staminaPoint, setStaminaPoint] = useState(0)
+  const inventoryRef = useRef<InventoryRef>()
 
   const dispatch = useDispatch()
 
@@ -143,9 +143,7 @@ export default function User(props: Props) {
                   <WrapItem>
                     <Text
                       className="click-cursor"
-                      onClick={() => {
-                        setIsOpenInventory(true)
-                      }}
+                      onClick={inventoryRef.current?.open}
                     >
                       Inventory
                     </Text>
@@ -225,12 +223,9 @@ export default function User(props: Props) {
             handleOpenTutorial={handleOpenTutorial}
           />
         )}
-        {isOpenInventory && (
-          <Inventory
-            setIsOpenInventory={setIsOpenInventory}
-            isOpenInventory={isOpenInventory}
-          />
-        )}
+
+        <Inventory ref={inventoryRef} />
+
         <ProfessionsTutorial
           onClose={() => setIsOpenTutorial(false)}
           isOpenTutorial={isOpenTutorial}

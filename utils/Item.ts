@@ -22,12 +22,14 @@ export const fetchListItemIds = async (trait) => {
   const contract = await getItemContract()
   const currentAddress = await window.ethereum.selectedAddress
   const itemIdList = await contract.getAmountItemByTrait(trait, currentAddress)
-  const result = itemIdList.map((id) => id.toNumber())
-
+  const result = itemIdList.map((id) => id.toNumber()).filter((id) => id !== 0)
   return result
 }
+const ITEM_TYPES = ['fish', 'ore', 'hammer', 'sushi']
 
-export const fetchUserInventoryItemAmount = async () => {
+export async function fetchUserInventoryItemAmount(): Promise<
+  { type: string; ids: number[] }[]
+> {
   const itemsAmount = []
 
   for (let i = 1; i < 5; i++) {
@@ -36,15 +38,21 @@ export const fetchUserInventoryItemAmount = async () => {
     itemsAmount.push(itemIdList)
     itemsAmount.push(itemAmount)
   }
-
-  return {
-    fishItems: itemsAmount[0],
-    fishAmount: itemsAmount[1],
-    oreItems: itemsAmount[2],
-    oreAmount: itemsAmount[3],
-    hammerItems: itemsAmount[4],
-    hammerAmount: itemsAmount[5],
-    sushiItems: itemsAmount[6],
-    sushiAmount: itemsAmount[7],
-  }
+  const results = await Promise.all(
+    ITEM_TYPES.map(async (type, index) => ({
+      type,
+      ids: await fetchListItemIds(index + 1),
+    }))
+  )
+  return results
+  // return {
+  //   fishItems: itemsAmount[0],
+  //   fishAmount: itemsAmount[1],
+  //   oreItems: itemsAmount[2],
+  //   oreAmount: itemsAmount[3],
+  //   hammerItems: itemsAmount[4],
+  //   hammerAmount: itemsAmount[5],
+  //   sushiItems: itemsAmount[6],
+  //   sushiAmount: itemsAmount[7],
+  // }
 }

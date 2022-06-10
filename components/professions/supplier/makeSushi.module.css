@@ -1,5 +1,4 @@
 .modalOverlay {
-  z-index: 2000;
   opacity: 0;
   visibility: hidden;
   will-change: opacity;
@@ -12,7 +11,6 @@
 }
 
 .modalOverlay.active {
-  z-index: 2002;
   opacity: 1;
   visibility: visible;
   will-change: opacity;

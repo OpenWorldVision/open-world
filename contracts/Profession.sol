@@ -154,7 +154,7 @@ contract Profession is AccessControlUpgradeable {
     uint256 secondPerStamina = 857;
     uint256 timestamp = 0;
     if (currentStamina == 0) {
-      timestamp = block.timestamp.sub(secondPerStamina.mul(staminaRefill));
+      timestamp = block.timestamp.add(secondPerStamina.mul(staminaRefill));
     } else {
       timestamp = profiles.getStaminaTimestamp(_account).add(
         secondPerStamina.mul(staminaRefill)
