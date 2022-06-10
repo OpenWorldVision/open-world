@@ -1,7 +1,6 @@
 import { getAddresses } from 'constants/addresses'
-import { BigNumber, ethers } from 'ethers'
+import { ethers } from 'ethers'
 import Web3 from 'web3'
-import { getOpenWorldContract } from './openWorldContract'
 import { getItemContract } from './Item'
 import marketInterface from '../build/contracts/NFTMarket.json'
 
@@ -97,11 +96,10 @@ export const purchaseItems = async (
 }
 
 export const cancelListingItem = async (id: number) => {
+  const contract = await getMarketContract()
+  const chainId = await web3.eth.getChainId()
+  const itemAddress = getAddresses(chainId).ITEM
   try {
-    const contract = await getMarketContract()
-    const chainId = await web3.eth.getChainId()
-    const itemAddress = getAddresses(chainId).ITEM
-
     const tx = await contract?.cancelListing(itemAddress, id)
     const receipt = await tx.wait()
 
@@ -142,19 +140,22 @@ export const getAmountItemByTrait = async () => {
   const Item = await getItemContract()
   const currentAddress = await window.ethereum.selectedAddress
   const array = []
+
   try {
     for(let i = 1; i < 4; i++) {
       const result = await Item.getAmountItemByTrait(i, currentAddress)
       for (const y of result) {
-        const _trait = await Item.get(y.toNumber())
-        array.push({
-          id: y.toNumber(),
-          trait: _trait
-        })
+        if (y.toNumber() !== 0) {
+          const _trait = await Item.get(y.toNumber())
+          array.push({
+            id: y.toNumber(),
+            trait: _trait
+          })
+        }
       }
     }
     return array
-  } catch (e) {
+  } catch {
     return []
   }
 }

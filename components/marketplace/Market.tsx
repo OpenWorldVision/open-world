@@ -79,16 +79,16 @@ export default function Market() {
 
     const handlePurchase = async (value) => {
         const result = await purchaseItems(value.id, value.items, async (error) => {
-            setStatus('Loading ...')
-            setDataInit([])
-            setData([])
-            await getItems()
             setIsOpenNotify({ 
                 type: 'FAILED',
                 content: error
             })
         })
         if (result) {
+            setStatus('Loading ...')
+            setDataInit([])
+            setData([])
+            await getItems()
             setIsOpenNotify({ 
                 type: 'SUCCESS',
                 content: 'Your Order has been Completed'
@@ -101,7 +101,7 @@ export default function Market() {
         setNav(nav)
         setPage(1)
         if (nav === 0) {
-            if (!dataInit.length) {
+            if (!dataInit.length){
                 setStatus('No results found')
                 setData([])
             } else {
@@ -109,9 +109,7 @@ export default function Market() {
             }
         }
         else if (nav === 4) {
-            const result = dataInit.filter(value => {
-                return value.isOwner
-            })
+            const result = dataInit.filter(value => value.isOwner)
             if (!result.length) {
                 setStatus('No results found')
                 setData([])
@@ -121,7 +119,7 @@ export default function Market() {
         }
         else {
             const result = dataInit.filter(value => {
-                return value.trait === nav
+                return value.trait === nav && !value.isOwner
             })
             if (!result.length) {
                 setStatus('No results found')
@@ -190,21 +188,23 @@ export default function Market() {
                     </div>
                 </div>
                 <div className={styles.body}>
-                    {data.length === 0 && <div className={styles.loading}>{status}</div>}
-                    {data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
-                        return <div key={value} className={styles.item}>
-                            <div className={styles.itemInfo}>
-                                <div>
-                                    <div>#{value.id} HALLEN</div>
-                                    <img src={`/images/marketplace/items/${value.trait}.png`} alt="img" />
+                    <div>
+                        {data.length === 0 ? <div className={styles.loading}>{status}</div>
+                        : data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
+                            return <div key={value} className={styles.item}>
+                                <div className={styles.itemInfo}>
+                                    <div>
+                                        <div>#{value.id} HALLEN</div>
+                                        <img src={`/images/marketplace/items/${value.trait}.png`} alt="img" />
+                                    </div>
+                                    <div>{value.price} OPEN</div>
                                 </div>
-                                <div>{value.price} OPEN</div>
+                                {nav !== 4 && <div className={styles.itemBuy}>
+                                    <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.png" alt="img" />
+                                </div>}
                             </div>
-                            {nav !== 4 && <div className={styles.itemBuy}>
-                                <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.png" alt="img" />
-                            </div>}
-                        </div>
-                    })}
+                        })}
+                    </div>
                 </div>
                 <div className={styles.footer}>
                     <div className={styles.pagination}>

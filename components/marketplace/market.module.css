@@ -126,12 +126,7 @@
 
 .body{
     padding: 20px 200px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    height: calc(100% - 300px);
-    overflow: auto;
+    height: calc(100% - 250px);
 }
 
 @media (max-width: 1720px) {
@@ -142,7 +137,7 @@
 
 @media (max-width: 900px) {
     .body{
-        padding: 20px 20px;
+        padding: 20px 0px;
     }
 }
 
@@ -152,7 +147,16 @@
     }
 }
 
-.body::-webkit-scrollbar {
+.body > div{
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.body > div::-webkit-scrollbar {
     display: none;
 }
 
@@ -287,6 +291,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 20px;
 }
 
@@ -301,5 +306,6 @@
 
 .notifyBody {
     margin-top: 50px;
-    font-size: 25px
+    font-size: 25px;
+    margin: auto;
 }

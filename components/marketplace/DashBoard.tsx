@@ -31,14 +31,17 @@ export default function DashBoard() {
 
     const handleSell = async () => {
         setSelected(null)
+        setData([])
+        setStatus('Loading ...')
         const result = await listMultiItems([selected.id], Number(priceInput))
         if (result) {
-            setStatus('Loading ...')
-            setDataInit([])
-            setData([])
             await getItems()
             setIsOpenNotify({ type: true })
-        } else setIsOpenNotify({ type: false })
+        } else {
+            setData(dataInit)
+            setStatus('Loading ...')
+            setIsOpenNotify({ type: false })
+        }
     }
 
     const sortId = (id: string) => {
@@ -164,17 +167,19 @@ export default function DashBoard() {
                 </div>
                 <div className={styles.body}>
                     <div className={styles.body1}>
-                        {data.length === 0 && <div className={styles.loading}>{status}</div>}
-                        {data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
-                            return <div key={value} className={styles.item}>
-                                <div onClick={() => {setSelected(value)}} className={styles.itemInfo + ' click-cursor'}>
-                                    <div>
-                                        <div>#{value.id} HALLEN</div>
-                                        <img src={`./images/marketplace/items/${value.trait}.png`} alt="img" />
+                        <div>
+                            {data.length === 0 ? <div className={styles.loading}>{status}</div>
+                            : data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
+                                return <div key={value} className={styles.item}>
+                                    <div onClick={() => {setSelected(value)}} className={styles.itemInfo + ' click-cursor'}>
+                                        <div>
+                                            <div>#{value.id} HALLEN</div>
+                                            <img src={`./images/marketplace/items/${value.trait}.png`} alt="img" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        })}
+                            })}
+                        </div>
                     </div>
                     <div className={styles.body2}>
                         <div className={styles.sellerBoard}>
@@ -190,7 +195,7 @@ export default function DashBoard() {
                             </div>
                             <div className={styles.containerTotal}>Total price: <span>{selected ? priceInput : 0}</span> OPEN</div>
                             {(priceInput > 0) && selected && <div className={styles.btnSell}>
-                                <img onClick={() => {handleSell()}} className='click-cursor' src="./images/marketplace/market/sell.png" alt="img" />
+                                <img onClick={() => {handleSell()}} className='click-cursor' src="./images/marketplace/sell.png" alt="img" />
                             </div>}
                         </div>
                     </div>

@@ -31,6 +31,10 @@
     }
 }
 
+.nav1 > div:first-child {
+    color: '#FFB966',
+}
+
 
 .nav1 > input:last-child {
     width: 250px;
@@ -97,7 +101,7 @@
 
 .body{
     display: flex;
-    height: calc(100% - 300px);
+    height: 100%;
     overflow: auto;
 }
 
@@ -108,30 +112,32 @@
 }
 
 .body1{
-    padding: 20px;
+    padding: 20px 0px;
+    height: calc(100% - 300px);
+    flex: 1.5;
+}
+
+.body1 > div{
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     overflow: auto;
-    flex: 1.5;
-    min-width: 400px;
-    height: 100%;
 }
 
+.body1 > div::-webkit-scrollbar {
+    display: none;
+}
 
 .loading {
     font-size: 30px;
 }
 
-.body1::-webkit-scrollbar {
-    display: none;
-}
-
 .item{
     padding: 0 20px;
     width: 220px;
-    margin-top: 50px;
+    margin-bottom: 30px;
 }
 
 .itemInfo {
@@ -177,6 +183,7 @@
 .body2 {
     flex: 1;
     padding: 0 50px;
+    height: 100%;
 }
 
 @media (max-width: 800px) {
