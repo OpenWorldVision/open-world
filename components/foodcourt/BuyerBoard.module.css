@@ -1,29 +1,6 @@
-.modalOverlay {
-  z-index: 2000;
-  opacity: 0;
-  visibility: hidden;
-  will-change: opacity;
-  /* transition: all 0.5s linear; */
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  background-color: transparent;
-}
-
-.modalOverlay.active {
-  z-index: 2002;
-  opacity: 1;
-  visibility: visible;
-  will-change: opacity;
-  /* transition: all 0.5s linear; */
-}
-
 .modal {
-  padding: 40px 50px 10px;
+  padding: 60px 50px 10px;
   position: relative;
-  width: 550px;
-  height: fit-content;
   background-image: url('/images/professions/borders/sellBorder-left.png'),
     url('/images/professions/borders/sellBorder-right.png');
   background-position: 0, 100%;
@@ -35,12 +12,6 @@
   align-items: center;
   color: #fff;
   z-index: 2;
-  margin-top: 40px;
-}
-
-
-.modal img {
-  width: 100%;
 }
 
 .modal::before,

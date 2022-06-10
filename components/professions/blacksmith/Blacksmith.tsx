@@ -1,18 +1,18 @@
 import { Button } from '@chakra-ui/react'
 import styles from './blacksmith.module.css'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 import ForgeHammer from './forgehammer/ForgeHammer'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
-import Inventory from '@components/Inventory'
+import Inventory, { InventoryRef } from '@components/professions/Inventory'
 
 export default function Blacksmith() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [isForgeHammer, setIsForgeHammer] = useState(false)
-  const [isSellBoard, setIsSellBoard] = useState(false)
-
+  const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const inventoryRef = useRef<InventoryRef>()
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -28,26 +28,17 @@ export default function Blacksmith() {
     }
   }, [])
 
-  const toggleForgeHammerModal = useCallback(
-    async (state) => {
-      setIsForgeHammer(state)
-    },
-    [isForgeHammer]
-  )
+  const toggleForgeHammerModal = useCallback(() => {
+    setIsForgeHammer((prevState) => !prevState)
+  }, [])
 
-  const toggleSellBoardModal = useCallback(
-    async (state) => {
-      setIsSellBoard(state)
-    },
-    [isSellBoard]
-  )
+  const toggleSellBoardModal = useCallback(() => {
+    setIsOpenInventory((prevState) => !prevState)
+  }, [])
 
-  const toggleLoadingModal = useCallback(
-    (state) => {
-      setIsLoading(state)
-    },
-    [isLoading]
-  )
+  const toggleLoadingModal = useCallback(() => {
+    setIsLoading((prevState) => !prevState)
+  }, [])
 
   return (
     <>
@@ -75,30 +66,25 @@ export default function Blacksmith() {
                 <Button
                   className={`${styles.forgeHammer} click-cursor`}
                   onClick={toggleForgeHammerModal}
-                ></Button>
+                />
                 <Button
                   className={`${styles.sellHammer} click-cursor`}
-                  onClick={toggleSellBoardModal}
-                ></Button>
+                  onClick={inventoryRef.current?.open}
+                />
               </div>
             </div>
           </TransformComponent>
         </TransformWrapper>
         <BackButton />
       </div>
-      {isSellBoard && (
-        <Inventory
-          setIsOpenInventory={toggleSellBoardModal}
-          isOpenInventory={isSellBoard}
-        />
-      )}
-      {
-        <ForgeHammer
-          isOpen={isForgeHammer}
-          toggleModal={toggleForgeHammerModal}
-          toggleLoadingModal={toggleLoadingModal}
-        />
-      }
+
+      <Inventory ref={inventoryRef} />
+
+      <ForgeHammer
+        isOpen={isForgeHammer}
+        toggleModal={toggleForgeHammerModal}
+        toggleLoadingModal={toggleLoadingModal}
+      />
     </>
   )
 }

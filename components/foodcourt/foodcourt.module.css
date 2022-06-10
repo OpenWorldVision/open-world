@@ -1,6 +1,5 @@
 .foodCourtContainer {
   height: 100%;
-  z-index: 999998;
   background-color: #131313;
   position: relative;
 }
@@ -12,7 +11,6 @@
   width: 100vw;
   height: 100vh;
   position: relative;
-  z-index: 999990;
   padding: 60px 30px;
   overflow: hidden;
 }
