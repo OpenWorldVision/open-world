@@ -9,6 +9,7 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
   useToast,
 } from '@chakra-ui/react'
 import styles from '@components/foodcourt/foodcourt.module.css'
@@ -28,7 +29,8 @@ export default function FoodCourt() {
     'sushi'
   )
   const [listItemsBoard, setListItemsBoard] = useState([])
-  const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
+  const { isOpen: isOpenBuyBoard, onToggle: onToggleBuyerBoard } =
+    useDisclosure()
   const [pageFoodCourt, setPageFoodCourt] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
   const [isLoading, setIsLoading] = useState(false)
@@ -62,10 +64,6 @@ export default function FoodCourt() {
 
   useEffect(() => {
     handleGetSushiList()
-  }, [])
-
-  const toggleBuyModal = useCallback(() => {
-    setIsOpenBuyBoard((prev) => !prev)
   }, [])
 
   const handleSelectItemBoard = useCallback(
@@ -103,9 +101,9 @@ export default function FoodCourt() {
   const handleBuyItem = useCallback(
     (item) => () => {
       setBuyDetail(item)
-      toggleBuyModal()
+      onToggleBuyerBoard()
     },
-    [toggleBuyModal]
+    [onToggleBuyerBoard]
   )
 
   const handleCancelItem = useCallback(
@@ -277,7 +275,7 @@ export default function FoodCourt() {
           </div>
           <BuyerBoard
             isOpen={isOpenBuyBoard}
-            toggleModalBuyModal={toggleBuyModal}
+            toggleModalBuyModal={onToggleBuyerBoard}
             buyDetail={buyDetail}
             handlePurchaseItem={handlePurchaseItem}
           />

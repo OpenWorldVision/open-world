@@ -14,7 +14,7 @@ import styles from '@components/workshop/workshop.module.css'
 
 import BuyerBoard from '@components/workshop/BuyerBoard'
 import Head from 'next/head'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useRef } from 'react'
 import {
   cancelListingItem,
   getListingIDs,
@@ -23,7 +23,7 @@ import {
 import BackButton from '@components/BackButton'
 import LoadingModal from '@components/LoadingModal'
 import Link from 'next/link'
-import Inventory from '@components/Inventory'
+import Inventory, { InventoryRef } from '@components/professions/Inventory'
 
 export default function WorkShop() {
   const [isItemBoard, setIsItemBoard] = useState<'ore' | 'hammer' | 'mine'>(
@@ -33,9 +33,8 @@ export default function WorkShop() {
   const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
   const [pageWorkShop, setPageWorkShop] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
-  const [isOpenInventory, setIsOpenInventory] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
+  const inventoryRef = useRef<InventoryRef>()
   const handleGetHammerList = async () => {
     const data = await getListingIDs(false)
     setListItemsBoard(data.filter((listing) => listing.trait === 3))
@@ -218,7 +217,7 @@ export default function WorkShop() {
                       if (index < 5) {
                         return (
                           <>
-                            <Tr>
+                            <Tr key={index}>
                               <Td>
                                 <div className={styles.columnItem}>
                                   {item.seller}
@@ -269,12 +268,9 @@ export default function WorkShop() {
           <Link href="/">
             <a className={`${styles.backBtn} click-cursor`}></a>
           </Link>
-          {isOpenInventory && (
-            <Inventory
-              isOpenInventory={isOpenInventory}
-              setIsOpenInventory={setIsOpenInventory}
-            />
-          )}
+
+          <Inventory ref={inventoryRef} />
+
           <BackButton />
         </div>
       </div>
