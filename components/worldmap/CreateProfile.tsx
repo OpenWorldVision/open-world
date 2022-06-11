@@ -6,7 +6,9 @@ import {
   crateProfile,
   checkNameTaken,
 } from 'utils/profileContract'
-import useTransactionState from 'hooks/useTransactionState'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 const imagesIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
@@ -36,22 +38,22 @@ export default function CreateProfile({
   const onTransactionComplete = (data) => {
     let title
     if (isEdit && profile._picId != heroSelector) {
-      title = "Update profile"
+      title = 'Update profile'
     } else {
-      title = "Create profile"
+      title = 'Create profile'
     }
-    const status = data.status ? 1 : 0;
+    const status = data.status ? 1 : 0
     handleTxStateChange(title, data.transactionHash, status)
   }
 
   const onTransactionExecute = (txHash) => {
     let title
     if (isEdit && profile._picId != heroSelector) {
-      title = "Update profile"
+      title = 'Update profile'
     } else {
-      title = "Create profile"
+      title = 'Create profile'
     }
-    handleTxStateChange(title, txHash, 2)
+    handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
   }
 
   const handleCreateProfile = useCallback(async () => {
@@ -59,7 +61,7 @@ export default function CreateProfile({
     setIsLoading(true)
     if (isEdit && profile._picId != heroSelector) {
       if (heroSelector) {
-        title = "Update profile"
+        title = 'Update profile'
         const isChangePictureProfile = await changePictureProfile(
           Number(profile._id),
           heroSelector,
@@ -72,14 +74,14 @@ export default function CreateProfile({
           setIsOpenCreateProfile(false)
           setIsLoading(false)
         } else {
-          handleTxStateChange(title, '', 3)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
           setIsOpenCreateProfile(false)
           setIsLoading(false)
         }
       }
     } else {
       if (heroSelector && nameValue && isNameValid) {
-        title = "Create profile"
+        title = 'Create profile'
         const isNameTaken = await checkNameTaken(nameValue)
         if (nameValue.length <= 3 || nameValue.length >= 16) {
           setIsNameValid(false)
@@ -100,14 +102,14 @@ export default function CreateProfile({
             setIsLoading(false)
             handleOpenTutorial(true)
           } else {
-            handleTxStateChange(title, '', 3)
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
             setIsOpenCreateProfile(false)
             setIsLoading(false)
           }
         }
       }
     }
-  }, [isEdit, heroSelector, nameValue, isNameValid, ])
+  }, [isEdit, heroSelector, nameValue, isNameValid])
 
   return (
     <CreateProfileCSS>

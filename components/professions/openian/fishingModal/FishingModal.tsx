@@ -14,7 +14,9 @@ import WaitingModal from './WaitingModal'
 import FinishModal from './FinishModal'
 import DefaultModal from './DefaultModal'
 import { addHours, fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
-import useTransactionState from 'hooks/useTransactionState'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 type Props = {
   isOpen: boolean
@@ -107,7 +109,7 @@ function FishingModal(props: Props) {
     toggleLoadingModal(true)
 
     const fishing = await startFishing((txHash) => {
-      handleTxStateChange(title, txHash, 2)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
     })
     setTimeout(() => {
       toggleLoadingModal(false)
@@ -118,7 +120,7 @@ function FishingModal(props: Props) {
       handleTxStateChange(title, fishing.transactionHash, fishing.status)
     } else {
       toggleLoadingModal(false)
-      handleTxStateChange(title, '', 3)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
     }
   }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
 
@@ -127,14 +129,14 @@ function FishingModal(props: Props) {
     if (canFinish) {
       toggleLoadingModal(true)
       const finish = await finishFishing((txHash) => {
-        handleTxStateChange(title, txHash, 2)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
       })
       if (finish) {
         handleTxStateChange(title, finish.transactionHash, finish.status)
         updateInventory()
         setTypeOfModal(TYPE_OF_MODAL.FINISH)
       } else {
-        handleTxStateChange(title, '', 3)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
       toggleLoadingModal(false)
     }

@@ -13,7 +13,9 @@ import SellSushiModal from '@components/professions/supplier/SellSushiModal'
 import { listMultiItems } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
-import useTransactionState from 'hooks/useTransactionState'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 function Supplier() {
   const [showMakeSushi, setShowMakeSushi] = useState(false)
@@ -57,17 +59,14 @@ function Supplier() {
       setTypeModal(TYPE_OF_MODAL.START)
       setIsLoading(true)
 
-      const data = await makeMultiSushi(
-        listFishBurn,
-        (txHash) => {
-          handleTxStateChange(title, txHash, 2)
-        }
-      )
+      const data = await makeMultiSushi(listFishBurn, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
 
       if (data) {
         handleTxStateChange(title, data.transactionHash, data.status)
       } else {
-        handleTxStateChange(title, '', 3)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
 
       setIsLoading(false)
@@ -88,13 +87,9 @@ function Supplier() {
       setIsLoading(true)
       const listSushiSell = []
       listSushiSell.push(parseInt(listSushi[0]))
-      const data = await listMultiItems(
-        listSushiSell,
-        valueSushi,
-        (txHash) => {
-          handleTxStateChange(title, txHash, 2)
-        }
-      )
+      const data = await listMultiItems(listSushiSell, valueSushi, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
       if (data) {
         handleTxStateChange(title, data.transactionHash, data.status)
         setTypeModal(TYPE_OF_MODAL.FINISH)
@@ -102,7 +97,7 @@ function Supplier() {
         setIsLoading(false)
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', 3)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     },
     [getApprovedStatus, getListSushi, listSushi]

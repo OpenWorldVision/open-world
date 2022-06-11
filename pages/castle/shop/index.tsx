@@ -9,7 +9,9 @@ import {
   fetchProfessionsNFTPrices,
 } from 'utils/professions'
 import LoadingModal from '@components/LoadingModal'
-import useTransactionState from 'hooks/useTransactionState'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 function Shop() {
   const [nftsAmount, setNftsAmount] = useState({
@@ -30,17 +32,14 @@ function Shop() {
   const mintProfessionsNFT = async (trait) => {
     const title = 'Purchase NFT card'
     setIsLoading(true)
-    const data = await mintProfessionNFT(
-      trait,
-      (txHash) => {
-        handleTxStateChange(title, txHash, 2)
-      }
-    )
+    const data = await mintProfessionNFT(trait, (txHash) => {
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+    })
     if (data) {
       handleTxStateChange(title, data.transactionHash, data.status)
       await fetchNFTAmount()
     } else {
-      handleTxStateChange(title, '', 3)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
     }
     setIsLoading(false)
   }

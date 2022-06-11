@@ -13,7 +13,9 @@ import {
 } from '../../utils/professions'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 import LoadingModal from '@components/LoadingModal'
-import useTransactionState from 'hooks/useTransactionState'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 const NPCList = ['openian', 'supplier', 'blacksmith']
 
@@ -81,7 +83,7 @@ function ProfessionsModal(props: Props) {
         professionNft,
         hero.heroId,
         (txHash) => {
-          handleTxStateChange(title, txHash, 2)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
         }
       )
 
@@ -89,7 +91,7 @@ function ProfessionsModal(props: Props) {
         getResult(data.status)
         handleTxStateChange(title, data.transactionHash, data.status)
       } else {
-        handleTxStateChange(title, '', 3)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     }
     setIsLoading(false)

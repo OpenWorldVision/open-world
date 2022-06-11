@@ -15,7 +15,9 @@ import {
 import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
 import { fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
 import { getStamina } from 'utils/profileContract'
-import useTransactionState from 'hooks/useTransactionState'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 type Props = {
   isOpen: boolean
@@ -109,7 +111,7 @@ export default function MiningModal(props: Props) {
       toggleLoadingModal(true)
 
       const mining = await startMining((txHash) => {
-        handleTxStateChange(title, txHash, 2)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
       })
 
       if (mining) {
@@ -119,7 +121,7 @@ export default function MiningModal(props: Props) {
         setIsStartQuest(false)
         setCanFinish(false)
       } else {
-        handleTxStateChange(title, '', 3)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     } catch (e) {
     } finally {
@@ -131,7 +133,7 @@ export default function MiningModal(props: Props) {
     const title = 'Finish mining quest'
     toggleLoadingModal(true)
     const finish = await finishMining((txHash) => {
-      handleTxStateChange(title, txHash, 2)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
     })
     if (finish) {
       handleTxStateChange(title, finish.transactionHash, finish.status)
@@ -141,7 +143,7 @@ export default function MiningModal(props: Props) {
       setIsFinished(true)
       // setTimeLeft(duration)
     } else {
-      handleTxStateChange(title, '', 3)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
     }
     toggleLoadingModal(false)
   }, [])
@@ -153,38 +155,36 @@ export default function MiningModal(props: Props) {
   }, [toggleModal])
 
   return (
-      <div
-        className={`${style.miningOverlay} ${isOpen && style.active} overlay`}
-      >
-        {!isFinished ? (
-          <div className={style.frameMining}>
-            <div className={style.frameHead}>
-              <Button className={style.infoBtn} />
-              <Button className={style.exitBtn} onClick={toggleModal} />
-            </div>
-            <div className={style.miningBody}>
-              <div className={style.artItem} />
-            </div>
-            <div className={style.miningFooter}>
-              {isStartQuest ? (
-                <MiningQuest
-                  duration={duration}
-                  requireStamina={requireStamina}
-                  startQuest={startQuest}
-                />
-              ) : (
-                <MiningWait
-                  isStartQuest={isStartQuest}
-                  timeLeft={timeLeft}
-                  handleFinish={handleFinish}
-                  checkCanFinish={canFinish}
-                />
-              )}
-            </div>
+    <div className={`${style.miningOverlay} ${isOpen && style.active} overlay`}>
+      {!isFinished ? (
+        <div className={style.frameMining}>
+          <div className={style.frameHead}>
+            <Button className={style.infoBtn} />
+            <Button className={style.exitBtn} onClick={toggleModal} />
           </div>
-        ) : (
-          <ResultMining toggleModal={confirmResult} />
-        )}
-      </div>
+          <div className={style.miningBody}>
+            <div className={style.artItem} />
+          </div>
+          <div className={style.miningFooter}>
+            {isStartQuest ? (
+              <MiningQuest
+                duration={duration}
+                requireStamina={requireStamina}
+                startQuest={startQuest}
+              />
+            ) : (
+              <MiningWait
+                isStartQuest={isStartQuest}
+                timeLeft={timeLeft}
+                handleFinish={handleFinish}
+                checkCanFinish={canFinish}
+              />
+            )}
+          </div>
+        </div>
+      ) : (
+        <ResultMining toggleModal={confirmResult} />
+      )}
+    </div>
   )
 }

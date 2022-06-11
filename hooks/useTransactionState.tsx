@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { useToast } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 
-enum TRANSACTION_STATE {
+export enum TRANSACTION_STATE {
   FAILED = 0,
   SUCCESSFUL,
   WAITING,
@@ -35,58 +35,73 @@ function useTransactionState() {
     }
   }, [window?.ethereum?.chainId])
 
-  const handleTxStateChange = useCallback((title, txHash, txResult: TRANSACTION_STATE) => {
-    toast.closeAll()
-    switch (txResult) {
-      case TRANSACTION_STATE.FAILED:
-        return toast({
-          title: title + ' transaction is failed',
-          description: (
-            <a target="_blank" rel="noopener noreferrer" href={blockExplorer + txHash}>
-              Transaction detail <ExternalLinkIcon mx="2px" />
-            </a>
-          ),
-          duration: 10000,
-          isClosable: true,
-          status: 'error',
-        })
-      case TRANSACTION_STATE.SUCCESSFUL:
-        return toast({
-          title: title + ' transaction is successful',
-          description: (
-            <a target="_blank" rel="noopener noreferrer" href={blockExplorer + txHash}>
-              Transaction detail <ExternalLinkIcon mx="2px" />
-            </a>
-          ),
-          duration: 10000,
-          isClosable: true,
-          status: 'success',
-        })
+  const handleTxStateChange = useCallback(
+    (title, txHash, txResult: TRANSACTION_STATE) => {
+      toast.closeAll()
+      switch (txResult) {
+        case TRANSACTION_STATE.FAILED:
+          return toast({
+            title: title + ' transaction is failed',
+            description: (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={blockExplorer + txHash}
+              >
+                Transaction detail <ExternalLinkIcon mx="2px" />
+              </a>
+            ),
+            duration: 10000,
+            isClosable: true,
+            status: 'error',
+          })
+        case TRANSACTION_STATE.SUCCESSFUL:
+          return toast({
+            title: title + ' transaction is successful',
+            description: (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={blockExplorer + txHash}
+              >
+                Transaction detail <ExternalLinkIcon mx="2px" />
+              </a>
+            ),
+            duration: 10000,
+            isClosable: true,
+            status: 'success',
+          })
 
-      case TRANSACTION_STATE.WAITING:
-        return toast({
-          title: title + ' transaction is excuting',
-          duration: 100000,
-          description: (
-            <a target="_blank" rel="noopener noreferrer" href={blockExplorer + txHash}>
-              Transaction detail <ExternalLinkIcon mx="2px" />
-            </a>
-          ),
-          status: 'info',
-          containerStyle: {
-            zIndex: 999999
-          }
-        })
+        case TRANSACTION_STATE.WAITING:
+          return toast({
+            title: title + ' transaction is excuting',
+            duration: 100000,
+            description: (
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={blockExplorer + txHash}
+              >
+                Transaction detail <ExternalLinkIcon mx="2px" />
+              </a>
+            ),
+            status: 'info',
+            containerStyle: {
+              zIndex: 999999,
+            },
+          })
 
-      case TRANSACTION_STATE.NOT_EXCUTE:
-        return toast({
-          title: title + ' transaction is failed to execute',
-          duration: 10000,
-          isClosable: true,
-          status: 'error',
-        })
-    }
-  }, [])
+        case TRANSACTION_STATE.NOT_EXCUTE:
+          return toast({
+            title: title + ' transaction is failed to execute',
+            duration: 10000,
+            isClosable: true,
+            status: 'error',
+          })
+      }
+    },
+    []
+  )
 
   return handleTxStateChange
 }

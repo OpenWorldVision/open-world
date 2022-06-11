@@ -23,7 +23,9 @@ import {
 } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
-import useTransactionState from 'hooks/useTransactionState'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 export default function FoodCourt() {
   const [isItemBoard, setIsItemBoard] = useState<'sushi' | 'fish' | 'mine'>(
@@ -111,18 +113,15 @@ export default function FoodCourt() {
     (item) => async () => {
       const title = `Cancel listing item in Food Court`
       setIsLoading(true)
-      const data = await cancelListingItem(
-        item?.id,
-        (txHash) => {
-          handleTxStateChange(title, txHash, 2)
-        },
-      )
+      const data = await cancelListingItem(item?.id, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
       setIsLoading(false)
       if (data) {
         handleTxStateChange(title, data.transactionHash, data.status)
         handleGetMyList()
       } else {
-        handleTxStateChange(title, '', 3)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     },
     []
@@ -133,14 +132,17 @@ export default function FoodCourt() {
       const title = `Purchase ${isItemBoard} in Food Court`
       setIsLoading(true)
 
-      const data = await purchaseItems(id, listIds,
+      const data = await purchaseItems(
+        id,
+        listIds,
         (txHash) => {
-          handleTxStateChange(title, txHash, 2)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
         },
         (error) => {
-          handleTxStateChange(title, '', 3)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
           setIsLoading(false)
-      })
+        }
+      )
 
       if (data) {
         setIsLoading(false)
@@ -153,7 +155,7 @@ export default function FoodCourt() {
         return data
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', 3)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     },
     [isItemBoard]

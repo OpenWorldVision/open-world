@@ -8,7 +8,9 @@ import React, {
 import styled from '@emotion/styled'
 import { fetchUserInventoryItemAmount } from 'utils/Item'
 import { listMultiItems } from 'utils/NFTMarket'
-import useTransactionState from 'hooks/useTransactionState'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 import {
   Button,
@@ -64,14 +66,14 @@ function Inventory(_, ref) {
       selectedItem?.ids?.slice(0, Number(amountItems)),
       price,
       (txHash) => {
-        handleTxStateChange(title, txHash, 2)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
       }
     )
 
     if (result) {
       handleTxStateChange(title, result.transactionHash, result.status)
     } else {
-      handleTxStateChange(title, '', 3)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
     }
 
     getItemsIndex()
@@ -226,7 +228,7 @@ function Inventory(_, ref) {
                           onClick={handleSelling}
                           bgSize="100% 100%"
                           size="lg"
-                          width="18vw"
+                          width={175}
                           _hover={{
                             bgImg: '/images/inventory/confirm-seller-board.png',
                           }}

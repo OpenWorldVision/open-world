@@ -4,7 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import NotificationForge from './NotificationForge'
 import ResultForgeHammer from './ResultForgeHammer'
 import { fetchAmountItemByTrait, makeHammer } from 'utils/blackSmithContract'
-import useTransactionState from 'hooks/useTransactionState'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 type Props = {
   toggleModal: (boolean) => void
@@ -48,12 +50,9 @@ export default function ForgeHammer(props: Props) {
     toggleLoadingModal(true)
     if (numberOreNeed <= numberYourOre.length && numberHammer !== 0) {
       const listSellHammer = numberYourOre.slice(0, numberOreNeed)
-      const forgeHammer = await makeHammer(
-        listSellHammer,
-        (txHash) => {
-          handleTxStateChange(title, txHash, 2)
-        }
-      )
+      const forgeHammer = await makeHammer(listSellHammer, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
 
       if (forgeHammer) {
         setCheckIsSuccess(forgeHammer)
@@ -64,7 +63,7 @@ export default function ForgeHammer(props: Props) {
           forgeHammer.status
         )
       } else {
-        handleTxStateChange(title, '', 3)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
 
       toggleLoadingModal(false)
