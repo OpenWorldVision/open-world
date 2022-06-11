@@ -35,6 +35,7 @@ export default function DashBoard() {
         setStatus('Loading ...')
         const result = await listMultiItems([selected.id], Number(priceInput))
         if (result) {
+            setDataInit([])
             await getItems()
             setIsOpenNotify({ type: true })
         } else {

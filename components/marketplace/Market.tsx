@@ -78,16 +78,18 @@ export default function Market() {
     }
 
     const handlePurchase = async (value) => {
+        setData([])
+        setStatus('Loading ...')
         const result = await purchaseItems(value.id, value.items, async (error) => {
+            setData(dataInit)
+            setStatus('Loading ...')
             setIsOpenNotify({ 
                 type: 'FAILED',
                 content: error
             })
         })
         if (result) {
-            setStatus('Loading ...')
             setDataInit([])
-            setData([])
             await getItems()
             setIsOpenNotify({ 
                 type: 'SUCCESS',
