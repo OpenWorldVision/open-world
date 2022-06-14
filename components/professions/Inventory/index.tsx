@@ -8,6 +8,10 @@ import React, {
 import styled from '@emotion/styled'
 import { fetchUserInventoryItemAmount } from 'utils/Item'
 import { listMultiItems } from 'utils/NFTMarket'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
+
 import {
   Button,
   Modal,
@@ -35,6 +39,7 @@ function Inventory(_, ref) {
   const [amountItems, setAmountItems] = useState(null)
   const [isOpenNotify, setIsOpenNotify] = useState(null)
   const [data, setData] = useState(null)
+  const handleTxStateChange = useTransactionState()
 
   useImperativeHandle(
     ref,
@@ -55,10 +60,21 @@ function Inventory(_, ref) {
   }, [])
 
   const handleSelling = useCallback(async () => {
+    const title = 'Sell item(s)'
+
     const result = await listMultiItems(
       selectedItem?.ids?.slice(0, Number(amountItems)),
-      price
+      price,
+      (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      }
     )
+
+    if (result) {
+      handleTxStateChange(title, result.transactionHash, result.status)
+    } else {
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+    }
 
     getItemsIndex()
     setIsOpenNotify({ type: !!result })
@@ -212,7 +228,7 @@ function Inventory(_, ref) {
                           onClick={handleSelling}
                           bgSize="100% 100%"
                           size="lg"
-                          width="18vw"
+                          width={175}
                           _hover={{
                             bgImg: '/images/inventory/confirm-seller-board.png',
                           }}

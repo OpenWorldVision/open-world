@@ -13,6 +13,9 @@ import SellSushiModal from '@components/professions/supplier/SellSushiModal'
 import { listMultiItems } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 function Supplier() {
   const [showMakeSushi, setShowMakeSushi] = useState(false)
@@ -21,6 +24,8 @@ function Supplier() {
   const [listSushi, setListSushi] = useState([])
   const [typeModal, setTypeModal] = useState(TYPE_OF_MODAL.START)
   const [isLoading, setIsLoading] = useState(false)
+  const handleTxStateChange = useTransactionState()
+
   const getListItemByTrait = useCallback(async () => {
     const data = await getNFTsByTrait(1)
     setListFish(data)
@@ -49,11 +54,23 @@ function Supplier() {
 
   const _onStartCook = useCallback(
     async (valueFish) => {
+      const title = 'Cooking sushi'
       const listFishBurn = listFish.slice(0, valueFish)
       setTypeModal(TYPE_OF_MODAL.START)
       setIsLoading(true)
-      const data = await makeMultiSushi(listFishBurn)
+
+      const data = await makeMultiSushi(listFishBurn, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
+
+      if (data) {
+        handleTxStateChange(title, data.transactionHash, data.status)
+      } else {
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+      }
+
       setIsLoading(false)
+
       if (data?.status) {
         setTypeModal(TYPE_OF_MODAL.FINISH)
       }
@@ -64,18 +81,23 @@ function Supplier() {
 
   const _onSellSushi = useCallback(
     async (valueSushi) => {
+      const title = 'Sell sushi'
       getApprovedStatus()
       setTypeModal(TYPE_OF_MODAL.START)
       setIsLoading(true)
       const listSushiSell = []
       listSushiSell.push(parseInt(listSushi[0]))
-      const data = await listMultiItems(listSushiSell, valueSushi)
+      const data = await listMultiItems(listSushiSell, valueSushi, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
       if (data) {
+        handleTxStateChange(title, data.transactionHash, data.status)
         setTypeModal(TYPE_OF_MODAL.FINISH)
         getListSushi()
         setIsLoading(false)
       } else {
         setIsLoading(false)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     },
     [getApprovedStatus, getListSushi, listSushi]

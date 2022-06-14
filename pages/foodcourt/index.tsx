@@ -23,6 +23,9 @@ import {
 } from 'utils/NFTMarket'
 import LoadingModal from '@components/LoadingModal'
 import BackButton from '@components/BackButton'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 export default function FoodCourt() {
   const [isItemBoard, setIsItemBoard] = useState<'sushi' | 'fish' | 'mine'>(
@@ -34,7 +37,7 @@ export default function FoodCourt() {
   const [pageFoodCourt, setPageFoodCourt] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
   const [isLoading, setIsLoading] = useState(false)
-  const toast = useToast()
+  const handleTxStateChange = useTransactionState()
 
   const handleGetSushiList = async () => {
     const data = await getListingIDs(false)
@@ -108,11 +111,17 @@ export default function FoodCourt() {
 
   const handleCancelItem = useCallback(
     (item) => async () => {
+      const title = `Cancel listing item in Food Court`
       setIsLoading(true)
-      const data = await cancelListingItem(item?.id)
+      const data = await cancelListingItem(item?.id, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
       setIsLoading(false)
       if (data) {
+        handleTxStateChange(title, data.transactionHash, data.status)
         handleGetMyList()
+      } else {
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     },
     []
@@ -120,30 +129,36 @@ export default function FoodCourt() {
 
   const handlePurchaseItem = useCallback(
     async (id: number, listIds: Array<number>) => {
+      const title = `Purchase ${isItemBoard} in Food Court`
       setIsLoading(true)
-      const data = await purchaseItems(id, listIds, (error) => {
-        toast({
-          title: 'Error',
-          description: error,
-          duration: 15000,
-          isClosable: true,
-          status: 'error',
-          position: 'bottom-right',
-        })
-        setIsLoading(false)
-      })
+
+      const data = await purchaseItems(
+        id,
+        listIds,
+        (txHash) => {
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        },
+        (error) => {
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+          setIsLoading(false)
+        }
+      )
 
       if (data) {
         setIsLoading(false)
+        handleTxStateChange(title, data.transactionHash, data.status)
         if (isItemBoard === 'sushi') {
           handleGetSushiList()
         } else {
           handleGetFishList()
         }
         return data
+      } else {
+        setIsLoading(false)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     },
-    [isItemBoard, toast]
+    [isItemBoard]
   )
 
   return (

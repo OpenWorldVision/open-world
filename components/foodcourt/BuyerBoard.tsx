@@ -54,7 +54,7 @@ function BuyerBoard(props: Props) {
       size="xl"
     >
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg="transparent">
         <ModalBody padding={0}>
           {!isShowNoti && (
             <div className={styles.modal}>

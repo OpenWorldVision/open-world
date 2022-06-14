@@ -15,6 +15,9 @@ import {
 import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
 import { fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
 import { getStamina } from 'utils/profileContract'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 type Props = {
   isOpen: boolean
@@ -34,7 +37,7 @@ export default function MiningModal(props: Props) {
   const [timeLeft, setTimeLeft] = useState<Duration>(() =>
     intervalToDuration({ start: 0, end: 0 })
   )
-
+  const handleTxStateChange = useTransactionState()
   const toast = useToast()
 
   const initialize = useCallback(async () => {
@@ -99,19 +102,26 @@ export default function MiningModal(props: Props) {
 
   const startQuest = useCallback(async () => {
     try {
+      const title = 'Start mining quest'
       const isOk = await checkRequirementBeforeStartQuest()
       if (!isOk) {
         return
       }
       setTimeLeft(intervalToDuration({ start: 0, end: 0 }))
       toggleLoadingModal(true)
-      const mining = await startMining()
+
+      const mining = await startMining((txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
 
       if (mining) {
+        handleTxStateChange(title, mining.transactionHash, mining.status)
         const data = await getMiningQuest()
         setIsFinished(data.finish)
         setIsStartQuest(false)
         setCanFinish(false)
+      } else {
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     } catch (e) {
     } finally {
@@ -120,13 +130,20 @@ export default function MiningModal(props: Props) {
   }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
 
   const handleFinish = useCallback(async () => {
+    const title = 'Finish mining quest'
     toggleLoadingModal(true)
-    const finish = await finishMining()
+    const finish = await finishMining((txHash) => {
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+    })
     if (finish) {
+      handleTxStateChange(title, finish.transactionHash, finish.status)
+
       updateInventory()
       setIsStartQuest(false)
       setIsFinished(true)
       // setTimeLeft(duration)
+    } else {
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
     }
     toggleLoadingModal(false)
   }, [])

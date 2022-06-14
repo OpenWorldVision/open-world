@@ -39,7 +39,10 @@ export const fetchRequireBalanceProfession = async () => {
   return balance.toNumber()
 }
 
-export const mintProfessionNFT = async (trait) => {
+export const mintProfessionNFT = async (
+  trait: number,
+  onTransactionExecute: (txHash: string) => void
+) => {
   const HeroCore = await getHeroCoreContract()
   const OpenWorld = await getOpenWorldContract()
   const currentAddress = await window.ethereum.selectedAddress
@@ -53,10 +56,13 @@ export const mintProfessionNFT = async (trait) => {
     )
   }
   try {
-    await HeroCore.mint(currentAddress, trait)
-    return true
+    const tx = await HeroCore.mint(currentAddress, trait)
+    onTransactionExecute(tx.hash)
+    const receipt = await tx.wait()
+
+    return receipt
   } catch (e) {
-    return false
+    return null
   }
 }
 
@@ -75,20 +81,19 @@ export const fetchUserProfessionNFT = async () => {
   return nftList
 }
 
-export const activateProfession = async (profession, heroId) => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
+export const activateProfession = async (
+  profession,
+  heroId,
+  onTransactionExecute: (hash: string) => void
+) => {
   const contract = await getProfilesContract()
   try {
-    const result = await contract.setProfession(profession, heroId)
-
-    let transactionReceipt = null
-    do {
-      transactionReceipt = await provider.getTransactionReceipt(result.hash)
-    } while (transactionReceipt === null)
-
-    return transactionReceipt.status
+    const tx = await contract.setProfession(profession, heroId)
+    onTransactionExecute(tx.hash)
+    const receipt = await tx.wait()
+    return receipt
   } catch (e) {
-    return false
+    return null
   }
 }
 
