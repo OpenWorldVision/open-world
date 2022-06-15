@@ -9,10 +9,11 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
 } from '@chakra-ui/react'
 import styles from '@components/workshop/workshop.module.css'
 
-import BuyerBoard from '@components/workshop/BuyerBoard'
+import BuyerBoard from '@components/foodcourt/BuyerBoard'
 import Head from 'next/head'
 import { useCallback, useEffect, useState, useRef } from 'react'
 import {
@@ -33,7 +34,8 @@ export default function WorkShop() {
     'ore'
   )
   const [listItemsBoard, setListItemsBoard] = useState([])
-  const [isOpenBuyBoard, setIsOpenBuyBoard] = useState(false)
+  const { isOpen: isOpenBuyBoard, onToggle: onToggleBuyerBoard } =
+    useDisclosure()
   const [pageWorkShop, setPageWorkShop] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
   const [isLoading, setIsLoading] = useState(false)
@@ -60,10 +62,6 @@ export default function WorkShop() {
 
   useEffect(() => {
     handleGetOreList()
-  }, [])
-
-  const toggleBuyModal = useCallback((state) => {
-    setIsOpenBuyBoard(state)
   }, [])
 
   const handleSelectItemBoard = useCallback(
@@ -114,18 +112,28 @@ export default function WorkShop() {
   const handleBuyItem = useCallback(
     (item) => () => {
       setBuyDetail(item)
-      toggleBuyModal(true)
+      onToggleBuyerBoard()
     },
-    [toggleBuyModal]
+    [onToggleBuyerBoard]
   )
 
   const _handlePurchaseItem = useCallback(
     async (id: number, listIds: Array<number>) => {
+      const title = `Purchase ${isItemBoard} in Workshop`
       setIsLoading(true)
-      const data = await purchaseItems(id, listIds, () => {
-        setIsLoading(false)
-      })
+      const data = await purchaseItems(
+        id,
+        listIds,
+        (txHash) => {
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        },
+        (error) => {
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+          setIsLoading(false)
+        }
+      )
       if (data) {
+        handleTxStateChange(title, data.transactionHash, data.status)
         setIsLoading(false)
         if (isItemBoard === 'ore') {
           handleGetOreList()
@@ -133,6 +141,9 @@ export default function WorkShop() {
           handleGetHammerList()
         }
         return data
+      } else {
+        setIsLoading(false)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     },
     [isItemBoard]
@@ -272,7 +283,7 @@ export default function WorkShop() {
           </div>
           <BuyerBoard
             isOpen={isOpenBuyBoard}
-            toggleModalBuyModal={() => toggleBuyModal(false)}
+            toggleModalBuyModal={onToggleBuyerBoard}
             buyDetail={buyDetail}
             handlePurchaseItem={_handlePurchaseItem}
           />
