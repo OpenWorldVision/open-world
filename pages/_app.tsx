@@ -21,16 +21,16 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-TV6JQ8HCRQ"
-        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+        strategy="lazyOnload"
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script id="google-analytics" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', 'G-TV6JQ8HCRQ');
+          gtag('config', ${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS});
         `}
       </Script>
       <Web3ReactProvider getLibrary={getLibrary}>
