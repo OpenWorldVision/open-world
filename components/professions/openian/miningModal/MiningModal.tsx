@@ -72,24 +72,26 @@ export default function MiningModal(props: Props) {
   }, [])
 
   const checkRequirementBeforeStartQuest = useCallback(async () => {
-    const hammerList = await fetchAmountItemByTrait(3)
-    if (hammerList?.length < 1) {
+    const data = await getMiningQuestInfo()
+
+    const stamina = await getStamina()
+
+    if (Number(stamina) < data.requireStamina) {
       toast({
         title: 'Mining Quest',
-        description: "You don't have enough hammer to start mining quest",
+        description: `Mining quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start mining quest.`,
         status: 'error',
         duration: 15000,
         isClosable: true,
       })
       return false
     }
-    const stamina = await getStamina()
 
-    if (Number(stamina) < 49) {
+    const hammerList = await fetchAmountItemByTrait(3)
+    if (hammerList?.length < 1) {
       toast({
         title: 'Mining Quest',
-        description:
-          "Mining quest requires at least 49 stamina to start. You don't have enough stamina to start mining quest.",
+        description: "You don't have enough hammer to start mining quest",
         status: 'error',
         duration: 15000,
         isClosable: true,
