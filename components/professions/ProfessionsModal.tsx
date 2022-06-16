@@ -13,6 +13,9 @@ import {
 } from '../../utils/professions'
 import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
 import LoadingModal from '@components/LoadingModal'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 const NPCList = ['openian', 'supplier', 'blacksmith']
 
@@ -52,6 +55,7 @@ function ProfessionsModal(props: Props) {
   const [currentOPEN, setCurrentOPEN] = useState(0)
   const [requireBalance, setRequireBalance] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
+  const handleTxStateChange = useTransactionState()
 
   const getRequireBalanceProfession = async () => {
     const balance = await fetchRequireBalanceProfession()
@@ -65,6 +69,7 @@ function ProfessionsModal(props: Props) {
   }
 
   const onActivateProfession = useCallback(async () => {
+    const title = 'Activate career'
     if (!canActivate) {
       return
     }
@@ -74,8 +79,20 @@ function ProfessionsModal(props: Props) {
     const hero = heroes.find((hero) => professionNft === hero.trait)
 
     if (hero) {
-      const check = await activateProfession(professionNft, hero.heroId)
-      getResult(check)
+      const data = await activateProfession(
+        professionNft,
+        hero.heroId,
+        (txHash) => {
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        }
+      )
+
+      if (data) {
+        getResult(data.status)
+        handleTxStateChange(title, data.transactionHash, data.status)
+      } else {
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+      }
     }
     setIsLoading(false)
   }, [canActivate, getResult, npc])
@@ -117,7 +134,9 @@ function ProfessionsModal(props: Props) {
 
   return (
     <>
+      {/* Loading modal */}
       {isLoading && <LoadingModal />}
+
       <div
         className={`${mainStyle.professionsOverlay} ${style.npcOverlay} overlay game-scroll-bar`}
       >

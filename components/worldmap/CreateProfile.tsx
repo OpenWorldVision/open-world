@@ -6,6 +6,9 @@ import {
   crateProfile,
   checkNameTaken,
 } from 'utils/profileContract'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 const imagesIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
@@ -22,6 +25,7 @@ export default function CreateProfile({
   const [isNameValid, setIsNameValid] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const handleTxStateChange = useTransactionState()
 
   const handleCloseModalCreateProfile = useCallback(
     (e: any) => {
@@ -31,13 +35,38 @@ export default function CreateProfile({
     [isOpenCreateProfile]
   )
 
-  const handleCreateProfile = async () => {
+  const onTransactionComplete = (data) => {
+    let title
+    if (isEdit && profile._picId != heroSelector) {
+      title = 'Update profile'
+    } else {
+      title = 'Create profile'
+    }
+    const status = data.status ? 1 : 0
+    handleTxStateChange(title, data.transactionHash, status)
+  }
+
+  const onTransactionExecute = (txHash) => {
+    let title
+    if (isEdit && profile._picId != heroSelector) {
+      title = 'Update profile'
+    } else {
+      title = 'Create profile'
+    }
+    handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+  }
+
+  const handleCreateProfile = useCallback(async () => {
+    let title
     setIsLoading(true)
     if (isEdit && profile._picId != heroSelector) {
       if (heroSelector) {
+        title = 'Update profile'
         const isChangePictureProfile = await changePictureProfile(
           Number(profile._id),
-          heroSelector
+          heroSelector,
+          onTransactionExecute,
+          onTransactionComplete
         )
         if (isChangePictureProfile) {
           router.push('/')
@@ -45,19 +74,27 @@ export default function CreateProfile({
           setIsOpenCreateProfile(false)
           setIsLoading(false)
         } else {
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
           setIsOpenCreateProfile(false)
           setIsLoading(false)
         }
       }
     } else {
       if (heroSelector && nameValue && isNameValid) {
+        title = 'Create profile'
         const isNameTaken = await checkNameTaken(nameValue)
         if (nameValue.length <= 3 || nameValue.length >= 16) {
           setIsNameValid(false)
         } else if (isNameTaken) {
           setIsNameValid(false)
         } else {
-          const isCreateProfile = await crateProfile(nameValue, heroSelector)
+          const isCreateProfile = await crateProfile(
+            nameValue,
+            heroSelector,
+            onTransactionExecute,
+            onTransactionComplete
+          )
+
           if (isCreateProfile) {
             router.push('/')
             getDataProfile()
@@ -65,13 +102,14 @@ export default function CreateProfile({
             setIsLoading(false)
             handleOpenTutorial(true)
           } else {
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
             setIsOpenCreateProfile(false)
             setIsLoading(false)
           }
         }
       }
     }
-  }
+  }, [isEdit, heroSelector, nameValue, isNameValid])
 
   return (
     <CreateProfileCSS>

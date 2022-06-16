@@ -68,6 +68,7 @@ export async function getListingIDs(isMine: boolean, isFull = false): Promise<Li
 export const purchaseItems = async (
   transactionId: number,
   itemIds: number[],
+  onTransactionExecute: (txHash: string) => void,
   onError?: (error: string) => void
 ) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
@@ -87,6 +88,7 @@ export const purchaseItems = async (
       transactionId,
       itemIds
     )
+    onTransactionExecute(tx2.hash)
     const receipt = await tx2.wait()
     return receipt
   } catch (error) {
@@ -95,21 +97,33 @@ export const purchaseItems = async (
   }
 }
 
-export const cancelListingItem = async (id: number) => {
-  const contract = await getMarketContract()
-  const chainId = await web3.eth.getChainId()
-  const itemAddress = getAddresses(chainId).ITEM
+export const cancelListingItem = async (
+  id: number,
+  onTransactionExecute: (txHash: string) => void
+) => {
   try {
+    const contract = await getMarketContract()
+    const chainId = await web3.eth.getChainId()
+    const itemAddress = getAddresses(chainId).ITEM
+
     const tx = await contract?.cancelListing(itemAddress, id)
+    onTransactionExecute(tx.hash)
+
     const receipt = await tx.wait()
 
-    return receipt
+    if (receipt) {
+      return receipt
+    }
   } catch (error) {
     return null
   }
 }
 
-export const listMultiItems = async (ids, price) => {
+export const listMultiItems = async (
+  ids,
+  price,
+  onTransactionExecute: (txHash: string) => void
+) => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   const Market = await getMarketContract()
   const Item = await getItemContract()
@@ -128,6 +142,8 @@ export const listMultiItems = async (ids, price) => {
       ids,
       ethers.utils.parseEther(`${price}`)
     )
+    onTransactionExecute(tx2.hash)
+
     const receipt = await tx2.wait()
 
     return receipt

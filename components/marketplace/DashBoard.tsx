@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { getAmountItemByTrait, listMultiItems } from 'utils/NFTMarket'
 import styles from './dashboard.module.css'
+import useTransactionState, {
+    TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 const numOfPage = 8
 
@@ -14,6 +17,7 @@ export default function DashBoard() {
     const [priceInput, setPriceInput] = useState(null)
     const [status, setStatus] = useState('Loading ...')
     const [isOpenNotify, setIsOpenNotify] = useState(null)
+    const handleTxStateChange = useTransactionState()
     
     useEffect(() => {
         getItems()
@@ -21,27 +25,38 @@ export default function DashBoard() {
 
     const getItems = async () => {
         const result = await getAmountItemByTrait()
+        const dataResult = []
+        for (const i of result) if (i.trait !== 4) dataResult.push(i)
         if(result.length) {
-            setDataInit(result)
-            setData(result)
+            setDataInit(dataResult)
+            setData(dataResult)
         } else {
             setStatus('No results found')
         }
     }
 
     const handleSell = async () => {
+        const title = 'Sell item'
         setSelected(null)
         setData([])
         setStatus('Loading ...')
-        const result = await listMultiItems([selected.id], Number(priceInput))
+        const result = await listMultiItems(
+            [selected.id], 
+            Number(priceInput),
+            (txHash) => {
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+            }
+        )
         if (result) {
             setDataInit([])
             await getItems()
             setIsOpenNotify({ type: true })
+            handleTxStateChange(title, result.transactionHash, result.status)
         } else {
             setData(dataInit)
             setStatus('Loading ...')
             setIsOpenNotify({ type: false })
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
         }
     }
 

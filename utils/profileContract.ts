@@ -49,13 +49,21 @@ export async function getStamina() {
   }
 }
 
-export const crateProfile = async (nameStr: string, pictureId: number) => {
+export const crateProfile = async (
+  nameStr: string,
+  pictureId: number,
+  onTransactionExecute: (hash: string) => void,
+  onTransactionComplete: (hash: string) => void
+) => {
   const contract = await getProfileContract()
   const accounts = await web3.eth.getAccounts()
   try {
     await contract.methods
       .createProfile(nameStr, pictureId)
       .send({ from: accounts[0] })
+      .on('transactionHash', onTransactionExecute)
+      .on('receipt', onTransactionComplete)
+
     return true
   } catch {
     return false
@@ -76,15 +84,20 @@ export const isProfessionExist = async () => {
 
 export const changePictureProfile = async (
   profileId: number,
-  pictureId: number
+  pictureId: number,
+  onTransactionExecute: (hash: string) => void,
+  onTransactionComplete: (hash: string) => void
 ) => {
   const contract = await getProfileContract()
   const accounts = await web3.eth.getAccounts()
   try {
-    await contract.methods
+    const result = await contract.methods
       .changePic(profileId, pictureId)
       .send({ from: accounts[0] })
-    return true
+      .on('transactionHash', onTransactionExecute)
+      .on('receipt', onTransactionComplete)
+
+    return result
   } catch {
     return false
   }

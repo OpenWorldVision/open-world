@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import store, { persistor } from 'reducers'
 import { AnimatePresence } from 'framer-motion'
+import Script from 'next/script'
 
 // config.autoAddCss = false
 
@@ -18,22 +19,37 @@ function getLibrary(provider, connector) {
 
 export default function App({ Component, pageProps }) {
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <ChakraProvider theme={theme}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <Layout home>
-              <AnimatePresence
-                exitBeforeEnter
-                initial={false}
-                onExitComplete={() => window.scrollTo(0, 0)}
-              >
-                <Component {...pageProps} />
-              </AnimatePresence>
-            </Layout>
-          </PersistGate>
-        </Provider>
-      </ChakraProvider>
-    </Web3ReactProvider>
+    <>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+        strategy="lazyOnload"
+      />
+      <Script id="google-analytics" strategy="lazyOnload">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', ${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS});
+        `}
+      </Script>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <ChakraProvider theme={theme}>
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <Layout home>
+                <AnimatePresence
+                  exitBeforeEnter
+                  initial={false}
+                  onExitComplete={() => window.scrollTo(0, 0)}
+                >
+                  <Component {...pageProps} />
+                </AnimatePresence>
+              </Layout>
+            </PersistGate>
+          </Provider>
+        </ChakraProvider>
+      </Web3ReactProvider>
+    </>
   )
 }

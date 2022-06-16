@@ -10,10 +10,8 @@ export const getBalanceOpen = async () => {
   const contract = await getOpenWorldContract()
   const accounts = await web3.eth.getAccounts()
   try {
-    let balance = await contract.balanceOf(accounts[0])
-    balance = new BigNumber(balance)
-
-    return Number(balance.c[0] / 10000).toFixed(2)
+    const balance = await contract.balanceOf(accounts[0])
+    return (parseInt(balance._hex, 16)/10**18).toFixed(2)
   } catch (err) {}
 }
 

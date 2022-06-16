@@ -20,26 +20,27 @@ function MarketPlace() {
               <div className='nav-items-1'>
                   <img src="./favicon.ico" alt="img" />
                   <div
-                      onClick={() => {setNav(1)}}
-                      className={nav === 1 ? 'select click-cursor' : 'click-cursor'}
+                    onClick={() => {setNav(1)}}
+                    className={nav === 1 ? 'select click-cursor' : 'click-cursor'}
                   >
-                      MARKET
+                    MARKET
                   </div>
               </div>
               <div className='nav-items-2'>
                   <div
-                      onClick={() => {setNav(2)}}
-                      className={nav === 2 ? 'select click-cursor' : 'click-cursor'}
+                    onClick={() => {setNav(2)}}
+                    className={nav === 2 ? 'select click-cursor' : 'click-cursor'}
                   >
-                      DASHBOARD
+                    DASHBOARD
                   </div>
               </div>
               <div className='nav-items-3'>
                   <div
-                      onClick={() => {setNav(3)}}
-                      className={nav === 3 ? 'select click-cursor' : 'click-cursor'}
+                    // onClick={() => {setNav(3)}}
+                    style={{ color: 'gray' }}
+                    className={nav === 3 ? 'select' : ''}
                   >
-                      HISTORY
+                    HISTORY
                   </div>
               </div>
           </div>

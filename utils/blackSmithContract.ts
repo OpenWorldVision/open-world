@@ -22,10 +22,14 @@ export const fetchAmountItemByTrait = async (hammer: number) => {
   }
 }
 
-export const makeHammer = async (listOre: number[]) => {
+export const makeHammer = async (
+  listOre: number[],
+  onTransactionExecute: (txHash: string) => void
+) => {
   const contract = await getProfessionContract()
   try {
     const tx = await contract.makeMultiHammer(listOre)
+    onTransactionExecute(tx.hash)
     const receipt = await tx.wait()
     return receipt
   } catch (err) {

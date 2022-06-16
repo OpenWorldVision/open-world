@@ -18,11 +18,15 @@ export const getProfessionContract = async () => {
   )
 }
 
-export const startFishing = async () => {
+export const startFishing = async (
+  onTransactionExecute: (txHash: string) => void
+) => {
   try {
     const contract = await getProfessionContract()
 
     const tx = await contract.startFishing()
+    onTransactionExecute(tx.hash)
+
     const receipt = await tx.wait()
     return receipt
   } catch (e) {
@@ -62,18 +66,24 @@ export async function getFishingQuest(): Promise<{
   return data
 }
 
-export const finishFishing = async () => {
+export const finishFishing = async (
+  onTransactionExecute: (txHash: string) => void
+) => {
   const contract = await getProfessionContract()
 
   try {
     const tx = await contract.finishFishing()
+    onTransactionExecute(tx.hash)
+
     const receipt = await tx.wait()
     return receipt
   } catch (error) {}
 }
 
 // Mining
-export const startMining = async () => {
+export const startMining = async (
+  onTransactionExecute: (hash: string) => void
+) => {
   const contract = await getProfessionContract()
   const hammerList = await fetchAmountItemByTrait(3)
   if (hammerList?.length <= 1) {
@@ -81,6 +91,8 @@ export const startMining = async () => {
   }
   try {
     const tx = await contract.startMining(hammerList[0])
+    onTransactionExecute(tx.hash)
+
     const receipt = await tx.wait()
     return receipt
   } catch (e) {
@@ -121,11 +133,16 @@ export async function getMiningQuest(): Promise<{
   return data
 }
 
-export const makeMultiSushi = async (itemIds: number[]) => {
+export const makeMultiSushi = async (
+  itemIds: number[],
+  onTransactionExecute: (txHash: string) => void
+) => {
   const contract = await getProfessionContract()
 
   try {
     const tx = await contract.makeMultiSushi(itemIds)
+    onTransactionExecute(tx.hash)
+
     const receipt = await tx.wait()
     return receipt
   } catch (error) {
@@ -133,11 +150,14 @@ export const makeMultiSushi = async (itemIds: number[]) => {
   }
 }
 
-export const finishMining = async () => {
+export const finishMining = async (
+  onTransactionExecute: (hash: string) => void
+) => {
   const contract = await getProfessionContract()
 
   try {
     const tx = await contract.finishMining()
+    onTransactionExecute(tx.hash)
     const receipt = await tx.wait()
     return receipt
   } catch (error) {

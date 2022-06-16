@@ -24,6 +24,9 @@ import BackButton from '@components/BackButton'
 import LoadingModal from '@components/LoadingModal'
 import Link from 'next/link'
 import Inventory, { InventoryRef } from '@components/professions/Inventory'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 export default function WorkShop() {
   const [isItemBoard, setIsItemBoard] = useState<'ore' | 'hammer' | 'mine'>(
@@ -35,6 +38,8 @@ export default function WorkShop() {
   const [buyDetail, setBuyDetail] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const inventoryRef = useRef<InventoryRef>()
+  const handleTxStateChange = useTransactionState()
+
   const handleGetHammerList = async () => {
     const data = await getListingIDs(false)
     setListItemsBoard(data.filter((listing) => listing.trait === 3))
@@ -76,9 +81,15 @@ export default function WorkShop() {
   )
   const handleCancelItem = useCallback(
     (item) => async () => {
-      const data = await cancelListingItem(item?.id)
+      const title = `Cancel listing item in Workshop`
+      const data = await cancelListingItem(item?.id, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
       if (data) {
+        handleTxStateChange(title, data.transactionHash, data.status)
         handleGetMyList()
+      } else {
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
       }
     },
     []
