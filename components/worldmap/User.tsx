@@ -19,13 +19,10 @@ import {
 } from '@chakra-ui/react'
 import RefillStaminaModal from './RefillStaminaModal'
 import { PlusSquareIcon } from '@chakra-ui/icons'
+import { getBalanceOpen } from 'utils/checkBalanceOpen'
 
-type Props = {
-  balance: number
-}
-
-export default function User(props: Props) {
-  const { balance } = props
+export default function User() {
+  const [balance, setBalance] = useState(null)
 
   const { isOpen, onToggle } = useDisclosure()
   const [isOpenUserInfo, setIsOpenUserInfo] = useState(false)
@@ -58,6 +55,11 @@ export default function User(props: Props) {
     }
   }, [dispatch])
 
+  const getBalance = async () => {
+    const balance = await getBalanceOpen()
+    setBalance(balance)
+  }
+
   const handleGetStamina = useCallback(async () => {
     const stamina = await getStamina()
     if (stamina) {
@@ -68,8 +70,8 @@ export default function User(props: Props) {
   useEffect(() => {
     getDataProfile()
     handleGetStamina()
+    getBalance()
   }, [])
-
   const handleOpenTutorial = useCallback(() => {
     setIsOpenTutorial(true)
   }, [])
