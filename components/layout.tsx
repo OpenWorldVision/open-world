@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import LoadingModal from './LoadingModal'
 import { motion } from 'framer-motion'
-import { getBalanceOpen } from 'utils/checkBalanceOpen'
 import { getWeb3Client } from '@lib/web3'
 
 export const siteTitle = 'Open World #Metaverse'
@@ -24,7 +23,6 @@ const variants = {
 export default function Layout({ children, home }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const [balance, setBalance] = useState(null)
   const dispatch = useDispatch()
 
   const isProfileExist = useSelector((state: any) => {
@@ -39,13 +37,7 @@ export default function Layout({ children, home }) {
     dispatch(updateIsConnected({ isConnected: !!web3Client }))
   }
 
-  const getBalance = async () => {
-    const balance = await getBalanceOpen()
-    setBalance(balance)
-  }
-
   useEffect(() => {
-    getBalance()
     checkConnect()
     router.events.on('routeChangeStart', () => {
       setIsLoading(true)
@@ -87,7 +79,7 @@ export default function Layout({ children, home }) {
           {!window.location.href.includes('market') && (
             <>
               <Menu />
-              <User balance={balance} />
+              <User />
             </>
           )}
         </>
