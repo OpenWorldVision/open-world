@@ -16,9 +16,9 @@ module.exports = async function (deployer, network) {
     deployer,
   })
 
-  const profiles = await Profiles.at(
-    '0xdA7Ac2056FeC83f1A9E1a1a3F339fcaA696618c3'
-  )
+  // const profiles = await Profiles.at(
+  //   '0xdA7Ac2056FeC83f1A9E1a1a3F339fcaA696618c3'
+  // )
   // profiles.grantRole(
   //   '0x0d6a1bd1ca1363e4d52ba01324f983eef28b98b2863700aece4a71134de1a9c1',
   //   '0x2CC6D07871A1c0655d6A7c9b0Ad24bED8f940517'

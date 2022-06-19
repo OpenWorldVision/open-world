@@ -53,10 +53,10 @@ module.exports = async function (deployer, network, accounts) {
   // await profiles.setHeroes(heroAddress)
 
   const item = await Item.at(itemAddress)
-  const PROFESSION_OPERATOR = await item.PROFESSION_OPERATOR()
+  // const PROFESSION_OPERATOR = await item.PROFESSION_OPERATOR()
   // await item.grantRole(PROFESSION_OPERATOR, accounts[0])
   // await item.grantRole(PROFESSION_OPERATOR, professionProxy)
-  // for (let i = 0; i < 50; i++) {
-  //   await item.mint('0x2CC6D07871A1c0655d6A7c9b0Ad24bED8f940517', 1)
-  // }
+  for (let i = 0; i < 50; i++) {
+    await item.mint('0xf29182606EBd85B233dEa5be6c513707D8894084', 4)
+  }
 }
