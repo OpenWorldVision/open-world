@@ -121,7 +121,7 @@ export default function MiningModal(props: Props) {
         setIsStartQuest(false)
         setCanFinish(false)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
     } catch (e) {
     } finally {
@@ -143,7 +143,7 @@ export default function MiningModal(props: Props) {
       setIsFinished(true)
       // setTimeLeft(duration)
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
     }
     toggleLoadingModal(false)
   }, [])

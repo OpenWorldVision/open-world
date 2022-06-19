@@ -66,7 +66,7 @@ function Supplier() {
       if (data) {
         handleTxStateChange(title, data.transactionHash, data.status)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
 
       setIsLoading(false)
@@ -97,7 +97,7 @@ function Supplier() {
         setIsLoading(false)
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
     },
     [getApprovedStatus, getListSushi, listSushi]

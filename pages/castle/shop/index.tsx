@@ -39,7 +39,7 @@ function Shop() {
       handleTxStateChange(title, data.transactionHash, data.status)
       await fetchNFTAmount()
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
     }
     setIsLoading(false)
   }

@@ -87,7 +87,7 @@ export default function WorkShop() {
         handleTxStateChange(title, data.transactionHash, data.status)
         handleGetMyList()
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
     },
     []
@@ -128,7 +128,7 @@ export default function WorkShop() {
           handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
         },
         (error) => {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
           setIsLoading(false)
         }
       )
@@ -143,7 +143,7 @@ export default function WorkShop() {
         return data
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
     },
     [isItemBoard]

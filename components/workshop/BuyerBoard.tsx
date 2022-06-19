@@ -1,8 +1,7 @@
 import { Button } from '@chakra-ui/react'
 import styles from './BuyerBoard.module.css'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import NotificationBuyItem from './NotificationBuyItem'
-import { purchaseItems } from 'utils/NFTMarket'
 
 type Props = {
   isOpen: boolean
@@ -16,7 +15,6 @@ export default function BuyerBoard(props: Props) {
 
   const [numberItem, setNumberItem] = useState(0)
   const [totalOpen, setTotalOpen] = useState(0)
-  const [myOpen, setMyOpen] = useState(100)
   const [notiContent, setNotiContent] = useState({})
   const [isShowNoti, setIsShowNoti] = useState(false)
 
