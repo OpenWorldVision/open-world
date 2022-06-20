@@ -1,4 +1,4 @@
-import styles from '../../../components/professions/supplier.module.css'
+import styles from '@components/professions/supplier.module.css'
 import Head from 'next/head'
 import { TYPE_OF_MODAL } from '@components/professions/openian/fishingModal/FishingModal'
 import { useCallback, useEffect, useState } from 'react'
@@ -16,9 +16,12 @@ import BackButton from '@components/BackButton'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import { useDisclosure } from '@chakra-ui/react'
 
 function Supplier() {
-  const [showMakeSushi, setShowMakeSushi] = useState(false)
+  const { isOpen: isOpenMakeSushi, onToggle: onToggleMakeSushi } =
+    useDisclosure()
+
   const [showSellSushi, setShowSellSushi] = useState(false)
   const [listFish, setListFish] = useState([])
   const [listSushi, setListSushi] = useState([])
@@ -106,24 +109,26 @@ function Supplier() {
   const toggleModal = useCallback(
     (type) => {
       setTypeModal(TYPE_OF_MODAL.START)
+
       if (type === 'make') {
-        setShowMakeSushi(!showMakeSushi)
+        onToggleMakeSushi()
       } else {
         setShowSellSushi(!showSellSushi)
       }
     },
-    [showMakeSushi, showSellSushi]
+    [onToggleMakeSushi, showSellSushi]
   )
 
   const renderModal = useCallback(() => {
     return (
       <div>
         <MakeSushiModal
-          isOpen={showMakeSushi}
+          isOpen={isOpenMakeSushi}
           toggleModal={() => toggleModal('make')}
           listFishArray={listFish}
           onStartCook={_onStartCook}
           typeModal={typeModal}
+          onClose={onToggleMakeSushi}
         />
         <SellSushiModal
           isOpen={showSellSushi}
@@ -135,10 +140,11 @@ function Supplier() {
       </div>
     )
   }, [
-    showMakeSushi,
+    isOpenMakeSushi,
     listFish,
     _onStartCook,
     typeModal,
+    onToggleMakeSushi,
     showSellSushi,
     listSushi,
     _onSellSushi,
