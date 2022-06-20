@@ -137,7 +137,7 @@ function SellBoard(props: Props) {
         handleTxStateChange(title, result.transactionHash, result.status)
       } else {
         setListingResult(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
       priceRef.current.value = '0'
       setPrice(0)

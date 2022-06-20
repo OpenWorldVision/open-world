@@ -73,7 +73,7 @@ function Inventory(_, ref) {
     if (result) {
       handleTxStateChange(title, result.transactionHash, result.status)
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
     }
 
     getItemsIndex()

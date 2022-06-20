@@ -74,7 +74,7 @@ export default function CreateProfile({
           setIsOpenCreateProfile(false)
           setIsLoading(false)
         } else {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
           setIsOpenCreateProfile(false)
           setIsLoading(false)
         }
@@ -102,7 +102,7 @@ export default function CreateProfile({
             setIsLoading(false)
             handleOpenTutorial(true)
           } else {
-            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
             setIsOpenCreateProfile(false)
             setIsLoading(false)
           }
