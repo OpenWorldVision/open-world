@@ -11,6 +11,9 @@ import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import LoadingModal from './LoadingModal'
 import { motion } from 'framer-motion'
 import { getWeb3Client } from '@lib/web3'
+import Web3 from 'web3'
+
+const web3 = new Web3(Web3.givenProvider)
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -33,8 +36,10 @@ export default function Layout({ children, home }) {
   )
 
   const checkConnect = async () => {
-    const web3Client = await getWeb3Client()
-    dispatch(updateIsConnected({ isConnected: !!web3Client }))
+    const chainId = await web3.eth.getChainId()
+    if (![56, 97, 1666600000, 1666700000].includes(chainId)) {
+      await getWeb3Client()
+    }
   }
 
   useEffect(() => {
