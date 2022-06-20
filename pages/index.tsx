@@ -35,9 +35,7 @@ export default function Home() {
             wrapperStyle={{ height: '100vh', width: '100vw' }}
           >
             <div className={style.worldMapContainer}>
-              <div className={style.worldMapBg}>
-                <Navigation />
-              </div>
+              <Navigation />
             </div>
           </TransformComponent>
         </TransformWrapper>

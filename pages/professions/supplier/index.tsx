@@ -1,4 +1,4 @@
-import styles from '../../../components/professions/supplier.module.css'
+import styles from '@components/professions/supplier.module.css'
 import Head from 'next/head'
 import { TYPE_OF_MODAL } from '@components/professions/openian/fishingModal/FishingModal'
 import { useCallback, useEffect, useState } from 'react'
@@ -16,10 +16,14 @@ import BackButton from '@components/BackButton'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import { useDisclosure } from '@chakra-ui/react'
 
 function Supplier() {
-  const [showMakeSushi, setShowMakeSushi] = useState(false)
-  const [showSellSushi, setShowSellSushi] = useState(false)
+  const { isOpen: isOpenMakeSushi, onToggle: onToggleMakeSushi } =
+    useDisclosure()
+  const { isOpen: isOpenSellSushi, onToggle: onToggleSellSushi } =
+    useDisclosure()
+
   const [listFish, setListFish] = useState([])
   const [listSushi, setListSushi] = useState([])
   const [typeModal, setTypeModal] = useState(TYPE_OF_MODAL.START)
@@ -66,7 +70,7 @@ function Supplier() {
       if (data) {
         handleTxStateChange(title, data.transactionHash, data.status)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
 
       setIsLoading(false)
@@ -97,53 +101,12 @@ function Supplier() {
         setIsLoading(false)
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
     },
     [getApprovedStatus, getListSushi, listSushi]
   )
 
-  const toggleModal = useCallback(
-    (type) => {
-      setTypeModal(TYPE_OF_MODAL.START)
-      if (type === 'make') {
-        setShowMakeSushi(!showMakeSushi)
-      } else {
-        setShowSellSushi(!showSellSushi)
-      }
-    },
-    [showMakeSushi, showSellSushi]
-  )
-
-  const renderModal = useCallback(() => {
-    return (
-      <div>
-        <MakeSushiModal
-          isOpen={showMakeSushi}
-          toggleModal={() => toggleModal('make')}
-          listFishArray={listFish}
-          onStartCook={_onStartCook}
-          typeModal={typeModal}
-        />
-        <SellSushiModal
-          isOpen={showSellSushi}
-          toggleModal={() => toggleModal('sell')}
-          listSushi={listSushi}
-          onSellSushi={_onSellSushi}
-          typeModal={typeModal}
-        />
-      </div>
-    )
-  }, [
-    showMakeSushi,
-    listFish,
-    _onStartCook,
-    typeModal,
-    showSellSushi,
-    listSushi,
-    _onSellSushi,
-    toggleModal,
-  ])
   return (
     <div>
       <Head>
@@ -153,21 +116,38 @@ function Supplier() {
         <div className={styles.supplierContainer}>
           <div className={styles.containerSupplierSellBtn}>
             <div
-              onClick={() => toggleModal('sell')}
+              onClick={onToggleSellSushi}
               className={styles.supplierButtonSell}
-            ></div>
+            />
           </div>
           <div className={styles.containerSupplierMakeBtn}>
             <div
               className={styles.supplierButtonMake}
-              onClick={() => toggleModal('make')}
-            ></div>
+              onClick={onToggleMakeSushi}
+            />
           </div>
         </div>
         <BackButton />
       </div>
 
-      {renderModal()}
+      <div>
+        <MakeSushiModal
+          isOpen={isOpenMakeSushi}
+          toggleModal={onToggleMakeSushi}
+          listFishArray={listFish}
+          onStartCook={_onStartCook}
+          typeModal={typeModal}
+          onClose={onToggleMakeSushi}
+        />
+        <SellSushiModal
+          isOpen={isOpenSellSushi}
+          onClose={onToggleSellSushi}
+          toggleModal={onToggleSellSushi}
+          listSushi={listSushi}
+          onSellSushi={_onSellSushi}
+          typeModal={typeModal}
+        />
+      </div>
       {isLoading ? <LoadingModal /> : null}
     </div>
   )

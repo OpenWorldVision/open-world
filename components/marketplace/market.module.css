@@ -207,6 +207,20 @@
     margin: 20px 0;
 }
 
+.itemCancel{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.itemCancel div{
+    padding: 5px 20px;
+    background-color: #254F86;
+    border: 2px solid #D9BF5E;
+    border-radius: 4px;
+    font-weight: normal;
+}
+
 .footer {
     position: fixed;
     bottom: 50px;

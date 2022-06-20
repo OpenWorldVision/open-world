@@ -3,45 +3,45 @@
 }
 
 .castleWrap {
-  top: 36%;
-  left: 890px;
-  width: 267px;
-  height: 163px;
+  top: 35%;
+  left: 48%;
+  width: 375px;
+  height: 260px;
 }
 
 .marketWrap {
-  top: 50%;
-  left: 850px;
-  width: 110px;
-  height: 110px;
+  top: 48%;
+  left: 45%;
+  width: 240px;
+  height: 190px;
 }
 
 .workshopWrap {
-  top: 56%;
-  left: 961px;
-  width: 79px;
-  height: 100px;
+  top: 55%;
+  left: 51.5%;
+  width: 115px;
+  height: 150px;
 }
 
 .foodcourtWrap {
-  top: 64%;
-  left: 924px;
-  width: 89px;
-  height: 100px;
+  top: 63%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
 }
 
 .battleArenaWrap {
-  top: 64%;
-  left: 740px;
+  top: 63%;
+  left: 41%;
   width: 96px;
-  height: 90px;
+  height: 140px;
 }
 
 .professionsWrap {
-  top: 56%;
-  left: 665px;
-  width: 75px;
-  height: 84px;
+  top: 55%;
+  left: 35%;
+  width: 150px;
+  height: 130px;
 }
 
 .showLinkBtn {
@@ -70,6 +70,36 @@
   transition: all 0.5s;
 }
 
+.navigateLink:hover {
+  text-decoration: none;
+}
+
+.mapBtn {
+  width: fit-content;
+  height: 45px;
+  background-image: url('/images/worldmap/mapBtn.png');
+  background-position: center center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  font-weight: 700;
+  font-size: 15px;
+  font-family: 'Noto Serif', serif;
+  color: #571010;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mapBtn span {
+  padding: 0 40px;
+  white-space: nowrap;
+}
+
+.castleLink {
+  width: 100%;
+}
+
 @media (min-width: 1025px) {
   .showLinkBtn:hover .navigateLink {
     top: -40px;
@@ -81,6 +111,18 @@
 }
 
 @media (max-width: 1024px) {
+  .navigateLink{
+    opacity: 1;
+  }
+  .mapBtn {
+    font-size: 10px;
+    height: 35px;
+  }
+  .mapBtn span {
+    padding: 0 25px;
+    white-space: nowrap;
+  }
+
   .showLinkBtn:hover~.navigateLink {
     top: -40px;
     opacity: 1;
@@ -118,78 +160,48 @@
   }
 
   .professionsWrap {
-    top: 56%;
-    left: 643px;
-    width: 120px;
-    height: 72px;
+    top: 55%;
+    left: 36%;
+    width: 100px;
+    height: 100px;
   }
 
   .battleArenaWrap {
-    top: 64%;
-    left: 733px;
-    width: 105px;
-    height: 80px;
+    top: 63%;
+    left: 40%;
+    width: 110px;
+    height: 110px;
   }
 
   .foodcourtWrap {
-    top: 63%;
-    left: 915px;
+    top: 62%;
+    left: 50%;
     width: 100px;
-    height: 95px;
+    height: 120px;
   }
 
   .workshopWrap {
-    top: 56%;
-    left: 950px;
-    width: 90px;
-    height: 85px;
+    top: 55%;
+    left: 51%;
+    width: 110px;
+    height: 110px;
   }
 
   .marketWrap {
-    top: 50%;
-    left: 840px;
-    width: 120px;
-    height: 85px;
+    top: 48%;
+    left: 45%;
+    width: 160px;
+    height: 150px;
   }
 
   .castleWrap {
-    top: 36%;
-    left: 867px;
-    width: 259px;
-    height: 160px;
+    top: 35%;
+    left: 48%;
+    width: 280px;
+    height: 180px;
   }
 
   .navigateLink {
     height: 100%;
   }
-}
-
-.navigateLink:hover {
-  text-decoration: none;
-}
-
-.mapBtn {
-  width: fit-content;
-  height: 35px;
-  background-image: url('/images/worldmap/mapBtn.png');
-  background-position: center center;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  font-weight: 700;
-  font-size: 10px;
-  font-family: 'Noto Serif', serif;
-  color: #571010;
-  text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.mapBtn span {
-  padding: 0 25px;
-  white-space: nowrap;
-}
-
-.castleLink {
-  width: 100%;
 }

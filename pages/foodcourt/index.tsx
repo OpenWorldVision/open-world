@@ -10,7 +10,6 @@ import {
   Thead,
   Tr,
   useDisclosure,
-  useToast,
 } from '@chakra-ui/react'
 import styles from '@components/foodcourt/foodcourt.module.css'
 
@@ -121,10 +120,10 @@ export default function FoodCourt() {
         handleTxStateChange(title, data.transactionHash, data.status)
         handleGetMyList()
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
     },
-    []
+    [handleTxStateChange]
   )
 
   const handlePurchaseItem = useCallback(
@@ -139,7 +138,7 @@ export default function FoodCourt() {
           handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
         },
         (error) => {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
           setIsLoading(false)
         }
       )
@@ -155,10 +154,10 @@ export default function FoodCourt() {
         return data
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
     },
-    [isItemBoard]
+    [handleTxStateChange, isItemBoard]
   )
 
   return (

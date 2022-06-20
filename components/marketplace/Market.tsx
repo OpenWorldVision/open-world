@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { getListingIDs, purchaseItems } from 'utils/NFTMarket'
+import { cancelListingItem, getListingIDs, purchaseItems } from 'utils/NFTMarket'
 import styles from './market.module.css'
 import useTransactionState, {
     TRANSACTION_STATE,
@@ -15,7 +15,6 @@ export default function Market() {
     const [dataInit, setDataInit] = useState([])
     const [data, setData] = useState([])
     const [status, setStatus] = useState('Loading ...')
-    const [isOpenNotify, setIsOpenNotify] = useState(null)
     const handleTxStateChange = useTransactionState()
 
     useEffect(() => {
@@ -96,22 +95,32 @@ export default function Market() {
             async (error) => {
                 setData(dataInit)
                 setStatus('Loading ...')
-                setIsOpenNotify({ 
-                    type: 'FAILED',
-                    content: error
-                })
             }
         )
         if (result) {
             setDataInit([])
             await getItems()
-            setIsOpenNotify({ 
-                type: 'SUCCESS',
-                content: 'Your Order has been Completed'
-            })
             handleTxStateChange(title, result.transactionHash, result.status)
         } else {
-            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        }
+    }
+
+    const handleCancel = async (value) => {
+        const title = 'Cancel listing item'
+        const result = await cancelListingItem(
+            value?.id,
+            (txHash) => {
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+            }, 
+        )
+        if (result) {
+            setStatus('Loading ...')
+            setData([])
+            await getItems()
+            handleTxStateChange(title, result.transactionHash, result.status)
+        } else {
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
         }
     }
 
@@ -149,105 +158,94 @@ export default function Market() {
     }
 
     return (
-        <>
-            {isOpenNotify ? <div className={styles.main}>
-                <div className={styles.containerNotify}>
-                    <div className={styles.notifyHeader}>{isOpenNotify.type}</div>
-                    <div className={styles.notifyBody}>{isOpenNotify.content}</div>
+        <div className={styles.main}>
+            <div className={styles.nav}>
+                <div className={styles.nav1}>
+                    <div
+                        onClick={() => {changeNav(0)}}
+                    >
+                        <div className={nav === 0 ? styles.select + ' click-cursor' : 'click-cursor'}>ALL</div>
+                    </div>
+                    <div
+                        onClick={() => {changeNav(1)}}
+                    >
+                        <div className={nav === 1 ? styles.select + ' click-cursor' : 'click-cursor'}>OPENIAN</div>
+                    </div>
+                    <div
+                        onClick={() => {changeNav(2)}}
+                    >
+                        <div className={nav === 2 ? styles.select + ' click-cursor' : 'click-cursor'}>SUPPLIER</div>
+                    </div>
+                    <div
+                        onClick={() => {changeNav(3)}}
+                    >
+                        <div className={nav === 3 ? styles.select + ' click-cursor' : 'click-cursor'}>BLACKSMITH</div>
+                    </div>
+                    <div
+                        onClick={() => {changeNav(4)}}
+                    >
+                        <div className={nav === 4 ? styles.select + ' click-cursor' : 'click-cursor'}>MY LISTING</div>
+                    </div>
+                </div>
+                <div className={styles.nav2}>
+                    <div>
+                        <div
+                            onClick={() => {setIsOpenSortPrice(isOpenSortPricePrev => !isOpenSortPricePrev)}}
+                        >SORT PRICE</div>
+                        {isOpenSortPrice && (
+                            <div className={styles.sortPriceBoard}>
+                                <div onClick={() => {sortHighest()}}>HIGHEST</div>
+                                <div onClick={() => {sortLowest()}}>LOWEST</div>
+                            </div>
+                        )}
+                    </div>
+                    <input type="number" placeholder='NFT ID' onChange={(e) => {sortId(e.target.value)}} />
+                </div>
+            </div>
+            <div className={styles.body}>
+                <div>
+                    {data.length === 0 ? <div className={styles.loading}>{status}</div>
+                    : data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
+                        return <div key={value} className={styles.item}>
+                            <div className={styles.itemInfo}>
+                                <div>
+                                    <div>#{value.id} HALLEN</div>
+                                    <img src={`/images/marketplace/items/${value.trait}.png`} alt="img" />
+                                </div>
+                                <div>{value.price} OPEN</div>
+                            </div>
+                            {nav !== 4 ? <div className={styles.itemBuy}>
+                                <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.png" alt="img" />
+                            </div> : <div className={styles.itemCancel}>
+                                {/* <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.png" alt="img" /> */}
+                                <div onClick={() => handleCancel(value)} className='click-cursor'>CANCEL</div>
+                            </div>}
+                        </div>
+                    })}
+                </div>
+            </div>
+            <div className={styles.footer}>
+                <div className={styles.pagination}>
+                    <img 
+                        onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
+                        src="./images/marketplace/triangle-left.png" 
+                        alt="img"
+                        className='click-cursor' 
+                    />
+                    <div>{page < 10 ? `0${page}` : page}</div>
                     <img
-                        onClick={() => {setIsOpenNotify(null)}}
-                        className={styles.notifyConfirm + ' click-cursor'}
-                        src="/images/marketplace/confirm-notify.png" 
+                        onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
+                        src="./images/marketplace/triangle-right.png" 
                         alt="img" 
+                        className='click-cursor' 
                     />
                 </div>
-            </div> : <div className={styles.main}>
-                <div className={styles.nav}>
-                    <div className={styles.nav1}>
-                        <div
-                            onClick={() => {changeNav(0)}}
-                        >
-                            <div className={nav === 0 ? styles.select + ' click-cursor' : 'click-cursor'}>ALL</div>
-                        </div>
-                        <div
-                            onClick={() => {changeNav(1)}}
-                        >
-                            <div className={nav === 1 ? styles.select + ' click-cursor' : 'click-cursor'}>OPENIAN</div>
-                        </div>
-                        <div
-                            onClick={() => {changeNav(2)}}
-                        >
-                            <div className={nav === 2 ? styles.select + ' click-cursor' : 'click-cursor'}>SUPPLIER</div>
-                        </div>
-                        <div
-                            onClick={() => {changeNav(3)}}
-                        >
-                            <div className={nav === 3 ? styles.select + ' click-cursor' : 'click-cursor'}>BLACKSMITH</div>
-                        </div>
-                        <div
-                            onClick={() => {changeNav(4)}}
-                        >
-                            <div className={nav === 4 ? styles.select + ' click-cursor' : 'click-cursor'}>MY COLLECTION</div>
-                        </div>
-                    </div>
-                    <div className={styles.nav2}>
-                        <div>
-                            <div
-                                onClick={() => {setIsOpenSortPrice(isOpenSortPricePrev => !isOpenSortPricePrev)}}
-                            >SORT PRICE</div>
-                            {isOpenSortPrice && (
-                                <div className={styles.sortPriceBoard}>
-                                    <div onClick={() => {sortHighest()}}>HIGHEST</div>
-                                    <div onClick={() => {sortLowest()}}>LOWEST</div>
-                                </div>
-                            )}
-                        </div>
-                        <input type="number" placeholder='NFT ID' onChange={(e) => {sortId(e.target.value)}} />
-                    </div>
-                </div>
-                <div className={styles.body}>
-                    <div>
-                        {data.length === 0 ? <div className={styles.loading}>{status}</div>
-                        : data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
-                            return <div key={value} className={styles.item}>
-                                <div className={styles.itemInfo}>
-                                    <div>
-                                        <div>#{value.id} HALLEN</div>
-                                        <img src={`/images/marketplace/items/${value.trait}.png`} alt="img" />
-                                    </div>
-                                    <div>{value.price} OPEN</div>
-                                </div>
-                                {nav !== 4 && <div className={styles.itemBuy}>
-                                    <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.png" alt="img" />
-                                </div>}
-                            </div>
-                        })}
-                    </div>
-                </div>
-                <div className={styles.footer}>
-                    <div className={styles.pagination}>
-                        <img 
-                            onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                            src="./images/marketplace/triangle-left.png" 
-                            alt="img"
-                            className='click-cursor' 
-                        />
-                        <div>{page < 10 ? `0${page}` : page}</div>
-                        <img
-                            onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                            src="./images/marketplace/triangle-right.png" 
-                            alt="img" 
-                            className='click-cursor' 
-                        />
-                    </div>
-                </div>
-                <Link href='/'>
-                    <a className={styles.back}>
-                        <img src="./images/marketplace/back.png" alt="img" />
-                    </a>
-                </Link>
             </div>
-            }
-        </>
+            <Link href='/'>
+                <a className={styles.back}>
+                    <img src="./images/marketplace/back.png" alt="img" />
+                </a>
+            </Link>
+        </div>
     )
 }

@@ -120,7 +120,7 @@ function FishingModal(props: Props) {
       handleTxStateChange(title, fishing.transactionHash, fishing.status)
     } else {
       toggleLoadingModal(false)
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
     }
   }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
 
@@ -136,7 +136,7 @@ function FishingModal(props: Props) {
         updateInventory()
         setTypeOfModal(TYPE_OF_MODAL.FINISH)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
       toggleLoadingModal(false)
     }

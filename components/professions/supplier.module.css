@@ -4,7 +4,6 @@
   background-repeat: no-repeat;
   background-position: center center;
   background-color: #ccc;
-  z-index: 2001;
   display: flex;
   justify-content: center;
   overflow-x: hidden;
@@ -29,7 +28,7 @@
   top: 360px;
   left: 300px;
   width: 300px;
-  height: 400px;
+
 
   display: flex;
   flex-direction: column;
@@ -46,15 +45,12 @@
 
 .containerSupplierMakeBtn {
   position: absolute;
-  top: 240px;
+  top: 280px;
   right: 300px;
   width: 500px;
-  height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  z-index: 9999;
-  /* background-color: red; */
 }
 .backBtn {
   display: block;
@@ -66,7 +62,6 @@
   background-image: url('/images/professions/back-btn.webp');
   background-repeat: no-repeat;
   background-size: 100%;
-  /* background-color: red; */
   z-index: 9999;
 }
 

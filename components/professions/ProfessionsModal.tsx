@@ -91,7 +91,7 @@ function ProfessionsModal(props: Props) {
         getResult(data.status)
         handleTxStateChange(title, data.transactionHash, data.status)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXCUTE)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
       }
     }
     setIsLoading(false)

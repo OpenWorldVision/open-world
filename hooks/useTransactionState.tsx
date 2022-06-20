@@ -6,7 +6,7 @@ export enum TRANSACTION_STATE {
   FAILED = 0,
   SUCCESSFUL,
   WAITING,
-  NOT_EXCUTE,
+  NOT_EXECUTED,
 }
 
 function useTransactionState() {
@@ -33,7 +33,7 @@ function useTransactionState() {
       case '0x63564c43':
         return 'https://explorer.harmony.one/tx/'
     }
-  }, [window?.ethereum?.chainId])
+  }, [])
 
   const handleTxStateChange = useCallback(
     (title, txHash, txResult: TRANSACTION_STATE) => {
@@ -91,7 +91,7 @@ function useTransactionState() {
             },
           })
 
-        case TRANSACTION_STATE.NOT_EXCUTE:
+        case TRANSACTION_STATE.NOT_EXECUTED:
           return toast({
             title: title + ' transaction is failed to execute',
             duration: 10000,
@@ -100,7 +100,7 @@ function useTransactionState() {
           })
       }
     },
-    []
+    [blockExplorer, toast]
   )
 
   return handleTxStateChange

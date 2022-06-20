@@ -507,18 +507,21 @@ contract NFTMarket is
     uint256 _id,
     uint256[] calldata _buyItemIds
   ) public userNotBanned isListedMulti(_tokenAddress, _buyItemIds) {
+    require(_buyItemIds.length > 0, 'No item to buy');
     uint256 finalPrice = getFinalPrice(_tokenAddress, _id, _buyItemIds);
 
     Listing memory listing = listings[address(_tokenAddress)][_id];
     require(isUserBanned[listing.seller] == false, 'Banned seller');
     uint256 taxAmount = getTaxOnListing(_tokenAddress, _id, _buyItemIds);
 
-    uint256[] memory _ids = listings[address(_tokenAddress)][_id].items;
-
-    for (uint256 index = 0; index < _ids.length; index++) {
-      listedTokenIDs[address(_tokenAddress)].remove(_ids[index]);
-      listingsItem[_id].remove(_ids[index]);
-      _tokenAddress.safeTransferFrom(address(this), msg.sender, _ids[index]);
+    for (uint256 index = 0; index < _buyItemIds.length; index++) {
+      listedTokenIDs[address(_tokenAddress)].remove(_buyItemIds[index]);
+      listingsItem[_id].remove(_buyItemIds[index]);
+      _tokenAddress.safeTransferFrom(
+        address(this),
+        msg.sender,
+        _buyItemIds[index]
+      );
       _updateListedTokenTypes(_tokenAddress);
     }
 

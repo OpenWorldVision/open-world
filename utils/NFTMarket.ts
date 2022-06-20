@@ -3,6 +3,7 @@ import { ethers } from 'ethers'
 import Web3 from 'web3'
 import { getItemContract } from './Item'
 import marketInterface from '../build/contracts/NFTMarket.json'
+import { truncate } from 'fs/promises'
 
 const web3 = new Web3(Web3.givenProvider)
 
@@ -86,8 +87,12 @@ export const purchaseItems = async (
     const tx2 = await Market.purchaseListing(
       Item.address,
       transactionId,
-      itemIds
+      itemIds,
+      {
+        gasLimit: 800000
+      }
     )
+
     onTransactionExecute(tx2.hash)
     const receipt = await tx2.wait()
     return receipt

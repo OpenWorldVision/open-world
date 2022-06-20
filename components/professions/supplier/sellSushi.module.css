@@ -1,41 +1,4 @@
-.modalOverlay {
-  z-index: 2000;
-  opacity: 0;
-  visibility: hidden;
-  will-change: opacity;
-  transition: all 0.5s linear;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  background-color: transparent;
-}
 
-.modalOverlay.active {
-  z-index: 2002;
-  opacity: 1;
-  visibility: visible;
-  will-change: opacity;
-  transition: all 0.5s linear;
-}
-
-.modal {
-  /* padding: 80px 50px 50px; */
-  padding-bottom: 30px;
-  position: relative;
-  width: 600px;
-  height: fit-content;
-  background-position: 100%, 100%;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  /* background-color: #3d2316; */
-  background-image: url('/images/professions/suppliers/sellSushiModal.png');
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  z-index: 2;
-}
 .closeBtn {
   position: absolute !important;
   z-index: 3;
@@ -67,25 +30,7 @@
   font-size: 35px !important;
   box-shadow: none !important;
 }
-.modalFinish {
-  padding: 80px 50px 10px;
-  position: relative;
-  width: 600px;
-  height: 400px;
-  background-image: url('/images/professions/openian/claimFish.png');
-  background-position: center left, center right;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  /* background-color: #3d2314; */
-  display: flex;
-  justify-content: center;
-  color: #fff;
-  z-index: 2;
-}
 
-/* .modal img {
-    width: 100%;
-  } */
 
 .boardContent {
   position: relative;
@@ -190,26 +135,26 @@
 }
 .titleText {
   font-weight: 700;
-  color: '#fff';
+  color: #fff;
   font-size: 20px;
   line-height: 24px;
 }
 .valueText {
   font-weight: 400;
-  color: '#fff';
+  color: #fff;
   font-size: 20px;
   line-height: 24px;
 }
 
 .titleTextFinish {
   font-weight: 500;
-  color: '#fff';
+  color: #fff;
   font-size: 40px;
   line-height: 49px;
 }
 .valueTextFinish {
   font-weight: 500;
-  color: '#fff';
+  color: #fff;
   font-size: 36px;
   line-height: 44px;
 }
@@ -226,14 +171,16 @@
 }
 .containerSushiNFTs {
   background-color: #261106;
-  width: 145px;
-  height: 145px;
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 16px;
   margin-top: 16px;
+
 }
+
 .fishNFT {
   width: 36px;
   height: 63px;
@@ -241,7 +188,7 @@
 }
 .noteText {
   font-weight: 500;
-  color: '#fff';
+  color: #fff;
   font-size: 24px;
   line-height: 29px;
   text-align: center;
@@ -249,7 +196,7 @@
 }
 .noteTextFinish {
   font-weight: 500;
-  color: '#fff';
+  color: #fff;
   font-size: 24px;
   line-height: 29px;
   text-align: center;

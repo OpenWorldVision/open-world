@@ -40,7 +40,7 @@ function MarketPlace() {
                     style={{ color: 'gray' }}
                     className={nav === 3 ? 'select' : ''}
                   >
-                    HISTORY
+                    {/* HISTORY */}
                   </div>
               </div>
           </div>

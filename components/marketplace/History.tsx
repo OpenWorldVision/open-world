@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { cancelListingItem, getListingIDsBySeller, getNumberOfItemListings } from 'utils/NFTMarket'
 import styles from './history.module.css'
+import useTransactionState, {
+    TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 const numOfPage = 4
 
@@ -12,6 +15,7 @@ export default function History() {
     const [totalItems, setTotalItems] = useState(null)
     const [status, setStatus] = useState('Loading ...')
     const [isOpenNotify, setIsOpenNotify] = useState(null)
+    const handleTxStateChange = useTransactionState()
     
     useEffect(() => {
         getItems()
@@ -28,7 +32,13 @@ export default function History() {
     }
 
     const handleCancel = async (id: number) => {
-        const result = await cancelListingItem(id)
+        const title = 'Cancel listing item'
+        const result = await cancelListingItem(
+            id,
+            (txHash) => {
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+            }, 
+        )
         if (result) {
             setStatus('Loading ...')
             setData([])

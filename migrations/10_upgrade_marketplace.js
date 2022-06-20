@@ -4,7 +4,7 @@ const NFTMarket = artifacts.require('NFTMarket')
 module.exports = async function (deployer, network) {
   let nftMarketProxy
   if (network === 'harmonyTestnet') {
-    nftMarketProxy = '0x6c14d24eae373ae930768adbfa75c406119bf569'
+    nftMarketProxy = '0xCF26DCD48df44bfe074CdAC8A565476Ae4CEf205'
   }
   if (network === 'harmony') {
     nftMarketProxy = ''
