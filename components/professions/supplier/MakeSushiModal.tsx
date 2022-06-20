@@ -1,5 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, Input } from '@chakra-ui/react'
+import {
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
+} from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useState } from 'react'
 import styles from './makeSushi.module.css'
@@ -11,6 +18,7 @@ type Props = {
   listFishArray: any
   onStartCook: (sushi: number) => void
   typeModal: string
+  onClose: () => void
 }
 
 const TYPE_OF_MODAL = {
@@ -20,16 +28,20 @@ const TYPE_OF_MODAL = {
 }
 
 function MakeSushiModal(props: Props) {
-  const { isOpen, toggleModal, listFishArray, onStartCook, typeModal } = props
+  const {
+    isOpen,
+    toggleModal,
+    listFishArray,
+    onStartCook,
+    typeModal,
+    onClose,
+  } = props
 
   const [valueFish, setValueFish] = useState(1)
   const [errorText, setErrorText] = useState('')
 
-  const startCook = useCallback(async () => {
-    //
+  const startCook = useCallback(() => {
     onStartCook(valueFish)
-
-    // set
   }, [onStartCook, valueFish])
 
   const onPressUp = useCallback(() => {
@@ -240,19 +252,26 @@ function MakeSushiModal(props: Props) {
   ])
 
   return (
-    <div
-      className={`overlay ${styles.modalOverlay} ${isOpen && styles.active}`}
-    >
-      <div
-        className={
-          typeModal !== TYPE_OF_MODAL.FINISH ? styles.modal : styles.modalFinish
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay blur="3xl" />
+      <ModalContent
+        bgImg={
+          typeModal !== TYPE_OF_MODAL.FINISH
+            ? `url('/images/professions/suppliers/supplierModalBackground.png')`
+            : `url('/images/professions/openian/claimFish.png')`
         }
+        width={600}
+        backgroundPosition="center left, center right"
+        bgRepeat="no-repeat"
+        bgSize="100% 100%"
+        bgColor="transparent"
+        padding="80px 50px 70px"
       >
         <Button className={styles.closeBtn} onClick={toggleModal}>
           <FontAwesomeIcon icon={faTimesCircle} />
         </Button>
 
-        <div className={styles.boardContent}>
+        <ModalBody className={styles.boardContent}>
           {typeModal === TYPE_OF_MODAL?.START ? (
             <img
               src="/images/professions/suppliers/modalSupImg.png"
@@ -261,11 +280,9 @@ function MakeSushiModal(props: Props) {
           ) : null}
 
           {renderText()}
-        </div>
-      </div>
-
-      <div className="overlay" onClick={toggleModal}></div>
-    </div>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   )
 }
 
