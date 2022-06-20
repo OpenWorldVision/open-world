@@ -7,7 +7,7 @@ module.exports = async function (deployer, network) {
     nftMarketProxy = '0xCF26DCD48df44bfe074CdAC8A565476Ae4CEf205'
   }
   if (network === 'harmony') {
-    nftMarketProxy = ''
+    nftMarketProxy = '0x3B131B734Abf9C23E092Fac633e8CeF32bbb201f'
   }
   if (network === 'bsctestnet') {
     nftMarketProxy = '0x7210aEaF0c7d74366E37cfB37073cB630Ac86B5b'
