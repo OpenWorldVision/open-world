@@ -2,11 +2,16 @@
 import {
   Button,
   Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalOverlay,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Text,
 } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useState } from 'react'
@@ -19,6 +24,7 @@ type Props = {
   listSushi: any
   onSellSushi: (price: number, quantity: number) => void
   typeModal: string
+  onClose: () => void
 }
 
 const TYPE_OF_MODAL = {
@@ -28,7 +34,8 @@ const TYPE_OF_MODAL = {
 }
 
 function SellSushiModal(props: Props) {
-  const { isOpen, toggleModal, listSushi, onSellSushi, typeModal } = props
+  const { isOpen, toggleModal, listSushi, onSellSushi, typeModal, onClose } =
+    props
 
   const [valueSushi, setValueSushi] = useState(1)
   const [quantitySushi, setQuantitySushi] = useState(1)
@@ -91,7 +98,10 @@ function SellSushiModal(props: Props) {
               <div className={styles.columnView}>
                 <div className={styles.titleText}>Selected Item:</div>
                 <div className={styles.containerSushiNFTs}>
-                  <img src={`/images/professions/openian/sushiNFT.png`} />
+                  <img
+                    src={`/images/professions/openian/sushiNFT.png`}
+                    style={{ maxWidth: '80%' }}
+                  />
                 </div>
               </div>
               <div
@@ -113,7 +123,7 @@ function SellSushiModal(props: Props) {
                       onChange={onChangeValue}
                       defaultValue={valueSushi}
                     />
-                    <div>OPEN</div>
+                    <Text color="#fff">OPEN</Text>
                   </div>
                 </div>
                 <div className={styles.rowView2}>
@@ -140,9 +150,9 @@ function SellSushiModal(props: Props) {
                   <div className={styles.flex1}>
                     <div className={styles.titleText}>Your Sushi Amount</div>
                   </div>
-                  <div className={styles.flex1WithFlexEnd}>
+                  <Text className={styles.flex1WithFlexEnd} color="#fff">
                     {listSushi?.length}
-                  </div>
+                  </Text>
                 </div>
               </div>
             </div>
@@ -169,19 +179,25 @@ function SellSushiModal(props: Props) {
     toggleModal,
     onChangeValue,
     valueSushi,
-    onChangeQuantity,
+    listSushi?.length,
     errorText,
     startCook,
   ])
 
   return (
-    <div
-      className={`overlay ${styles.modalOverlay} ${isOpen && styles.active}`}
-    >
-      <div
-        className={
-          typeModal !== TYPE_OF_MODAL.FINISH ? styles.modal : styles.modalFinish
+    <Modal isOpen={isOpen} onClose={onClose} size="2xl">
+      <ModalOverlay />
+      <ModalContent
+        bgImg={
+          typeModal !== TYPE_OF_MODAL.FINISH
+            ? `url('/images/professions/suppliers/sellSushiModal.png')`
+            : `url('/images/professions/openian/claimFish.png')`
         }
+        width="600px"
+        bgPosition="100%, 100%"
+        bgRepeat="no-repeat"
+        bgSize="100% 100%"
+        bgColor="transparent"
       >
         <Button
           className={
@@ -194,11 +210,9 @@ function SellSushiModal(props: Props) {
           <FontAwesomeIcon icon={faTimesCircle} />
         </Button>
 
-        <div className={styles.boardContent}>{renderText()}</div>
-      </div>
-
-      <div className="overlay" onClick={toggleModal}></div>
-    </div>
+        <ModalBody className={styles.boardContent}>{renderText()}</ModalBody>
+      </ModalContent>
+    </Modal>
   )
 }
 
