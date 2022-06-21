@@ -431,7 +431,7 @@ contract Profiles is AccessControlUpgradeable {
     if (current >= timestamp) {
       return 0;
     }
-    uint256 currentStamina = timestamp.sub(current).div(857);
+    uint256 currentStamina = timestamp.sub(current).div(1714);
     if (currentStamina > MAX_STAMINA) {
       return MAX_STAMINA;
     }
