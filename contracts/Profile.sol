@@ -150,7 +150,7 @@ contract Profiles is AccessControlUpgradeable {
 
     profiles[profileId] = profile;
 
-    timestampStamina[msg.sender] = block.timestamp.add(85700);
+    timestampStamina[msg.sender] = block.timestamp.add(171400);
 
     emit ProfileCreated(
       profileId,

@@ -31,13 +31,13 @@ module.exports = async function (deployer, network, accounts) {
     profilesAddress = ''
     nftMarketAddress = ''
   }
-  // const profession = await Profession.at(professionProxy)
+  const profession = await Profession.at(professionProxy)
   // const MOD_ROLE = await profession.MODERATOR_ROLE()
   // await profession.grantRole(MOD_ROLE, accounts[0])
-  // await profession.setFishingDuration(43200)
-  // await profession.setMiningDuration(43200)
+  await profession.setFishingDuration(21600)
+  await profession.setMiningDuration(21600)
   // await profession.setProfiles(profilesAddress)
-  // await profession.setFishingMiningStaminaRequire('49')
+  await profession.setFishingMiningStaminaRequire('48')
 
   // const hero = await HeroCore.at(heroAddress)
   // const WORLD_OPERATOR = await hero.WORLD_OPERATOR()
