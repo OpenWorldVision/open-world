@@ -7,10 +7,7 @@ import Entry from '@components/entry/Entry'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import LoadingModal from './LoadingModal'
-import { motion } from 'framer-motion'
-import { getWeb3Client } from '@lib/web3'
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -32,13 +29,7 @@ export default function Layout({ children, home }) {
     (state: any) => state.IsConnectedStore.isConnected
   )
 
-  const checkConnect = async () => {
-    const web3Client = await getWeb3Client()
-    dispatch(updateIsConnected({ isConnected: !!web3Client }))
-  }
-
   useEffect(() => {
-    checkConnect()
     router.events.on('routeChangeStart', () => {
       setIsLoading(true)
     })
