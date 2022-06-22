@@ -422,10 +422,13 @@ contract Profiles is AccessControlUpgradeable {
   function getStamina(address _account) public view returns (uint256 stamina) {
     uint256 timestamp = timestampStamina[_account];
     uint256 current = block.timestamp;
+    require(profileExists(_account), 'no profile found');
+    Profile memory profile = profiles[addressToIndex[_account]];
+    if (profile.profession == Profession.UNKNOWN) {
+      return MAX_STAMINA;
+    }
 
     if (timestamp == 0) {
-      require(profileExists(_account), 'no profile found');
-      Profile memory profile = profiles[addressToIndex[_account]];
       timestamp = profile.created;
     }
     if (current >= timestamp) {

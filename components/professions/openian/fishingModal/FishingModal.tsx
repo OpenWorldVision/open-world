@@ -80,18 +80,18 @@ function FishingModal(props: Props) {
   const checkRequirementBeforeStartQuest = useCallback(async () => {
     const stamina = await getStamina()
 
-    if (Number(stamina) < 50) {
+    if (Number(stamina) < 49) {
       toast({
         title: 'Fishing Quest',
         description:
-          "Fishing quest requires at least 50 stamina to start. You don't have enough stamina to start fishing quest.",
+          "Fishing quest requires at least 49 stamina to start. You don't have enough stamina to start fishing quest.",
         status: 'error',
         duration: 15000,
         isClosable: true,
       })
     }
 
-    return Number(stamina) >= 50
+    return Number(stamina) >= 49
   }, [toast])
 
   const handleStartQuest = useCallback(async () => {

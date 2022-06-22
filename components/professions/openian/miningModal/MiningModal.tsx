@@ -85,11 +85,11 @@ export default function MiningModal(props: Props) {
     }
     const stamina = await getStamina()
 
-    if (Number(stamina) < 50) {
+    if (Number(stamina) < 49) {
       toast({
         title: 'Mining Quest',
         description:
-          "Mining quest requires at least 50 stamina to start. You don't have enough stamina to start mining quest.",
+          "Mining quest requires at least 49 stamina to start. You don't have enough stamina to start mining quest.",
         status: 'error',
         duration: 15000,
         isClosable: true,
