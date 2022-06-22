@@ -34,7 +34,8 @@ export default function Layout({ children, home }) {
 
   const checkConnect = async () => {
     const web3Client = await getWeb3Client()
-    dispatch(updateIsConnected({ isConnected: !!web3Client }))
+
+    dispatch(updateIsConnected({ isConnected: web3Client ? true : false }))
   }
 
   useEffect(() => {
@@ -46,6 +47,8 @@ export default function Layout({ children, home }) {
     router.events.on('routeChangeComplete', () => {
       setIsLoading(false)
     })
+
+    // if (is)
   }, [])
   return (
     <div
