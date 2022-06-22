@@ -9,9 +9,9 @@ module.exports = async function (deployer, network) {
     itemAddress = '0xBd69df7fFcB9d7F071bb2124E1Eb8734bBDA8E0B'
   }
   if (network === 'harmony') {
-    openToken = ''
-    taxRecipient = ''
-    itemAddress = ''
+    openToken = '0x27a339d9b59b21390d7209b78a839868e319301b'
+    taxRecipient = '0x5678917FfEb77827Aafc33419E99DaCd707313a9'
+    itemAddress = '0xaDFd281dd7bC9de80AC2aF5811914FF87ef6e00f'
   }
   if (network === 'bsctestnet') {
     openToken = '0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B'
