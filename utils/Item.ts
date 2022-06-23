@@ -30,29 +30,29 @@ const ITEM_TYPES = ['fish', 'ore', 'hammer', 'sushi']
 export async function fetchUserInventoryItemAmount(): Promise<
   { type: string; ids: number[] }[]
 > {
-  const itemsAmount = []
-
-  for (let i = 1; i < 5; i++) {
-    const itemIdList = await fetchListItemIds(i)
-    const itemAmount = itemIdList.filter((x) => x !== 0).length
-    itemsAmount.push(itemIdList)
-    itemsAmount.push(itemAmount)
-  }
-  const results = await Promise.all(
-    ITEM_TYPES.map(async (type, index) => ({
-      type,
-      ids: await fetchListItemIds(index + 1),
-    }))
-  )
-  return results
-  // return {
-  //   fishItems: itemsAmount[0],
-  //   fishAmount: itemsAmount[1],
-  //   oreItems: itemsAmount[2],
-  //   oreAmount: itemsAmount[3],
-  //   hammerItems: itemsAmount[4],
-  //   hammerAmount: itemsAmount[5],
-  //   sushiItems: itemsAmount[6],
-  //   sushiAmount: itemsAmount[7],
+  // for (let i = 1; i < 5; i++) {
+  //   const itemIdList = await fetchListItemIds(i)
+  //   const itemAmount = itemIdList.filter((x) => x !== 0).length
+  //   itemsAmount.push(itemIdList)
+  //   itemsAmount.push(itemAmount)
   // }
+  // const results = await Promise.all(
+  //   ITEM_TYPES.map(async (type, index) => ({
+  //     type,
+  //     ids: await fetchListItemIds(index + 1),
+  //   }))
+  // )
+  const resultsPromise = await Promise.all(
+    [fetchListItemIds(1),
+    fetchListItemIds(2),
+    fetchListItemIds(3),
+    fetchListItemIds(4)]
+  ) .then((values) => {
+    return values
+  })
+  const results = ITEM_TYPES.map( (type, index) => ({
+    type,
+    ids: resultsPromise[index],
+  }))
+  return results
 }
