@@ -32,11 +32,15 @@ const getHeroCoreContract = async () => {
 }
 
 // Call Methods
-export const fetchRequireBalanceProfession = async () => {
+export async function fetchRequireBalanceProfession(): Promise<string[]> {
   const contract = await getProfilesContract()
-  const balance = await contract.requireBalanceProfession()
+  const requireBalances = await Promise.all([
+    contract.requireBalanceBlacksmith(),
+    contract.requireBalanceSupplier(),
+    contract.requireBalanceOpenian(),
+  ])
 
-  return balance.toNumber()
+  return requireBalances.map((value) => value.toString())
 }
 
 export const mintProfessionNFT = async (

@@ -1,11 +1,8 @@
 import { Button, Grid, GridItem } from '@chakra-ui/react'
-import { useDispatch } from 'react-redux'
 import mainStyle from './professions.module.css'
 import inheritStyle from './professionsSelection.module.css'
 import style from './professionsModal.module.css'
-import { useCallback, useEffect, useState } from 'react'
-import { getProfile } from 'utils/profileContract'
-import { setProfile } from 'reduxActions/profileAction'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   fetchRequireBalanceProfession,
   fetchUserProfessionNFT,
@@ -16,6 +13,7 @@ import LoadingModal from '@components/LoadingModal'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import { ethers } from 'ethers'
 
 const NPCList = ['openian', 'supplier', 'blacksmith']
 
@@ -46,26 +44,23 @@ type Props = {
   toggleLoadingModal: (boolean) => void
   closeModal: () => void
 }
+async function getUserBalance() {
+  const balance = await getBalanceOfOpen()
+  return parseFloat(balance)
+}
 
 function ProfessionsModal(props: Props) {
   const { npc, getResult, toggleLoadingModal, closeModal } = props
   const [currentNpcText, setCurrentNpcText] = useState([])
   const [haveNFT, setHaveNFT] = useState(false)
   const [canActivate, setCanActivate] = useState(false)
-  const [currentOPEN, setCurrentOPEN] = useState(0)
-  const [requireBalance, setRequireBalance] = useState(0)
+  const [requireBalance, setRequireBalance] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
 
   const getRequireBalanceProfession = async () => {
     const balance = await fetchRequireBalanceProfession()
     setRequireBalance(balance)
-  }
-
-  const getUserBalance = async () => {
-    const balance = await getBalanceOfOpen()
-    setCurrentOPEN(parseFloat(balance))
-    return parseFloat(balance)
   }
 
   const onActivateProfession = useCallback(async () => {
@@ -95,7 +90,7 @@ function ProfessionsModal(props: Props) {
       }
     }
     setIsLoading(false)
-  }, [canActivate, getResult, npc])
+  }, [canActivate, getResult, handleTxStateChange, npc])
 
   const checkIfHasNTF = useCallback(async () => {
     const nftList = await fetchUserProfessionNFT()
@@ -112,13 +107,19 @@ function ProfessionsModal(props: Props) {
   }
 
   const checkIfCanActive = useCallback(async () => {
-    const checkNFT = await checkIfHasNTF()
-    const checkBalance = await getUserBalance()
-    if (npc === 'openian') {
-      setCanActivate(checkNFT)
-    } else {
-      setCanActivate(checkNFT && checkBalance >= requireBalance)
-    }
+    const hasHeroNFT = await checkIfHasNTF()
+    const userBalance = await getUserBalance()
+    const _requireBalance =
+      npc === 'openian'
+        ? requireBalance[2]
+        : npc === 'supplier'
+        ? requireBalance[1]
+        : requireBalance[0]
+
+    setCanActivate(
+      hasHeroNFT &&
+        userBalance >= parseFloat(ethers.utils.formatEther(_requireBalance))
+    )
   }, [checkIfHasNTF, npc, requireBalance])
 
   const initialize = async () => {
@@ -131,6 +132,19 @@ function ProfessionsModal(props: Props) {
     getCurrentNpcText()
     initialize()
   }, [npc])
+
+  const displayRequireBalance = useMemo(() => {
+    if (requireBalance.length === 0) {
+      return ''
+    }
+    if (npc === 'openian') {
+      return ethers.utils.formatEther(requireBalance[2])
+    }
+    if (npc === 'supplier') {
+      return ethers.utils.formatEther(requireBalance[1])
+    }
+    return ethers.utils.formatEther(requireBalance[0])
+  }, [npc, requireBalance])
 
   return (
     <>
@@ -194,15 +208,14 @@ function ProfessionsModal(props: Props) {
                       {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
                     </span>
                   </Button>
-                  {npc !== 'openian' && (
-                    <Button
-                      className={`${style.btn} ${style.acceptBtn} ${
-                        currentOPEN >= requireBalance && style.active
-                      } click-cursor`}
-                    >
-                      <span>Have {requireBalance} $OPEN</span>
-                    </Button>
-                  )}
+
+                  <Button
+                    className={`${style.btn} ${style.acceptBtn} ${
+                      canActivate && style.active
+                    } click-cursor`}
+                  >
+                    <span>Have {displayRequireBalance} $OPEN</span>
+                  </Button>
                 </div>
               </div>
             </GridItem>

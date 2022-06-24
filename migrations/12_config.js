@@ -53,7 +53,11 @@ module.exports = async function (deployer, network, accounts) {
 
   const profiles = await Profiles.at(profilesAddress)
   // await profiles.setHeroes(heroAddress)
-  await profiles.setRequirementBalance('100', '50000', '25000')
+  await profiles.setRequirementBalance(
+    '100000000000000000000',
+    '50000000000000000000000',
+    '25000000000000000000000'
+  )
 
   // const item = await Item.at(itemAddress)
   // const PROFESSION_OPERATOR = await item.PROFESSION_OPERATOR()
