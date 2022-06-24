@@ -8,7 +8,7 @@ import {
   fetchUserProfessionNFT,
   activateProfession,
 } from '../../utils/professions'
-import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
+import { getOpenBalance } from '../../utils/checkBalanceOpen'
 import LoadingModal from '@components/LoadingModal'
 import useTransactionState, {
   TRANSACTION_STATE,
@@ -45,8 +45,8 @@ type Props = {
   closeModal: () => void
 }
 async function getUserBalance() {
-  const balance = await getBalanceOfOpen()
-  return parseFloat(balance)
+  const balance = await getOpenBalance(false)
+  return Number(balance)
 }
 
 function ProfessionsModal(props: Props) {
@@ -164,6 +164,7 @@ function ProfessionsModal(props: Props) {
             gap={10}
           >
             <GridItem
+              key="npc"
               className={style.npcCardWrap}
               rowSpan={4}
               colSpan={{
@@ -180,7 +181,7 @@ function ProfessionsModal(props: Props) {
             >
               <div className={`${style.npcCard} ${style[`${npc}NPC`]}`}></div>
             </GridItem>
-            <GridItem rowSpan={3} colSpan={2}>
+            <GridItem rowSpan={3} colSpan={2} key="npc-info">
               <div
                 className={`${inheritStyle.professionsText} ${style.npcText}`}
               >
@@ -219,7 +220,7 @@ function ProfessionsModal(props: Props) {
                 </div>
               </div>
             </GridItem>
-            <GridItem colSpan={2} className={style.activateWrap}>
+            <GridItem colSpan={2} className={style.activateWrap} key="npc-cta">
               <Button
                 className={`btn-chaka ${style.activateBtn} ${
                   canActivate && style.active

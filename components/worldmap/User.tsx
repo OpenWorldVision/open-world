@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import RefillStaminaModal from './RefillStaminaModal'
 import { PlusSquareIcon } from '@chakra-ui/icons'
-import { getBalanceOpen } from 'utils/checkBalanceOpen'
+import { getOpenBalance } from 'utils/checkBalanceOpen'
 
 export default function User() {
   const [balance, setBalance] = useState(null)
@@ -56,7 +56,7 @@ export default function User() {
   }, [dispatch])
 
   const getBalance = async () => {
-    const balance = await getBalanceOpen()
+    const balance = await getOpenBalance(true)
     setBalance(balance)
   }
 
