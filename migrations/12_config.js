@@ -27,17 +27,18 @@ module.exports = async function (deployer, network, accounts) {
   }
   if (network === 'bsctestnet') {
     professionProxy = '0xf1FB61D2f353C8e612E201Ed8bb9Fb6FB4CC8673'
-    heroAddress = ''
-    profilesAddress = ''
-    nftMarketAddress = ''
+    heroAddress = '0x585ded8E0Dd7DCfad02F13b94571E24cA59A3234'
+    profilesAddress = '0xae46953433ebE48698c6D86a49fA154eDCad99C3'
+    nftMarketAddress = '0x7210aEaF0c7d74366E37cfB37073cB630Ac86B5b'
+    itemAddress = '0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492'
   }
-  const profession = await Profession.at(professionProxy)
+  // const profession = await Profession.at(professionProxy)
   // const MOD_ROLE = await profession.MODERATOR_ROLE()
   // await profession.grantRole(MOD_ROLE, accounts[0])
-  await profession.setFishingDuration(21600)
-  await profession.setMiningDuration(21600)
+  // await profession.setFishingDuration(21600)
+  // await profession.setMiningDuration(21600)
   // await profession.setProfiles(profilesAddress)
-  await profession.setFishingMiningStaminaRequire('48')
+  // await profession.setFishingMiningStaminaRequire('48')
 
   // const hero = await HeroCore.at(heroAddress)
   // const WORLD_OPERATOR = await hero.WORLD_OPERATOR()
@@ -50,8 +51,9 @@ module.exports = async function (deployer, network, accounts) {
   // await hero.setHeroPrice(2, '5000000000000000000000')
   // await hero.setHeroPrice(3, '2000000000000000000000')
 
-  // const profiles = await Profiles.at(profilesAddress)
+  const profiles = await Profiles.at(profilesAddress)
   // await profiles.setHeroes(heroAddress)
+  await profiles.setRequirementBalance('100', '50000', '25000')
 
   // const item = await Item.at(itemAddress)
   // const PROFESSION_OPERATOR = await item.PROFESSION_OPERATOR()
