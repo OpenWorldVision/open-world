@@ -1,9 +1,7 @@
 import { getAddresses } from 'constants/addresses'
-import { fromUnixTime, getUnixTime } from 'date-fns'
 import { BigNumber } from 'ethers'
 import Web3 from 'web3'
 import profilesInterface from '../build/contracts/Profiles.json'
-import { getProfessionContract } from './professionContract'
 
 const web3 = new Web3(Web3.givenProvider)
 
