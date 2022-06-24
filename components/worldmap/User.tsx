@@ -210,7 +210,6 @@ export default function User() {
         {profile === false && (
           <CreateProfile
             setIsOpenCreateProfile={setIsOpenCreateProfile}
-            isOpenCreateProfile={isOpenCreateProfile}
             getDataProfile={getDataProfile}
             handleOpenTutorial={handleOpenTutorial}
           />
@@ -220,7 +219,6 @@ export default function User() {
             profile={profile}
             isEdit={true}
             setIsOpenCreateProfile={setIsOpenCreateProfile}
-            isOpenCreateProfile={isOpenCreateProfile}
             getDataProfile={getDataProfile}
             handleOpenTutorial={handleOpenTutorial}
           />
