@@ -49,7 +49,7 @@ export async function getStamina() {
   }
 }
 
-export const crateProfile = async (
+export const createProfile = async (
   nameStr: string,
   pictureId: number,
   onTransactionExecute: (hash: string) => void,
@@ -65,7 +65,7 @@ export const crateProfile = async (
       .on('receipt', onTransactionComplete)
 
     return true
-  } catch {
+  } catch (e) {
     return false
   }
 }
