@@ -107,6 +107,9 @@ function ProfessionsModal(props: Props) {
   }
 
   const checkIfCanActive = useCallback(async () => {
+    if (requireBalance.length === 0) {
+      return
+    }
     const hasHeroNFT = await checkIfHasNTF()
     const userBalance = await getUserBalance()
     const _requireBalance =
