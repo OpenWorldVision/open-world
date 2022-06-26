@@ -9,7 +9,7 @@ import ErrorPage from 'pages/404'
 function MarketPlace() {
   const [nav, setNav] = useState(1)
 
-  // return <ErrorPage />
+  return <ErrorPage />
 
   return (
     <MarketPlaceCSS>
