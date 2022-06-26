@@ -27,14 +27,14 @@ const Popup = ({
                     <div className={styles.background1}>
                         <div>
                             <div>NOTI</div>
-                            <button onClick={() => {setIsOpen(null)}}>
+                            <button className="click-cursor" onClick={() => {setIsOpen(null)}}>
                                 <img src='/images/popup/close.png' />
                             </button>
                         </div>
                         {type && <img src={infoType[type]} />}
                         <div>{content}</div>
                         {subcontent && <div>({subcontent})</div> }
-                        <button onClick={action}>{actionContent}</button>
+                        <button className="click-cursor" onClick={action}>{actionContent}</button>
                     </div>
                 </div>
             </div>

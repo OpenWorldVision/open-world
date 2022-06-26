@@ -1,4 +1,4 @@
-import { Button, Grid, GridItem } from '@chakra-ui/react'
+import { Button, Grid, GridItem, useDisclosure, useToast } from '@chakra-ui/react'
 import style from '@components/castle/shop/shop.module.css'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -12,6 +12,8 @@ import LoadingModal from '@components/LoadingModal'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import { getBalanceOpen } from 'utils/checkBalanceOpen'
+import Popup from '@components/Popup'
 
 function Shop() {
   const [nftsAmount, setNftsAmount] = useState({
@@ -29,18 +31,33 @@ function Shop() {
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
   const [popup, setPopup] = useState(null)
+  const { onClose } = useDisclosure()
 
   const mintProfessionsNFT = async (trait) => {
-    const title = 'Purchase NFT card'
     setIsLoading(true)
-    const data = await mintProfessionNFT(trait, (txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
-    })
-    if (data) {
-      handleTxStateChange(title, data.transactionHash, data.status, setPopup)
-      await fetchNFTAmount()
+    const balance = parseFloat(await getBalanceOpen())
+    const NTFCardPrice = parseFloat(Object.values(nftsPrices)[trait-1])
+    if (balance >= NTFCardPrice) {
+      const title = 'Purchase NFT card'
+      const data = await mintProfessionNFT(trait, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+      })
+      if (data) {
+        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
+        await fetchNFTAmount()
+      } else {
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+      }
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+      setPopup(<Popup 
+        type='failed'
+        content="Purchase NFT card transaction is failed to excute"
+        subcontent="You don\'t have enough OPEN to purchase"
+        actionContent="Close"
+        setIsOpen={setPopup}
+        action={() => { setPopup(null) }}
+      />)
+      onClose()
     }
     setIsLoading(false)
   }
