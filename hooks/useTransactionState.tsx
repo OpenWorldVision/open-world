@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
-import { useToast } from '@chakra-ui/react'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
+import Popup from '@components/Popup'
 
 export enum TRANSACTION_STATE {
   FAILED = 0,
@@ -10,8 +10,6 @@ export enum TRANSACTION_STATE {
 }
 
 function useTransactionState() {
-  const toast = useToast()
-
   const blockExplorer = useMemo(() => {
     const chainId = window?.ethereum?.chainId
     switch (chainId) {
@@ -36,29 +34,28 @@ function useTransactionState() {
   }, [])
 
   const handleTxStateChange = useCallback(
-    (title, txHash, txResult: TRANSACTION_STATE) => {
-      toast.closeAll()
+    (title, txHash, txResult: TRANSACTION_STATE, setPopup) => {
       switch (txResult) {
         case TRANSACTION_STATE.FAILED:
-          return toast({
-            title: title + ' transaction is failed',
-            description: (
+          return setPopup(<Popup 
+            type='failed'
+            content={title + ' transaction is failed'}
+            subcontent={(
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 href={blockExplorer + txHash}
-              >
-                Transaction detail <ExternalLinkIcon mx="2px" />
-              </a>
-            ),
-            duration: 10000,
-            isClosable: true,
-            status: 'error',
-          })
+              />
+            )}
+            actionContent="Close"
+            setIsOpen={setPopup}
+            action={() => { setPopup(null) }}
+          />)
         case TRANSACTION_STATE.SUCCESSFUL:
-          return toast({
-            title: title + ' transaction is successful',
-            description: (
+          return setPopup(<Popup 
+            type='success'
+            content={title + ' transaction is successful'}
+            subcontent={(
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -66,17 +63,16 @@ function useTransactionState() {
               >
                 Transaction detail <ExternalLinkIcon mx="2px" />
               </a>
-            ),
-            duration: 10000,
-            isClosable: true,
-            status: 'success',
-          })
-
+            )}
+            actionContent="Close"
+            setIsOpen={setPopup}
+            action={() => { setPopup(null) }}
+          />)
         case TRANSACTION_STATE.WAITING:
-          return toast({
-            title: title + ' transaction is excuting',
-            duration: 100000,
-            description: (
+          return setPopup(<Popup 
+            type='waiting'
+            content={title + ' transaction is excuting'}
+            subcontent={(
               <a
                 target="_blank"
                 rel="noopener noreferrer"
@@ -84,23 +80,22 @@ function useTransactionState() {
               >
                 Transaction detail <ExternalLinkIcon mx="2px" />
               </a>
-            ),
-            status: 'info',
-            containerStyle: {
-              zIndex: 999999,
-            },
-          })
-
+            )}
+            actionContent="Close"
+            setIsOpen={setPopup}
+            action={() => { setPopup(null) }}
+          />)
         case TRANSACTION_STATE.NOT_EXECUTED:
-          return toast({
-            title: title + ' transaction is failed to execute',
-            duration: 10000,
-            isClosable: true,
-            status: 'error',
-          })
+          return setPopup(<Popup 
+            type='cancel'
+            content={title + ' transaction is failed to execute'}
+            actionContent="Close"
+            setIsOpen={setPopup}
+            action={() => { setPopup(null) }}
+          />)
       }
     },
-    [blockExplorer, toast]
+    [blockExplorer]
   )
 
   return handleTxStateChange

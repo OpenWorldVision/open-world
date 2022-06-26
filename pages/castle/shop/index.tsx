@@ -28,18 +28,19 @@ function Shop() {
   const [fetchPricesInterval, setFetchPricesInterval] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
+  const [popup, setPopup] = useState(null)
 
   const mintProfessionsNFT = async (trait) => {
     const title = 'Purchase NFT card'
     setIsLoading(true)
     const data = await mintProfessionNFT(trait, (txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
     })
     if (data) {
-      handleTxStateChange(title, data.transactionHash, data.status)
+      handleTxStateChange(title, data.transactionHash, data.status, setPopup)
       await fetchNFTAmount()
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
     }
     setIsLoading(false)
   }
@@ -171,6 +172,7 @@ function Shop() {
           <a className={`${style.backBtn} click-cursor`}></a>
         </Link>
       </div>
+      {popup}
     </div>
   )
 }

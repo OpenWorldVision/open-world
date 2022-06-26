@@ -23,6 +23,7 @@ export default function ForgeHammer(props: Props) {
   const [isStartQuestFail, setIsStartQuestFail] = useState(false)
   const [checkIsSuccess, setCheckIsSuccess] = useState(false)
   const handleTxStateChange = useTransactionState()
+  const [popup, setPopup] = useState(null)
 
   const numberOreNeed = useMemo(() => numberHammer / 2, [numberHammer])
 
@@ -51,7 +52,7 @@ export default function ForgeHammer(props: Props) {
     if (numberOreNeed <= numberYourOre.length && numberHammer !== 0) {
       const listSellHammer = numberYourOre.slice(0, numberOreNeed)
       const forgeHammer = await makeHammer(listSellHammer, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
       })
 
       if (forgeHammer) {
@@ -60,10 +61,11 @@ export default function ForgeHammer(props: Props) {
         handleTxStateChange(
           title,
           forgeHammer.transactionHash,
-          forgeHammer.status
+          forgeHammer.status,
+          setPopup
         )
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }
 
       toggleLoadingModal(false)
@@ -172,6 +174,7 @@ export default function ForgeHammer(props: Props) {
       {isStartQuestFail && (
         <NotificationForge hiddenNotification={hiddenNotification} />
       )}
+      {popup}
     </div>
   )
 }

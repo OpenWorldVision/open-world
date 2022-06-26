@@ -37,6 +37,7 @@ export default function FoodCourt() {
   const [buyDetail, setBuyDetail] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
+  const [popup, setPopup] = useState(null)
 
   const handleGetSushiList = async () => {
     const data = await getListingIDs(false)
@@ -113,14 +114,14 @@ export default function FoodCourt() {
       const title = `Cancel listing item in Food Court`
       setIsLoading(true)
       const data = await cancelListingItem(item?.id, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
       })
       setIsLoading(false)
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status)
+        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
         handleGetMyList()
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }
     },
     [handleTxStateChange]
@@ -135,17 +136,17 @@ export default function FoodCourt() {
         id,
         listIds,
         (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
         },
         (error) => {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
           setIsLoading(false)
         }
       )
 
       if (data) {
         setIsLoading(false)
-        handleTxStateChange(title, data.transactionHash, data.status)
+        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
         if (isItemBoard === 'sushi') {
           handleGetSushiList()
         } else {
@@ -154,7 +155,7 @@ export default function FoodCourt() {
         return data
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }
     },
     [handleTxStateChange, isItemBoard]
@@ -296,6 +297,7 @@ export default function FoodCourt() {
           <BackButton />
         </div>
       </div>
+      {popup}
     </>
   )
 }

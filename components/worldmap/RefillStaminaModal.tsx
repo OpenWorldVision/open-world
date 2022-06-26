@@ -17,7 +17,6 @@ import {
   Wrap,
   WrapItem,
   Text,
-  useToast,
   Link,
   useDisclosure,
 } from '@chakra-ui/react'
@@ -25,6 +24,8 @@ import { fetchAmountItemByTrait } from 'utils/blackSmithContract'
 import { refillStamina } from 'utils/professionContract'
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import LoadingModal from '@components/LoadingModal'
+import { useRouter } from 'next/router'
+import Popup from '@components/Popup'
 
 type Props = {
   isOpen: boolean
@@ -41,7 +42,8 @@ function RefillStaminaModal(props: Props) {
   } = useDisclosure()
   const [amountSushi, setAmountSushi] = useState(0)
   const [success, setSuccess] = useState(false)
-  const toast = useToast()
+  const [popup, setPopup] = useState(null)
+  const router = useRouter()
 
   const handleUseSushi = useCallback(async () => {
     if (success) {
@@ -53,13 +55,14 @@ function RefillStaminaModal(props: Props) {
       onToggleLoading()
       const availableSushi = await fetchAmountItemByTrait(4)
       if (availableSushi?.length < amountSushi) {
-        toast({
-          title: 'Recover stamina',
-          description: 'Not enough sushi to recover stamina',
-          duration: 10000,
-          isClosable: true,
-          status: 'warning',
-        })
+        setPopup(<Popup
+          type='sushi'
+          content="Not enough sushi to recover stamina"
+          subcontent='Make sushi or buy on maket'
+          actionContent="Bye sushi"
+          setIsOpen={setPopup}
+          action={() => { router.push('foodcourt') }}
+        />)
         onClose()
         return
       }
@@ -67,20 +70,19 @@ function RefillStaminaModal(props: Props) {
       await refillStamina(
         availableSushi?.slice(0, amountSushi).map((v) => `${v}`),
         (txHash) => {
-          toast({
-            title: 'Recover stamina transaction is executing',
-            description: (
-              <Link
-                href={`https://testnet.bscscan.com/tx/${txHash}`}
-                isExternal
-              >
-                Transaction detail <ExternalLinkIcon mx="2px" />
-              </Link>
-            ),
-            duration: 10000,
-            isClosable: true,
-            status: 'info',
-          })
+          setPopup(<Popup 
+            type='stamina'
+            content="Recover stamina transaction is executing"
+            subcontent={<Link
+              href={`https://testnet.bscscan.com/tx/${txHash}`}
+              isExternal
+            >
+              Transaction detail <ExternalLinkIcon mx="2px" />
+            </Link>}
+            actionContent="Close"
+            setIsOpen={setPopup}
+            action={() => { setPopup(null) }}
+          />)
         }
       )
       onSuccess()
@@ -89,7 +91,7 @@ function RefillStaminaModal(props: Props) {
     } finally {
       onClose()
     }
-  }, [amountSushi, onClose, onSuccess, onToggleLoading, success, toast])
+  }, [amountSushi, onClose, onSuccess, onToggleLoading, success, popup])
 
   const handleChangeAmountSushi = useCallback((_: string, value: number) => {
     setAmountSushi(value)
@@ -210,6 +212,7 @@ function RefillStaminaModal(props: Props) {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      {popup}
     </>
   )
 }

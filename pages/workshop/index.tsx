@@ -41,6 +41,7 @@ export default function WorkShop() {
   const [isLoading, setIsLoading] = useState(false)
   const inventoryRef = useRef<InventoryRef>()
   const handleTxStateChange = useTransactionState()
+  const [popup, setPopup] = useState(null)
 
   const handleGetHammerList = async () => {
     const data = await getListingIDs(false)
@@ -81,13 +82,13 @@ export default function WorkShop() {
     (item) => async () => {
       const title = `Cancel listing item in Workshop`
       const data = await cancelListingItem(item?.id, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
       })
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status)
+        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
         handleGetMyList()
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }
     },
     []
@@ -125,15 +126,15 @@ export default function WorkShop() {
         id,
         listIds,
         (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
         },
         (error) => {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
           setIsLoading(false)
         }
       )
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status)
+        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
         setIsLoading(false)
         if (isItemBoard === 'ore') {
           handleGetOreList()
@@ -143,7 +144,7 @@ export default function WorkShop() {
         return data
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }
     },
     [isItemBoard]
@@ -296,6 +297,7 @@ export default function WorkShop() {
           <BackButton />
         </div>
       </div>
+      {popup}
     </>
   )
 }

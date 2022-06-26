@@ -56,6 +56,7 @@ function ProfessionsModal(props: Props) {
   const [requireBalance, setRequireBalance] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
+  const [popup, setPopup] = useState(null)
 
   const getRequireBalanceProfession = async () => {
     const balance = await fetchRequireBalanceProfession()
@@ -83,15 +84,15 @@ function ProfessionsModal(props: Props) {
         professionNft,
         hero.heroId,
         (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
         }
       )
 
       if (data) {
         getResult(data.status)
-        handleTxStateChange(title, data.transactionHash, data.status)
+        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }
     }
     setIsLoading(false)
@@ -222,6 +223,7 @@ function ProfessionsModal(props: Props) {
           onClick={closeModal}
         ></div>
       </div>
+      {popup}
     </>
   )
 }

@@ -26,6 +26,7 @@ export default function CreateProfile({
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const handleTxStateChange = useTransactionState()
+  const [popup, setPopup] = useState(null)
 
   const handleCloseModalCreateProfile = useCallback(
     (e: any) => {
@@ -43,7 +44,7 @@ export default function CreateProfile({
       title = 'Create profile'
     }
     const status = data.status ? 1 : 0
-    handleTxStateChange(title, data.transactionHash, status)
+    handleTxStateChange(title, data.transactionHash, status, setPopup)
   }
 
   const onTransactionExecute = (txHash) => {
@@ -53,7 +54,7 @@ export default function CreateProfile({
     } else {
       title = 'Create profile'
     }
-    handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+    handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
   }
 
   const handleCreateProfile = useCallback(async () => {
@@ -74,7 +75,7 @@ export default function CreateProfile({
           setIsOpenCreateProfile(false)
           setIsLoading(false)
         } else {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
           setIsOpenCreateProfile(false)
           setIsLoading(false)
         }
@@ -102,7 +103,7 @@ export default function CreateProfile({
             setIsLoading(false)
             handleOpenTutorial(true)
           } else {
-            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
             setIsOpenCreateProfile(false)
             setIsLoading(false)
           }
@@ -201,6 +202,7 @@ export default function CreateProfile({
           )}
         </div>
       </div>
+      {popup}
     </CreateProfileCSS>
   )
 }

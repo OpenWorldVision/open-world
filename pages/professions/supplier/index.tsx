@@ -29,6 +29,7 @@ function Supplier() {
   const [typeModal, setTypeModal] = useState(TYPE_OF_MODAL.START)
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
+  const [popup, setPopup] = useState(null)
 
   const getListItemByTrait = useCallback(async () => {
     const data = await getNFTsByTrait(1)
@@ -64,13 +65,13 @@ function Supplier() {
       setIsLoading(true)
 
       const data = await makeMultiSushi(listFishBurn, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
       })
 
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status)
+        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }
 
       setIsLoading(false)
@@ -92,16 +93,16 @@ function Supplier() {
       const listSushiSell = []
       listSushiSell.push(parseInt(listSushi[0]))
       const data = await listMultiItems(listSushiSell, valueSushi, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
       })
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status)
+        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
         setTypeModal(TYPE_OF_MODAL.FINISH)
         getListSushi()
         setIsLoading(false)
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }
     },
     [getApprovedStatus, getListSushi, listSushi]
@@ -149,6 +150,7 @@ function Supplier() {
         />
       </div>
       {isLoading ? <LoadingModal /> : null}
+      {popup}
     </div>
   )
 }

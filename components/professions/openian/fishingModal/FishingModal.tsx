@@ -1,4 +1,4 @@
-import { Button, useToast } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useState } from 'react'
 import {
@@ -17,6 +17,8 @@ import { addHours, fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import Popup from '@components/Popup'
+import { useRouter } from 'next/router'
 
 type Props = {
   isOpen: boolean
@@ -36,11 +38,12 @@ function FishingModal(props: Props) {
   const [typeofModal, setTypeOfModal] = useState(TYPE_OF_MODAL.START)
   const [requireStamina, setRequireStamina] = useState(0)
   const [duration, setDuration] = useState(10)
+  const [popup, setPopup] = useState(null)
+  const router = useRouter()
 
   const [canFinish, setCanFinish] = useState(false)
   const [timeLeft, setTimeLeft] = useState<Duration>(null)
   const [loading, setLoading] = useState(true)
-  const toast = useToast()
   const handleTxStateChange = useTransactionState()
 
   const initialize = useCallback(async () => {
@@ -81,18 +84,17 @@ function FishingModal(props: Props) {
     const stamina = await getStamina()
 
     if (Number(stamina) < 49) {
-      toast({
-        title: 'Fishing Quest',
-        description:
-          "Fishing quest requires at least 49 stamina to start. You don't have enough stamina to start fishing quest.",
-        status: 'error',
-        duration: 15000,
-        isClosable: true,
-      })
+      setPopup(<Popup 
+        type='stamina'
+        content="Fishing quest requires at least 49 stamina to start. You don't have enough stamina to start fishing quest."
+        subcontent="use sushi for stamina recovery"
+        actionContent="Bye sushi"
+        setIsOpen={setPopup}
+        action={() => { router.push('foodcourt') }}
+      />)
     }
-
     return Number(stamina) >= 49
-  }, [toast])
+  }, [popup])
 
   const handleStartQuest = useCallback(async () => {
     const title = 'Start fishing quest'
@@ -109,7 +111,7 @@ function FishingModal(props: Props) {
     toggleLoadingModal(true)
 
     const fishing = await startFishing((txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
     })
     setTimeout(() => {
       toggleLoadingModal(false)
@@ -117,10 +119,10 @@ function FishingModal(props: Props) {
     if (fishing !== null) {
       setTypeOfModal(TYPE_OF_MODAL.WAITING)
       setCanFinish(false)
-      handleTxStateChange(title, fishing.transactionHash, fishing.status)
+      handleTxStateChange(title, fishing.transactionHash, fishing.status, setPopup)
     } else {
       toggleLoadingModal(false)
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
     }
   }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
 
@@ -129,14 +131,14 @@ function FishingModal(props: Props) {
     if (canFinish) {
       toggleLoadingModal(true)
       const finish = await finishFishing((txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
       })
       if (finish) {
-        handleTxStateChange(title, finish.transactionHash, finish.status)
+        handleTxStateChange(title, finish.transactionHash, finish.status, setPopup)
         updateInventory()
         setTypeOfModal(TYPE_OF_MODAL.FINISH)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }
       toggleLoadingModal(false)
     }
@@ -226,6 +228,7 @@ function FishingModal(props: Props) {
 
         <div className="overlay" onClick={toggleModal} />
       </div>
+      {popup}
     </div>
   )
 }

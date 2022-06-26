@@ -40,6 +40,7 @@ function Inventory(_, ref) {
   const [isOpenNotify, setIsOpenNotify] = useState(null)
   const [data, setData] = useState(null)
   const handleTxStateChange = useTransactionState()
+  const [popup, setPopup] = useState(null)
 
   useImperativeHandle(
     ref,
@@ -66,14 +67,14 @@ function Inventory(_, ref) {
       selectedItem?.ids?.slice(0, Number(amountItems)),
       price,
       (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
       }
     )
 
     if (result) {
-      handleTxStateChange(title, result.transactionHash, result.status)
+      handleTxStateChange(title, result.transactionHash, result.status, setPopup)
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
     }
 
     getItemsIndex()
@@ -242,6 +243,7 @@ function Inventory(_, ref) {
           </InventoryCSS>
         </ModalBody>
       </ModalContent>
+      {popup}
     </Modal>
   )
 }
