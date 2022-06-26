@@ -112,7 +112,7 @@
 }
 
 .body1{
-    padding: 20px 0px;
+    padding: 20px 60px;
     height: calc(100% - 300px);
     flex: 1.5;
 }
@@ -184,6 +184,7 @@
     flex: 1;
     padding: 0 50px;
     height: 100%;
+    margin-bottom: 300px;
 }
 
 @media (max-width: 800px) {
