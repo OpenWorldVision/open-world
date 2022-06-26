@@ -7,7 +7,7 @@ module.exports = async function (deployer, network) {
     professionProxy = '0xC5Cc7a45Dd43AE5a50bB5487C79f37fFeb0B4616'
   }
   if (network === 'harmony') {
-    professionProxy = '0x707Ea5fC3Fc92c3B802Ecb9E1428E6F4FF03282f'
+    professionProxy = '0xAD26336E8a65398Ed6A566175B132D48F9871004'
   }
   if (network === 'bsctestnet') {
     professionProxy = '0xf1FB61D2f353C8e612E201Ed8bb9Fb6FB4CC8673'

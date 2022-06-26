@@ -12,9 +12,9 @@ module.exports = async function (deployer, network) {
     itemAddress = '0xBd69df7fFcB9d7F071bb2124E1Eb8734bBDA8E0B'
   }
   if (network === 'harmony') {
-    govToken = ''
-    profileAddress = ''
-    itemAddress = ''
+    govToken = '0x27a339d9b59b21390d7209b78a839868e319301b'
+    profileAddress = '0x857c831fE590c472a222AbF62131906e5d038330'
+    itemAddress = '0xaDFd281dd7bC9de80AC2aF5811914FF87ef6e00f'
   }
   if (network === 'bsctestnet') {
     govToken = '0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B'

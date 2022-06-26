@@ -150,7 +150,7 @@ contract Profiles is AccessControlUpgradeable {
 
     profiles[profileId] = profile;
 
-    timestampStamina[msg.sender] = block.timestamp.add(85700);
+    timestampStamina[msg.sender] = block.timestamp.add(171400);
 
     emit ProfileCreated(
       profileId,
@@ -422,16 +422,19 @@ contract Profiles is AccessControlUpgradeable {
   function getStamina(address _account) public view returns (uint256 stamina) {
     uint256 timestamp = timestampStamina[_account];
     uint256 current = block.timestamp;
+    require(profileExists(_account), 'no profile found');
+    Profile memory profile = profiles[addressToIndex[_account]];
+    if (profile.profession == Profession.UNKNOWN) {
+      return MAX_STAMINA;
+    }
 
     if (timestamp == 0) {
-      require(profileExists(_account), 'no profile found');
-      Profile memory profile = profiles[addressToIndex[_account]];
       timestamp = profile.created;
     }
     if (current >= timestamp) {
       return 0;
     }
-    uint256 currentStamina = timestamp.sub(current).div(857);
+    uint256 currentStamina = timestamp.sub(current).div(1714);
     if (currentStamina > MAX_STAMINA) {
       return MAX_STAMINA;
     }
