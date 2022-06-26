@@ -1,4 +1,4 @@
-import { Button, Grid, GridItem } from '@chakra-ui/react'
+import { Button, Grid, GridItem, useDisclosure, useToast } from '@chakra-ui/react'
 import style from '@components/castle/shop/shop.module.css'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -12,6 +12,7 @@ import LoadingModal from '@components/LoadingModal'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import { getBalanceOpen } from 'utils/checkBalanceOpen'
 
 function Shop() {
   const [nftsAmount, setNftsAmount] = useState({
@@ -28,18 +29,33 @@ function Shop() {
   const [fetchPricesInterval, setFetchPricesInterval] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
+  const { onClose } = useDisclosure()
+  const toast = useToast()
 
   const mintProfessionsNFT = async (trait) => {
-    const title = 'Purchase NFT card'
     setIsLoading(true)
-    const data = await mintProfessionNFT(trait, (txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
-    })
-    if (data) {
-      handleTxStateChange(title, data.transactionHash, data.status)
-      await fetchNFTAmount()
+    const balance = parseFloat(await getBalanceOpen())
+    const NTFCardPrice = parseFloat(Object.values(nftsPrices)[trait-1])
+    if (balance >= NTFCardPrice) {
+      const title = 'Purchase NFT card'
+      const data = await mintProfessionNFT(trait, (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      })
+      if (data) {
+        handleTxStateChange(title, data.transactionHash, data.status)
+        await fetchNFTAmount()
+      } else {
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      }
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      toast({
+        title: 'Purchase NFT card transaction is failed to excute',
+        description: 'You don\'t have enough OPEN to purchase',
+        duration: 10000,
+        isClosable: true,
+        status: 'error',
+      })
+      onClose()
     }
     setIsLoading(false)
   }
