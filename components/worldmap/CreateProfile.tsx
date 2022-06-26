@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import {
@@ -9,6 +9,10 @@ import {
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import { useDispatch, useSelector } from 'react-redux'
+import { getWeb3Client } from '@lib/web3'
+import { updateIsConnected } from 'reduxActions/isConnectedAction'
+import Web3 from 'web3'
 
 const imagesIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
@@ -26,6 +30,23 @@ export default function CreateProfile({
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const handleTxStateChange = useTransactionState()
+
+  // const dispatch = useDispatch()
+  
+  // const isConnected = useSelector(
+  //   (state: any) => state.IsConnectedStore.isConnected
+  // )
+  
+  // const checkConnect = async () => {
+  //   // const provider = await detectEthereumProvider(); 
+  //   // console.log(provider, 1)
+  //   const web3Client = await getWeb3Client()
+  //   dispatch(updateIsConnected({ isConnected: !!web3Client}))
+  // }
+
+  // useEffect(() => {
+  //   checkConnect()
+  // }, [])
 
   const handleCloseModalCreateProfile = useCallback(
     (e: any) => {

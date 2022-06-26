@@ -1,33 +1,14 @@
 import Head from 'next/head'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import style from '@components/worldmap/worldMap.module.css'
 import Navigation from '@components/worldmap/Navigation'
-import { getWeb3Client } from '@lib/web3'
-import { updateIsConnected } from 'reduxActions/isConnectedAction'
-import { useDispatch, useSelector } from 'react-redux'
 
 export default function Home() {
   const transformWrapper = useRef(null)
-  const dispatch = useDispatch()
-  
-  const isConnected = useSelector(
-    (state: any) => state.IsConnectedStore.isConnected
-  )
-
-  const checkConnect = async () => {
-    if (!isConnected) {
-      const web3Client = await getWeb3Client()
-      dispatch(updateIsConnected({ isConnected: !!web3Client}))
-    }
-  }
 
   const checkWhenZoom = useCallback(() => {
     transformWrapper.current.centerView()
-  }, [])
-
-  useEffect(() => {
-    checkConnect()
   }, [])
 
   return (

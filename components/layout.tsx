@@ -8,6 +8,8 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LoadingModal from './LoadingModal'
+import { updateIsConnected } from 'reduxActions/isConnectedAction'
+import { getProfile } from 'utils/profileContract'
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -28,6 +30,14 @@ export default function Layout({ children, home }) {
   const isConnected = useSelector(
     (state: any) => state.IsConnectedStore.isConnected
   )
+  const checkConnect = async () => {
+    const _profile = await getProfile()
+    if (_profile){
+      dispatch(updateIsConnected({ isConnected: true}))
+    } else {
+      dispatch(updateIsConnected({ isConnected: false}))
+    }
+  }
 
   useEffect(() => {
     router.events.on('routeChangeStart', () => {
@@ -37,6 +47,7 @@ export default function Layout({ children, home }) {
     router.events.on('routeChangeComplete', () => {
       setIsLoading(false)
     })
+    checkConnect()
   }, [])
   return (
     <div
