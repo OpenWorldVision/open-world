@@ -21,7 +21,9 @@ export const getNFTsByTrait = async (trait) => {
       .call({ from: accounts[0] })
     const listFiltered = data.filter((item) => item !== '0')
     return listFiltered
-  } catch (error) {}
+  } catch (error) {
+    return []
+  }
 }
 
 export const setApprovedAll = async () => {

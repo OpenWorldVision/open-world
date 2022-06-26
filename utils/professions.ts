@@ -33,14 +33,18 @@ const getHeroCoreContract = async () => {
 
 // Call Methods
 export async function fetchRequireBalanceProfession(): Promise<string[]> {
-  const contract = await getProfilesContract()
-  const requireBalances = await Promise.all([
-    contract.requireBalanceBlacksmith(),
-    contract.requireBalanceSupplier(),
-    contract.requireBalanceOpenian(),
-  ])
+  try {
+    const contract = await getProfilesContract()
+    const requireBalances = await Promise.all([
+      contract.requireBalanceBlacksmith(),
+      contract.requireBalanceSupplier(),
+      contract.requireBalanceOpenian(),
+    ])
 
-  return requireBalances.map((value) => value.toString())
+    return requireBalances.map((value) => value.toString())
+  } catch (error) {
+    return ['0', '0', '0']
+  }
 }
 
 export const mintProfessionNFT = async (
@@ -71,18 +75,22 @@ export const mintProfessionNFT = async (
 }
 
 export const fetchUserProfessionNFT = async () => {
-  const contract = await getHeroCoreContract()
-  const currentAddress = await window.ethereum.selectedAddress
-  const index = await contract.balanceOf(currentAddress)
-  const nftList = []
+  try {
+    const contract = await getHeroCoreContract()
+    const currentAddress = await window.ethereum.selectedAddress
+    const heroBalance = await contract.balanceOf(currentAddress)
+    const nftList = []
 
-  for (let i = 0; i < index.toNumber(); i++) {
-    const heroId = await contract.tokenOfOwnerByIndex(currentAddress, i)
-    const trait = await contract.getTrait(heroId.toNumber())
-    nftList.push({ heroId: heroId.toNumber(), trait })
+    for (let i = 0; i < heroBalance.toNumber(); i++) {
+      const heroId = await contract.tokenOfOwnerByIndex(currentAddress, i)
+      const trait = await contract.getTrait(heroId.toNumber())
+      nftList.push({ heroId: heroId.toNumber(), trait })
+    }
+
+    return nftList
+  } catch (error) {
+    return []
   }
-
-  return nftList
 }
 
 export const activateProfession = async (
@@ -102,15 +110,23 @@ export const activateProfession = async (
 }
 
 export const fetchProfessionsNFTAmount = async () => {
-  const contract = await getHeroCoreContract()
-  const openianAmount = await contract.openianAmount()
-  const supplierAmount = await contract.supplierAmount()
-  const blacksmithAmount = await contract.blacksmithAmount()
+  try {
+    const contract = await getHeroCoreContract()
+    const openianAmount = await contract.openianAmount()
+    const supplierAmount = await contract.supplierAmount()
+    const blacksmithAmount = await contract.blacksmithAmount()
 
-  return {
-    openianAmount: openianAmount.toNumber(),
-    supplierAmount: supplierAmount.toNumber(),
-    blacksmithAmount: blacksmithAmount.toNumber(),
+    return {
+      openianAmount: openianAmount.toNumber(),
+      supplierAmount: supplierAmount.toNumber(),
+      blacksmithAmount: blacksmithAmount.toNumber(),
+    }
+  } catch (err) {
+    return {
+      openianAmount: 0,
+      supplierAmount: 0,
+      blacksmithAmount: 0,
+    }
   }
 }
 

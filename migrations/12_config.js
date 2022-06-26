@@ -54,9 +54,9 @@ module.exports = async function (deployer, network, accounts) {
   const profiles = await Profiles.at(profilesAddress)
   // await profiles.setHeroes(heroAddress)
   await profiles.setRequirementBalance(
-    '100000000000000000000',
-    '50000000000000000000000',
-    '25000000000000000000000'
+    '10000000000000000000',
+    '50000000000000000000',
+    '25000000000000000000'
   )
 
   // const item = await Item.at(itemAddress)

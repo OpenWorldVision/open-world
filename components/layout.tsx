@@ -18,9 +18,9 @@ export default function Layout({ children, home }) {
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
 
-  const isProfileExist = useSelector((state: any) => {
-    return state.ProfileStore.profile
-  })
+  // const isProfileExist = useSelector((state: any) => {
+  //   return state.ProfileStore.profile
+  // })
   const isConnected = useSelector(
     (state: any) => state.IsConnectedStore.isConnected
   )

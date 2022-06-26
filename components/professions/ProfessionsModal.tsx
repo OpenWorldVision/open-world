@@ -97,7 +97,6 @@ function ProfessionsModal(props: Props) {
     const check = nftList.some(
       (hero) => NPCList.indexOf(npc) + 1 === hero.trait
     )
-
     setHaveNFT(check)
     return check
   }, [npc])
