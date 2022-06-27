@@ -12,6 +12,6 @@ export const getOpenBalance = async (formatted: boolean) => {
     if (formatted) {
       return Number(utils.formatEther(balance)).toFixed(2)
     }
-    return Number(utils.formatEther(balance))
+    return utils.formatEther(balance)
   } catch (err) {}
 }
