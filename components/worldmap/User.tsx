@@ -32,13 +32,15 @@ export default function User() {
   const profile = useSelector((state: any) => state.ProfileStore.profile)
   const [staminaPoint, setStaminaPoint] = useState(0)
   const inventoryRef = useRef<InventoryRef>()
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch()
 
   const getDataProfile = useCallback(async () => {
+    setLoading(true)
     const _profile = await getProfile()
     dispatch(setProfile({ profile: _profile }))
-
+    setLoading(false)
     switch (_profile?._profession) {
       case '1':
         setCareer('Openian')
@@ -83,6 +85,10 @@ export default function User() {
   const handleClickProfile = useCallback(() => {
     setIsOpenUserInfo(true)
   }, [])
+
+  if (loading) {
+    return null
+  }
 
   return (
     <UserCSS>
