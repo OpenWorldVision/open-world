@@ -61,9 +61,12 @@ export default function User() {
   }
 
   const handleGetStamina = useCallback(async () => {
-    const stamina = await getStamina()
-    if (stamina) {
-      setStaminaPoint(stamina)
+    const career = profile._profession
+    if (career !== '0' ) {
+      const stamina = await getStamina()
+      if (stamina) {
+        setStaminaPoint(stamina)
+      }
     }
   }, [])
 
