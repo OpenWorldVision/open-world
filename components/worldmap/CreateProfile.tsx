@@ -177,7 +177,7 @@ function CreateProfile({
                   placeholder="Enter Name Here"
                 />
               )}
-              {!isNameValid && (
+              {!isNameValid && !isEdit && (
                 <div
                   css={{
                     width: '100%',

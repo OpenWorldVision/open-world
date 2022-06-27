@@ -71,6 +71,10 @@ export default function User() {
     getDataProfile()
     handleGetStamina()
     getBalance()
+    const getBalanceInterval = setInterval(getBalance, 60000)
+    return () => {
+      clearInterval(getBalanceInterval)
+    }
   }, [])
   const handleOpenTutorial = useCallback(() => {
     setIsOpenTutorial(true)
@@ -207,7 +211,7 @@ export default function User() {
           balance={balance}
         />
 
-        {(!profile || isOpenCreateProfile) && (
+        {(!profile || isOpenCreateProfile) && !isOpenTutorial && (
           <CreateProfile
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             getDataProfile={getDataProfile}
