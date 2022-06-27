@@ -54,14 +54,10 @@ function ProfessionsModal(props: Props) {
   const [currentNpcText, setCurrentNpcText] = useState([])
   const [haveNFT, setHaveNFT] = useState(false)
   const [canActivate, setCanActivate] = useState(false)
+  const [haveRequireBalance, setHaveRequireBalance] = useState(false)
   const [requireBalance, setRequireBalance] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
-
-  const getRequireBalanceProfession = async () => {
-    const balance = await fetchRequireBalanceProfession()
-    setRequireBalance(balance)
-  }
 
   const onActivateProfession = useCallback(async () => {
     const title = 'Activate career'
@@ -105,35 +101,32 @@ function ProfessionsModal(props: Props) {
     setCurrentNpcText(npcText[NPCList.indexOf(npc)])
   }
 
-  const checkIfCanActive = useCallback(async () => {
-    if (requireBalance.length === 0) {
-      return
-    }
-    const hasHeroNFT = await checkIfHasNTF()
-    const userBalance = await getUserBalance()
-    const _requireBalance =
-      npc === 'openian'
-        ? requireBalance[2]
-        : npc === 'supplier'
-        ? requireBalance[1]
-        : requireBalance[0]
-
-    setCanActivate(
-      hasHeroNFT &&
-        userBalance >= parseFloat(ethers.utils.formatEther(_requireBalance))
-    )
-  }, [checkIfHasNTF, npc, requireBalance])
-
-  const initialize = async () => {
-    await getRequireBalanceProfession()
-    await checkIfCanActive()
-    toggleLoadingModal(false)
-  }
-
   useEffect(() => {
-    getCurrentNpcText()
-    initialize()
-  }, [npc])
+    ;(async () => {
+      const requireBalance = await fetchRequireBalanceProfession()
+      setRequireBalance(requireBalance)
+      getCurrentNpcText()
+      if (requireBalance.length === 0) {
+        return
+      }
+      const hasHeroNFT = await checkIfHasNTF()
+      const userBalance = await getUserBalance()
+      const _requireBalance =
+        npc === 'openian'
+          ? requireBalance[2]
+          : npc === 'supplier'
+          ? requireBalance[1]
+          : requireBalance[0]
+      setCanActivate(
+        hasHeroNFT &&
+          userBalance >= parseFloat(ethers.utils.formatEther(_requireBalance))
+      )
+      setHaveRequireBalance(
+        userBalance >= parseFloat(ethers.utils.formatEther(_requireBalance))
+      )
+      toggleLoadingModal(false)
+    })()
+  }, [])
 
   const displayRequireBalance = useMemo(() => {
     if (requireBalance.length === 0) {
@@ -150,7 +143,6 @@ function ProfessionsModal(props: Props) {
 
   return (
     <>
-      {/* Loading modal */}
       {isLoading && <LoadingModal />}
 
       <div
@@ -214,7 +206,7 @@ function ProfessionsModal(props: Props) {
 
                   <Button
                     className={`${style.btn} ${style.acceptBtn} ${
-                      canActivate && style.active
+                      haveRequireBalance && style.active
                     } click-cursor`}
                   >
                     <span>Have {displayRequireBalance} $OPEN</span>
@@ -236,7 +228,7 @@ function ProfessionsModal(props: Props) {
         <div
           className={`${inheritStyle.backBtn} click-cursor`}
           onClick={closeModal}
-        ></div>
+        />
       </div>
     </>
   )

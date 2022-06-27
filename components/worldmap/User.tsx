@@ -207,20 +207,13 @@ export default function User() {
           balance={balance}
         />
 
-        {profile === false && (
+        {(!profile || isOpenCreateProfile) && (
           <CreateProfile
             setIsOpenCreateProfile={setIsOpenCreateProfile}
             getDataProfile={getDataProfile}
             handleOpenTutorial={handleOpenTutorial}
-          />
-        )}
-        {isOpenCreateProfile && (
-          <CreateProfile
+            isEdit={isOpenCreateProfile}
             profile={profile}
-            isEdit={true}
-            setIsOpenCreateProfile={setIsOpenCreateProfile}
-            getDataProfile={getDataProfile}
-            handleOpenTutorial={handleOpenTutorial}
           />
         )}
 

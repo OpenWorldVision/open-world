@@ -13,7 +13,7 @@ import LoadingModal from '@components/LoadingModal'
 
 const imagesIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
-export default function CreateProfile({
+function CreateProfile({
   setIsOpenCreateProfile,
   isEdit = false,
   profile = null,
@@ -207,6 +207,8 @@ export default function CreateProfile({
     </CreateProfileCSS>
   )
 }
+
+export default CreateProfile
 
 const CreateProfileCSS = styled.div({
   '.modal-create-profile': {
