@@ -13,7 +13,7 @@ import {
 
 import styles from '@components/entry/entry.module.css'
 import { chainName } from 'utils/chainName'
-import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
+import { getOpenBalance } from '../../utils/checkBalanceOpen'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import Head from 'next/head'
@@ -123,8 +123,8 @@ export default function Entry() {
     }
   }, [])
   const checkTokenWasAdded = async () => {
-    const balance = await getBalanceOfOpen()
-    if (parseFloat(balance) === 0) {
+    const balance = await getOpenBalance(false)
+    if (!balance) {
       const tokenAddress = '0x27a339d9B59b21390d7209b78a839868E319301B'
       const tokenSymbol = 'OPEN'
       const tokenDecimals = 18

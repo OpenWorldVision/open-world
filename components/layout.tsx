@@ -13,20 +13,14 @@ import { getProfile } from 'utils/profileContract'
 
 export const siteTitle = 'Open World #Metaverse'
 
-const variants = {
-  hidden: { opacity: 0, x: -200, y: 0 },
-  enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 0, x: 0, y: -100 },
-}
-
 export default function Layout({ children, home }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
 
-  const isProfileExist = useSelector((state: any) => {
-    return state.ProfileStore.profile
-  })
+  // const isProfileExist = useSelector((state: any) => {
+  //   return state.ProfileStore.profile
+  // })
   const isConnected = useSelector(
     (state: any) => state.IsConnectedStore.isConnected
   )
@@ -54,7 +48,6 @@ export default function Layout({ children, home }) {
       style={{
         cursor: 'url(/images/worldmap/CursorDefault.webp), auto !important',
       }}
-      className={`${styles.container} ${!isLoading && styles.loaded}`}
     >
       <Head>
         <link rel="icon" href="/favicon.ico" />
