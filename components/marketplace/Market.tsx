@@ -210,14 +210,14 @@ export default function Market() {
                             <div className={styles.itemInfo}>
                                 <div>
                                     <div>#{value.id} HALLEN</div>
-                                    <img src={`/images/marketplace/items/${value.trait}.png`} alt="img" />
+                                    <img src={`/images/marketplace/items/${value.trait}.webp`} alt="img" />
                                 </div>
                                 <div>{value.price} OPEN</div>
                             </div>
                             {nav !== 4 ? <div className={styles.itemBuy}>
-                                <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.png" alt="img" />
+                                <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.webp" alt="img" />
                             </div> : <div className={styles.itemCancel}>
-                                {/* <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.png" alt="img" /> */}
+                                {/* <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.webp" alt="img" /> */}
                                 <div onClick={() => handleCancel(value)} className='click-cursor'>CANCEL</div>
                             </div>}
                         </div>
@@ -228,14 +228,14 @@ export default function Market() {
                 <div className={styles.pagination}>
                     <img 
                         onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                        src="./images/marketplace/triangle-left.png" 
+                        src="./images/marketplace/triangle-left.webp" 
                         alt="img"
                         className='click-cursor' 
                     />
                     <div>{page < 10 ? `0${page}` : page}</div>
                     <img
                         onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                        src="./images/marketplace/triangle-right.png" 
+                        src="./images/marketplace/triangle-right.webp" 
                         alt="img" 
                         className='click-cursor' 
                     />
@@ -243,7 +243,7 @@ export default function Market() {
             </div>
             <Link href='/'>
                 <a className={styles.back}>
-                    <img src="./images/marketplace/back.png" alt="img" />
+                    <img src="./images/marketplace/back.webp" alt="img" />
                 </a>
             </Link>
         </div>

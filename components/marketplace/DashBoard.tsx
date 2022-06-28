@@ -174,7 +174,7 @@ export default function DashBoard() {
                                 <div onClick={() => {setSelected(value)}} className={styles.itemInfo + ' click-cursor'}>
                                     <div>
                                         <div>#{value.id} HALLEN</div>
-                                        <img src={`./images/marketplace/items/${value.trait}.png`} alt="img" />
+                                        <img src={`./images/marketplace/items/${value.trait}.webp`} alt="img" />
                                     </div>
                                 </div>
                             </div>
@@ -185,7 +185,7 @@ export default function DashBoard() {
                     <div className={styles.sellerBoard}>
                         <div className={styles.header}>Selected Item:</div>
                         {selected ? 
-                            <img className={styles.selectedImage} src={`./images/marketplace/items/${selected.trait}.png`} alt="img" /> 
+                            <img className={styles.selectedImage} src={`./images/marketplace/items/${selected.trait}.webp`} alt="img" /> 
                             : <div className={styles.selectedImageFrame} />
                         }
                         <div className={styles.priceInput}>
@@ -195,7 +195,7 @@ export default function DashBoard() {
                         </div>
                         <div className={styles.containerTotal}>Total price: <span>{selected ? priceInput : 0}</span> OPEN</div>
                         {(priceInput > 0) && selected && <div className={styles.btnSell}>
-                            <img onClick={() => {handleSell()}} className='click-cursor' src="./images/marketplace/sell.png" alt="img" />
+                            <img onClick={() => {handleSell()}} className='click-cursor' src="./images/marketplace/sell.webp" alt="img" />
                         </div>}
                     </div>
                 </div>
@@ -205,21 +205,21 @@ export default function DashBoard() {
                     <img 
                         className='click-cursor'
                         onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                        src="/images/marketplace/triangle-left.png" 
+                        src="/images/marketplace/triangle-left.webp" 
                         alt="img" 
                     />
                     <div>{page < 10 ? `0${page}` : page}</div>
                     <img
                         className='click-cursor'
                         onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                        src="./images/marketplace/triangle-right.png" 
+                        src="./images/marketplace/triangle-right.webp" 
                         alt="img" 
                     />
                 </div>
             </div>
             <Link href='/'>
                 <a className={styles.back}>
-                    <img className='click-cursor' src="./images/marketplace/back.png" alt="img" />
+                    <img className='click-cursor' src="./images/marketplace/back.webp" alt="img" />
                 </a>
             </Link>
         </div>

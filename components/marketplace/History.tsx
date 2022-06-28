@@ -56,7 +56,7 @@ export default function History() {
                     <img
                         onClick={() => {setIsOpenNotify(null)}}
                         className={styles.notifyConfirm + ' click-cursor'}
-                        src="/images/marketplace/confirm-notify.png" 
+                        src="/images/marketplace/confirm-notify.webp" 
                         alt="img" 
                     />
                 </div>
@@ -124,7 +124,7 @@ export default function History() {
                                     <div>{value.price} OPEN</div>
                                     {/* <div>SELLING</div> */}
                                     <div>
-                                        <img className='click-cursor' onClick={() => {handleCancel(value.id)}} src="./images/marketplace/history-cancel.png" alt="img" />
+                                        <img className='click-cursor' onClick={() => {handleCancel(value.id)}} src="./images/marketplace/history-cancel.webp" alt="img" />
                                     </div>
                                 </div>
                             ))}
@@ -135,20 +135,20 @@ export default function History() {
                     <div className={styles.pagination}>
                         <img 
                             onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                            src="./images/marketplace/triangle-left.png" 
+                            src="./images/marketplace/triangle-left.webp" 
                             alt="img" 
                         />
                         <div>{page < 10 ? `0${page}` : page}</div>
                         <img
                             onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                            src="./images/marketplace/triangle-right.png" 
+                            src="./images/marketplace/triangle-right.webp" 
                             alt="img" 
                         />
                     </div>
                 </div>
                 <Link href='/'>
                     <a className={styles.back}>
-                        <img src="./images/marketplace/back.png" alt="img" />
+                        <img src="./images/marketplace/back.webp" alt="img" />
                     </a>
                 </Link>
             </div>
