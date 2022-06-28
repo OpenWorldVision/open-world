@@ -44,6 +44,7 @@ export default function Home() {
             <div className={style.worldMapContainer}>
               <Navigation />
             </div>
+            {/* @ts-ignore */}
             <Shop ref={shopRef} />
           </TransformComponent>
         </TransformWrapper>
