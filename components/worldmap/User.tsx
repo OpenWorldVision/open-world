@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import RefillStaminaModal from './RefillStaminaModal'
 import { PlusSquareIcon } from '@chakra-ui/icons'
-import { getBalanceOpen } from 'utils/checkBalanceOpen'
+import { getOpenBalance } from 'utils/checkBalanceOpen'
 
 export default function User() {
   const [balance, setBalance] = useState(null)
@@ -32,13 +32,15 @@ export default function User() {
   const profile = useSelector((state: any) => state.ProfileStore.profile)
   const [staminaPoint, setStaminaPoint] = useState(0)
   const inventoryRef = useRef<InventoryRef>()
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch()
 
   const getDataProfile = useCallback(async () => {
+    setLoading(true)
     const _profile = await getProfile()
     dispatch(setProfile({ profile: _profile }))
-
+    setLoading(false)
     switch (_profile?._profession) {
       case '1':
         setCareer('Openian')
@@ -56,7 +58,7 @@ export default function User() {
   }, [dispatch])
 
   const getBalance = async () => {
-    const balance = await getBalanceOpen()
+    const balance = await getOpenBalance(true)
     setBalance(balance)
   }
 
@@ -71,6 +73,10 @@ export default function User() {
     getDataProfile()
     handleGetStamina()
     getBalance()
+    const getBalanceInterval = setInterval(getBalance, 60000)
+    return () => {
+      clearInterval(getBalanceInterval)
+    }
   }, [])
   const handleOpenTutorial = useCallback(() => {
     setIsOpenTutorial(true)
@@ -79,6 +85,10 @@ export default function User() {
   const handleClickProfile = useCallback(() => {
     setIsOpenUserInfo(true)
   }, [])
+
+  if (loading) {
+    return null
+  }
 
   return (
     <UserCSS>
@@ -207,22 +217,13 @@ export default function User() {
           balance={balance}
         />
 
-        {profile === false && (
+        {(!profile || isOpenCreateProfile) && !isOpenTutorial && (
           <CreateProfile
             setIsOpenCreateProfile={setIsOpenCreateProfile}
-            isOpenCreateProfile={isOpenCreateProfile}
             getDataProfile={getDataProfile}
             handleOpenTutorial={handleOpenTutorial}
-          />
-        )}
-        {isOpenCreateProfile && (
-          <CreateProfile
+            isEdit={isOpenCreateProfile}
             profile={profile}
-            isEdit={true}
-            setIsOpenCreateProfile={setIsOpenCreateProfile}
-            isOpenCreateProfile={isOpenCreateProfile}
-            getDataProfile={getDataProfile}
-            handleOpenTutorial={handleOpenTutorial}
           />
         )}
 
