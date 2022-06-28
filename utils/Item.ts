@@ -81,7 +81,7 @@ export async function buyFirstHammer(
 ) {
   const contract = await getItemContract()
   const openContract = await getOpenWorldContract()
-  const currentAddress = await window.ethereum.selectedAddress
+  const currentAddress = await contract.signer.getAddress()
 
   const allowance: BigNumber = await openContract.allowance(
     currentAddress,
