@@ -19,6 +19,7 @@ function MenuItem({ type, onClick }: MenuItemProps) {
       alignItems="center"
       flexDirection="column"
       onClick={onClick}
+      cursor="url(/images/worldmap/SelectCursor.webp), auto !important"
     >
       <Image
         src={`images/worldmap/${type}-icon.webp`}
