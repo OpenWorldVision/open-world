@@ -15,6 +15,8 @@ contract Item is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
   IERC20 public govToken;
 
   OWItem[] private tokens;
+  mapping(address => bool) private boughtHammer;
+  uint256 public hammerPrice;
 
   function initialize(address _token) public initializer {
     __ERC721_init('OpenWorld Hero', 'OWH');
@@ -72,5 +74,19 @@ contract Item is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
       }
     }
     return _ids;
+  }
+
+  function buyFirstHammer() public {
+    require(boughtHammer[msg.sender] == false, "You've bought hammer");
+    require(
+      govToken.balanceOf(msg.sender) >= hammerPrice,
+      'No money no hammer'
+    );
+
+    boughtHammer[msg.sender] = true;
+    uint256 tokenId = tokens.length;
+    tokens.push(OWItem(3));
+    _mint(msg.sender, tokenId);
+    emit NewItem(tokenId, msg.sender);
   }
 }
