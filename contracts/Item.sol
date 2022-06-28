@@ -76,6 +76,10 @@ contract Item is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
     return _ids;
   }
 
+  function isBoughtHammer(address _account) public view returns (bool _bought) {
+    _bought = boughtHammer[_account];
+  }
+
   function buyFirstHammer() public {
     require(boughtHammer[msg.sender] == false, "You've bought hammer");
     require(
@@ -88,5 +92,10 @@ contract Item is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
     tokens.push(OWItem(3));
     _mint(msg.sender, tokenId);
     emit NewItem(tokenId, msg.sender);
+  }
+
+  function setHammerPrice(uint256 _price) public {
+    require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), 'Not admin');
+    hammerPrice = _price;
   }
 }

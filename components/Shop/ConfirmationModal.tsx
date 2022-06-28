@@ -15,9 +15,14 @@ import {
   ModalFooter,
   ModalOverlay,
 } from '@chakra-ui/react'
+import LoadingModal from '@components/LoadingModal'
 import Button from '@components/theme/components/Button'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
 import { forwardRef, useImperativeHandle, useState, useCallback } from 'react'
+import { buyFirstHammer } from 'utils/Item'
 
 export type ConfirmationModalRef = {
   open: () => void
@@ -27,6 +32,8 @@ export type ConfirmationModalRef = {
 function ConfirmationModal(_, ref) {
   const { isOpen, onToggle } = useDisclosure()
   const [buyAmount, setBuyAmount] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const handleTxStateChange = useTransactionState()
 
   useImperativeHandle(
     ref,
@@ -40,6 +47,14 @@ function ConfirmationModal(_, ref) {
   const handleChangeBuyAmount = useCallback((_, value: number) => {
     setBuyAmount(value)
   }, [])
+
+  const handleConfirm = useCallback(async () => {
+    setLoading(true)
+    await buyFirstHammer((hash) => {
+      handleTxStateChange('Buy first hammer', hash, TRANSACTION_STATE.WAITING)
+    })
+    setLoading(false)
+  }, [handleTxStateChange])
 
   return (
     <Modal isOpen={isOpen} onClose={onToggle} isCentered>
@@ -73,6 +88,7 @@ function ConfirmationModal(_, ref) {
               min={1}
               max={2}
               onChange={handleChangeBuyAmount}
+              isDisabled
             >
               <NumberInputField />
               <NumberInputStepper>
@@ -91,7 +107,9 @@ function ConfirmationModal(_, ref) {
           </Box>
         </ModalBody>
         <ModalFooter display="flex" alignItems="center" justifyContent="center">
-          <Button>Confirm</Button>
+          <Button onClick={handleConfirm} isLoading={loading}>
+            Confirm
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

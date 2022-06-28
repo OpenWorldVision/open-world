@@ -51,12 +51,13 @@ module.exports = async function (deployer, network, accounts) {
   // await hero.setHeroPrice(2, '5000000000000000000000')
   // await hero.setHeroPrice(3, '2000000000000000000000')
 
-  const profiles = await Profiles.at(profilesAddress)
+  // const profiles = await Profiles.at(profilesAddress)
   // await profiles.setHeroes(heroAddress)
-  await profiles.setRequirementBalance('0', '0', '0')
+  // await profiles.setRequirementBalance('0', '0', '0')
 
   // const item = await Item.at(itemAddress)
   // const PROFESSION_OPERATOR = await item.PROFESSION_OPERATOR()
+  // await item.setHammerPrice('150000000000000000000')
   // await item.grantRole(PROFESSION_OPERATOR, accounts[0])
   // await item.grantRole(PROFESSION_OPERATOR, professionProxy)
   // for (let i = 0; i < 50; i++) {

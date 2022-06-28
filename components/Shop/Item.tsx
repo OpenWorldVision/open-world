@@ -1,10 +1,25 @@
 import { Text, Box, Image } from '@chakra-ui/react'
 import Button from '@components/theme/components/Button'
+import { utils } from 'ethers'
+import { useState, useEffect } from 'react'
+import { getHammerPrice, isBoughtHammer } from 'utils/Item'
 
 type Props = {
   onBuy: () => void
 }
 function Item({ onBuy }: Props) {
+  const [price, setPrice] = useState('0')
+  const [isBought, setIsBought] = useState(true)
+
+  useEffect(() => {
+    ;(async () => {
+      const _price = await getHammerPrice()
+      setPrice(utils.formatEther(_price))
+      const _isBought = await isBoughtHammer()
+      setIsBought(_isBought)
+    })()
+  }, [])
+
   return (
     <Box
       display="flex"
@@ -16,7 +31,7 @@ function Item({ onBuy }: Props) {
       mt={4}
       mb={4}
     >
-      <Box bgColor="white" p={0.4} borderWidth={2} minW={68}>
+      <Box bgColor="white" p={0.4} borderWidth={2} minW={68} mr={1}>
         <Image
           src="/images/shop/icon-sushi-1.webp"
           width={68}
@@ -35,16 +50,27 @@ function Item({ onBuy }: Props) {
           necessary tools for mining, made of black rock in the steep mountains.
         </Text>
       </Box>
-      <Box p="5" alignItems="flex-end" display="flex" flexDirection="column">
-        <Text fontSize={12}>Days limit: 2</Text>
-        <Box bgColor="#D9D9D9" p="8px 22px" borderRadius={10} mt={2}>
-          <Text fontWeight="medium" fontSize={14}>
-            Price 150
-          </Text>
-        </Box>
+
+      <Box
+        bgColor="#D9D9D9"
+        p="8px 16px"
+        borderRadius={10}
+        mt={2}
+        minW={110}
+        mr={1}
+      >
+        <Text fontWeight="medium" fontSize={14}>
+          Price {price}
+        </Text>
       </Box>
-      <Button bgColor="#472805" color="white" onClick={onBuy}>
-        Buy
+
+      <Button
+        bgColor="#472805"
+        color="white"
+        onClick={onBuy}
+        disabled={isBought}
+      >
+        {isBought ? 'Sold Out' : 'Buy'}
       </Button>
     </Box>
   )
