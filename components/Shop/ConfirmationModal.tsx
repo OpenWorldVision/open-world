@@ -54,7 +54,8 @@ function ConfirmationModal(_, ref) {
       handleTxStateChange('Buy first hammer', hash, TRANSACTION_STATE.WAITING)
     })
     setLoading(false)
-  }, [handleTxStateChange])
+    onToggle()
+  }, [handleTxStateChange, onToggle])
 
   return (
     <Modal isOpen={isOpen} onClose={onToggle} isCentered>
