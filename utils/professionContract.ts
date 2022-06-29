@@ -86,7 +86,7 @@ export const startMining = async (
 ) => {
   const contract = await getProfessionContract()
   const hammerList = await fetchAmountItemByTrait(3)
-  if (hammerList?.length <= 1) {
+  if (hammerList?.length < 1) {
     return
   }
   try {

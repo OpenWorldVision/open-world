@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import style from './Mining.module.css'
 import { Button, useToast } from '@chakra-ui/react'
 
@@ -129,7 +129,11 @@ export default function MiningModal(props: Props) {
     } finally {
       toggleLoadingModal(false)
     }
-  }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
+  }, [
+    checkRequirementBeforeStartQuest,
+    handleTxStateChange,
+    toggleLoadingModal,
+  ])
 
   const handleFinish = useCallback(async () => {
     const title = 'Finish mining quest'
