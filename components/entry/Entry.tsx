@@ -17,6 +17,8 @@ import { getOpenBalance } from '../../utils/checkBalanceOpen'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import Head from 'next/head'
+import { updateIsOpenEntry } from 'reduxActions/isOpenEntryAction'
+import { getProfile } from 'utils/profileContract'
 
 export default function Entry() {
   const [playMusic, setPlayMusic] = useState(false)
@@ -47,6 +49,7 @@ export default function Entry() {
                 setCheckIsConnect(true)
               })
               .catch(() => {
+                setCheckIsConnect(false)
                 dispatch(updateIsConnected({ isConnected: false }))
               })
           } else {
@@ -82,6 +85,7 @@ export default function Entry() {
               })
               .catch(() => {
                 dispatch(updateIsConnected({ isConnected: false }))
+                setCheckIsConnect(false)
               })
           }
         }
@@ -162,8 +166,9 @@ export default function Entry() {
     }
   }
 
-  const handleClickPlay = () => {
-    if (checkIsConnect) {
+  const handleClickPlay = async () => {
+    const _profile = await getProfile()
+    if (_profile) {
       dispatch(updateIsConnected({ isConnected: true }))
     }
   }

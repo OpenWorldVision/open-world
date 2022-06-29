@@ -30,6 +30,23 @@ function CreateProfile({
   const router = useRouter()
   const handleTxStateChange = useTransactionState()
 
+  // const dispatch = useDispatch()
+  
+  // const isConnected = useSelector(
+  //   (state: any) => state.IsConnectedStore.isConnected
+  // )
+  
+  // const checkConnect = async () => {
+  //   // const provider = await detectEthereumProvider(); 
+  //   // console.log(provider, 1)
+  //   const web3Client = await getWeb3Client()
+  //   dispatch(updateIsConnected({ isConnected: !!web3Client}))
+  // }
+
+  // useEffect(() => {
+  //   checkConnect()
+  // }, [])
+
   const handleCloseModalCreateProfile = useCallback(
     (e: any) => {
       if (e.target !== e.currentTarget) return
