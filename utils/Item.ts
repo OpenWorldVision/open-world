@@ -1,5 +1,6 @@
 import { getAddresses } from 'constants/addresses'
-import { ethers } from 'ethers'
+import { BigNumber, ethers, utils } from 'ethers'
+import { getOpenWorldContract } from './openWorldContract'
 
 const itemContract = {
   addressBSC: '0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492',
@@ -54,4 +55,52 @@ export async function fetchUserInventoryItemAmount(): Promise<
     }))
   )
   return results
+}
+
+export async function getHammerPrice() {
+  const contract = await getItemContract()
+  try {
+    return await contract.hammerPrice()
+  } catch (error) {
+    return 0
+  }
+}
+
+export async function isBoughtHammer() {
+  const contract = await getItemContract()
+  const account = await contract.signer.getAddress()
+  try {
+    return await contract.isBoughtHammer(account)
+  } catch (error) {
+    return true
+  }
+}
+
+export async function buyFirstHammer(
+  onTransactionExecute: (hash: string) => void
+) {
+  const contract = await getItemContract()
+  const openContract = await getOpenWorldContract()
+  const currentAddress = await contract.signer.getAddress()
+
+  const allowance: BigNumber = await openContract.allowance(
+    currentAddress,
+    contract.address
+  )
+
+  if (allowance.lt(utils.parseEther('1000000'))) {
+    await openContract.approve(
+      contract.address,
+      utils.parseEther('1000000').toString()
+    )
+  }
+  try {
+    const tx = await contract.buyFirstHammer()
+    onTransactionExecute(tx.hash)
+    const receipt = await tx.wait()
+
+    return receipt
+  } catch (e) {
+    return null
+  }
 }
