@@ -1,19 +1,19 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import {
   changePictureProfile,
-  crateProfile,
+  createProfile,
   checkNameTaken,
 } from 'utils/profileContract'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import LoadingModal from '@components/LoadingModal'
 
 const imagesIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
-export default function CreateProfile({
-  isOpenCreateProfile,
+function CreateProfile({
   setIsOpenCreateProfile,
   isEdit = false,
   profile = null,
@@ -22,7 +22,10 @@ export default function CreateProfile({
 }) {
   const [heroSelector, setHeroSelector] = useState(profile?._picId || 1)
   const [nameValue, setNameValue] = useState('')
-  const [isNameValid, setIsNameValid] = useState(true)
+  const isNameValid = useMemo(
+    () => nameValue.length >= 3 && nameValue.length <= 16,
+    [nameValue.length]
+  )
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const handleTxStateChange = useTransactionState()
@@ -32,38 +35,40 @@ export default function CreateProfile({
       if (e.target !== e.currentTarget) return
       setIsOpenCreateProfile(false)
     },
-    [isOpenCreateProfile]
+    [setIsOpenCreateProfile]
   )
 
-  const onTransactionComplete = (data) => {
-    let title
-    if (isEdit && profile._picId != heroSelector) {
-      title = 'Update profile'
-    } else {
-      title = 'Create profile'
-    }
-    const status = data.status ? 1 : 0
-    handleTxStateChange(title, data.transactionHash, status)
-  }
+  const onTransactionComplete = useCallback(
+    (data) => {
+      const title =
+        isEdit && profile?._picId != heroSelector
+          ? 'Update profile'
+          : 'Create profile'
 
-  const onTransactionExecute = (txHash) => {
-    let title
-    if (isEdit && profile._picId != heroSelector) {
-      title = 'Update profile'
-    } else {
-      title = 'Create profile'
-    }
-    handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
-  }
+      const status = data.status ? 1 : 0
+      handleTxStateChange(title, data.transactionHash, status)
+    },
+    [handleTxStateChange, heroSelector, isEdit, profile?._picId]
+  )
+
+  const onTransactionExecute = useCallback(
+    (txHash) => {
+      const title =
+        isEdit && profile?._picId != heroSelector
+          ? 'Update profile'
+          : 'Create profile'
+
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+    },
+    [handleTxStateChange, heroSelector, isEdit, profile?._picId]
+  )
 
   const handleCreateProfile = useCallback(async () => {
-    let title
     setIsLoading(true)
-    if (isEdit && profile._picId != heroSelector) {
+    if (isEdit && profile?._picId != heroSelector) {
       if (heroSelector) {
-        title = 'Update profile'
         const isChangePictureProfile = await changePictureProfile(
-          Number(profile._id),
+          Number(profile?._id),
           heroSelector,
           onTransactionExecute,
           onTransactionComplete
@@ -71,139 +76,139 @@ export default function CreateProfile({
         if (isChangePictureProfile) {
           router.push('/')
           getDataProfile()
-          setIsOpenCreateProfile(false)
-          setIsLoading(false)
         } else {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
-          setIsOpenCreateProfile(false)
-          setIsLoading(false)
+          handleTxStateChange(
+            'Update profile',
+            '',
+            TRANSACTION_STATE.NOT_EXECUTED
+          )
         }
+        setIsOpenCreateProfile(false)
+        setIsLoading(false)
       }
     } else {
       if (heroSelector && nameValue && isNameValid) {
-        title = 'Create profile'
         const isNameTaken = await checkNameTaken(nameValue)
-        if (nameValue.length <= 3 || nameValue.length >= 16) {
-          setIsNameValid(false)
-        } else if (isNameTaken) {
-          setIsNameValid(false)
-        } else {
-          const isCreateProfile = await crateProfile(
-            nameValue,
-            heroSelector,
-            onTransactionExecute,
-            onTransactionComplete
-          )
-
-          if (isCreateProfile) {
-            router.push('/')
-            getDataProfile()
-            setIsOpenCreateProfile(false)
-            setIsLoading(false)
-            handleOpenTutorial(true)
-          } else {
-            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
-            setIsOpenCreateProfile(false)
-            setIsLoading(false)
-          }
+        if (isNameTaken) {
+          setIsLoading(false)
+          return
         }
+
+        const isCreateProfile = await createProfile(
+          nameValue,
+          heroSelector,
+          onTransactionExecute,
+          onTransactionComplete
+        )
+
+        if (isCreateProfile) {
+          router.push('/')
+          getDataProfile()
+          handleOpenTutorial(true)
+        } else {
+          handleTxStateChange(
+            'Create profile',
+            '',
+            TRANSACTION_STATE.NOT_EXECUTED
+          )
+        }
+
+        setIsOpenCreateProfile(false)
+        setIsLoading(false)
       }
     }
-  }, [isEdit, heroSelector, nameValue, isNameValid])
+  }, [
+    isEdit,
+    profile?._picId,
+    profile?._id,
+    heroSelector,
+    onTransactionExecute,
+    onTransactionComplete,
+    router,
+    getDataProfile,
+    setIsOpenCreateProfile,
+    handleTxStateChange,
+    nameValue,
+    isNameValid,
+    handleOpenTutorial,
+  ])
+
+  const canCreateOrUpdate =
+    (heroSelector && isNameValid) || (isEdit && profile?._picId != heroSelector)
 
   return (
     <CreateProfileCSS>
       <div className="modal-create-profile">
+        {isLoading && <LoadingModal />}
         <div className="modal-content">
-          {isLoading ? (
-            <div className="loading">
-              <div className="loading-content">Loading ...</div>
-            </div>
-          ) : (
-            <div
-              className="body"
-              onClick={(e) => {
-                handleCloseModalCreateProfile(e)
-              }}
-            >
-              <div className="body-top">
-                <div className="container-items">
-                  {imagesIndex.map((value) => (
-                    <button
-                      className={`${
-                        value === heroSelector && 'select'
-                      } click-cursor`}
-                      onClick={() => {
-                        setHeroSelector(value)
-                      }}
-                      key={value}
-                    >
-                      <img
-                        src={`/images/profile/hero/${value}.webp`}
-                        alt="img"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="body-bottom">
-                <div className="avatar-selected">
-                  <img
-                    src={`/images/profile/hero/${heroSelector || 1}.webp`}
-                    alt="img"
-                  />
-                </div>
-                {!isEdit && (
-                  <input
-                    onChange={(e) => {
-                      setNameValue(e.target.value)
-                    }}
-                    onClick={(e) => {
-                      setIsNameValid(true)
-                    }}
-                    value={nameValue}
-                    className="input-name"
-                    type="text"
-                    placeholder="Enter Name Here"
-                  />
-                )}
-                {!isNameValid && (
-                  <div
-                    css={{
-                      width: '100%',
-                      textAlign: 'center',
-                      color: 'white',
-                      marginTop: '20px',
-                      fontSize: '25px',
-                      fontWeight: 'bold',
-                      textShadow: '0 0 10px #FF0000',
-                    }}
-                  >
-                    {nameValue.length <= 3 || nameValue.length >= 16
-                      ? 'Name must be between 4 and 15'
-                      : 'User name has been used. Try other name'}
-                  </div>
-                )}
-                <div className="complete-profile">
+          <div className="body" onClick={handleCloseModalCreateProfile}>
+            <div className="body-top">
+              <div className="container-items">
+                {imagesIndex.map((value) => (
                   <button
-                    onClick={() => {
-                      handleCreateProfile()
-                    }}
                     className={`${
-                      ((heroSelector && nameValue) ||
-                        (isEdit && profile._picId != heroSelector)) &&
-                      'valid'
-                    }`}
-                  />
-                </div>
+                      value === heroSelector && 'select'
+                    } click-cursor`}
+                    onClick={() => {
+                      setHeroSelector(value)
+                    }}
+                    key={value}
+                  >
+                    <img src={`/images/profile/hero/${value}.webp`} alt="img" />
+                  </button>
+                ))}
               </div>
             </div>
-          )}
+            <div className="body-bottom">
+              <div className="avatar-selected">
+                <img
+                  src={`/images/profile/hero/${heroSelector || 1}.webp`}
+                  alt="img"
+                />
+              </div>
+              {!isEdit && (
+                <input
+                  onChange={(e) => {
+                    setNameValue(e.target.value)
+                  }}
+                  value={nameValue}
+                  className="input-name"
+                  type="text"
+                  placeholder="Enter Name Here"
+                />
+              )}
+              {!isNameValid && !isEdit && (
+                <div
+                  css={{
+                    width: '100%',
+                    textAlign: 'center',
+                    color: 'white',
+                    marginTop: '20px',
+                    fontSize: '25px',
+                    fontWeight: 'bold',
+                    textShadow: '0 0 10px #FF0000',
+                  }}
+                >
+                  {nameValue.length <= 3 || nameValue.length >= 16
+                    ? 'Name must be between 4 and 15'
+                    : 'User name has been used. Try other name'}
+                </div>
+              )}
+              <div className="complete-profile">
+                <button
+                  onClick={handleCreateProfile}
+                  className={`${canCreateOrUpdate && 'valid'}`}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </CreateProfileCSS>
   )
 }
+
+export default CreateProfile
 
 const CreateProfileCSS = styled.div({
   '.modal-create-profile': {

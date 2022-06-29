@@ -15,7 +15,7 @@ export default function ResultMining(props: Props) {
       <div className={style.resultMining}>
         <div className={style.title}>You Got</div>
         <div className={style.items}>
-          <span>X2</span>
+          <span>x1</span>
         </div>
       </div>
       <div className={style.helpText}>
