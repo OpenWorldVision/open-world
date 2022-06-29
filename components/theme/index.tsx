@@ -10,7 +10,7 @@ const colors = {
 }
 
 const components = {
-  Button,
+  // Button,
 }
 
 const theme = extendTheme({ colors, components })
