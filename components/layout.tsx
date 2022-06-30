@@ -9,8 +9,6 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LoadingModal from './LoadingModal'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
-import { getProfile } from 'utils/profileContract'
-import { getWeb3Client } from '@lib/web3'
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -19,15 +17,10 @@ export default function Layout({ children, home }) {
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
 
-  // const isProfileExist = useSelector((state: any) => {
-  //   return state.ProfileStore.profile
-  // })
   const isConnected = useSelector(
     (state: any) => state.IsConnectedStore.isConnected
   )
   const checkConnect = async () => {
-    // const _profile = await getProfile()
-    // const web3Client = await getWeb3Client()
     try {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       if (accounts) {
@@ -36,12 +29,6 @@ export default function Layout({ children, home }) {
     } catch {
       dispatch(updateIsConnected({ isConnected: false}))
     }
-    // console.log(accounts)
-    // if (_profile){
-    //   dispatch(updateIsConnected({ isConnected: true}))
-    // } else {
-    //   dispatch(updateIsConnected({ isConnected: false}))
-    // }
   }
 
   useEffect(() => {
