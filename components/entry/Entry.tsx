@@ -19,6 +19,7 @@ import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import Head from 'next/head'
 import { updateIsOpenEntry } from 'reduxActions/isOpenEntryAction'
 import { getProfile } from 'utils/profileContract'
+import { getWeb3Client } from '@lib/web3'
 
 export default function Entry() {
   const [playMusic, setPlayMusic] = useState(false)
@@ -167,9 +168,20 @@ export default function Entry() {
   }
 
   const handleClickPlay = async () => {
-    const _profile = await getProfile()
-    if (_profile) {
-      dispatch(updateIsConnected({ isConnected: true }))
+    // const _profile = await getProfile()
+    // const web3Client = await getWeb3Client()
+    // if (_profile){
+    //   dispatch(updateIsConnected({ isConnected: true}))
+    // } else {
+    //   dispatch(updateIsConnected({ isConnected: !!web3Client}))
+    // }
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      if (accounts) {
+        dispatch(updateIsConnected({ isConnected: true}))
+      }
+    } catch {
+      dispatch(updateIsConnected({ isConnected: false}))
     }
   }
 
