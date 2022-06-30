@@ -219,9 +219,14 @@ function MakeSushiModal(props: Props) {
                     </div>
                   </div>
                 </div>
-                {errorText?.length > 0 ? (
-                  <div className={styles.errorText}>{errorText}</div>
-                ) : null}
+
+                <div
+                  className={styles.errorText}
+                  style={{ height: 20, margin: '6px 0' }}
+                >
+                  {errorText}
+                </div>
+
                 <div className={styles.titleText}>Note</div>
                 <div className={styles.valueText}>1 Fish Makes 2 sushi</div>
               </div>
@@ -231,6 +236,7 @@ function MakeSushiModal(props: Props) {
               className={`btn-chaka ${styles.confirmBtn} click-cursor`}
               onClick={startCook}
               disabled={valueFish === 0 || errorText?.length > 0}
+              mt={70}
             >
               <img
                 src={`/images/professions/suppliers/buttonCook.png`}

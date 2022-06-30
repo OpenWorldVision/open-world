@@ -39,7 +39,8 @@ function Inventory(props: Props) {
     }
   }, [isRefreshInventory])
 
-  const onCickItemHandle = (itemTrait) => { // 0: Fish, 1: Ore, 2: Hammer, 3: Sushi
+  const handleClickItem = (itemTrait) => {
+    // 0: Fish, 1: Ore, 2: Hammer, 3: Sushi
     if (userItems) {
       if (isOpenianSell) {
         selectOpenianSellItem(itemTrait)
@@ -73,7 +74,7 @@ function Inventory(props: Props) {
       >
         <GridItem
           className={`${style.emptySlot} click-cursor`}
-          onClick={() => onCickItemHandle(0)}
+          onClick={() => handleClickItem(0)}
         >
           <div className={`${style.itemImage} ${style.fish}`}></div>
           <div className={style.itemAmount}>
@@ -83,11 +84,11 @@ function Inventory(props: Props) {
 
         <GridItem
           className={`${style.emptySlot} click-cursor`}
-          onClick={() => onCickItemHandle(1)}
+          onClick={() => handleClickItem(1)}
         >
           <div className={`${style.itemImage} ${style.ore}`}></div>
           <div className={style.itemAmount}>
-            {userItems ? `x${userItems.oreAmount}` :  <Spinner />}
+            {userItems ? `x${userItems.oreAmount}` : <Spinner />}
           </div>
         </GridItem>
 
@@ -96,14 +97,14 @@ function Inventory(props: Props) {
             <GridItem className={`${style.emptySlot} click-cursor`}>
               <div className={`${style.itemImage} ${style.hammer}`}></div>
               <div className={style.itemAmount}>
-                {userItems ? `x${userItems.hammerAmount}` :  <Spinner />}
+                {userItems ? `x${userItems.hammerAmount}` : <Spinner />}
               </div>
             </GridItem>
 
             <GridItem className={`${style.emptySlot} click-cursor`}>
               <div className={`${style.itemImage} ${style.sushi}`}></div>
               <div className={style.itemAmount}>
-                {userItems ? `x${userItems.sushiAmount}` :  <Spinner />}
+                {userItems ? `x${userItems.sushiAmount}` : <Spinner />}
               </div>
             </GridItem>
           </>

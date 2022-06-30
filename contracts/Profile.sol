@@ -58,6 +58,10 @@ contract Profiles is AccessControlUpgradeable {
 
   mapping(address => uint256) timestampStamina;
 
+  uint256 public requireBalanceBlacksmith;
+  uint256 public requireBalanceSupplier;
+  uint256 public requireBalanceOpenian;
+
   event ProfileCreated(
     uint256 profileId,
     address owner,
@@ -170,8 +174,18 @@ contract Profiles is AccessControlUpgradeable {
     require(profileExists(msg.sender), 'profile must exist');
     Profile storage profile = profiles[addressToIndex[msg.sender]];
     require(profile.profession == Profession.UNKNOWN, 'Profession already set');
+    uint256 requireBalance;
+    if (_profession == Profession.BLACKSMITH) {
+      requireBalance = requireBalanceBlacksmith;
+    }
+    if (_profession == Profession.OPENER) {
+      requireBalance = requireBalanceOpenian;
+    }
+    if (_profession == Profession.SUPPLIER) {
+      requireBalance = requireBalanceSupplier;
+    }
     require(
-      IERC20(governanceToken).balanceOf(msg.sender) > requireBalanceProfession,
+      IERC20(governanceToken).balanceOf(msg.sender) > requireBalance,
       'Not enough balance'
     );
     require(
@@ -398,13 +412,26 @@ contract Profiles is AccessControlUpgradeable {
     return addresses[nameToIndex[name]];
   }
 
-  function canSetProfession(address account) public view returns (bool) {
+  function canSetProfession(address account, Profession _chooseProfession)
+    public
+    view
+    returns (bool)
+  {
     Profile memory profile = profiles[addressToIndex[msg.sender]];
-
+    uint256 requireBalance;
+    if (_chooseProfession == Profession.BLACKSMITH) {
+      requireBalance = requireBalanceBlacksmith;
+    }
+    if (_chooseProfession == Profession.OPENER) {
+      requireBalance = requireBalanceOpenian;
+    }
+    if (_chooseProfession == Profession.SUPPLIER) {
+      requireBalance = requireBalanceSupplier;
+    }
     return
       profileExists(account) &&
       profile.profession == Profession.UNKNOWN &&
-      IERC20(governanceToken).balanceOf(msg.sender) > requireBalanceProfession;
+      IERC20(governanceToken).balanceOf(msg.sender) > requireBalance;
   }
 
   /// @dev Adds points to a profile.
@@ -460,6 +487,17 @@ contract Profiles is AccessControlUpgradeable {
       _timestamp = block.timestamp;
     }
     timestampStamina[_account] = _timestamp;
+  }
+
+  function setRequirementBalance(
+    uint256 _openian,
+    uint256 _supplier,
+    uint256 _blacksmith
+  ) public {
+    require(hasRole(MODERATOR_ROLE, msg.sender), 'access denied');
+    requireBalanceBlacksmith = _blacksmith;
+    requireBalanceOpenian = _openian;
+    requireBalanceSupplier = _supplier;
   }
 
   function totalProfiles() public view returns (uint256) {

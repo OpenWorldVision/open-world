@@ -43,7 +43,7 @@
 
 .backBtn {
   display: block !important;
-  position: absolute !important;
+  position: fixed !important;
   bottom: 30px;
   left: 35px;
   width: 180px !important;

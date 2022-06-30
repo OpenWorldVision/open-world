@@ -33,6 +33,9 @@ export const getWeb3Client = async () => {
 
     if (!web3Provider) {
       web3Provider = await web3Modal.connect()
+      // await web3Modal.updateTheme({
+      //   display: 'none'
+      // })
     }
 
     if (!web3Client)

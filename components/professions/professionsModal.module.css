@@ -105,7 +105,7 @@
   background-image: url('/images/professions/activate-btn-active.png') !important;
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1279px) {
   .npcContainer {
     max-width: 750px;
     padding-bottom: 150px;

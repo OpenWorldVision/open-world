@@ -1,97 +1,225 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { getAmountItemByTrait, listMultiItems } from 'utils/NFTMarket'
 import styles from './dashboard.module.css'
+import useTransactionState, {
+    TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
 
-const numOfPage = 12
+const numOfPage = 8
 
 export default function DashBoard() {
     const [page, setPage] = useState(1)
-    const [nav, setNav] = useState(1)
+    const [nav, setNav] = useState(0)
+    const [dataInit, setDataInit] = useState([])
+    const [data, setData] = useState([])
+    const [selected, setSelected] = useState(null)
+    const [priceInput, setPriceInput] = useState(null)
+    const [status, setStatus] = useState('Loading ...')
+    const handleTxStateChange = useTransactionState()
     
-    const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    useEffect(() => {
+        getItems()
+    }, [])
+
+    const getItems = async () => {
+        const result = await getAmountItemByTrait()
+        const dataResult = []
+        for (const i of result) if (i.trait !== 4) dataResult.push(i)
+        if(result.length) {
+            setDataInit(dataResult)
+            setData(dataResult)
+        } else {
+            setStatus('No results found')
+        }
+    }
+
+    const handleSell = async () => {
+        const title = 'Sell item'
+        setSelected(null)
+        setData([])
+        setStatus('Loading ...')
+        const result = await listMultiItems(
+            [selected.id], 
+            Number(priceInput),
+            (txHash) => {
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+            }
+        )
+        if (result) {
+            setDataInit([])
+            await getItems()
+            handleTxStateChange(title, result.transactionHash, result.status)
+        } else {
+            setData(dataInit)
+            setStatus('Loading ...')
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        }
+    }
+
+    const sortId = (id: string) => {
+        if (id !== '') {
+            if (nav === 0) {
+                if (!dataInit.length) {
+                    setStatus('No results found')
+                    setData([])
+                } else {
+                    setData(dataInit.filter(value => value.id === Number(id)))
+                }
+            }
+            // else if (nav === 4) {
+            //     const result = dataInit.filter(value => {
+            //         return value.isOwner
+            //     })
+            //     if (!result.length) {
+            //         setStatus('No results found')
+            //         setData([])
+            //     } else {
+            //         setData(result.filter(value => value.id === Number(id)))
+            //     }
+            // }
+            else {
+                const result = dataInit.filter(value => {
+                    return value.trait === nav
+                })
+                if (!result.length) {
+                    setStatus('No results found')
+                    setData([])
+                } else {
+                    setData(result.filter(value => value.id === Number(id)))
+                }
+            }
+        } else {
+            changeNav(nav)
+        }
+    }
+
+    const changeNav = (nav: number) => {
+        setNav(nav)
+        setSelected(null)
+        setPage(1)
+        if (nav === 0) {
+            if (!dataInit.length) {
+                setStatus('No results found')
+                setData([])
+            } else {
+                setData(dataInit)
+            }
+        }
+        // else if (nav === 4) {
+        //     const result = dataInit.filter(value => {
+        //         return value.isOwner
+        //     })
+        //     if (!result.length) {
+        //         setStatus('No results found')
+        //         setData([])
+        //     } else {
+        //         setData(result)
+        //     }
+        // }
+        else {
+            const result = dataInit.filter(value => {
+                return value.trait === nav
+            })
+            if (!result.length) {
+                setStatus('No results found')
+                setData([])
+            } else {
+                setData(result)
+            }
+        }
+    }
 
     return (
         <div className={styles.main}>
             <div className={styles.nav}>
                 <div className={styles.nav1}>
                     <div>MY NFT</div>
-                    <input type="text" placeholder='NFT ID' />
+                    <input type="text" placeholder='NFT ID' onChange={(e) => {sortId(e.target.value)}} />
                 </div>
                 <div className={styles.nav2}>
-                    <div
-                        onClick={() => {setNav(1)}}
+                <div
+                        onClick={() => {changeNav(0)}}
                     >
-                        <div className={nav === 1 && styles.select}>OPENIAN</div>
+                        <div className={nav === 0 ? styles.select + ' click-cursor' : 'click-cursor'}>ALL</div>
                     </div>
                     <div
-                        onClick={() => {setNav(2)}}
+                        onClick={() => {changeNav(1)}}
                     >
-                        <div className={nav === 2 && styles.select}>SUPPLIER</div>
+                        <div className={nav === 1 ? styles.select + ' click-cursor' : 'click-cursor'}>OPENIAN</div>
                     </div>
                     <div
-                        onClick={() => {setNav(3)}}
+                        onClick={() => {changeNav(2)}}
                     >
-                        <div className={nav === 3 && styles.select}>BLACKSMITH</div>
+                        <div className={nav === 2 ? styles.select + ' click-cursor' : 'click-cursor'}>SUPPLIER</div>
                     </div>
                     <div
-                        onClick={() => {setNav(4)}}
+                        onClick={() => {changeNav(3)}}
                     >
-                        <div className={nav === 4 && styles.select}>COLLECTION</div>
+                        <div className={nav === 3 ? styles.select + ' click-cursor' : 'click-cursor'}>BLACKSMITH</div>
                     </div>
+                    {/* <div
+                        onClick={() => {changeNav(4)}}
+                    >
+                        <div className={nav === 4 ? styles.select + ' click-cursor' : 'click-cursor'}>MY COLLECTION</div>
+                    </div> */}
                 </div>
             </div>
             <div className={styles.body}>
                 <div className={styles.body1}>
-                    {test.slice((page - 1)*numOfPage, (page - 1)*numOfPage + numOfPage).map(value => {
-                        return <div key={value} className={styles.item}>
-                            <div className={styles.itemInfo}>
-                                <div>
-                                    <div>#1 HALLEN</div>
-                                    <img src={`./images/marketplace/items/${nav}.png`} alt="" />
+                    <div>
+                        {data.length === 0 ? <div className={styles.loading}>{status}</div>
+                        : data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
+                            return <div key={value} className={styles.item}>
+                                <div onClick={() => {setSelected(value)}} className={styles.itemInfo + ' click-cursor'}>
+                                    <div>
+                                        <div>#{value.id} HALLEN</div>
+                                        <img src={`./images/marketplace/items/${value.trait}.webp`} alt="img" />
+                                    </div>
                                 </div>
-                                <div>100 OPEN</div>
                             </div>
-                            <div className={styles.btnBuy}>
-                                <img src="./images/marketplace/buy.png" alt="img" />
-                            </div>
-                        </div>
-                    })}
+                        })}
+                    </div>
                 </div>
                 <div className={styles.body2}>
                     <div className={styles.sellerBoard}>
                         <div className={styles.header}>Selected Item:</div>
-                        <div className={styles.selectedImage}>
-
-                        </div>
+                        {selected ? 
+                            <img className={styles.selectedImage} src={`./images/marketplace/items/${selected.trait}.webp`} alt="img" /> 
+                            : <div className={styles.selectedImageFrame} />
+                        }
                         <div className={styles.priceInput}>
                             <div>Price:</div>
-                            <input type="number" />
+                            <input type="number" value={priceInput} onChange={(e) => setPriceInput(e.target.value !== '' && Number(e.target.value))} />
                             <div>OPEN</div>
                         </div>
-                        <div className={styles.btnSell}>
-                            <img src="./images/marketplace/sell.png" alt="img" />
-                        </div>
+                        <div className={styles.containerTotal}>Total price: <span>{selected ? priceInput : 0}</span> OPEN</div>
+                        {(priceInput > 0) && selected && <div className={styles.btnSell}>
+                            <img onClick={() => {handleSell()}} className='click-cursor' src="./images/marketplace/sell.webp" alt="img" />
+                        </div>}
                     </div>
                 </div>
             </div>
             <div className={styles.footer}>
                 <div className={styles.pagination}>
                     <img 
+                        className='click-cursor'
                         onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                        src="./images/marketplace/triangle-left.png" 
+                        src="/images/marketplace/triangle-left.webp" 
                         alt="img" 
                     />
                     <div>{page < 10 ? `0${page}` : page}</div>
                     <img
-                        onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(test.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                        src="./images/marketplace/triangle-right.png" 
+                        className='click-cursor'
+                        onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
+                        src="./images/marketplace/triangle-right.webp" 
                         alt="img" 
                     />
                 </div>
             </div>
             <Link href='/'>
                 <a className={styles.back}>
-                    <img src="./images/marketplace/back.png" alt="img" />
+                    <img className='click-cursor' src="./images/marketplace/back.webp" alt="img" />
                 </a>
             </Link>
         </div>

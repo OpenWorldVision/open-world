@@ -13,11 +13,13 @@ import {
 
 import styles from '@components/entry/entry.module.css'
 import { chainName } from 'utils/chainName'
-import { getBalanceOfOpen } from '../../utils/checkBalanceOpen'
+import { getOpenBalance } from '../../utils/checkBalanceOpen'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import Head from 'next/head'
 import { updateIsOpenEntry } from 'reduxActions/isOpenEntryAction'
+import { getProfile } from 'utils/profileContract'
+import { getWeb3Client } from '@lib/web3'
 
 export default function Entry() {
   const [playMusic, setPlayMusic] = useState(false)
@@ -48,6 +50,7 @@ export default function Entry() {
                 setCheckIsConnect(true)
               })
               .catch(() => {
+                setCheckIsConnect(false)
                 dispatch(updateIsConnected({ isConnected: false }))
               })
           } else {
@@ -83,6 +86,7 @@ export default function Entry() {
               })
               .catch(() => {
                 dispatch(updateIsConnected({ isConnected: false }))
+                setCheckIsConnect(false)
               })
           }
         }
@@ -120,8 +124,8 @@ export default function Entry() {
     }
   }, [])
   const checkTokenWasAdded = async () => {
-    const balance = await getBalanceOfOpen()
-    if (parseFloat(balance) === 0) {
+    const balance = await getOpenBalance(false)
+    if (!balance) {
       const tokenAddress = '0x27a339d9B59b21390d7209b78a839868E319301B'
       const tokenSymbol = 'OPEN'
       const tokenDecimals = 18
@@ -163,9 +167,21 @@ export default function Entry() {
     }
   }
 
-  const handleClickPlay = () => {
-    if (checkIsConnect) {
-      dispatch(updateIsConnected({ isConnected: true }))
+  const handleClickPlay = async () => {
+    // const _profile = await getProfile()
+    // const web3Client = await getWeb3Client()
+    // if (_profile){
+    //   dispatch(updateIsConnected({ isConnected: true}))
+    // } else {
+    //   dispatch(updateIsConnected({ isConnected: !!web3Client}))
+    // }
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      if (accounts) {
+        dispatch(updateIsConnected({ isConnected: true}))
+      }
+    } catch {
+      dispatch(updateIsConnected({ isConnected: false}))
     }
   }
 
