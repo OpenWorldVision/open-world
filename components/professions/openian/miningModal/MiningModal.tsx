@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import style from './Mining.module.css'
 import { Button } from '@chakra-ui/react'
 
@@ -75,26 +75,31 @@ export default function MiningModal(props: Props) {
   }, [])
 
   const checkRequirementBeforeStartQuest = useCallback(async () => {
-    const hammerList = await fetchAmountItemByTrait(3)
-    if (hammerList?.length < 1) {
+    const data = await getMiningQuestInfo()
+
+    const stamina = await getStamina()
+
+    if (Number(stamina) < data.requireStamina) {
       setPopup(<Popup 
-        content="You don't have enough hammer to start mining quest"
-        actionContent="Bye hammer"
+        type='stamina'
+        content="Mining Quest"
+        subcontent={`Mining quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start mining quest.`}
+        actionContent="Bye sushi"
         setIsOpen={setPopup}
         action={() => { router.push('professions') }}
       />)
       return false
     }
-    const stamina = await getStamina()
 
-    if (Number(stamina) < 49) {
+    const hammerList = await fetchAmountItemByTrait(3)
+    if (hammerList?.length < 1) {
       setPopup(<Popup 
         type='stamina'
-        content="Fishing quest requires at least 49 stamina to start. You don't have enough stamina to start fishing quest."
-        subcontent="use sushi for stamina recovery"
-        actionContent="Bye sushi"
+        content="Mining Quest"
+        subcontent="You don't have enough hammer to start mining quest"
+        actionContent="Bye hammer"
         setIsOpen={setPopup}
-        action={() => { router.push('foodcourt') }}
+        action={() => { router.push('professions') }}
       />)
       return false
     }
@@ -128,7 +133,11 @@ export default function MiningModal(props: Props) {
     } finally {
       toggleLoadingModal(false)
     }
-  }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
+  }, [
+    checkRequirementBeforeStartQuest,
+    handleTxStateChange,
+    toggleLoadingModal,
+  ])
 
   const handleFinish = useCallback(async () => {
     const title = 'Finish mining quest'

@@ -54,7 +54,7 @@
 }
 .backBtn {
   display: block;
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   left: 35px;
   width: 180px;

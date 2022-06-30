@@ -77,11 +77,13 @@ export default function ForgeHammer(props: Props) {
 
   const hiddenNotification = useCallback(() => {
     setIsStartQuestFail(false)
-  }, [])
+    toggleModal(false)
+  }, [toggleModal])
 
   const hiddenPopupResult = useCallback(() => {
     setIsStartQuest(false)
-  }, [])
+    toggleModal(false)
+  }, [toggleModal])
 
   const handleToggleModal = useCallback(() => {
     toggleModal(false)

@@ -15,7 +15,7 @@ function FinishModal({ onConfirm, loading }: Props) {
       </h3>
       <div className={styles.titleTextFinish}>You Caught</div>
       <div className={styles.rowView}>
-        <div className={styles.valueTextFinish}>x2</div>
+        <div className={styles.valueTextFinish}>x1</div>
         <img
           src={`/images/professions/openian/fishNFT.png`}
           alt="Confirm"

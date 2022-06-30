@@ -7,38 +7,44 @@ import Entry from '@components/entry/Entry'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import LoadingModal from './LoadingModal'
-import { motion } from 'framer-motion'
+import { updateIsConnected } from 'reduxActions/isConnectedAction'
+import { getProfile } from 'utils/profileContract'
 import { getWeb3Client } from '@lib/web3'
 
 export const siteTitle = 'Open World #Metaverse'
-
-const variants = {
-  hidden: { opacity: 0, x: -200, y: 0 },
-  enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 0, x: 0, y: -100 },
-}
 
 export default function Layout({ children, home }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
 
-  const isProfileExist = useSelector((state: any) => {
-    return state.ProfileStore.profile
-  })
+  // const isProfileExist = useSelector((state: any) => {
+  //   return state.ProfileStore.profile
+  // })
   const isConnected = useSelector(
     (state: any) => state.IsConnectedStore.isConnected
   )
-
   const checkConnect = async () => {
-    const web3Client = await getWeb3Client()
-    dispatch(updateIsConnected({ isConnected: !!web3Client }))
+    // const _profile = await getProfile()
+    // const web3Client = await getWeb3Client()
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      if (accounts) {
+        dispatch(updateIsConnected({ isConnected: true}))
+      }
+    } catch {
+      dispatch(updateIsConnected({ isConnected: false}))
+    }
+    // console.log(accounts)
+    // if (_profile){
+    //   dispatch(updateIsConnected({ isConnected: true}))
+    // } else {
+    //   dispatch(updateIsConnected({ isConnected: false}))
+    // }
   }
 
   useEffect(() => {
-    checkConnect()
     router.events.on('routeChangeStart', () => {
       setIsLoading(true)
     })
@@ -46,13 +52,13 @@ export default function Layout({ children, home }) {
     router.events.on('routeChangeComplete', () => {
       setIsLoading(false)
     })
+    checkConnect()
   }, [])
   return (
     <div
       style={{
         cursor: 'url(/images/worldmap/CursorDefault.webp), auto !important',
       }}
-      className={`${styles.container} ${!isLoading && styles.loaded}`}
     >
       <Head>
         <link rel="icon" href="/favicon.ico" />

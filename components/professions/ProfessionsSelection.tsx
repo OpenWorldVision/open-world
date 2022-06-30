@@ -46,7 +46,7 @@ function ProfessionsSelection() {
 
   return (
     <>
-      {isLoading && <LoadingModal fullBlack/>}
+      {isLoading && <LoadingModal fullBlack />}
 
       <div
         className={`${style.professionsSelection} ${
@@ -110,7 +110,7 @@ function ProfessionsSelection() {
         </Link>
       </div>
 
-      {selectedNPC && result === undefined && (
+      {selectedNPC && !result && (
         <ProfessionsModal
           npc={selectedNPC}
           toggleLoadingModal={toggleLoadingModal}
@@ -119,13 +119,13 @@ function ProfessionsSelection() {
         />
       )}
 
-      {selectedNPC && result !== undefined &&
+      {selectedNPC && result !== undefined && (
         <ProfessionsResult
           activateResult={result}
           npc={selectedNPC}
           closeModal={activateResult}
         />
-      }
+      )}
     </>
   )
 }

@@ -1,5 +1,6 @@
 import { getAddresses } from 'constants/addresses'
-import { ethers } from 'ethers'
+import { BigNumber, ethers, utils } from 'ethers'
+import { getOpenWorldContract } from './openWorldContract'
 
 const itemContract = {
   addressBSC: '0xC7610EC0BF5e0EC8699Bc514899471B3cD7d5492',
@@ -19,40 +20,83 @@ export const getItemContract = async () => {
 
 // Call methods
 export const fetchListItemIds = async (trait) => {
-  const contract = await getItemContract()
-  const currentAddress = await window.ethereum.selectedAddress
-  const itemIdList = await contract.getAmountItemByTrait(trait, currentAddress)
-  const result = itemIdList.map((id) => id.toNumber()).filter((id) => id !== 0)
-  return result
+  try {
+    const contract = await getItemContract()
+    const currentAddress = await window.ethereum.selectedAddress
+    const itemIdList = await contract.getAmountItemByTrait(
+      trait,
+      currentAddress
+    )
+    const result = itemIdList
+      .map((id) => id.toNumber())
+      .filter((id) => id !== 0)
+    return result
+  } catch (e) {
+    return []
+  }
 }
 const ITEM_TYPES = ['fish', 'ore', 'hammer', 'sushi']
 
 export async function fetchUserInventoryItemAmount(): Promise<
   { type: string; ids: number[] }[]
 > {
-  const itemsAmount = []
-
-  for (let i = 1; i < 5; i++) {
-    const itemIdList = await fetchListItemIds(i)
-    const itemAmount = itemIdList.filter((x) => x !== 0).length
-    itemsAmount.push(itemIdList)
-    itemsAmount.push(itemAmount)
-  }
-  const results = await Promise.all(
-    ITEM_TYPES.map(async (type, index) => ({
-      type,
-      ids: await fetchListItemIds(index + 1),
-    }))
+  const resultsPromise = await Promise.all(
+    [fetchListItemIds(1),
+    fetchListItemIds(2),
+    fetchListItemIds(3),
+    fetchListItemIds(4)]
   )
+  const results = ITEM_TYPES.map( (type, index) => ({
+    type,
+    ids: resultsPromise[index],
+  }))
   return results
-  // return {
-  //   fishItems: itemsAmount[0],
-  //   fishAmount: itemsAmount[1],
-  //   oreItems: itemsAmount[2],
-  //   oreAmount: itemsAmount[3],
-  //   hammerItems: itemsAmount[4],
-  //   hammerAmount: itemsAmount[5],
-  //   sushiItems: itemsAmount[6],
-  //   sushiAmount: itemsAmount[7],
-  // }
+}
+
+export async function getHammerPrice() {
+  const contract = await getItemContract()
+  try {
+    return await contract.hammerPrice()
+  } catch (error) {
+    return 0
+  }
+}
+
+export async function isBoughtHammer() {
+  const contract = await getItemContract()
+  const account = await contract.signer.getAddress()
+  try {
+    return await contract.isBoughtHammer(account)
+  } catch (error) {
+    return true
+  }
+}
+
+export async function buyFirstHammer(
+  onTransactionExecute: (hash: string) => void
+) {
+  const contract = await getItemContract()
+  const openContract = await getOpenWorldContract()
+  const currentAddress = await contract.signer.getAddress()
+
+  const allowance: BigNumber = await openContract.allowance(
+    currentAddress,
+    contract.address
+  )
+
+  if (allowance.lt(utils.parseEther('1000000'))) {
+    await openContract.approve(
+      contract.address,
+      utils.parseEther('1000000').toString()
+    )
+  }
+  try {
+    const tx = await contract.buyFirstHammer()
+    onTransactionExecute(tx.hash)
+    const receipt = await tx.wait()
+
+    return receipt
+  } catch (e) {
+    return null
+  }
 }

@@ -5,10 +5,7 @@ type Props = {
   isOpenTutorial: boolean
   onClose: () => void
 }
-export default function ProfessionsTutorial({
-  onClose,
-  isOpenTutorial,
-}: Props) {
+function ProfessionsTutorial({ onClose, isOpenTutorial }: Props) {
   const router = useRouter()
 
   const handleCloseModalProfessionsTutorial = useCallback(
@@ -59,6 +56,8 @@ export default function ProfessionsTutorial({
     </ProfessionsTutorialCSS>
   )
 }
+
+export default ProfessionsTutorial
 
 const ProfessionsTutorialCSS = styled.div({
   '.modal-professions-tutorial': {

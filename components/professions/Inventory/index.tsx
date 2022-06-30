@@ -81,7 +81,13 @@ function Inventory(_, ref) {
     setIsOpenNotify({ type: !!result })
     setData(null)
     setSelectedItem(null)
-  }, [amountItems, getItemsIndex, price, selectedItem?.ids])
+  }, [
+    amountItems,
+    getItemsIndex,
+    handleTxStateChange,
+    price,
+    selectedItem?.ids,
+  ])
 
   const handleChangeAmountSellingItem = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

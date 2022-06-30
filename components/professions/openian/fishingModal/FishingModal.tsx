@@ -82,18 +82,18 @@ function FishingModal(props: Props) {
 
   const checkRequirementBeforeStartQuest = useCallback(async () => {
     const stamina = await getStamina()
-
-    if (Number(stamina) < 49) {
+    const data = await fetchFishingQuestData()
+    if (Number(stamina) < data.requireStamina) {
       setPopup(<Popup 
         type='stamina'
-        content="Fishing quest requires at least 49 stamina to start. You don't have enough stamina to start fishing quest."
-        subcontent="use sushi for stamina recovery"
+        content="Fishing Quest"
+        subcontent={`Fishing quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start fishing quest.`}
         actionContent="Bye sushi"
         setIsOpen={setPopup}
         action={() => { router.push('foodcourt') }}
       />)
     }
-    return Number(stamina) >= 49
+    return Number(stamina) >= data.requireStamina
   }, [popup])
 
   const handleStartQuest = useCallback(async () => {

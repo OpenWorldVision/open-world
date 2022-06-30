@@ -1,9 +1,7 @@
 import { getAddresses } from 'constants/addresses'
-import { fromUnixTime, getUnixTime } from 'date-fns'
 import { BigNumber } from 'ethers'
 import Web3 from 'web3'
 import profilesInterface from '../build/contracts/Profiles.json'
-import { getProfessionContract } from './professionContract'
 
 const web3 = new Web3(Web3.givenProvider)
 
@@ -49,7 +47,7 @@ export async function getStamina() {
   }
 }
 
-export const crateProfile = async (
+export const createProfile = async (
   nameStr: string,
   pictureId: number,
   onTransactionExecute: (hash: string) => void,
@@ -65,19 +63,7 @@ export const crateProfile = async (
       .on('receipt', onTransactionComplete)
 
     return true
-  } catch {
-    return false
-  }
-}
-
-export const isProfessionExist = async () => {
-  const contract = await getProfileContract()
-  const accounts = await web3.eth.getAccounts()
-  try {
-    return await contract.methods
-      .canSetProfession(accounts[0])
-      .call({ from: accounts[0] })
-  } catch {
+  } catch (e) {
     return false
   }
 }

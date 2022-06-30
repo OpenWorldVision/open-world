@@ -1,4 +1,10 @@
-import { Button, Grid, GridItem, useDisclosure, useToast } from '@chakra-ui/react'
+import {
+  Button,
+  Grid,
+  GridItem,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react'
 import style from '@components/castle/shop/shop.module.css'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -12,8 +18,8 @@ import LoadingModal from '@components/LoadingModal'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
-import { getBalanceOpen } from 'utils/checkBalanceOpen'
 import Popup from '@components/Popup'
+import { getOpenBalance } from 'utils/checkBalanceOpen'
 
 function Shop() {
   const [nftsAmount, setNftsAmount] = useState({
@@ -35,8 +41,8 @@ function Shop() {
 
   const mintProfessionsNFT = async (trait) => {
     setIsLoading(true)
-    const balance = parseFloat(await getBalanceOpen())
-    const NTFCardPrice = parseFloat(Object.values(nftsPrices)[trait-1])
+    const balance = parseFloat(await getOpenBalance(false))
+    const NTFCardPrice = parseFloat(Object.values(nftsPrices)[trait - 1])
     if (balance >= NTFCardPrice) {
       const title = 'Purchase NFT card'
       const data = await mintProfessionNFT(trait, (txHash) => {
