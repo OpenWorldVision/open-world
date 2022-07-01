@@ -92,6 +92,7 @@ function Item({ onBuy }: Props) {
           onClick={onBuy}
           disabled={isBought}
           mt="8px"
+          size="sm"
         >
           {isBought ? 'Sold Out' : 'Buy'}
         </Button>
