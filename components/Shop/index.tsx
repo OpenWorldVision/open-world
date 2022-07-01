@@ -41,10 +41,10 @@ function Shop(_, ref) {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onToggle} size="6xl" isCentered>
-        <ModalOverlay />
-        {/* <ModalCloseButton /> */}
-        <ModalContent bgColor="transparent">
+      <Modal isOpen={isOpen} onClose={onToggle} size="6xl">
+        <ModalOverlay bg="blackAlpha.800" />
+
+        <ModalContent bgColor="transparent" mt="5rem">
           <ModalBody>
             <Box
               display="flex"
@@ -92,6 +92,7 @@ function Shop(_, ref) {
                 p={2}
                 flex={3}
                 position="relative"
+                minH="40vh"
               >
                 <Box
                   position="absolute"
@@ -106,7 +107,7 @@ function Shop(_, ref) {
                 >
                   <Text
                     fontSize={16}
-                    fontWeight="black"
+                    fontWeight="bold"
                     textAlign="center"
                     bgColor="#CFB183"
                     w="-moz-fit-content"

@@ -1,7 +1,7 @@
 import { Text, Box, Image, useMediaQuery } from '@chakra-ui/react'
 import Button from '@components/theme/components/Button'
 import { utils } from 'ethers'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { getHammerPrice, isBoughtHammer } from 'utils/Item'
 import Price from './Price'
 
@@ -12,6 +12,11 @@ function Item({ onBuy }: Props) {
   const [price, setPrice] = useState('0')
   const [isBought, setIsBought] = useState(true)
   const [isMobile] = useMediaQuery('(max-width: 1014px)')
+
+  const handleBuy = useCallback(() => {
+    setIsBought(true)
+    onBuy()
+  }, [onBuy])
 
   useEffect(() => {
     ;(async () => {
@@ -25,7 +30,7 @@ function Item({ onBuy }: Props) {
   return (
     <Box
       display="flex"
-      alignItems="center"
+      alignItems="flex-end"
       justifyContent="space-between"
       bgColor="#DCD7C1"
       p="16px 12px"
@@ -85,11 +90,11 @@ function Item({ onBuy }: Props) {
         color="#6A6A6A"
         alignItems="flex-end"
       >
-        <Text>Available: 2</Text>
+        <Text>Available: {isBought ? 0 : 1}</Text>
         <Button
           bgColor="#472805"
           color="#F0E0D0"
-          onClick={onBuy}
+          onClick={handleBuy}
           disabled={isBought}
           mt="8px"
           size="sm"
