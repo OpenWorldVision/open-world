@@ -25,6 +25,7 @@ import BackButton from '@components/BackButton'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import LayoutShop from '@components/workshop/LayoutShop'
 
 export default function FoodCourt() {
   const [isItemBoard, setIsItemBoard] = useState<'sushi' | 'fish' | 'mine'>(
@@ -160,142 +161,144 @@ export default function FoodCourt() {
     [handleTxStateChange, isItemBoard]
   )
 
-  return (
-    <>
-      {isLoading && <LoadingModal />}
-      <div className={styles.foodCourtContainer}>
-        <div className={styles.foodCourtBg}>
-          <div className={styles.foodCourtTitleContainer}>
-            <div className={styles.navFoodCourt}></div>
-            <div className={styles.foodCourtTitle}></div>
-            <div className={styles.navFoodCourt}></div>
-          </div>
-          <div>
-            <Button
-              onClick={handleSelectItemBoard('sushi')}
-              className={`click-cursor ${styles.foodBtn}`}
-            >
-              <div className={styles.sushiBtn}></div>
-              <div
-                className={`${
-                  isItemBoard === 'sushi' && styles.itemBoardSelected
-                }`}
-              ></div>
-            </Button>
-            <Button
-              onClick={handleSelectItemBoard('fish')}
-              className={`click-cursor ${styles.foodBtn}`}
-            >
-              <div className={styles.fishBtn}></div>
-              <div
-                className={`${
-                  isItemBoard === 'fish' && styles.itemBoardSelected
-                }`}
-              ></div>
-            </Button>
-            <Button
-              className={`${styles.buyButtonCustom} click-cursor`}
-              backgroundColor={'#52241E'}
-              onClick={handleSelectItemBoard('mine')}
-              _hover={{ bg: '#52241E' }}
-            >
-              <Text color={'#fff'}>My FoodCourt</Text>
-            </Button>
-          </div>
-          <div className={styles.foodCourtBoard}>
-            <TableContainer className={styles.table}>
-              <Table size="sm" variant="strunstylediped">
-                <TableCaption className={styles.paginationContainer}>
-                  <div className={styles.pagination}>
-                    <div
-                      onClick={handlePreviousPage}
-                      className={`${styles.increase} click-cursor`}
-                    />
-                    <div className={styles.numberPage}>
-                      {pageFoodCourt < 10 && 0}
-                      {pageFoodCourt}
-                    </div>
-                    <div
-                      onClick={handleIncreasePage}
-                      className={`${styles.previous} click-cursor`}
-                    />
-                  </div>
-                </TableCaption>
-                <Thead>
-                  <Tr>
-                    <Th>
-                      <div className={styles.columnTitle}>SELLER</div>
-                    </Th>
-                    <Th>
-                      <div className={styles.columnTitle}>PRICE</div>
-                    </Th>
-                    <Th>
-                      <div className={styles.columnTitle}>AVAILABLE</div>
-                    </Th>
-                    <Th sx={{ textAlign: 'center' }}>
-                      <Button
-                        onClick={handleRefresh}
-                        className={`${styles.refreshBtn} click-cursor`}
-                      ></Button>
-                    </Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {listItemsBoard
-                    .slice((pageFoodCourt - 1) * 5)
-                    .map((item, index) => {
-                      if (index < 5) {
-                        return (
-                          <Tr key={`${item.seller}${index}`}>
-                            <Td>
-                              <div className={styles.columnItem}>
-                                {item.seller}
-                              </div>
-                            </Td>
-                            <Td>
-                              <div className={styles.columnItem}>
-                                {item.price} OPEN
-                              </div>
-                            </Td>
-                            <Td>
-                              <div className={styles.columnItem}>
-                                {item.items?.length}
-                              </div>
-                            </Td>
-                            <Td sx={{ textAlign: 'center' }}>
-                              {isItemBoard === 'mine' ? (
-                                <Button
-                                  backgroundColor={'#DD8600'}
-                                  onClick={handleCancelItem(item)}
-                                  className={`${styles.customButton} click-cursor`}
-                                  _hover={{ bg: '#DD8600' }}
-                                >
-                                  <Text color={'#fff'}>Cancel</Text>
-                                </Button>
-                              ) : (
-                                <Button
-                                  onClick={handleBuyItem(item)}
-                                  className={`${styles.buyBtnItem} click-cursor`}
-                                />
-                              )}
-                            </Td>
-                          </Tr>
-                        )
-                      }
-                    })}
-                </Tbody>
-              </Table>
-            </TableContainer>
-          </div>
-          <BuyerBoard
-            isOpen={isOpenBuyBoard}
-            toggleModalBuyModal={onToggleBuyerBoard}
-            buyDetail={buyDetail}
-            handlePurchaseItem={handlePurchaseItem}
-          />
-          <BackButton />
-        </div>
-      </div>
-    </>
-  )
+    return <LayoutShop isPage='foodcourt' />
+
+  // return (
+  //   <>
+  //     {isLoading && <LoadingModal />}
+  //     <div className={styles.foodCourtContainer}>
+  //       <div className={styles.foodCourtBg}>
+  //         <div className={styles.foodCourtTitleContainer}>
+  //           <div className={styles.navFoodCourt}></div>
+  //           <div className={styles.foodCourtTitle}></div>
+  //           <div className={styles.navFoodCourt}></div>
+  //         </div>
+  //         <div>
+  //           <Button
+  //             onClick={handleSelectItemBoard('sushi')}
+  //             className={`click-cursor ${styles.foodBtn}`}
+  //           >
+  //             <div className={styles.sushiBtn}></div>
+  //             <div
+  //               className={`${
+  //                 isItemBoard === 'sushi' && styles.itemBoardSelected
+  //               }`}
+  //             ></div>
+  //           </Button>
+  //           <Button
+  //             onClick={handleSelectItemBoard('fish')}
+  //             className={`click-cursor ${styles.foodBtn}`}
+  //           >
+  //             <div className={styles.fishBtn}></div>
+  //             <div
+  //               className={`${
+  //                 isItemBoard === 'fish' && styles.itemBoardSelected
+  //               }`}
+  //             ></div>
+  //           </Button>
+  //           <Button
+  //             className={`${styles.buyButtonCustom} click-cursor`}
+  //             backgroundColor={'#52241E'}
+  //             onClick={handleSelectItemBoard('mine')}
+  //             _hover={{ bg: '#52241E' }}
+  //           >
+  //             <Text color={'#fff'}>My FoodCourt</Text>
+  //           </Button>
+  //         </div>
+  //         <div className={styles.foodCourtBoard}>
+  //           <TableContainer className={styles.table}>
+  //             <Table size="sm" variant="strunstylediped">
+  //               <TableCaption className={styles.paginationContainer}>
+  //                 <div className={styles.pagination}>
+  //                   <div
+  //                     onClick={handlePreviousPage}
+  //                     className={`${styles.increase} click-cursor`}
+  //                   />
+  //                   <div className={styles.numberPage}>
+  //                     {pageFoodCourt < 10 && 0}
+  //                     {pageFoodCourt}
+  //                   </div>
+  //                   <div
+  //                     onClick={handleIncreasePage}
+  //                     className={`${styles.previous} click-cursor`}
+  //                   />
+  //                 </div>
+  //               </TableCaption>
+  //               <Thead>
+  //                 <Tr>
+  //                   <Th>
+  //                     <div className={styles.columnTitle}>SELLER</div>
+  //                   </Th>
+  //                   <Th>
+  //                     <div className={styles.columnTitle}>PRICE</div>
+  //                   </Th>
+  //                   <Th>
+  //                     <div className={styles.columnTitle}>AVAILABLE</div>
+  //                   </Th>
+  //                   <Th sx={{ textAlign: 'center' }}>
+  //                     <Button
+  //                       onClick={handleRefresh}
+  //                       className={`${styles.refreshBtn} click-cursor`}
+  //                     ></Button>
+  //                   </Th>
+  //                 </Tr>
+  //               </Thead>
+  //               <Tbody>
+  //                 {listItemsBoard
+  //                   .slice((pageFoodCourt - 1) * 5)
+  //                   .map((item, index) => {
+  //                     if (index < 5) {
+  //                       return (
+  //                         <Tr key={`${item.seller}${index}`}>
+  //                           <Td>
+  //                             <div className={styles.columnItem}>
+  //                               {item.seller}
+  //                             </div>
+  //                           </Td>
+  //                           <Td>
+  //                             <div className={styles.columnItem}>
+  //                               {item.price} OPEN
+  //                             </div>
+  //                           </Td>
+  //                           <Td>
+  //                             <div className={styles.columnItem}>
+  //                               {item.items?.length}
+  //                             </div>
+  //                           </Td>
+  //                           <Td sx={{ textAlign: 'center' }}>
+  //                             {isItemBoard === 'mine' ? (
+  //                               <Button
+  //                                 backgroundColor={'#DD8600'}
+  //                                 onClick={handleCancelItem(item)}
+  //                                 className={`${styles.customButton} click-cursor`}
+  //                                 _hover={{ bg: '#DD8600' }}
+  //                               >
+  //                                 <Text color={'#fff'}>Cancel</Text>
+  //                               </Button>
+  //                             ) : (
+  //                               <Button
+  //                                 onClick={handleBuyItem(item)}
+  //                                 className={`${styles.buyBtnItem} click-cursor`}
+  //                               />
+  //                             )}
+  //                           </Td>
+  //                         </Tr>
+  //                       )
+  //                     }
+  //                   })}
+  //               </Tbody>
+  //             </Table>
+  //           </TableContainer>
+  //         </div>
+  //         <BuyerBoard
+  //           isOpen={isOpenBuyBoard}
+  //           toggleModalBuyModal={onToggleBuyerBoard}
+  //           buyDetail={buyDetail}
+  //           handlePurchaseItem={handlePurchaseItem}
+  //         />
+  //         <BackButton />
+  //       </div>
+  //     </div>
+  //   </>
+  // )
 }

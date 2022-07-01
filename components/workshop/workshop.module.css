@@ -37,6 +37,16 @@
   margin: 0 auto;
 }
 
+.foodCourtTitle {
+  position: relative;
+  background-image: url('/images/foodcourt/name.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 300px;
+  height: 70px;
+  margin: 0 auto;
+}
+
 .navWorkShop {
   background-image: url('/images/workshop/decorate.png');
   background-repeat: no-repeat;
@@ -89,6 +99,24 @@
 
 .hammerBtn {
   background-image: url('/images/workshop/hammer.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 35px !important;
+  height: 35px !important;
+  position: absolute;
+}
+
+.sushiBtn {
+  background-image: url('/images/foodcourt/sushi.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 35px !important;
+  height: 35px !important;
+  position: absolute;
+}
+
+.fishBtn {
+  background-image: url('/images/foodcourt/fish.png') !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   width: 35px !important;
