@@ -117,7 +117,9 @@ function Shop(_, ref) {
                     Selling Items
                   </Text>
                 </Box>
-                <Item onBuy={confirmationRef.current?.open} />
+                <Box mt={8}>
+                  <Item onBuy={confirmationRef.current?.open} />
+                </Box>
               </Box>
             </Box>
           </ModalBody>
