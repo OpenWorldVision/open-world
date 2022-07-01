@@ -227,15 +227,16 @@
   /* z-index: 999998; */
 }
 
-@media only screen and (max-width: 675px) {
+@media only screen and (max-width: 1024px) {
   .backBtn {
     width: 110px !important;
     height: 40px !important;
-    bottom: 20px;
+    bottom: 120px;
     left: 15px;
   }
   .foodCourtContainer {
     overflow-y: scroll;
+    padding: 80px 0 100px 0;
   }
   .foodCourtBg {
     width: 1500px;

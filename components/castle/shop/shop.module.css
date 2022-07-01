@@ -116,14 +116,14 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .shopBoard {
     width: 150px;
     height: 45px;
-    top: 45px;
+    top: 125px;
   }
   .shopContainer {
-    padding-top: 100px;
+    padding-top: 180px;
   }
   .shopOverlay{
     background-size: cover;
@@ -131,7 +131,7 @@
   .backBtn {
     width: 100px !important;
     height: 75px !important;
-    bottom: 0;
+    bottom: 100px;
     left: 15px;
   }
 }

@@ -85,7 +85,7 @@
   font-size: 15px;
   font-family: 'Noto Serif', serif;
   color: #571010;
-  text-transform: uppercase;
+  text-transform: capitalize;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,11 +115,18 @@
     opacity: 1;
   }
   .mapBtn {
-    font-size: 10px;
+    background: none;
+    background-color: #40516080;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 12px;
     height: 35px;
+    width: fit-content;
+    height: 45px;
   }
   .mapBtn span {
-    padding: 0 25px;
+    padding: 10px;
     white-space: nowrap;
   }
 
