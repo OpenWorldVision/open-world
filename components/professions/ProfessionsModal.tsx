@@ -2,7 +2,7 @@ import { Button, Grid, GridItem } from '@chakra-ui/react'
 import mainStyle from './professions.module.css'
 import inheritStyle from './professionsSelection.module.css'
 import style from './professionsModal.module.css'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
   fetchRequireBalanceProfession,
   fetchUserProfessionNFT,
@@ -128,19 +128,6 @@ function ProfessionsModal(props: Props) {
     })()
   }, [])
 
-  const displayRequireBalance = useMemo(() => {
-    if (requireBalance.length === 0) {
-      return ''
-    }
-    if (npc === 'openian') {
-      return ethers.utils.formatEther(requireBalance[2])
-    }
-    if (npc === 'supplier') {
-      return ethers.utils.formatEther(requireBalance[1])
-    }
-    return ethers.utils.formatEther(requireBalance[0])
-  }, [npc, requireBalance])
-
   return (
     <>
       {isLoading && <LoadingModal />}
@@ -202,14 +189,6 @@ function ProfessionsModal(props: Props) {
                       Have {npc !== 'openian' ? 'a' : 'an'}{' '}
                       {npc.charAt(0).toUpperCase() + npc.slice(1)} NFT
                     </span>
-                  </Button>
-
-                  <Button
-                    className={`${style.btn} ${style.acceptBtn} ${
-                      haveRequireBalance && style.active
-                    } click-cursor`}
-                  >
-                    <span>Have {displayRequireBalance} $OPEN</span>
                   </Button>
                 </div>
               </div>
