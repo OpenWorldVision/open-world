@@ -28,6 +28,7 @@ import Inventory, { InventoryRef } from '@components/professions/Inventory'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import LayoutShopMobile from './LayoutShopMobile'
 
 type Props = {
   isPage: string
@@ -326,6 +327,7 @@ export default function LayoutShop(props: Props) {
 
           <BackButton />
         </div>
+        <LayoutShopMobile />
       </div>
     </>
   )
