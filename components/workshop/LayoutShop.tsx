@@ -28,7 +28,9 @@ import Inventory, { InventoryRef } from '@components/professions/Inventory'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
-import LayoutShopMobile from './LayoutShopMobile'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBowlFood, faSackXmark, faFilter, faFish, faHotdog, faGavel, faGem } from '@fortawesome/free-solid-svg-icons'
+import ItemLayout from './ItemLayout'
 
 type Props = {
   isPage: string
@@ -45,6 +47,7 @@ export default function LayoutShop(props: Props) {
   const [pageBoard, setPageBoard] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
   const [isLoading, setIsLoading] = useState(false)
+  const [sellingPage, setSellingPage] = useState(true)
   const inventoryRef = useRef<InventoryRef>()
   const handleTxStateChange = useTransactionState()
 
@@ -188,6 +191,12 @@ export default function LayoutShop(props: Props) {
     }
   }
 
+  const addClassSelected = (itemName) => {
+    if (isItemBoard === itemName) {
+      return styles.selected
+    }
+  }
+
   return (
     <>
       {isLoading && <LoadingModal />}
@@ -327,7 +336,48 @@ export default function LayoutShop(props: Props) {
 
           <BackButton />
         </div>
-        <LayoutShopMobile />
+        {/* <LayoutShopMobile /> */}
+        <div className={styles.backgroundLayout}>
+          <div className={styles.nav}>
+            <Button className={sellingPage && styles.selected}>
+              {isPage === 'workshop'
+                ? <><FontAwesomeIcon icon={faGavel} />Workshop</>
+                : <><FontAwesomeIcon icon={faBowlFood} />Food Court</>}
+            </Button>
+            <Button><FontAwesomeIcon icon={faSackXmark} />My Stall</Button>
+            <Button>Fill<FontAwesomeIcon style={{ marginLeft: '5px' }} icon={faFilter} /></Button>
+          </div>
+          <div className={styles.body}>
+            <div className={styles.container}>
+              <div className={styles.containerTitle}>
+                {
+                  isPage === 'workshop'
+                    ? <img src="/images/workshop/mobile/logo-head-workshop.png" alt="workshop-img" />
+                    : <img src="/images/workshop/mobile/logo-head-foodcourt.png" alt="foodcourt-img" />
+                }
+                <div className={styles.containerTitleText}>Selling Items</div>
+              </div>
+              <div className={styles.containerTitleButtop}>
+                <Button className={`${addClassSelected(isPage === 'workshop' ? 'ore' : 'sushi')}`} onClick={handleSelectItemBoard(isPage === 'workshop' ? 'ore' : 'sushi')}>{isPage === 'workshop' ? <FontAwesomeIcon icon={faGem} /> : <FontAwesomeIcon icon={faFish} />}</Button>
+                <Button className={`${addClassSelected(isPage === 'workshop' ? 'hammer' : 'fish')}`} onClick={handleSelectItemBoard(isPage === 'workshop' ? 'hammer' : 'fish')}>{isPage === 'workshop' ? <FontAwesomeIcon icon={faGavel} /> : <FontAwesomeIcon icon={faHotdog} />}</Button>
+              </div>
+              <div className={styles.listItem}>
+                {
+                  listItemsBoard
+                    .slice((pageBoard - 1) * 5)
+                    .map((item, index) => {
+                      if (index < 5) {
+                        return (
+                          <ItemLayout item={item} />
+                        )
+                      }
+                    })
+
+                }
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )
