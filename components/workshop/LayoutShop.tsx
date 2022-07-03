@@ -1,5 +1,8 @@
 import {
+  Box,
   Button,
+  Input,
+  Stack,
   Table,
   TableCaption,
   TableContainer,
@@ -29,8 +32,26 @@ import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBowlFood, faSackXmark, faFilter, faFish, faHotdog, faGavel, faGem } from '@fortawesome/free-solid-svg-icons'
+import {
+  faBowlFood,
+  faSackXmark, faFilter,
+  faFish,
+  faHotdog,
+  faGavel,
+  faGem,
+  faArrowLeft,
+  faArrowRight,
+  faSackDollar,
+  faMagnifyingGlass,
+} from '@fortawesome/free-solid-svg-icons'
 import ItemLayout from './ItemLayout'
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+} from '@chakra-ui/react'
 
 type Props = {
   isPage: string
@@ -48,19 +69,26 @@ export default function LayoutShop(props: Props) {
   const [buyDetail, setBuyDetail] = useState({})
   const [isLoading, setIsLoading] = useState(false)
   const [sellingPage, setSellingPage] = useState(true)
+  const [contentSearch, setContentSearch] = useState('')
+  const [listItemDefault, setListItemDefault] = useState([])
   const inventoryRef = useRef<InventoryRef>()
+  const initRef = useRef()
   const handleTxStateChange = useTransactionState()
 
   const handleGetOreOrSushiList = async () => {
     const data = await getListingIDs(false)
     if (isPage === 'workshop') {
       setListItemsBoard(data.filter((listing) => listing.trait === 2))
+      setListItemDefault(data.filter((listing) => listing.trait === 2))
     } else {
       setListItemsBoard(
         data.filter(
           (listing) => listing.trait === 4 && listing?.items?.length !== 0
         )
       )
+      setListItemDefault(data.filter(
+        (listing) => listing.trait === 4 && listing?.items?.length !== 0
+      ))
     }
 
   }
@@ -69,12 +97,16 @@ export default function LayoutShop(props: Props) {
     const data = await getListingIDs(false)
     if (isPage === 'workshop') {
       setListItemsBoard(data.filter((listing) => listing.trait === 3))
+      setListItemDefault(data.filter((listing) => listing.trait === 3))
     } else {
       setListItemsBoard(
         data.filter(
           (listing) => listing.trait === 1 && listing?.items?.length !== 0
         )
       )
+      setListItemDefault(data.filter(
+        (listing) => listing.trait === 1 && listing?.items?.length !== 0
+      ))
     }
   }
 
@@ -84,15 +116,17 @@ export default function LayoutShop(props: Props) {
       const myOreList = data?.filter(
         (item) => item?.trait === 2 || item?.trait === 3
       )
+
       setListItemsBoard(myOreList)
+      setListItemDefault(myOreList)
     } else {
       const myFoodCourtList = data?.filter(
         (item) => item?.trait === 1 || item?.trait === 4
       )
       setListItemsBoard(myFoodCourtList)
+      setListItemDefault(myFoodCourtList)
     }
   }
-
 
   useEffect(() => {
     handleGetOreOrSushiList()
@@ -106,6 +140,8 @@ export default function LayoutShop(props: Props) {
       } else if (item === 'hammer' || item === 'fish') {
         handleGetHammerOrFishList()
       } else {
+        setListItemsBoard([])
+        setSellingPage(false)
         handleGetMyList()
       }
     },
@@ -128,6 +164,7 @@ export default function LayoutShop(props: Props) {
   )
 
   const handleIncreasePage = useCallback(() => {
+
     if (listItemsBoard.slice(pageBoard * 5).length !== 0) {
       setPageBoard(pageBoard + 1)
     }
@@ -195,6 +232,68 @@ export default function LayoutShop(props: Props) {
     if (isItemBoard === itemName) {
       return styles.selected
     }
+  }
+
+  const renderTotalPage = () => {
+    if (listItemsBoard.length % 5 === 0) {
+      return listItemsBoard.length
+    } else return Math.floor(listItemsBoard.length / 5) + 1
+  }
+
+  const handleClickSellingPage = (item) => () => {
+    setListItemsBoard([])
+    setSellingPage(item)
+    handleGetOreOrSushiList()
+    setIsItemBoard(isPage === 'workshop' ? 'ore' : 'sushi')
+  }
+
+  const sortItem = (item) => () => {
+    const listItemsBoardNew = [...listItemsBoard]
+    if (item === 1) {
+      for (let i = 0; i < listItemsBoardNew.length - 1; i++) {
+        for (let j = i + 1; j < listItemsBoardNew.length; j++) {
+          if (Number(listItemsBoardNew[i].id) < Number(listItemsBoardNew[j].id)) {
+            [listItemsBoardNew[i], listItemsBoardNew[j]] = [listItemsBoardNew[j], listItemsBoardNew[i]]
+          }
+        }
+      }
+      setListItemsBoard(listItemsBoardNew)
+    }
+    else if (item === 2) {
+      const listItemsBoardNew = [...listItemsBoard]
+      for (let i = 0; i < listItemsBoardNew.length - 1; i++) {
+        for (let j = i + 1; j < listItemsBoardNew.length; j++) {
+          if (Number(listItemsBoardNew[i].price) > Number(listItemsBoardNew[j].price)) {
+            [listItemsBoardNew[i], listItemsBoardNew[j]] = [listItemsBoardNew[j], listItemsBoardNew[i]]
+          }
+        }
+      }
+      setListItemsBoard(listItemsBoardNew)
+    }
+
+    else if (item === 3) {
+      const listItemsBoardNew = [...listItemsBoard]
+      for (let i = 0; i < listItemsBoardNew.length - 1; i++) {
+        for (let j = i + 1; j < listItemsBoardNew.length; j++) {
+          if (Number(listItemsBoardNew[i].price) < Number(listItemsBoardNew[j].price)) {
+            [listItemsBoardNew[i], listItemsBoardNew[j]] = [listItemsBoardNew[j], listItemsBoardNew[i]]
+          }
+        }
+      }
+      setListItemsBoard(listItemsBoardNew)
+    }
+  }
+  const searchAddress = () => {
+    const listItemFilter = listItemDefault.filter((item) => {
+      const address = item.seller.toUpperCase()
+      return address.includes(contentSearch.toUpperCase()) && item
+    })
+    setListItemsBoard(listItemFilter)
+
+  }
+
+  const changeContentSearch = (e) => {
+    setContentSearch(e.target.value)
   }
 
   return (
@@ -322,62 +421,136 @@ export default function LayoutShop(props: Props) {
               </Table>
             </TableContainer>
           </div>
-          <BuyerBoard
-            isOpen={isOpenBuyBoard}
-            toggleModalBuyModal={onToggleBuyerBoard}
-            buyDetail={buyDetail}
-            handlePurchaseItem={_handlePurchaseItem}
-          />
           <Link href="/">
             <a className={`${styles.backBtn} click-cursor`}></a>
           </Link>
 
-          <Inventory ref={inventoryRef} />
-
           <BackButton />
         </div>
-        {/* <LayoutShopMobile /> */}
+        
+        {/* MOBILE */}
         <div className={styles.backgroundLayout}>
           <div className={styles.nav}>
-            <Button className={sellingPage && styles.selected}>
+            <Button
+              onClick={handleClickSellingPage(true)}
+              className={sellingPage && styles.selected}>
               {isPage === 'workshop'
                 ? <><FontAwesomeIcon icon={faGavel} />Workshop</>
                 : <><FontAwesomeIcon icon={faBowlFood} />Food Court</>}
             </Button>
-            <Button><FontAwesomeIcon icon={faSackXmark} />My Stall</Button>
-            <Button>Fill<FontAwesomeIcon style={{ marginLeft: '5px' }} icon={faFilter} /></Button>
-          </div>
-          <div className={styles.body}>
-            <div className={styles.container}>
-              <div className={styles.containerTitle}>
-                {
-                  isPage === 'workshop'
-                    ? <img src="/images/workshop/mobile/logo-head-workshop.png" alt="workshop-img" />
-                    : <img src="/images/workshop/mobile/logo-head-foodcourt.png" alt="foodcourt-img" />
-                }
-                <div className={styles.containerTitleText}>Selling Items</div>
-              </div>
-              <div className={styles.containerTitleButtop}>
-                <Button className={`${addClassSelected(isPage === 'workshop' ? 'ore' : 'sushi')}`} onClick={handleSelectItemBoard(isPage === 'workshop' ? 'ore' : 'sushi')}>{isPage === 'workshop' ? <FontAwesomeIcon icon={faGem} /> : <FontAwesomeIcon icon={faFish} />}</Button>
-                <Button className={`${addClassSelected(isPage === 'workshop' ? 'hammer' : 'fish')}`} onClick={handleSelectItemBoard(isPage === 'workshop' ? 'hammer' : 'fish')}>{isPage === 'workshop' ? <FontAwesomeIcon icon={faGavel} /> : <FontAwesomeIcon icon={faHotdog} />}</Button>
-              </div>
-              <div className={styles.listItem}>
-                {
-                  listItemsBoard
-                    .slice((pageBoard - 1) * 5)
-                    .map((item, index) => {
-                      if (index < 5) {
-                        return (
-                          <ItemLayout item={item} />
-                        )
-                      }
-                    })
+            <Button
+              className={!sellingPage && styles.selected}
+              onClick={handleSelectItemBoard('mine')}>
+              <FontAwesomeIcon icon={faSackXmark} />My Stall
+            </Button>
+            {sellingPage
+              ? <Popover placement='bottom-end' initialFocusRef={initRef}>
+                {({ onClose }) => (
+                  <>
+                    <PopoverTrigger>
+                      <Button>Fill
+                        <FontAwesomeIcon style={{ marginLeft: '5px' }} icon={faFilter} />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent sx={{ width: '280px', color: '#F0E0D0' }} className={styles.poppover}>
+                      <Box onClick={sortItem(1)}><PopoverHeader onClick={onClose}>Newest</PopoverHeader></Box>
+                      <Box onClick={sortItem(2)}><PopoverHeader onClick={onClose}>Low to high price</PopoverHeader></Box>
+                      <Box onClick={sortItem(3)}><PopoverHeader onClick={onClose}>High price to low</PopoverHeader></Box>
+                      <PopoverBody>
+                        <Stack spacing={3}>
+                          <Box sx={{ background: '#627F9C', borderRadius: '16px', display: 'flex' }}>
+                            <Input onChange={changeContentSearch} sx={{ background: '#D9D9D9', borderRadius: '16px', width: '85%', color: 'rgba(63, 79, 95, 0.7)' }} placeholder='Searching address...' size='sm' />
+                            <Box onClick={searchAddress}><Button onClick={onClose} sx={{ background: 'transparent !important', margin: '0 !important' }}><FontAwesomeIcon icon={faMagnifyingGlass} /></Button></Box>
+                          </Box>
+                        </Stack>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </>
+                )}
 
-                }
+              </Popover>
+              : <Button onClick={inventoryRef.current?.open}
+                style={{ background: '#DB790B' }}
+              >
+                <FontAwesomeIcon icon={faSackDollar} />
+                Push Items
+              </Button>}
+          </div>
+          <div className={styles.overlayBody}>
+            <div className={styles.body}>
+              <div className={styles.container}>
+                <div className={styles.containerTitle}>
+                  {
+                    isPage === 'workshop'
+                      ? <img src="/images/workshop/mobile/logo-head-workshop.png" alt="workshop-img" />
+                      : <img src="/images/workshop/mobile/logo-head-foodcourt.png" alt="foodcourt-img" />
+                  }
+                  <div className={styles.containerTitleText}>{sellingPage ? 'Selling Items' : 'My Selling Items'}</div>
+                </div>
+                {sellingPage && <>
+                  <div className={styles.containerTitleButtop}>
+                    <Button
+                      className={`${addClassSelected(isPage === 'workshop' ? 'ore' : 'sushi')}`}
+                      onClick={handleSelectItemBoard(isPage === 'workshop' ? 'ore' : 'sushi')}
+                    >
+                      {isPage === 'workshop'
+                        ? <FontAwesomeIcon icon={faGem} />
+                        : <FontAwesomeIcon icon={faHotdog} />}
+                    </Button>
+                    <Button
+                      className={`${addClassSelected(isPage === 'workshop' ? 'hammer' : 'fish')}`}
+                      onClick={handleSelectItemBoard(isPage === 'workshop' ? 'hammer' : 'fish')}>
+                      {isPage === 'workshop' ? <FontAwesomeIcon icon={faGavel} />
+                        : <FontAwesomeIcon icon={faFish} />}
+                    </Button>
+                  </div>
+                </>}
+                <div className={`${styles.listItem} ${!sellingPage && styles.listItemMyStall}`}>
+                  {
+                    listItemsBoard
+                      .slice((pageBoard - 1) * 5)
+                      .map((item, index) => {
+                        if (index < 5) {
+                          return (
+                            <div key={index}>
+                              <ItemLayout
+                                item={item}
+                                handleBuyItem={handleBuyItem}
+                                isItemBoard={isItemBoard}
+                                handleCancelItem={handleCancelItem} />
+                            </div>
+                          )
+                        }
+                      })
+                  }
+                </div>
+
+                {listItemsBoard.length !== 0 && <div className={styles.paginationMobile}>
+                  <Button
+                    disabled={pageBoard === 1}
+                    onClick={handlePreviousPage}>
+                    <FontAwesomeIcon icon={faArrowLeft} />
+                  </Button>
+                  Page
+                  <div>{pageBoard}</div>
+                  of {renderTotalPage()}
+                  <Button
+                    disabled={listItemsBoard.slice(pageBoard * 5).length === 0}
+                    onClick={handleIncreasePage}>
+                    <FontAwesomeIcon icon={faArrowRight} />
+                  </Button>
+                </div>}
               </div>
             </div>
           </div>
         </div>
+        {isOpenBuyBoard && <BuyerBoard
+          isOpen={isOpenBuyBoard}
+          toggleModalBuyModal={onToggleBuyerBoard}
+          buyDetail={buyDetail}
+          handlePurchaseItem={_handlePurchaseItem}
+        />}
+        <Inventory ref={inventoryRef} />
       </div>
     </>
   )

@@ -2,16 +2,18 @@ import { Button } from '@chakra-ui/react'
 import styles from './ItemLayoutStyle.module.css'
 
 type Props = {
-  item: object
+  item: object,
+  handleBuyItem: (object) => () => void,
+  handleCancelItem: (object) => () => void,
+  isItemBoard: string
 }
 
 export default function ItemLayout(props: Props) {
-  const { item } = props
-
+  const { item, handleBuyItem, handleCancelItem, isItemBoard } = props
   const renderNameItem = () => {
     if (item['trait'] === 1) {
       return 'Fish'
-    } 
+    }
     else if (item['trait'] === 2) {
       return 'Ore'
     }
@@ -26,7 +28,7 @@ export default function ItemLayout(props: Props) {
   const renderItemImg = () => {
     if (item['trait'] === 1) {
       return <img src="/images/workshop/mobile/fish.png" alt="" />
-    } 
+    }
     else if (item['trait'] === 2) {
       return <img src="/images/workshop/mobile/ore.png" alt="" />
     }
@@ -37,7 +39,7 @@ export default function ItemLayout(props: Props) {
       return <img src="/images/workshop/mobile/sushi.png" alt="" />
     }
   }
-  
+
   return (
     <div className={styles.itemContainer}>
       <div className={styles.itemContainerHead}>
@@ -52,7 +54,8 @@ export default function ItemLayout(props: Props) {
         </div>
         <div className={styles.itemQuantity}>
           <div className={styles.quantity}>Available: {item['items'].length}</div>
-          <Button>Buy</Button>
+          {isItemBoard === 'mine' ? <Button onClick={handleCancelItem(item)}>Cancel</Button>
+          : <Button onClick={handleBuyItem(item)}>Buy</Button>}
         </div>
       </div>
       <div className={styles.itemContainerBody}>
