@@ -112,10 +112,8 @@ export default function Castle() {
     }
 
     checkWindowWidth()
-    if (isMobile) {
-      fetchNFTAmount()
-      fetchNFTPrices()
-    }
+    fetchNFTAmount()
+    fetchNFTPrices()
 
     window.addEventListener('resize', checkWindowWidth)
 
