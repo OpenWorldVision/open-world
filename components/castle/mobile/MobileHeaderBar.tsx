@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import { getOpenBalance } from 'utils/checkBalanceOpen'
 import styles from './MobileHeaderBar.module.css'
 
 const MobileHeaderBar = (props) => {
@@ -9,13 +8,6 @@ const MobileHeaderBar = (props) => {
     (state: any) => state.ProfileStore.openBalance
   )
   const numberOpen = parseInt(balanceOpen)
-  //   useEffect(() => {
-  //     const balance = getBalance();
-  //   }, [])
-  //   const getBalance = async () => {
-  //     const amountOpen = await getOpenBalance(false);
-  //     return amountOpen
-  //   }
   return (
     <div className={styles.container}>
       <div className={styles.containerHeader}>
