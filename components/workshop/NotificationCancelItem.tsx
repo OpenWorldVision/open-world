@@ -68,9 +68,9 @@ export default function NotificationCancelItem(props: Props) {
       isCentered
       size="xl"
     >
-      {/* backgroundColor='#fff' */}
+      {/* background: rgb(70 70 70 / 48%); */}
       <ModalOverlay />
-      <ModalContent bg="transparent">
+      <ModalContent bg="transparent" boxShadow="none">
         <ModalBody padding={0}>
           <div className={styles.modalMobile}>
             <div className={styles.buyBoardMobile}>Withdraw Items</div>

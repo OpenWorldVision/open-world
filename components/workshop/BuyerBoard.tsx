@@ -117,10 +117,10 @@ function BuyerBoard(props: Props) {
 
   const renderItemInfo = () => {
     if (buyDetail['trait'] === 1) {
-      return 'Fish is the main ingredient for making Sushi and Suppliers are paying good money for them.Let & apos; s go catch some!!!'
+      return "Fish is the main ingredient for making Sushi and Suppliers are paying good money for them.Let's go catch some!!!"
     }
     else if (buyDetail['trait'] === 2) {
-      return 'Ore is the main material to make Hammers and BlackSmiths are paying good money for them. Let&apos;s go mine some !!!'
+      return "Ore is the main material to make Hammers and BlackSmiths are paying good money for them. Let's go mine some !!!"
     }
     else if (buyDetail['trait'] === 3) {
       return 'Hammer is item that help Openians doing their Mining quest'
@@ -139,7 +139,7 @@ function BuyerBoard(props: Props) {
       size="xl"
     >
       <ModalOverlay />
-      <ModalContent bg="transparent">
+      <ModalContent bg="transparent" boxShadow="none">
         <ModalBody padding={0}>
           {!isShowNoti && (
             <>
