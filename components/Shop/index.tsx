@@ -16,6 +16,7 @@ import ConfirmationModal, { ConfirmationModalRef } from './ConfirmationModal'
 import Item from './Item'
 
 export type ShopRef = {
+  isOpen: boolean
   open: () => void
   close: () => void
 }
@@ -33,6 +34,7 @@ function Shop(_, ref) {
   useImperativeHandle(
     ref,
     () => ({
+      isOpen: isOpen,
       open: onToggle,
       close: onToggle,
     }),
