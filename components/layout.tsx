@@ -13,9 +13,6 @@ import Shop, { ShopRef } from '@components/Shop'
 import Inventory, { InventoryRef } from '@components/professions/Inventory'
 import WorldMenu from '@components/worldmap/WorldMenu'
 import { useMediaQuery } from '@chakra-ui/react'
-import Shop, { ShopRef } from '@components/Shop'
-import Inventory, { InventoryRef } from '@components/professions/Inventory'
-import WorldMenu from '@components/worldmap/WorldMenu'
 
 export const siteTitle = 'Open World #Metaverse'
 
