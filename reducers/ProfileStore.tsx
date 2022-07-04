@@ -1,5 +1,6 @@
 export const initState: any = {
   profile: null,
+  openBalance: 0,
 }
 
 const ProfileStore = (state = initState, action) => {
@@ -17,6 +18,12 @@ const ProfileStore = (state = initState, action) => {
           _profession: action.payload.profession,
         },
       }
+    case 'SET_OPEN_BALANCE': {
+      return {
+        ...state,
+        openBalance: action.payload,
+      }
+    }
     default:
       return state
   }

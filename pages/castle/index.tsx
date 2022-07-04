@@ -3,9 +3,12 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import style from '@components/castle/castle.module.css'
 import CastleModal from '@components/castle/CastleModal'
 import LandAuction from '@components/castle/LandAuction'
-import { ButtonGroup, Button, Flex } from '@chakra-ui/react'
+import { ButtonGroup, Button, Flex, useMediaQuery } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
+import styles from '@components/castle/mobile/MobileHeaderBar.module.css'
+import MobileHeaderBar from '@components/castle/mobile/MobileHeaderBar'
+import CastleLayout from '@components/castle/mobile/CastleLayout'
 
 export default function Castle() {
   // Ref
@@ -18,6 +21,8 @@ export default function Castle() {
   const [action, setAction] = useState(0)
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [isMobile] = useMediaQuery('(max-width: 1014px)')
+  const [showModalBuy, setShowModalBuy] = useState(false)
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -38,26 +43,28 @@ export default function Castle() {
     setIsLandAuctionOpen(true)
   }, [])
 
+  const _onBuyNFT = useCallback((nft) => {
+    //get nft to open modal
+  }, [])
+
+  const renderMobileUI = useCallback(() => {
+    return (
+      <>
+        <MobileHeaderBar />
+        <CastleLayout onPressBuyNFT={_onBuyNFT} />
+      </>
+    )
+  }, [])
+
   return (
     <div className={`${style.castleOverlay} overlay`}>
       <Head>
-        <title>Castle</title>
+        <title>{!isMobile ? 'Castle' : 'Mobile Castle'}</title>
       </Head>
-      <TransformWrapper
-        initialPositionX={0}
-        initialPositionY={0}
-        centerOnInit={true}
-        wheel={{
-          disabled: true,
-        }}
-        doubleClick={{
-          disabled: true,
-        }}
-        panning={{
-          disabled: windowWidth >= 1858,
-        }}
-      >
-        <TransformComponent wrapperStyle={{ height: '100vh', width: '100vw' }}>
+      {isMobile ? (
+        renderMobileUI()
+      ) : (
+        <div className={styles.webContainer}>
           <div
             ref={castleOverlay}
             className={`${style.castleContainer} overlay`}
@@ -80,8 +87,8 @@ export default function Castle() {
               </Link>
             </div>
           </div>
-        </TransformComponent>
-      </TransformWrapper>
+        </div>
+      )}
 
       <CastleModal
         isOpen={isLandAuctionModalOpen}

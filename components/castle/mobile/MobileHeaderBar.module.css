@@ -1,0 +1,80 @@
+.containerHeader {
+  display: flex;
+  justify-content: space-between;
+  height: fit-content;
+  padding-left: 26px;
+  padding-right: 26px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.container {
+  background-color: #465763;
+}
+.webContainer {
+  width: 100%;
+  height: 100%;
+}
+.avatarUser {
+  width: 64px;
+  height: 64px;
+  border-radius: 32px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.leftSide {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+.rightSide {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-end;
+}
+.avatarUser img {
+  width: 58px;
+  height: 58px;
+  border-radius: 29px;
+}
+.balanceContainer {
+  width: 110px;
+  height: 24px;
+  border-radius: 15px;
+  background-color: #b4a787;
+  border-width: 1px;
+  border-color: #634a2e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 30px;
+}
+.coinIcon {
+  background-image: url('/images/castle/mobile/coin2.webp');
+  background-size: 100% 100%;
+  width: 32px;
+  height: 32px;
+  flex: 0.3;
+}
+.openValueText {
+  font-size: 0.8rem;
+  color: #412300;
+  line-height: normal;
+  text-align: right;
+  flex: 0.7;
+  margin-right: 8px;
+}
+.moreIcon {
+  background-image: url('/images/castle/mobile/more.webp');
+  background-size: 100% 100%;
+  width: 48px;
+  height: 48px;
+}
+.line {
+  background-color: #847967;
+  width: 100%;
+  height: 2px;
+  margin-bottom: 4px;
+}

@@ -12,17 +12,22 @@ import { updateIsConnected } from 'reduxActions/isConnectedAction'
 import Shop, { ShopRef } from '@components/Shop'
 import Inventory, { InventoryRef } from '@components/professions/Inventory'
 import WorldMenu from '@components/worldmap/WorldMenu'
+import { useMediaQuery } from '@chakra-ui/react'
 
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
-  const [currentActiveMenu, setCurrentActiveMenu] = useState<'inventory' | 'shop' | 'town' | 'none'>('town')
+  const [currentActiveMenu, setCurrentActiveMenu] = useState<
+    'inventory' | 'shop' | 'town' | 'none'
+  >('town')
+  const [isMobile] = useMediaQuery('(max-width: 1014px)')
   const dispatch = useDispatch()
   const shopRef = useRef<ShopRef>()
   const inventoryRef = useRef<InventoryRef>()
 
+  const isCastleMobileUI = isMobile && window.location.href.includes('castle')
 
   const isConnected = useSelector(
     (state: any) => state.IsConnectedStore.isConnected
@@ -129,7 +134,8 @@ export default function Layout({ children, home }) {
       {isConnected && (
         <>
           {children}
-          {!window.location.href.includes('market') && (
+          {window.location.href.includes('market') ||
+          isCastleMobileUI ? null : (
             <header className={styles.headerMenu}>
               <Menu />
               <User />

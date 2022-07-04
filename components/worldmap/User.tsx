@@ -4,7 +4,7 @@ import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
 import { getProfile, getStamina } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
-import { setProfile } from 'reduxActions/profileAction'
+import { setOpenBalance, setProfile } from 'reduxActions/profileAction'
 import Inventory, { InventoryRef } from '../professions/Inventory'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 import {
@@ -156,10 +156,11 @@ export default function User() {
     }
   }, [dispatch])
 
-  const getBalance = async () => {
+  const getBalance = useCallback(async () => {
     const balance = await getOpenBalance(true)
+    dispatch(setOpenBalance(balance))
     setBalance(balance)
-  }
+  }, [dispatch])
 
   const handleGetStamina = useCallback(async () => {
     const stamina = await getStamina()
