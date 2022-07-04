@@ -13,6 +13,9 @@ import Shop, { ShopRef } from '@components/Shop'
 import Inventory, { InventoryRef } from '@components/professions/Inventory'
 import WorldMenu from '@components/worldmap/WorldMenu'
 import { useMediaQuery } from '@chakra-ui/react'
+import Shop, { ShopRef } from '@components/Shop'
+import Inventory, { InventoryRef } from '@components/professions/Inventory'
+import WorldMenu from '@components/worldmap/WorldMenu'
 
 export const siteTitle = 'Open World #Metaverse'
 
@@ -23,6 +26,9 @@ export default function Layout({ children, home }) {
     'inventory' | 'shop' | 'town' | 'none'
   >('town')
   const [isMobile] = useMediaQuery('(max-width: 1014px)')
+  const [currentActiveMenu, setCurrentActiveMenu] = useState<
+    'inventory' | 'shop' | 'town' | 'none'
+  >('town')
   const dispatch = useDispatch()
   const shopRef = useRef<ShopRef>()
   const inventoryRef = useRef<InventoryRef>()
