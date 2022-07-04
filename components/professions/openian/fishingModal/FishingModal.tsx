@@ -13,7 +13,7 @@ import { getStamina } from 'utils/profileContract'
 import WaitingModal from './WaitingModal'
 import FinishModal from './FinishModal'
 import DefaultModal from './DefaultModal'
-import { addHours, fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
+import { addHours, millisecondsToHours, fromUnixTime, intervalToDuration, isBefore } from 'date-fns'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
@@ -44,6 +44,7 @@ function FishingModal(props: Props) {
   const handleTxStateChange = useTransactionState()
 
   const initialize = useCallback(async () => {
+    setLoading(true)
     const fishingQuest = await getFishingQuest()
     const data = await fetchFishingQuestData()
 
@@ -100,10 +101,11 @@ function FishingModal(props: Props) {
     if (!isOk) {
       return
     }
+
     setTimeLeft(
       intervalToDuration({
         start: new Date(),
-        end: addHours(new Date(), 12),
+        end: addHours(new Date(), duration/3600),
       })
     )
     toggleLoadingModal(true)
