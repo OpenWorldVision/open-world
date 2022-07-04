@@ -65,6 +65,7 @@ export default function LayoutShop(props: Props) {
   const [listItemsBoard, setListItemsBoard] = useState([])
   const { isOpen: isOpenBuyBoard, onToggle: onToggleBuyerBoard } =
     useDisclosure()
+
   const [pageBoard, setPageBoard] = useState(1)
   const [buyDetail, setBuyDetail] = useState({})
   const [isLoading, setIsLoading] = useState(false)
@@ -149,15 +150,19 @@ export default function LayoutShop(props: Props) {
   )
   const handleCancelItem = useCallback(
     (item) => async () => {
+      setIsLoading(true)
       const title = isPage === 'workshop' ? `Cancel listing item in Workshop` : `Cancel listing item in Food Court`
       const data = await cancelListingItem(item?.id, (txHash) => {
         handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        setIsLoading(false)
       })
       if (data) {
         handleTxStateChange(title, data.transactionHash, data.status)
         handleGetMyList()
+        setIsLoading(false)
       } else {
         handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        setIsLoading(false)
       }
     },
     []
@@ -250,17 +255,9 @@ export default function LayoutShop(props: Props) {
   const sortItem = (item) => () => {
     const listItemsBoardNew = [...listItemsBoard]
     if (item === 1) {
-      for (let i = 0; i < listItemsBoardNew.length - 1; i++) {
-        for (let j = i + 1; j < listItemsBoardNew.length; j++) {
-          if (Number(listItemsBoardNew[i].id) < Number(listItemsBoardNew[j].id)) {
-            [listItemsBoardNew[i], listItemsBoardNew[j]] = [listItemsBoardNew[j], listItemsBoardNew[i]]
-          }
-        }
-      }
-      setListItemsBoard(listItemsBoardNew)
+      setListItemsBoard(listItemDefault.reverse())
     }
     else if (item === 2) {
-      const listItemsBoardNew = [...listItemsBoard]
       for (let i = 0; i < listItemsBoardNew.length - 1; i++) {
         for (let j = i + 1; j < listItemsBoardNew.length; j++) {
           if (Number(listItemsBoardNew[i].price) > Number(listItemsBoardNew[j].price)) {
@@ -272,7 +269,6 @@ export default function LayoutShop(props: Props) {
     }
 
     else if (item === 3) {
-      const listItemsBoardNew = [...listItemsBoard]
       for (let i = 0; i < listItemsBoardNew.length - 1; i++) {
         for (let j = i + 1; j < listItemsBoardNew.length; j++) {
           if (Number(listItemsBoardNew[i].price) < Number(listItemsBoardNew[j].price)) {
@@ -283,6 +279,7 @@ export default function LayoutShop(props: Props) {
       setListItemsBoard(listItemsBoardNew)
     }
   }
+
   const searchAddress = () => {
     const listItemFilter = listItemDefault.filter((item) => {
       const address = item.seller.toUpperCase()
@@ -399,7 +396,7 @@ export default function LayoutShop(props: Props) {
                                 {isItemBoard === 'mine' ? (
                                   <Button
                                     backgroundColor={'#1e4882'}
-                                    onClick={handleCancelItem(item)}
+                                    onClick={onToggleBuyerBoard}
                                     className={`${styles.customButton} click-cursor`}
                                     _hover={{ bg: '#52241E' }}
                                   >
@@ -427,7 +424,7 @@ export default function LayoutShop(props: Props) {
 
           <BackButton />
         </div>
-        
+
         {/* MOBILE */}
         <div className={styles.backgroundLayout}>
           <div className={styles.nav}>
@@ -448,7 +445,7 @@ export default function LayoutShop(props: Props) {
                 {({ onClose }) => (
                   <>
                     <PopoverTrigger>
-                      <Button>Fill
+                      <Button>
                         <FontAwesomeIcon style={{ marginLeft: '5px' }} icon={faFilter} />
                       </Button>
                     </PopoverTrigger>

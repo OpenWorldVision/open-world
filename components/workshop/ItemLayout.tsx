@@ -1,5 +1,6 @@
-import { Button } from '@chakra-ui/react'
+import { Button, useDisclosure } from '@chakra-ui/react'
 import styles from './ItemLayoutStyle.module.css'
+import NotificationCancelItem from './NotificationCancelItem'
 
 type Props = {
   item: object,
@@ -10,6 +11,8 @@ type Props = {
 
 export default function ItemLayout(props: Props) {
   const { item, handleBuyItem, handleCancelItem, isItemBoard } = props
+  const { isOpen: isOpenCancelBoard, onToggle: onToggleCancelBoard } =
+    useDisclosure()
   const renderNameItem = () => {
     if (item['trait'] === 1) {
       return 'Fish'
@@ -41,27 +44,30 @@ export default function ItemLayout(props: Props) {
   }
 
   return (
-    <div className={styles.itemContainer}>
-      <div className={styles.itemContainerHead}>
-        <div className={styles.itemBackground}>
-          <div className={styles.imgContainer}>
-            {renderItemImg()}
+    <>
+      <div className={styles.itemContainer}>
+        <div className={styles.itemContainerHead}>
+          <div className={styles.itemBackground}>
+            <div className={styles.imgContainer}>
+              {renderItemImg()}
+            </div>
+          </div>
+          <div className={styles.itemNamePrice}>
+            <span>{renderNameItem()}</span>
+            <div className={styles.price}><span>{item['price']}</span><img src="/images/workshop/mobile/coin.png" alt="coin" /></div>
+          </div>
+          <div className={styles.itemQuantity}>
+            <div className={styles.quantity}>Available: {item['items'].length}</div>
+            {isItemBoard === 'mine' ? <Button onClick={onToggleCancelBoard}>Cancel</Button>
+              : <Button onClick={handleBuyItem(item)}>Buy</Button>}
           </div>
         </div>
-        <div className={styles.itemNamePrice}>
-          <span>{renderNameItem()}</span>
-          <div className={styles.price}><span>{item['price']}</span><img src="/images/workshop/mobile/coin.png" alt="coin" /></div>
-        </div>
-        <div className={styles.itemQuantity}>
-          <div className={styles.quantity}>Available: {item['items'].length}</div>
-          {isItemBoard === 'mine' ? <Button onClick={handleCancelItem(item)}>Cancel</Button>
-          : <Button onClick={handleBuyItem(item)}>Buy</Button>}
+        <div className={styles.itemContainerBody}>
+          <div className={styles.itemSellerTitle}>Seller</div>
+          <div className={styles.itemSellerAddress}>{`${item['seller'].slice(0, 5)}...${item['seller'].slice(item['seller'].length - 4, item['seller'].length)}`}</div>
         </div>
       </div>
-      <div className={styles.itemContainerBody}>
-        <div className={styles.itemSellerTitle}>Seller</div>
-        <div className={styles.itemSellerAddress}>{`${item['seller'].slice(0, 5)}...${item['seller'].slice(item['seller'].length - 4, item['seller'].length)}`}</div>
-      </div>
-    </div>
+      {isOpenCancelBoard && <NotificationCancelItem handleCancelItem={handleCancelItem} item={item} handleToggleCancelBoard={onToggleCancelBoard} isOpenCancelBoard={isOpenCancelBoard}/>}
+    </>
   )
 }
