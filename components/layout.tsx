@@ -26,9 +26,6 @@ export default function Layout({ children, home }) {
     'inventory' | 'shop' | 'town' | 'none'
   >('town')
   const [isMobile] = useMediaQuery('(max-width: 1014px)')
-  const [currentActiveMenu, setCurrentActiveMenu] = useState<
-    'inventory' | 'shop' | 'town' | 'none'
-  >('town')
   const dispatch = useDispatch()
   const shopRef = useRef<ShopRef>()
   const inventoryRef = useRef<InventoryRef>()
