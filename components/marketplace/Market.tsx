@@ -16,6 +16,7 @@ export default function Market() {
     const [data, setData] = useState([])
     const [status, setStatus] = useState('Loading ...')
     const handleTxStateChange = useTransactionState()
+    const [popup, setPopup] = useState(null)
 
     useEffect(() => {
         getItems()
@@ -90,7 +91,7 @@ export default function Market() {
             parseInt(value?.id), 
             value?.items, 
             (txHash) => {
-                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
             }, 
             async (error) => {
                 setData(dataInit)
@@ -100,9 +101,9 @@ export default function Market() {
         if (result) {
             setDataInit([])
             await getItems()
-            handleTxStateChange(title, result.transactionHash, result.status)
+            handleTxStateChange(title, result.transactionHash, result.status, setPopup)
         } else {
-            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
         }
     }
 
@@ -111,16 +112,16 @@ export default function Market() {
         const result = await cancelListingItem(
             value?.id,
             (txHash) => {
-                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
             }, 
         )
         if (result) {
             setStatus('Loading ...')
             setData([])
             await getItems()
-            handleTxStateChange(title, result.transactionHash, result.status)
+            handleTxStateChange(title, result.transactionHash, result.status, setPopup)
         } else {
-            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
         }
     }
 
@@ -246,6 +247,7 @@ export default function Market() {
                     <img src="./images/marketplace/back.webp" alt="img" />
                 </a>
             </Link>
+            {popup}
         </div>
     )
 }

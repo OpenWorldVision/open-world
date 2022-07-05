@@ -57,9 +57,9 @@ function RefillStaminaModal(props: Props) {
       if (availableSushi?.length < amountSushi) {
         setPopup(<Popup
           type='sushi'
-          content="Not enough sushi to recover stamina"
-          subcontent='Make sushi or buy on maket'
-          actionContent="Bye sushi"
+          content="Not enough Sushi to recover stamina"
+          subcontent='Make Sushi or buy on maket'
+          actionContent="Bye Sushi"
           setIsOpen={setPopup}
           action={() => { router.push('foodcourt') }}
         />)

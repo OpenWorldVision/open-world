@@ -84,7 +84,7 @@ export default function MiningModal(props: Props) {
         type='stamina'
         content="Mining Quest"
         subcontent={`Mining quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start mining quest.`}
-        actionContent="Bye sushi"
+        actionContent="Bye Sushi"
         setIsOpen={setPopup}
         action={() => { router.push('professions') }}
       />)

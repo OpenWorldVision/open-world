@@ -16,6 +16,7 @@ export default function DashBoard() {
     const [selected, setSelected] = useState(null)
     const [priceInput, setPriceInput] = useState(null)
     const [status, setStatus] = useState('Loading ...')
+    const [popup, setPopup] = useState(null)
     const handleTxStateChange = useTransactionState()
     
     useEffect(() => {
@@ -43,17 +44,17 @@ export default function DashBoard() {
             [selected.id], 
             Number(priceInput),
             (txHash) => {
-                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
             }
         )
         if (result) {
             setDataInit([])
             await getItems()
-            handleTxStateChange(title, result.transactionHash, result.status)
+            handleTxStateChange(title, result.transactionHash, result.status, setPopup)
         } else {
             setData(dataInit)
             setStatus('Loading ...')
-            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
         }
     }
 
@@ -222,6 +223,7 @@ export default function DashBoard() {
                     <img className='click-cursor' src="./images/marketplace/back.webp" alt="img" />
                 </a>
             </Link>
+            {popup}
         </div>
     )
 }

@@ -15,6 +15,7 @@ export default function History() {
     const [totalItems, setTotalItems] = useState(null)
     const [status, setStatus] = useState('Loading ...')
     const [isOpenNotify, setIsOpenNotify] = useState(null)
+    const [popup, setPopup] = useState(null)
     const handleTxStateChange = useTransactionState()
     
     useEffect(() => {
@@ -36,7 +37,7 @@ export default function History() {
         const result = await cancelListingItem(
             id,
             (txHash) => {
-                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
             }, 
         )
         if (result) {
@@ -151,6 +152,7 @@ export default function History() {
                         <img src="./images/marketplace/back.webp" alt="img" />
                     </a>
                 </Link>
+                {popup}
             </div>
             }
         </>

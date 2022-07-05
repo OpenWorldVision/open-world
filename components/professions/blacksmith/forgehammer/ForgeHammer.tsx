@@ -64,6 +64,7 @@ export default function ForgeHammer(props: Props) {
           forgeHammer.status,
           setPopup
         )
+        getListYourOre()
       } else {
         handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
       }

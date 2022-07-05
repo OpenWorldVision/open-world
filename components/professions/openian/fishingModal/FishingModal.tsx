@@ -88,7 +88,7 @@ function FishingModal(props: Props) {
         type='stamina'
         content="Fishing Quest"
         subcontent={`Fishing quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start fishing quest.`}
-        actionContent="Bye sushi"
+        actionContent="Bye Sushi"
         setIsOpen={setPopup}
         action={() => { router.push('foodcourt') }}
       />)

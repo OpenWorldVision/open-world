@@ -42,6 +42,7 @@ function ConfirmationModal(_, ref) {
   const { isOpen, onToggle } = useDisclosure()
   const [buyAmount, setBuyAmount] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [popup, setPopup] = useState(null)
   const handleTxStateChange = useTransactionState()
 
   useEffect(() => {
@@ -67,7 +68,7 @@ function ConfirmationModal(_, ref) {
   const handleConfirm = useCallback(async () => {
     setLoading(true)
     await buyFirstHammer((hash) => {
-      handleTxStateChange('Buy first hammer', hash, TRANSACTION_STATE.WAITING)
+      handleTxStateChange('Buy first hammer', hash, TRANSACTION_STATE.WAITING, setPopup)
     })
     setLoading(false)
     onToggle()
@@ -148,6 +149,7 @@ function ConfirmationModal(_, ref) {
           </Button>
         </ModalFooter>
       </ModalContent>
+      {popup}
     </Modal>
   )
 }
