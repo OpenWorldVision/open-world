@@ -30,8 +30,8 @@ function MenuItem({ type, currentType, onClick }: MenuItemProps) {
         src={`images/worldmap/${type}-${
           currentType === type ? 'active' : 'disabled'
         }.webp`}
-        width={90}
-        height={90}
+        width={'80px'}
+        height={'80px'}
         alt={`${type}-icon`}
       />
       <Text
@@ -44,7 +44,7 @@ function MenuItem({ type, currentType, onClick }: MenuItemProps) {
         }}
         textShadow={{
           base: '2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;',
-          lg: '2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;'
+          lg: '2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;',
         }}
       >
         {MenuItemLabel[type]}
@@ -61,8 +61,7 @@ function WorldMenu(props: Props) {
       bottom={0}
       left={0}
       right={0}
-      mb={{ lg: 20 }}
-      zIndex={2001}
+      mb={{ lg: 12 }}
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -92,7 +91,7 @@ function WorldMenu(props: Props) {
         }}
         borderRadius={{ lg: 10 }}
         alignSelf="center"
-        p="2px 20px"
+        p="2px 16px"
         gap={4}
       >
         <MenuItem type="shop" currentType={currentType} onClick={onOpenShop} />
@@ -101,7 +100,11 @@ function WorldMenu(props: Props) {
           currentType={currentType}
           onClick={onReturnToTown}
         />
-        <MenuItem type="inventory" currentType={currentType} onClick={onOpenInventory}/>
+        <MenuItem
+          type="inventory"
+          currentType={currentType}
+          onClick={onOpenInventory}
+        />
       </Box>
     </Box>
   )
