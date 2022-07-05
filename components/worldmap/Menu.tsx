@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import styled from '@emotion/styled'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 export default function Menu() {
   const [isOpenMenu, setIsOpenMenu] = useState(false)
@@ -15,6 +17,9 @@ export default function Menu() {
           className="click-cursor"
         >
           <img src="/images/worldmap/Menu.webp" alt="img" />
+          <span className="menu-mobile-icon">
+            <FontAwesomeIcon icon={faBars} />
+          </span>
         </button>
         {isOpenMenu && (
           <ul>
@@ -26,11 +31,6 @@ export default function Menu() {
               </div>
               <Link href="/">
                 <a className="click-cursor">Map</a>
-              </Link>
-            </li>
-            <li className="click-cursor">
-              <Link href="/battleArena">
-                <a className="click-cursor">Battle Arena</a>
               </Link>
             </li>
             <li className="click-cursor">
@@ -86,15 +86,22 @@ const MenuCSS = styled.div({
     top: '30px',
     right: '30px',
     zIndex: '2000',
-    '@media(max-width: 720px)': {
-      right: '10px',
+    '@media(max-width: 1024px)': {
+      position: 'unset',
+      marginLeft: '30px',
+      backgroundColor: '#405160',
+      borderRadius: '10px',
+      '.menu-mobile-icon': {
+        color: '#F0E0D0',
+        fontSize: '32px',
+      },
     },
     button: {
       width: '70px',
       height: '70px',
-      '@media(max-width: 720px)': {
-        width: '60px',
-        height: '60px',
+      '@media(max-width: 1024px)': {
+        width: '48px',
+        height: '48px',
       },
       img: {
         position: 'absolute',
@@ -102,6 +109,9 @@ const MenuCSS = styled.div({
         left: '-2px',
         'min-width': '100%',
         'min-height': '100%',
+        '@media(max-width: 1024px)': {
+          display: 'none',
+        },
       },
       div: {
         position: 'absolute',
@@ -124,8 +134,9 @@ const MenuCSS = styled.div({
       backgroundImage:
         'linear-gradient(to right, rgba(1,1,1, 0.6) , rgb(1,1,1))',
       color: 'white',
-      '@media(max-width: 720px)': {
-        top: '56px',
+      '@media(max-width: 1024px)': {
+        top: '80px',
+        width: '115px'
       },
       li: {
         padding: '4px',

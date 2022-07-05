@@ -5,44 +5,89 @@ import Menu from '@components/worldmap/Menu'
 import User from '@components/worldmap/User'
 import Entry from '@components/entry/Entry'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LoadingModal from './LoadingModal'
 import { updateIsConnected } from 'reduxActions/isConnectedAction'
-import { getProfile } from 'utils/profileContract'
-import { getWeb3Client } from '@lib/web3'
+import Shop, { ShopRef } from '@components/Shop'
+import Inventory, { InventoryRef } from '@components/professions/Inventory'
+import WorldMenu from '@components/worldmap/WorldMenu'
 
 export const siteTitle = 'Open World #Metaverse'
 
 export default function Layout({ children, home }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const [currentActiveMenu, setCurrentActiveMenu] = useState<'inventory' | 'shop' | 'town' | 'none'>('town')
   const dispatch = useDispatch()
+  const shopRef = useRef<ShopRef>()
+  const inventoryRef = useRef<InventoryRef>()
 
-  // const isProfileExist = useSelector((state: any) => {
-  //   return state.ProfileStore.profile
-  // })
+
   const isConnected = useSelector(
     (state: any) => state.IsConnectedStore.isConnected
   )
   const checkConnect = async () => {
-    // const _profile = await getProfile()
-    // const web3Client = await getWeb3Client()
     try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      })
       if (accounts) {
-        dispatch(updateIsConnected({ isConnected: true}))
+        dispatch(updateIsConnected({ isConnected: true }))
       }
     } catch {
-      dispatch(updateIsConnected({ isConnected: false}))
+      dispatch(updateIsConnected({ isConnected: false }))
     }
-    // console.log(accounts)
-    // if (_profile){
-    //   dispatch(updateIsConnected({ isConnected: true}))
-    // } else {
-    //   dispatch(updateIsConnected({ isConnected: false}))
-    // }
   }
+
+  const handleOpenShop = useCallback(() => {
+    if (inventoryRef.current?.isOpen) {
+      inventoryRef.current?.close()
+    }
+
+    shopRef.current?.open()
+
+    if (!shopRef.current?.isOpen) {
+      setCurrentActiveMenu('shop')
+    } else {
+      checkIfAtTown()
+    }
+  }, [])
+
+  const handleOpenInventory = useCallback(() => {
+    if (shopRef.current?.isOpen) {
+      shopRef.current?.close()
+    }
+
+    inventoryRef.current?.open()
+
+    if (!inventoryRef.current?.isOpen) {
+      setCurrentActiveMenu('inventory')
+    } else {
+      checkIfAtTown()
+    }
+  }, [])
+
+  const handleReturnToTown = useCallback(() => {
+    if (inventoryRef.current?.isOpen) {
+      inventoryRef.current?.close()
+    }
+
+    if (shopRef.current?.isOpen) {
+      shopRef.current?.close()
+    }
+
+    router.push('/')
+    setCurrentActiveMenu('town')
+  }, [])
+
+  const checkIfAtTown = useCallback(() => {
+    if (window.location.pathname === '/') {
+      setCurrentActiveMenu('town')
+    } else {
+      setCurrentActiveMenu('none')
+    }
+  }, [])
 
   useEffect(() => {
     router.events.on('routeChangeStart', () => {
@@ -50,8 +95,10 @@ export default function Layout({ children, home }) {
     })
 
     router.events.on('routeChangeComplete', () => {
+      checkIfAtTown()
       setIsLoading(false)
     })
+
     checkConnect()
   }, [])
   return (
@@ -83,13 +130,23 @@ export default function Layout({ children, home }) {
         <>
           {children}
           {!window.location.href.includes('market') && (
-            <>
+            <header className={styles.headerMenu}>
               <Menu />
               <User />
-            </>
+            </header>
           )}
+          {/* @ts-ignore */}
+          <Shop ref={shopRef} />
+          <Inventory ref={inventoryRef} />
+          <WorldMenu
+            currentType={currentActiveMenu}
+            onOpenShop={handleOpenShop}
+            onReturnToTown={handleReturnToTown}
+            onOpenInventory={handleOpenInventory}
+          />
         </>
       )}
+
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">

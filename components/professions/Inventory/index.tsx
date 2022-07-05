@@ -28,12 +28,13 @@ type Item = {
   ids: number[]
 }
 export type InventoryRef = {
+  isOpen: boolean
   open: () => void
   close: () => void
 }
 
 function Inventory(_, ref) {
-  const { isOpen, onClose, onOpen } = useDisclosure()
+  const { isOpen, onToggle } = useDisclosure()
   const [selectedItem, setSelectedItem] = useState<Item>(null)
   const [price, setPrice] = useState(null)
   const [amountItems, setAmountItems] = useState(null)
@@ -45,10 +46,11 @@ function Inventory(_, ref) {
   useImperativeHandle(
     ref,
     () => ({
-      open: onOpen,
-      close: onClose,
+      isOpen: isOpen,
+      open: onToggle,
+      close: onToggle,
     }),
-    [onClose, onOpen]
+    [onToggle]
   )
   useEffect(() => {
     getItemsIndex()
@@ -132,7 +134,7 @@ function Inventory(_, ref) {
   }, [selectedItem?.ids?.length])
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="full">
+    <Modal isOpen={isOpen} onClose={onToggle} isCentered size="full">
       <ModalOverlay />
       <ModalContent>
         <ModalBody paddingStart={0}>
@@ -166,7 +168,7 @@ function Inventory(_, ref) {
                       loading={!data}
                       data={data}
                       onClickItem={handleSelectItem}
-                      onClose={onClose}
+                      onClose={onToggle}
                     />
                     <div className="container-2">
                       <div className="container-2-body">
@@ -286,6 +288,9 @@ const InventoryCSS = styled.div({
         height: '90vh',
         overflow: 'auto',
         width: '100vw',
+        '@media (max-width: 1024px)': {
+          padding: '80px 0',
+        },
         '.container-notify': {
           flex: 1,
           maxWidth: '750px',

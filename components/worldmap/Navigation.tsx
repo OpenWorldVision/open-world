@@ -7,7 +7,6 @@ function Navigation() {
       <NavigationItem title="market" pageName="market" />
       <NavigationItem title="work shop" pageName="workshop" />
       <NavigationItem title="food court" pageName="foodcourt" />
-      <NavigationItem title="battle arena" pageName="battleArena" />
       <NavigationItem title="professions" pageName="professions" />
     </>
   )

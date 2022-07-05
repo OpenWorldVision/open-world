@@ -83,11 +83,14 @@
   align-items: center;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
+  .castleContainer {
+    height: calc(100vh - 150px);
+  }
   .backBtn {
     width: 100px !important;
     height: 75px !important;
-    bottom: 0;
+    bottom: 100px;
     left: 15px;
   }
 }
