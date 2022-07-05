@@ -20,15 +20,13 @@
 }
 .backgroundText {
   font-weight: 700;
-  font-size: 13px;
-  line-height: 16px;
+  font-size: 15px;
+  line-height: 18px;
   color: #fff;
   max-width: 240px;
   text-align: center;
-  padding-left: 24px;
-  padding-right: 24px;
-}
-.classImage {
+  padding-left: 12px;
+  padding-right: 12px;
 }
 .containerList {
   background-color: #3f4f5f;
@@ -36,6 +34,7 @@
   height: fit-content;
   border-radius: 10px;
   margin-top: 32px;
+  padding-bottom: 64px;
 }
 .containerListInside {
   background-color: #c8bb98;

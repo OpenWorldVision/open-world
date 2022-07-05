@@ -1,3 +1,4 @@
+import Menu from '@components/worldmap/Menu'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import styles from './MobileHeaderBar.module.css'
@@ -28,7 +29,7 @@ const MobileHeaderBar = (props) => {
             <div className={styles.openValueText}>{numberOpen}</div>
             <div className={styles.coinIcon} />
           </div>
-          <div className={styles.moreIcon}></div>
+          <Menu />
         </div>
       </div>
       <div className={styles.line}></div>

@@ -36,7 +36,7 @@ const CastleLayout = ({ onPressBuyNFT, listNFTs }) => {
     <div className={styles.container}>
       <div className={styles.backgroundContainer}>
         <div className={styles.backgroundText}>
-          Castle is the place to manage residents, you can buy NTF to activate
+          Castle is the place to manage residents, you can buy NFT to activate
           the profession
         </div>
       </div>

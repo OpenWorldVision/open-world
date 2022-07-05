@@ -40,15 +40,15 @@
   margin-bottom: 8px;
 }
 .containerDesc p {
-  font-size: 14px;
-  line-height: 17px;
+  font-size: 16px;
+  line-height: 19px;
   text-align: center;
   color: '#000';
   font-weight: 500;
 }
 .containerDesc span {
-  font-size: 10px;
-  line-height: 12px;
+  font-size: 12px;
+  line-height: 16px;
   text-align: center;
   color: '#000';
   font-weight: 400;
@@ -62,7 +62,7 @@
 .rowPrice {
   display: flex;
   flex: 1;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 15px;
 }
@@ -128,8 +128,8 @@
 .totalField span {
   flex: 0.2;
   font-weight: 700;
-  font-size: 12px;
-  line-height: 15px;
+  font-size: 14px;
+  line-height: 17px;
   /* identical to box height */
   color: #000000;
 }
@@ -148,8 +148,8 @@
 }
 .totalPrice p {
   font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 17px;
   /* identical to box height */
 
   color: #412300;

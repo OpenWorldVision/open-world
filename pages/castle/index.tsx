@@ -274,10 +274,11 @@ export default function Castle() {
           </Flex>
         </ButtonGroup>
       </CastleModal>
-
-      <Link href="/">
-        <a className={`${style.backBtn} click-cursor`}></a>
-      </Link>
+      {!isMobile ? (
+        <Link href="/">
+          <a className={`${style.backBtn} click-cursor`}></a>
+        </Link>
+      ) : null}
 
       <LandAuction
         action={action}
