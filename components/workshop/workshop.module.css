@@ -275,7 +275,7 @@
   }
 
   .backgroundLayout {
-    background-image: url('/images/workshop/mobile/background-layout.png');
+    background-image: url('/images/workshop/mobile/background-layout.webp');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 100vw;
@@ -287,7 +287,6 @@
   }
 
   .nav {
-    margin-top: 70px;
     padding: 20px 0;
   }
 
@@ -339,6 +338,7 @@
     min-height: 80vh;
     padding: 10px 0;
     position: relative;
+    margin-bottom: 160px;
   }
 
   .containerTitle {

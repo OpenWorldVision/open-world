@@ -57,6 +57,25 @@ type Props = {
   isPage: string
 }
 
+const test = [
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
+]
+
 export default function LayoutShop(props: Props) {
   const { isPage } = props
   const [isItemBoard, setIsItemBoard] = useState<'ore' | 'hammer' | 'sushi' | 'fish' | 'mine'>(
@@ -451,8 +470,8 @@ export default function LayoutShop(props: Props) {
                     </PopoverTrigger>
                     <PopoverContent sx={{ width: '280px', color: '#F0E0D0' }} className={styles.poppover}>
                       <Box onClick={sortItem(1)}><PopoverHeader onClick={onClose}>Newest</PopoverHeader></Box>
-                      <Box onClick={sortItem(2)}><PopoverHeader onClick={onClose}>Low to high price</PopoverHeader></Box>
-                      <Box onClick={sortItem(3)}><PopoverHeader onClick={onClose}>High price to low</PopoverHeader></Box>
+                      <Box onClick={sortItem(2)}><PopoverHeader onClick={onClose}>Price: Low to High</PopoverHeader></Box>
+                      <Box onClick={sortItem(3)}><PopoverHeader onClick={onClose}>Price: High to Low</PopoverHeader></Box>
                       <PopoverBody>
                         <Stack spacing={3}>
                           <Box sx={{ background: '#627F9C', borderRadius: '16px', display: 'flex' }}>
@@ -479,8 +498,8 @@ export default function LayoutShop(props: Props) {
                 <div className={styles.containerTitle}>
                   {
                     isPage === 'workshop'
-                      ? <img src="/images/workshop/mobile/logo-head-workshop.png" alt="workshop-img" />
-                      : <img src="/images/workshop/mobile/logo-head-foodcourt.png" alt="foodcourt-img" />
+                      ? <img src="/images/workshop/mobile/logo-head-workshop.webp" alt="workshop-img" />
+                      : <img src="/images/workshop/mobile/logo-head-foodcourt.webp" alt="foodcourt-img" />
                   }
                   <div className={styles.containerTitleText}>{sellingPage ? 'Selling Items' : 'My Selling Items'}</div>
                 </div>

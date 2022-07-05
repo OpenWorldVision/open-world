@@ -30,16 +30,16 @@ export default function ItemLayout(props: Props) {
 
   const renderItemImg = () => {
     if (item['trait'] === 1) {
-      return <img src="/images/workshop/mobile/fish.png" alt="" />
+      return <img src="/images/workshop/mobile/fish.webp" alt="" />
     }
     else if (item['trait'] === 2) {
-      return <img src="/images/workshop/mobile/ore.png" alt="" />
+      return <img src="/images/workshop/mobile/ore.webp" alt="" />
     }
     else if (item['trait'] === 3) {
-      return <img src="/images/workshop/mobile/hammer.png" alt="" />
+      return <img src="/images/workshop/mobile/hammer.webp" alt="" />
     }
     else if (item['trait'] === 4) {
-      return <img src="/images/workshop/mobile/sushi.png" alt="" />
+      return <img src="/images/workshop/mobile/sushi.webp" alt="" />
     }
   }
 
@@ -54,7 +54,7 @@ export default function ItemLayout(props: Props) {
           </div>
           <div className={styles.itemNamePrice}>
             <span>{renderNameItem()}</span>
-            <div className={styles.price}><span>{item['price']}</span><img src="/images/workshop/mobile/coin.png" alt="coin" /></div>
+            <div className={styles.price}><span>{item['price']}</span><img src="/images/workshop/mobile/coin.webp" alt="coin" /></div>
           </div>
           <div className={styles.itemQuantity}>
             <div className={styles.quantity}>Available: {item['items'].length}</div>

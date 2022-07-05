@@ -16,16 +16,16 @@ export default function NotificationCancelItem(props: Props) {
 
   const renderItemImg = () => {
     if (item['trait'] === 1) {
-      return <img src="/images/workshop/mobile/fish.png" alt="" />
+      return <img src="/images/workshop/mobile/fish.webp" alt="" />
     }
     else if (item['trait'] === 2) {
-      return <img src="/images/workshop/mobile/ore.png" alt="" />
+      return <img src="/images/workshop/mobile/ore.webp" alt="" />
     }
     else if (item['trait'] === 3) {
-      return <img src="/images/workshop/mobile/hammer.png" alt="" />
+      return <img src="/images/workshop/mobile/hammer.webp" alt="" />
     }
     else if (item['trait'] === 4) {
-      return <img src="/images/workshop/mobile/sushi.png" alt="" />
+      return <img src="/images/workshop/mobile/sushi.webp" alt="" />
     }
   }
 
@@ -47,10 +47,10 @@ export default function NotificationCancelItem(props: Props) {
 
   const renderItemInfo = () => {
     if (item['trait'] === 1) {
-      return 'Fish is the main ingredient for making Sushi and Suppliers are paying good money for them.Let & apos; s go catch some!!!'
+      return "Fish is the main ingredient for making Sushi and Suppliers are paying good money for them. Let's go catch some!!!"
     }
     else if (item['trait'] === 2) {
-      return 'Ore is the main material to make Hammers and BlackSmiths are paying good money for them. Let&apos;s go mine some !!!'
+      return "Ore is the main material to make Hammers and BlackSmiths are paying good money for them. Let's go mine some !!!"
     }
     else if (item['trait'] === 3) {
       return 'Hammer is item that help Openians doing their Mining quest'

@@ -86,16 +86,16 @@ function BuyerBoard(props: Props) {
 
   const renderItemImg = () => {
     if (buyDetail['trait'] === 1) {
-      return <img src="/images/workshop/mobile/fish.png" alt="" />
+      return <img src="/images/workshop/mobile/fish.webp" alt="" />
     }
     else if (buyDetail['trait'] === 2) {
-      return <img src="/images/workshop/mobile/ore.png" alt="" />
+      return <img src="/images/workshop/mobile/ore.webp" alt="" />
     }
     else if (buyDetail['trait'] === 3) {
-      return <img src="/images/workshop/mobile/hammer.png" alt="" />
+      return <img src="/images/workshop/mobile/hammer.webp" alt="" />
     }
     else if (buyDetail['trait'] === 4) {
-      return <img src="/images/workshop/mobile/sushi.png" alt="" />
+      return <img src="/images/workshop/mobile/sushi.webp" alt="" />
     }
   }
 
@@ -117,7 +117,7 @@ function BuyerBoard(props: Props) {
 
   const renderItemInfo = () => {
     if (buyDetail['trait'] === 1) {
-      return "Fish is the main ingredient for making Sushi and Suppliers are paying good money for them.Let's go catch some!!!"
+      return "Fish is the main ingredient for making Sushi and Suppliers are paying good money for them. Let's go catch some!!!"
     }
     else if (buyDetail['trait'] === 2) {
       return "Ore is the main material to make Hammers and BlackSmiths are paying good money for them. Let's go mine some !!!"
@@ -245,7 +245,7 @@ function BuyerBoard(props: Props) {
                   </div>
                   <div className={styles.itemPrice}>
                     <span>Price</span>
-                    <div className={styles.price}><span>{buyDetail['price']}</span><img src="/images/workshop/mobile/coin.png" alt="coin" /></div>
+                    <div className={styles.price}><span>{buyDetail['price']}</span><img src="/images/workshop/mobile/coin.webp" alt="coin" /></div>
                   </div>
                 </div>
                 <div className={styles.itemChoiseQuantity}>
@@ -255,7 +255,7 @@ function BuyerBoard(props: Props) {
                 </div>
                 <div className={styles.itemTotalPrice}>
                   <span>Total</span>
-                  <div className={styles.price}><span>{buyDetail?.price * Number(amountItems) + ' '}</span><img src="/images/workshop/mobile/coin.png" alt="coin" /></div>
+                  <div className={styles.price}><span>{buyDetail?.price * Number(amountItems) + ' '}</span><img src="/images/workshop/mobile/coin.webp" alt="coin" /></div>
                 </div>
                 <Button onClick={handleConfirmBuy} className={styles.itemBtnConfirm}>Confirm</Button>
               </div>
