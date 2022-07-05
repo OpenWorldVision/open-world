@@ -10,11 +10,11 @@
   background-size: 100%;
 }
 
-@media only screen and (max-width: 675px) {
+@media only screen and (max-width: 1024px) {
   .backBtn {
     width: 110px !important;
     height: 40px !important;
-    bottom: 20px;
+    bottom: 120px;
     left: 15px;
   }
 }
