@@ -57,25 +57,6 @@ type Props = {
   isPage: string
 }
 
-const test = [
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-  {id: 8, items: Array(1), price: '103.0', seller: '0xECB9432976A0443f5ec844F900a50cB3a09c852B', trait: 4},
-]
-
 export default function LayoutShop(props: Props) {
   const { isPage } = props
   const [isItemBoard, setIsItemBoard] = useState<'ore' | 'hammer' | 'sushi' | 'fish' | 'mine'>(
@@ -541,7 +522,7 @@ export default function LayoutShop(props: Props) {
                   }
                 </div>
 
-                {listItemsBoard.length !== 0 && <div className={styles.paginationMobile}>
+                {listItemsBoard.length !== 0 ? <div className={styles.paginationMobile}>
                   <Button
                     disabled={pageBoard === 1}
                     onClick={handlePreviousPage}>
@@ -555,17 +536,18 @@ export default function LayoutShop(props: Props) {
                     onClick={handleIncreasePage}>
                     <FontAwesomeIcon icon={faArrowRight} />
                   </Button>
-                </div>}
+                </div>
+                : <div className={styles.noneData}>No data</div>}
               </div>
             </div>
           </div>
         </div>
-        {isOpenBuyBoard && <BuyerBoard
+        <BuyerBoard
           isOpen={isOpenBuyBoard}
           toggleModalBuyModal={onToggleBuyerBoard}
           buyDetail={buyDetail}
           handlePurchaseItem={_handlePurchaseItem}
-        />}
+        />
         <Inventory ref={inventoryRef} />
       </div>
     </>

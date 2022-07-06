@@ -241,7 +241,7 @@ function BuyerBoard(props: Props) {
                 <div className={styles.itemSellerPrice}>
                   <div className={styles.itemSeller}>
                     <div className={styles.itemSellerTitle}>Seller</div>
-                    <div className={styles.itemSellerAddress}>{`${buyDetail['seller'].slice(0, 5)}...${buyDetail['seller'].slice(buyDetail['seller'].length - 4, buyDetail['seller'].length)}`}</div>
+                    <div className={styles.itemSellerAddress}>{`${buyDetail['seller']?.slice(0, 5)}...${buyDetail['seller']?.slice(buyDetail['seller'].length - 4, buyDetail['seller'].length)}`}</div>
                   </div>
                   <div className={styles.itemPrice}>
                     <span>Price</span>

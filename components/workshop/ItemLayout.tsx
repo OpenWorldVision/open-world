@@ -64,7 +64,7 @@ export default function ItemLayout(props: Props) {
         </div>
         <div className={styles.itemContainerBody}>
           <div className={styles.itemSellerTitle}>Seller</div>
-          <div className={styles.itemSellerAddress}>{`${item['seller'].slice(0, 5)}...${item['seller'].slice(item['seller'].length - 4, item['seller'].length)}`}</div>
+          <div className={styles.itemSellerAddress}>{`${item['seller']?.slice(0, 5)}...${item['seller']?.slice(item['seller'].length - 4, item['seller'].length)}`}</div>
         </div>
       </div>
       {isOpenCancelBoard && <NotificationCancelItem handleCancelItem={handleCancelItem} item={item} handleToggleCancelBoard={onToggleCancelBoard} isOpenCancelBoard={isOpenCancelBoard}/>}

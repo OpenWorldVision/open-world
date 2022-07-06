@@ -440,4 +440,11 @@
     display: block !important;
     background: #3F4F5F !important;
   }
+
+  .noneData {
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    color: #7c7272cc;
+  }
 }
