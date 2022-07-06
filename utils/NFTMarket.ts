@@ -9,7 +9,7 @@ import { parseEther } from 'ethers/lib/utils'
 
 const web3 = new Web3(Web3.givenProvider)
 
-const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
+export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 type Listing = {
   id: string
   items: string[]
