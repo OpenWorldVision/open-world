@@ -194,6 +194,10 @@
   opacity: 0;
 }
 
+.modalContent {
+  width: 600px;
+}
+
 @media (max-width: 767px) {
   .modal {
     width: 95vw;
@@ -217,5 +221,22 @@
 
   .sellingAmount .sellInput {
     width: 130px;
+  }
+
+  .description {
+    width: 340px;
+    /* margin-top:70px; */
+    padding-top: 80px;
+    /* margin-top: 0px; */
+  }
+
+  .modalContent {
+    width: 365px;
+  }
+
+  .imgMakeSushi{
+    margin-top: 60px;
+    max-width: 300px !important;
+    height: 170px;
   }
 }

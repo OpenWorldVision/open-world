@@ -12,6 +12,7 @@ import useTransactionState, {
 } from 'hooks/useTransactionState'
 import { useDisclosure } from '@chakra-ui/react'
 import Inventory, { InventoryRef } from '@components/professions/Inventory'
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
 
 function Supplier() {
   const { isOpen: isOpenMakeSushi, onToggle: onToggleMakeSushi } =
@@ -22,6 +23,21 @@ function Supplier() {
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
   const inventoryRef = useRef<InventoryRef>()
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    const checkWindowWidth = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    checkWindowWidth()
+
+    window.addEventListener('resize', checkWindowWidth)
+
+    return () => {
+      window.removeEventListener('resize', checkWindowWidth)
+    }
+  }, [])
 
   const getListItemByTrait = useCallback(async () => {
     const data = await getNFTsByTrait(1)
@@ -66,21 +82,44 @@ function Supplier() {
       <Head>
         <title>Supplier</title>
       </Head>
+
       <div className={`${styles.supplierOverlay} overlay game-scroll-bar`}>
-        <div className={styles.supplierContainer}>
-          <div className={styles.containerSupplierSellBtn}>
-            <div
-              onClick={inventoryRef.current?.open}
-              className={styles.supplierButtonSell}
-            />
-          </div>
-          <div className={styles.containerSupplierMakeBtn}>
-            <div
-              className={styles.supplierButtonMake}
-              onClick={onToggleMakeSushi}
-            />
-          </div>
-        </div>
+        <TransformWrapper
+          initialPositionX={0}
+          initialPositionY={0}
+          centerOnInit={true}
+          wheel={{
+            disabled: true,
+          }}
+          doubleClick={{
+            disabled: true,
+          }}
+          panning={{
+            disabled: windowWidth >= 1858,
+          }}
+        >
+          <TransformComponent
+            wrapperStyle={{ height: '100vh', width: '100vw' }}
+          >
+            <div className={styles.supplierContainer}>
+              <div className={styles.supplierBg}>
+                <div className={styles.containerSupplierSellBtn}>
+                  <div
+                    onClick={inventoryRef.current?.open}
+                    className={styles.supplierButtonSell}
+                  />
+                </div>
+                <div className={styles.containerSupplierMakeBtn}>
+                  <div
+                    className={styles.supplierButtonMake}
+                    onClick={onToggleMakeSushi}
+                  />
+                </div>
+              </div>
+            </div>
+          </TransformComponent>
+        </TransformWrapper>
+
         <BackButton />
       </div>
 
