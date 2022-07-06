@@ -29,8 +29,6 @@ function Item({ onBuy, price, imageUrl, name, available, actionLabel }: Props) {
       bgColor="#DCD7C1"
       p="16px 12px"
       borderRadius={10}
-      mt={4}
-      mb={4}
       gap={2}
     >
       <Box display="flex" gap={1}>
@@ -50,7 +48,7 @@ function Item({ onBuy, price, imageUrl, name, available, actionLabel }: Props) {
           flexDirection="column"
           justifyContent="space-between"
         >
-          <Text fontSize="14" fontWeight="medium">
+          <Text fontSize="14" fontWeight="medium" color="black">
             {name}
           </Text>
 

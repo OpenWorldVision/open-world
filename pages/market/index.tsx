@@ -4,6 +4,7 @@ import History from '@components/marketplace/History'
 import styled from '@emotion/styled'
 import Head from 'next/head'
 import { useState } from 'react'
+import { Box, Center } from '@chakra-ui/react'
 
 function MarketPlace() {
   const [nav, setNav] = useState(1)
@@ -13,29 +14,37 @@ function MarketPlace() {
       <Head>
         <title>Marketplace</title>
       </Head>
-      <div className="nav">
-        <div className="nav-items-1">
-          <img src="./favicon.ico" alt="img" />
-          <div
+
+      <Box
+        display="flex"
+        justifyContent="space-evenly"
+        gap={2}
+        backgroundColor="black"
+      >
+        <Box>
+          <Center
             onClick={() => {
               setNav(1)
             }}
             className={nav === 1 ? 'select click-cursor' : 'click-cursor'}
+            color="white"
           >
             MARKET
-          </div>
-        </div>
-        <div className="nav-items-2">
-          <div
+          </Center>
+        </Box>
+        <Box>
+          <Center
             onClick={() => {
               setNav(2)
             }}
             className={nav === 2 ? 'select click-cursor' : 'click-cursor'}
+            color="white"
           >
             DASHBOARD
-          </div>
-        </div>
-      </div>
+          </Center>
+        </Box>
+      </Box>
+
       <div>
         {nav === 1 ? <Market /> : nav === 2 ? <DashBoard /> : <History />}
       </div>
