@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
@@ -173,6 +173,29 @@ export default function User() {
     setWindowWidth(window.innerWidth)
   }, [window.innerWidth])
 
+  const buyOpenLink = useMemo(() => {
+    const chainId = window?.ethereum?.chainId
+
+    switch (chainId) {
+      // BSC testnet
+      case '0x61':
+        return 'https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B'
+    case '0x38':
+        return 'https://pancakeswap.finance/swap?outputCurrency=0x27a339d9B59b21390d7209b78a839868E319301B'
+      // Harmony mainet
+      case '0x63564c40':
+      case '0x63564c41':
+      case '0x63564c42':
+      case '0x63564c43':
+      // Harmony test
+      case '0x6357d2e0':
+      case '0x6357d2e1':
+      case '0x6357d2e2':
+      case '0x6357d2e3':
+        return 'https://app.sushi.com/swap?outputCurrency=0x27a339d9B59b21390d7209b78a839868E319301B'
+    }
+  }, [])
+
   useEffect(() => {
     getDataProfile()
     handleGetStamina()
@@ -319,7 +342,7 @@ export default function User() {
                   className='buy-OPEN-link'
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://pancakeswap.finance/swap?outputCurrency=0x27a339d9B59b21390d7209b78a839868E319301B"
+                  href={buyOpenLink}
                 >
                   <span>+</span>
                 </a>
