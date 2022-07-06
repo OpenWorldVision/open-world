@@ -41,19 +41,17 @@ function Market() {
 
   const handlePurchase = async (value) => {
     const title = 'Purchase item'
-    setData([])
 
     const result = await purchaseHero(
       parseInt(value?.id),
       (txHash) => {
         handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
       },
-      async (error) => {
+      async (_) => {
         setData(dataInit)
       }
     )
     if (result) {
-      setDataInit([])
       await getItems()
       handleTxStateChange(title, result.transactionHash, result.status)
     } else {
@@ -67,7 +65,6 @@ function Market() {
       handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
     })
     if (result) {
-      setData([])
       await getItems()
       handleTxStateChange(title, result.transactionHash, result.status)
     } else {
