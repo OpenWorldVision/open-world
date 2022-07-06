@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback } from 'react'
 import styles from './CastleLayout.module.css'
-import {} from 'utils/professions'
 
 const CastleLayout = ({ onPressBuyNFT, listNFTs }) => {
   const _onPressBuyNFT = useCallback(
