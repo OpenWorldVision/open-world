@@ -52,6 +52,21 @@ export default function NotificationBuyItem(props: Props) {
           ></Button>
         </div>
       </div>
+      <div className={style.modalMobile}>
+        <div className={style.buyBoardMobile}>Buy Items</div>
+        <div className={style.content}>
+          <div className={style.title}>
+            {notiContent['value'] ? 'SUCCESS !' : 'FAILED!'}
+          </div>
+          <div className={style.helpText}>{notiContent['content']}</div>
+          {notiContent['value'] && (
+            <div style={{ marginTop: '20px' }} className={style.helpText}>
+              Check Your Inventory For Bought Items !
+            </div>
+          )}
+        </div>
+        <Button onClick={handleConfirm} className={style.itemBtnConfirm}>Confirm</Button>
+      </div>
     </>
   )
 }

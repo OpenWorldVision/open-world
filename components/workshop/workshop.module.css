@@ -22,6 +22,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .buyButtonCustom {
   width: 150px !important;
   height: 65px !important;
@@ -30,6 +31,16 @@
 .workShopTitle {
   position: relative;
   background-image: url('/images/workshop/name.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 300px;
+  height: 70px;
+  margin: 0 auto;
+}
+
+.foodCourtTitle {
+  position: relative;
+  background-image: url('/images/foodcourt/name.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   width: 300px;
@@ -89,6 +100,24 @@
 
 .hammerBtn {
   background-image: url('/images/workshop/hammer.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 35px !important;
+  height: 35px !important;
+  position: absolute;
+}
+
+.sushiBtn {
+  background-image: url('/images/foodcourt/sushi.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  width: 35px !important;
+  height: 35px !important;
+  position: absolute;
+}
+
+.fishBtn {
+  background-image: url('/images/foodcourt/fish.png') !important;
   background-repeat: no-repeat !important;
   background-size: 100% 100% !important;
   width: 35px !important;
@@ -229,11 +258,193 @@
     bottom: 120px;
     left: 15px;
   }
+
   .workShopContainer {
     overflow-y: scroll;
     padding: 80px 0 100px 0;
   }
+
   .workShopBg {
     width: 1500px;
+  }
+}
+
+@media only screen and (max-width: 970px) {
+  .workShopBg {
+    display: none;
+  }
+
+  .backgroundLayout {
+    background-image: url('/images/workshop/mobile/background-layout.webp');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .nav {
+    padding: 20px 0;
+  }
+
+  .nav button {
+    height: 35px;
+    border-radius: 10px;
+    margin: 0 5px;
+    background: #405160;
+    color: #F0E0D0;
+    padding: 8px;
+    font-size: 14px;
+
+  }
+
+  .nav button svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+
+  .nav button:active,
+  .nav button:hover {
+    /* background: #F0E0D0;
+    color: #472805; */
+    background: #405160;
+    color: #F0E0D0;
+  }
+
+  .overlayBody {
+    /* height: 300px; */
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+
+  .body {
+    padding: 0 15px;
+    margin-top: 60px;
+    background: #405160;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+
+  .container {
+    background: #C8BB98;
+    width: 100%;
+    min-height: 80vh;
+    padding: 10px 0;
+    position: relative;
+    margin-bottom: 160px;
+  }
+
+  .containerTitle {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .containerTitle img {
+    width: 200px;
+    position: absolute;
+    top: -60px;
+  }
+
+  .containerTitleText {
+    background: #CFB183;
+    border-radius: 10px;
+    padding: 5px 20px;
+    position: absolute;
+    top: 10px;
+    font-weight: 700;
+    font-size: 18px;
+    border: 3px solid #472805;
+  }
+
+  .containerTitleButtop {
+    margin-top: 80px;
+  }
+
+  .containerTitleButtop button {
+    padding: 0 0px;
+    height: 40px;
+    margin: 0 5px;
+    border-radius: 10px;
+    background: #405160;
+    color: #F0E0D0;
+    font-size: 15px;
+  }
+
+  .containerTitleButtop button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .containerTitleButtop button:active,
+  .containerTitleButtop button:hover {
+    /* background: #F0E0D0;
+    color: #472805; */
+    background: #405160;
+    color: #F0E0D0;
+  }
+
+  .selected {
+    background: #F0E0D0 !important;
+    color: #472805 !important;
+  }
+
+  .listItem {
+    margin-top: 10px;
+    /* max-height: 400px;
+    overflow-y: scroll; */
+  }
+
+  .listItem.listItemMyStall {
+    margin-top: 100px;
+  }
+
+  .paginationMobile {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+    width: 200px;
+    margin: 20px auto;
+  }
+
+  .paginationMobile button {
+    height: 30px;
+    min-width: 30px !important;
+    padding: 0;
+    border-radius: 10px;
+  }
+
+  .paginationMobile button svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .paginationMobile div {
+    width: 24px;
+    height: 24px;
+    background: #FFFFFF;
+    text-align: center;
+  }
+
+  .poppover {
+    display: block !important;
+    background: #3F4F5F !important;
+  }
+
+  .noneData {
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    color: #7c7272cc;
   }
 }

@@ -1,0 +1,110 @@
+.itemContainer {
+  background: #DCD7C1;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.itemContainerHead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.itemBackground {
+  max-width: 100px;
+  min-width: 70px;
+  width: 22%;
+  /* height: 100%; */
+  background: linear-gradient(180deg, rgba(90, 90, 90, 0.7) 0%, rgba(171, 171, 171, 0.7) 100%);
+  padding: 1px;
+
+}
+
+.imgContainer {
+  border: 1px solid #F8F8F8;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.itemNamePrice {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.itemNamePrice span {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: start;
+}
+
+.itemNamePrice .price {
+  background: #A69876;
+  border-radius: 20px;
+  padding: 2px 10px;
+  width: 100px;
+  overflow-x: scroll;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #412300;
+ 
+}
+
+.itemNamePrice .price img {
+  margin-left: 2px;
+  width: 20px;
+  height: 20px;
+}
+
+.itemQuantity {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quantity {
+  color: #6A6A6A;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.itemQuantity button {
+  height: 40px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #F0E0D0;
+  background: #472805;
+  border-radius: 10px;
+}
+
+.itemQuantity button:active,
+.itemQuantity button:hover {
+  background: #472805;
+  color: #F0E0D0;
+}
+
+.itemContainerBody {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.itemSellerTitle {
+  color: #6A6A6A;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.itemSellerAddress {
+  color: #6A6A6A;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+}
