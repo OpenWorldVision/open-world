@@ -1,15 +1,15 @@
 import styles from "./popup.module.css"
 
 const infoType = {
-    sushi: '/images/popup/sushi.png',
-    stamina: '/images/popup/stamina.png',
-    fish: '/images/popup/fish.png',
-    ore: '/images/popup/ore.png',
-    other: '/images/popup/other.png',
-    success: '/images/popup/success.png',
-    failed: '/images/popup/failed.png',
-    cancel: '/images/popup/cancel.png',
-    waiting: '/images/popup/waiting.png',
+    sushi: '/images/popup/sushi.webp',
+    stamina: '/images/popup/stamina.webp',
+    fish: '/images/popup/fish.webp',
+    ore: '/images/popup/ore.webp',
+    other: '/images/popup/other.webp',
+    success: '/images/popup/success.webp',
+    failed: '/images/popup/failed.webp',
+    cancel: '/images/popup/cancel.webp',
+    waiting: '/images/popup/waiting.webp',
 }
 
 const Popup = ({ 
@@ -28,7 +28,7 @@ const Popup = ({
                         <div>
                             <div>NOTI</div>
                             <button className="click-cursor" onClick={() => {setIsOpen(null)}}>
-                                <img src='/images/popup/close.png' />
+                                <img src='/images/popup/close.webp' />
                             </button>
                         </div>
                         {type && <img src={infoType[type]} />}
