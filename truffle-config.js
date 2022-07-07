@@ -171,7 +171,7 @@ module.exports = {
       confirmations: 2,
       gas: 8000000, //8000000,
       skipDryRun: true,
-      gasPrice: 38000000000,
+      gasPrice: 150000000000,
     },
   },
 
