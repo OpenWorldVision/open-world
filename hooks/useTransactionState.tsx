@@ -75,7 +75,7 @@ function useTransactionState() {
         case TRANSACTION_STATE.WAITING:
           return toast({
             title: title + ' transaction is excuting',
-            duration: 100000,
+            duration: 3000,
             description: (
               <a
                 target="_blank"
@@ -90,16 +90,14 @@ function useTransactionState() {
               zIndex: 999999,
             },
             isClosable: true,
-            duration: 3000,
           })
 
         case TRANSACTION_STATE.NOT_EXECUTED:
           return toast({
             title: title + ' transaction is failed to execute',
-            duration: 10000,
+            duration: 3000,
             isClosable: true,
             status: 'error',
-            duration: 3000,
           })
       }
     },
