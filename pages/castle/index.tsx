@@ -222,30 +222,49 @@ export default function Castle() {
           />
         </>
       ) : (
-        <div className={styles.webContainer}>
-          <div
-            ref={castleOverlay}
-            className={`${style.castleContainer} overlay`}
+        <TransformWrapper
+          initialPositionX={0}
+          initialPositionY={0}
+          centerOnInit={true}
+          wheel={{
+            disabled: true,
+          }}
+          doubleClick={{
+            disabled: true,
+          }}
+          panning={{
+            disabled: windowWidth >= 1858,
+          }}
+        >
+          <TransformComponent
+            wrapperStyle={{ height: '100vh', width: '100vw' }}
           >
-            <div ref={castle} className={style.castleBg}>
+            <div className={styles.webContainer}>
               <div
-                className={`${style.castleBtn} ${style.bankBtn} click-cursor`}
-              ></div>
-              <div
-                className={`${style.castleBtn} ${style.wowBtn} click-cursor`}
-              ></div>
-              <div
-                className={`${style.castleBtn} ${style.landAuctionBtn} click-cursor`}
-                // onClick={() => setIsLandAuctionModalOpen(true)}
-              ></div>
-              <Link href="/castle/shop">
-                <a
-                  className={`${style.castleBtn} ${style.shopBtn} click-cursor`}
-                ></a>
-              </Link>
+                ref={castleOverlay}
+                className={`${style.castleContainer} overlay`}
+              >
+                <div ref={castle} className={style.castleBg}>
+                  <div
+                    className={`${style.castleBtn} ${style.bankBtn} click-cursor`}
+                  ></div>
+                  <div
+                    className={`${style.castleBtn} ${style.wowBtn} click-cursor`}
+                  ></div>
+                  <div
+                    className={`${style.castleBtn} ${style.landAuctionBtn} click-cursor`}
+                    // onClick={() => setIsLandAuctionModalOpen(true)}
+                  ></div>
+                  <Link href="/castle/shop">
+                    <a
+                      className={`${style.castleBtn} ${style.shopBtn} click-cursor`}
+                    ></a>
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </TransformComponent>
+        </TransformWrapper>
       )}
 
       <CastleModal
