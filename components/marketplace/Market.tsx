@@ -6,7 +6,7 @@ import useTransactionState, {
 } from 'hooks/useTransactionState'
 import NavItem from './NavItem'
 import Item from './Item'
-import { Center, Spinner, Stack } from '@chakra-ui/react'
+import { Box, Center, Image, Spinner, Stack, Text } from '@chakra-ui/react'
 import {
   cancelListingItem,
   getListingIDs,
@@ -14,6 +14,8 @@ import {
 } from 'utils/HeroMarketUtils'
 
 const numOfPage = 12
+
+const TRAIT_NAME = ['OPENIAN NFT', 'SUPPLIER NFT', 'BLACKSMITH NFT']
 
 function Market() {
   const [page, setPage] = useState(1)
@@ -139,33 +141,69 @@ function Market() {
           />
         </div>
       </div>
-
-      <Stack overflow="scroll" height="80vh" spacing={2} p="0 22px">
-        {loading && <Spinner />}
-        {data.length === 0 && (
-          <Center className={styles.loading}>No results found</Center>
-        )}
-        {data
-          .slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage)
-          .map((value, index) => (
-            <Item
-              onBuy={() => {
-                if (nav === 4) {
-                  handleCancel(value)
-                  return
-                }
-
-                handlePurchase(value)
-              }}
-              name={`#${value.id}`}
-              price={value.price}
-              available={1}
-              imageUrl={`/images/marketplace/items/${value.trait}.webp`}
-              key={`${value.id}${index}`}
-              actionLabel={nav !== 4 ? 'buy' : 'cancel'}
+      <Box bgColor="#3F4F5F" m="8px 22px" borderRadius={10} p="0 16px">
+        <Stack
+          overflow="scroll"
+          height="76vh"
+          spacing={2}
+          p="0 16px"
+          bgColor="#C8BB98"
+          align="center"
+        >
+          <Box zIndex={1}>
+            <Box
+              p="10px 18px"
+              bgColor="#CFB183"
+              borderRadius={10}
+              m="16px 48px"
+            >
+              <Text fontWeight="bold" fontSize="16px" color="black">
+                Selling NFT
+              </Text>
+            </Box>
+            <Image
+              src="/images/marketplace/header.webp"
+              alt="header"
+              position="absolute"
+              top={58}
+              mr="auto"
+              ml="auto"
+              left={0}
+              right={0}
+              zIndex={-1}
+              w={`${210 * 0.6}px`}
+              h={`${160 * 0.6}px`}
             />
-          ))}
-      </Stack>
+          </Box>
+
+          {loading && <Spinner />}
+          {data.length === 0 && (
+            <Center className={styles.loading}>No results found</Center>
+          )}
+
+          {data
+            .slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage)
+            .map((value, index) => (
+              <Item
+                onBuy={() => {
+                  if (nav === 4) {
+                    handleCancel(value)
+                    return
+                  }
+
+                  handlePurchase(value)
+                }}
+                name={`${TRAIT_NAME[value.trait - 1]} #${value.id}`}
+                price={value.price}
+                seller={value.seller}
+                available={1}
+                imageUrl={`/images/marketplace/items/${value.trait}.webp`}
+                key={`${value.id}${index}`}
+                actionLabel={nav !== 4 ? 'buy' : 'cancel'}
+              />
+            ))}
+        </Stack>
+      </Box>
 
       <div className={styles.footer}>
         <div className={styles.pagination}>

@@ -3,7 +3,6 @@ import { BigNumber, ethers } from 'ethers'
 import Web3 from 'web3'
 import { getItemContract } from './Item'
 import marketInterface from '../build/contracts/NFTMarket.json'
-import { truncate } from 'fs/promises'
 import { getOpenWorldContract } from './openWorldContract'
 import { parseEther } from 'ethers/lib/utils'
 

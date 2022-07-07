@@ -1,18 +1,27 @@
 import { Text, Box, Image, useMediaQuery } from '@chakra-ui/react'
 import Price from '@components/Shop/Price'
 import Button from '@components/theme/components/Button'
-import { useState, useEffect, useCallback } from 'react'
-import { isBoughtHammer } from 'utils/Item'
+import { useState, useCallback } from 'react'
+import truncateEthAddress from 'utils/truncateAddress'
 
 type Props = {
   onBuy: () => void
   price: string
   imageUrl: string
   name: string
+  seller: string
   available: number
   actionLabel: 'cancel' | 'buy'
 }
-function Item({ onBuy, price, imageUrl, name, available, actionLabel }: Props) {
+function Item({
+  onBuy,
+  price,
+  imageUrl,
+  name,
+  available,
+  actionLabel,
+  seller,
+}: Props) {
   const [isBought, setIsBought] = useState(false)
   const [isMobile] = useMediaQuery('(max-width: 1014px)')
 
@@ -24,7 +33,7 @@ function Item({ onBuy, price, imageUrl, name, available, actionLabel }: Props) {
   return (
     <Box
       display="flex"
-      alignItems="flex-end"
+      alignItems="flex-start"
       justifyContent="space-between"
       bgColor="#DCD7C1"
       p="16px 12px"
@@ -32,27 +41,27 @@ function Item({ onBuy, price, imageUrl, name, available, actionLabel }: Props) {
       gap={2}
     >
       <Box display="flex" gap={1}>
-        <Box bgColor="white" p={0.4} borderWidth={2} minW={68} mr={1}>
-          <Image
-            src={imageUrl}
-            width={68}
-            height={68}
-            alt="stone-pickaxe"
-            p="1px"
-            background="linear-gradient(180deg, rgba(90, 90, 90, 0.7) 0%, rgba(171, 171, 171, 0.7) 100%);"
-          />
+        <Box p={0.4} minW={68} mr={1}>
+          <Image src={imageUrl} width={68} height={68} alt="stone-pickaxe" />
+          <Text fontWeight="bold" fontSize={14} color="gray.600" mt={1}>
+            Seller
+          </Text>
         </Box>
 
         <Box
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
+          minW={136}
         >
           <Text fontSize="14" fontWeight="medium" color="black">
             {name}
           </Text>
 
           {isMobile && <Price price={Number(price)} />}
+          <Text fontWeight="medium" fontSize={14} color="gray.600">
+            {truncateEthAddress(seller)}
+          </Text>
         </Box>
       </Box>
 
@@ -84,7 +93,7 @@ function Item({ onBuy, price, imageUrl, name, available, actionLabel }: Props) {
           color="#F0E0D0"
           onClick={handleBuy}
           disabled={isBought}
-          mt="8px"
+          mt="12px"
           size="sm"
         >
           {actionLabel === 'buy' ? 'Buy' : 'Cancel'}
