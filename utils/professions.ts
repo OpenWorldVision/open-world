@@ -19,7 +19,7 @@ const getProfilesContract = async () => {
   )
 }
 
-const getHeroCoreContract = async () => {
+export const getHeroCoreContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   const { chainId } = await provider.getNetwork()
   const heroAddress = getAddresses(chainId).HERO_CORE

@@ -3,13 +3,12 @@ import { BigNumber, ethers } from 'ethers'
 import Web3 from 'web3'
 import { getItemContract } from './Item'
 import marketInterface from '../build/contracts/NFTMarket.json'
-import { truncate } from 'fs/promises'
 import { getOpenWorldContract } from './openWorldContract'
 import { parseEther } from 'ethers/lib/utils'
 
 const web3 = new Web3(Web3.givenProvider)
 
-const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
+export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000'
 type Listing = {
   id: string
   items: string[]

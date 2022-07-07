@@ -51,7 +51,7 @@ function useTransactionState() {
                 Transaction detail <ExternalLinkIcon mx="2px" />
               </a>
             ),
-            duration: 10000,
+            duration: 3000,
             isClosable: true,
             status: 'error',
           })
@@ -67,7 +67,7 @@ function useTransactionState() {
                 Transaction detail <ExternalLinkIcon mx="2px" />
               </a>
             ),
-            duration: 10000,
+            duration: 3000,
             isClosable: true,
             status: 'success',
           })
@@ -89,6 +89,8 @@ function useTransactionState() {
             containerStyle: {
               zIndex: 999999,
             },
+            isClosable: true,
+            duration: 3000,
           })
 
         case TRANSACTION_STATE.NOT_EXECUTED:
@@ -97,6 +99,7 @@ function useTransactionState() {
             duration: 10000,
             isClosable: true,
             status: 'error',
+            duration: 3000,
           })
       }
     },
