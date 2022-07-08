@@ -34,65 +34,55 @@ function useTransactionState() {
   }, [])
 
   const handleTxStateChange = useCallback(
-    (title, txHash, txResult: TRANSACTION_STATE, setPopup) => {
+    (title, txHash, txResult: TRANSACTION_STATE, popupRef) => {
       switch (txResult) {
         case TRANSACTION_STATE.FAILED:
-          return setPopup(<Popup 
-            type='failed'
-            content={title + ' transaction is failed'}
-            subcontent={(
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={blockExplorer + txHash}
-              />
-            )}
-            actionContent="Close"
-            setIsOpen={setPopup}
-            action={() => { setPopup(null) }}
-          />)
+          popupRef.current.open()
+          popupRef.current.type = 'failed'
+          popupRef.current.content = title + ' transaction is failed'
+          popupRef.current.subcontent = <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={blockExplorer + txHash}
+          />
+          popupRef.current.actionContent = "Close"
+          popupRef.current.action = popupRef.current.close
+          return null
         case TRANSACTION_STATE.SUCCESSFUL:
-          return setPopup(<Popup 
-            type='success'
-            content={title + ' transaction is successful'}
-            subcontent={(
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={blockExplorer + txHash}
-              >
-                Transaction detail <ExternalLinkIcon mx="2px" />
-              </a>
-            )}
-            actionContent="Close"
-            setIsOpen={setPopup}
-            action={() => { setPopup(null) }}
-          />)
+          popupRef.current.open()
+          popupRef.current.type = 'success'
+          popupRef.current.content = title + ' transaction is successful'
+          popupRef.current.subcontent = <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={blockExplorer + txHash}
+          >
+            Transaction detail <ExternalLinkIcon mx="2px" />
+          </a>
+          popupRef.current.actionContent = "Close"
+          popupRef.current.action = popupRef.current.close
+          return null
         case TRANSACTION_STATE.WAITING:
-          return setPopup(<Popup 
-            type='waiting'
-            content={title + ' transaction is excuting'}
-            subcontent={(
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href={blockExplorer + txHash}
-              >
-                Transaction detail <ExternalLinkIcon mx="2px" />
-              </a>
-            )}
-            actionContent="Close"
-            setIsOpen={setPopup}
-            action={() => { setPopup(null) }}
-          />)
+          popupRef.current.open()
+          popupRef.current.type = 'waiting'
+          popupRef.current.content = title + ' transaction is excuting'
+          popupRef.current.subcontent = <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={blockExplorer + txHash}
+          >
+            Transaction detail <ExternalLinkIcon mx="2px" />
+          </a>
+          popupRef.current.actionContent = "Close"
+          popupRef.current.action = popupRef.current.close
+          return null
         case TRANSACTION_STATE.NOT_EXECUTED:
-          return setPopup(<Popup 
-            type='cancel'
-            content={title + ' transaction is failed to execute'}
-            actionContent="Close"
-            setIsOpen={setPopup}
-            action={() => { setPopup(null) }}
-          />)
+          popupRef.current.open()
+          popupRef.current.type = 'cancel'
+          popupRef.current.content = title + ' transaction is failed to execute'
+          popupRef.current.actionContent = "Close"
+          popupRef.current.action = popupRef.current.close
+          return null
       }
     },
     [blockExplorer]

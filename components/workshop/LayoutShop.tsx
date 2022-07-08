@@ -52,6 +52,7 @@ import {
   PopoverHeader,
   PopoverBody,
 } from '@chakra-ui/react'
+import Popup, { PopupRef } from '@components/Popup'
 
 type Props = {
   isPage: string
@@ -75,7 +76,7 @@ export default function LayoutShop(props: Props) {
   const inventoryRef = useRef<InventoryRef>()
   const initRef = useRef()
   const handleTxStateChange = useTransactionState()
-  const [popup, setPopup] = useState(null)
+  const popupRef = useRef<PopupRef>()
 
   const handleGetOreOrSushiList = async () => {
     const data = await getListingIDs(false)
@@ -154,15 +155,15 @@ export default function LayoutShop(props: Props) {
       setIsLoading(true)
       const title = isPage === 'workshop' ? `Cancel listing item in Workshop` : `Cancel listing item in Food Court`
       const data = await cancelListingItem(item?.id, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
         setIsLoading(false)
       })
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
+        handleTxStateChange(title, data.transactionHash, data.status, popupRef)
         handleGetMyList()
         setIsLoading(false)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
         setIsLoading(false)
       }
     },
@@ -202,15 +203,15 @@ export default function LayoutShop(props: Props) {
         id,
         listIds,
         (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
         },
         (error) => {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
           setIsLoading(false)
         }
       )
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
+        handleTxStateChange(title, data.transactionHash, data.status, popupRef)
         setIsLoading(false)
         if (isItemBoard === 'ore' || isItemBoard === 'sushi') {
           handleGetOreOrSushiList()
@@ -220,7 +221,7 @@ export default function LayoutShop(props: Props) {
         return data
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
       }
     },
     [isItemBoard]
@@ -551,7 +552,7 @@ export default function LayoutShop(props: Props) {
         />
         <Inventory ref={inventoryRef} />
       </div>
-      {popup}
+      <Popup ref={popupRef} />
     </>
   )
 }

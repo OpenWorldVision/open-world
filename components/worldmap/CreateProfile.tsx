@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import {
@@ -10,6 +10,7 @@ import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
 import LoadingModal from '@components/LoadingModal'
+import Popup, { PopupRef } from '@components/Popup'
 
 const imagesIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
@@ -29,7 +30,7 @@ function CreateProfile({
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const handleTxStateChange = useTransactionState()
-  const [popup, setPopup] = useState(null)
+  const popupRef = useRef<PopupRef>()
 
   // const dispatch = useDispatch()
   
@@ -64,7 +65,7 @@ function CreateProfile({
           : 'Create profile'
 
       const status = data.status ? 1 : 0
-      handleTxStateChange(title, data.transactionHash, status, setPopup)
+      handleTxStateChange(title, data.transactionHash, status, popupRef)
     },
     [handleTxStateChange, heroSelector, isEdit, profile?._picId]
   )
@@ -76,7 +77,7 @@ function CreateProfile({
           ? 'Update profile'
           : 'Create profile'
 
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
     },
     [handleTxStateChange, heroSelector, isEdit, profile?._picId]
   )
@@ -99,7 +100,7 @@ function CreateProfile({
             'Update profile',
             '',
             TRANSACTION_STATE.NOT_EXECUTED,
-            setPopup
+            popupRef
           )
         }
         setIsOpenCreateProfile(false)
@@ -129,7 +130,7 @@ function CreateProfile({
             'Create profile',
             '',
             TRANSACTION_STATE.NOT_EXECUTED,
-            setPopup
+            popupRef
           )
         }
 
@@ -224,7 +225,7 @@ function CreateProfile({
           </div>
         </div>
       </div>
-      {popup}
+      <Popup ref={popupRef} />
     </CreateProfileCSS>
   )
 }

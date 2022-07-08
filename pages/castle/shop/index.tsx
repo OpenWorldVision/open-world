@@ -8,7 +8,7 @@ import {
 import style from '@components/castle/shop/shop.module.css'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   mintProfessionNFT,
   fetchProfessionsNFTAmount,
@@ -18,7 +18,7 @@ import LoadingModal from '@components/LoadingModal'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
-import Popup from '@components/Popup'
+import Popup, { PopupRef } from '@components/Popup'
 import { getOpenBalance } from 'utils/checkBalanceOpen'
 
 function Shop() {
@@ -36,8 +36,8 @@ function Shop() {
   const [fetchPricesInterval, setFetchPricesInterval] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
-  const [popup, setPopup] = useState(null)
   const { onClose } = useDisclosure()
+  const popupRef = useRef<PopupRef>()
 
   const mintProfessionsNFT = async (trait) => {
     setIsLoading(true)
@@ -46,23 +46,21 @@ function Shop() {
     if (balance >= NTFCardPrice) {
       const title = 'Purchase NFT card'
       const data = await mintProfessionNFT(trait, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
       })
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
+        handleTxStateChange(title, data.transactionHash, data.status, popupRef)
         await fetchNFTAmount()
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
       }
     } else {
-      setPopup(<Popup 
-        type='failed'
-        content="Purchase NFT card transaction is failed to excute"
-        subcontent="You don\'t have enough OPEN to purchase"
-        actionContent="Close"
-        setIsOpen={setPopup}
-        action={() => { setPopup(null) }}
-      />)
+      popupRef.current.open()
+      popupRef.current.type = 'failed'
+      popupRef.current.content = 'Purchase NFT card transaction is failed to excute'
+      popupRef.current.subcontent = "You don\'t have enough OPEN to purchase"
+      popupRef.current.actionContent = "Close"
+      popupRef.current.action = () => popupRef.current.close
       onClose()
     }
     setIsLoading(false)
@@ -195,7 +193,7 @@ function Shop() {
           <a className={`${style.backBtn} click-cursor`}></a>
         </Link>
       </div>
-      {popup}
+      <Popup ref={popupRef} />
     </div>
   )
 }

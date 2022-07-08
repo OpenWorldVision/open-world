@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import style from './Mining.module.css'
 import { Button } from '@chakra-ui/react'
 
@@ -19,7 +19,7 @@ import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
 import { useRouter } from 'next/router'
-import Popup from '@components/Popup'
+import Popup, { PopupRef } from '@components/Popup'
 
 type Props = {
   isOpen: boolean
@@ -40,8 +40,8 @@ export default function MiningModal(props: Props) {
     intervalToDuration({ start: 0, end: 0 })
   )
   const handleTxStateChange = useTransactionState()
-  const [popup, setPopup] = useState(null)
   const router = useRouter()
+  const popupRef = useRef<PopupRef>()
 
   const initialize = useCallback(async () => {
     toggleLoadingModal(true)
@@ -80,31 +80,27 @@ export default function MiningModal(props: Props) {
     const stamina = await getStamina()
 
     if (Number(stamina) < data.requireStamina) {
-      setPopup(<Popup 
-        type='stamina'
-        content="Mining Quest"
-        subcontent={`Mining quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start mining quest.`}
-        actionContent="Bye Sushi"
-        setIsOpen={setPopup}
-        action={() => { router.push('professions') }}
-      />)
+      popupRef.current.open()
+      popupRef.current.type = 'stamina'
+      popupRef.current.content = 'Mining Quest'
+      popupRef.current.subcontent = `Mining quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start mining quest.`
+      popupRef.current.actionContent = "Bye Sushi"
+      popupRef.current.action = () => { router.push('professions') }
       return false
     }
 
     const hammerList = await fetchAmountItemByTrait(3)
     if (hammerList?.length < 1) {
-      setPopup(<Popup 
-        type='stamina'
-        content="Mining Quest"
-        subcontent="You don't have enough hammer to start mining quest"
-        actionContent="Bye hammer"
-        setIsOpen={setPopup}
-        action={() => { router.push('professions') }}
-      />)
+      popupRef.current.open()
+      popupRef.current.type = 'stamina'
+      popupRef.current.content = 'Mining Quest'
+      popupRef.current.subcontent = "You don't have enough hammer to start mining quest"
+      popupRef.current.actionContent = "Bye hammer"
+      popupRef.current.action = () => { router.push('professions') }
       return false
     }
     return true
-  }, [popup])
+  }, [popupRef])
 
   const startQuest = useCallback(async () => {
     try {
@@ -117,17 +113,17 @@ export default function MiningModal(props: Props) {
       toggleLoadingModal(true)
 
       const mining = await startMining((txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
       })
 
       if (mining) {
-        handleTxStateChange(title, mining.transactionHash, mining.status, setPopup)
+        handleTxStateChange(title, mining.transactionHash, mining.status, popupRef)
         const data = await getMiningQuest()
         setIsFinished(data.finish)
         setIsStartQuest(false)
         setCanFinish(false)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
       }
     } catch (e) {
     } finally {
@@ -143,17 +139,17 @@ export default function MiningModal(props: Props) {
     const title = 'Finish mining quest'
     toggleLoadingModal(true)
     const finish = await finishMining((txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
     })
     if (finish) {
-      handleTxStateChange(title, finish.transactionHash, finish.status, setPopup)
+      handleTxStateChange(title, finish.transactionHash, finish.status, popupRef)
 
       updateInventory()
       setIsStartQuest(false)
       setIsFinished(true)
       // setTimeLeft(duration)
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
     }
     toggleLoadingModal(false)
   }, [])
@@ -195,7 +191,7 @@ export default function MiningModal(props: Props) {
       ) : (
         <ResultMining toggleModal={confirmResult} />
       )}
-      {popup}
+      <Popup ref={popupRef} />
     </div>
   )
 }

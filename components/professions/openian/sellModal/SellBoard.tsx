@@ -12,6 +12,7 @@ import { listMultiItems } from 'utils/NFTMarket'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import Popup, { PopupRef } from '@components/Popup'
 
 type Props = {
   selectedItem: number
@@ -31,7 +32,7 @@ function SellBoard(props: Props) {
   const [isLoading, setIsLoading] = useState(false)
   const [listingResult, setListingResult] = useState(undefined)
   const handleTxStateChange = useTransactionState()
-  const [popup, setPopup] = useState(null)
+  const popupRef = useRef<PopupRef>()
 
   const fetchSelectedItemAmount = async () => {
     const itemAmount = await fetchUserInventoryItemAmount()
@@ -130,15 +131,15 @@ function SellBoard(props: Props) {
 
       const itemSellIds = selectedItemIds.slice(0, sellingAmount)
       const result = await listMultiItems(itemSellIds, price, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
       })
       if (result !== null) {
         handleFinishListing()
         setListingResult(true)
-        handleTxStateChange(title, result.transactionHash, result.status, setPopup)
+        handleTxStateChange(title, result.transactionHash, result.status, popupRef)
       } else {
         setListingResult(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
       }
       priceRef.current.value = '0'
       setPrice(0)
@@ -256,7 +257,7 @@ function SellBoard(props: Props) {
           </Button>
         </div>
       </div>
-      {popup}
+      <Popup ref={popupRef} />
     </>
   )
 }

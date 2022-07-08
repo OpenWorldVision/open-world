@@ -1,12 +1,13 @@
 import { Button } from '@chakra-ui/button'
 import style from './forgeHammer.module.css'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import NotificationForge from './NotificationForge'
 import ResultForgeHammer from './ResultForgeHammer'
 import { fetchAmountItemByTrait, makeHammer } from 'utils/blackSmithContract'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import Popup, { PopupRef } from '@components/Popup'
 
 type Props = {
   toggleModal: (boolean) => void
@@ -23,7 +24,7 @@ export default function ForgeHammer(props: Props) {
   const [isStartQuestFail, setIsStartQuestFail] = useState(false)
   const [checkIsSuccess, setCheckIsSuccess] = useState(false)
   const handleTxStateChange = useTransactionState()
-  const [popup, setPopup] = useState(null)
+  const popupRef = useRef<PopupRef>()
 
   const numberOreNeed = useMemo(() => numberHammer / 2, [numberHammer])
 
@@ -52,7 +53,7 @@ export default function ForgeHammer(props: Props) {
     if (numberOreNeed <= numberYourOre.length && numberHammer !== 0) {
       const listSellHammer = numberYourOre.slice(0, numberOreNeed)
       const forgeHammer = await makeHammer(listSellHammer, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
       })
 
       if (forgeHammer) {
@@ -62,11 +63,11 @@ export default function ForgeHammer(props: Props) {
           title,
           forgeHammer.transactionHash,
           forgeHammer.status,
-          setPopup
+          popupRef
         )
         getListYourOre()
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
       }
 
       toggleLoadingModal(false)
@@ -177,7 +178,7 @@ export default function ForgeHammer(props: Props) {
       {isStartQuestFail && (
         <NotificationForge hiddenNotification={hiddenNotification} />
       )}
-      {popup}
+      <Popup ref={popupRef} />
     </div>
   )
 }

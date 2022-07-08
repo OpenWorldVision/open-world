@@ -2,7 +2,7 @@ import { Button, Grid, GridItem } from '@chakra-ui/react'
 import mainStyle from './professions.module.css'
 import inheritStyle from './professionsSelection.module.css'
 import style from './professionsModal.module.css'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   fetchRequireBalanceProfession,
   fetchUserProfessionNFT,
@@ -14,6 +14,7 @@ import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
 import { ethers } from 'ethers'
+import Popup, { PopupRef } from '@components/Popup'
 
 const NPCList = ['openian', 'supplier', 'blacksmith']
 
@@ -58,7 +59,7 @@ function ProfessionsModal(props: Props) {
   const [requireBalance, setRequireBalance] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
-  const [popup, setPopup] = useState(null)
+  const popupRef = useRef<PopupRef>()
 
   const onActivateProfession = useCallback(async () => {
     const title = 'Activate career'
@@ -75,15 +76,15 @@ function ProfessionsModal(props: Props) {
         professionNft,
         hero.heroId,
         (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
         }
       )
 
       if (data) {
         getResult(data.status)
-        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
+        handleTxStateChange(title, data.transactionHash, data.status, popupRef)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
       }
     }
     setIsLoading(false)
@@ -210,7 +211,7 @@ function ProfessionsModal(props: Props) {
           onClick={closeModal}
         />
       </div>
-      {popup}
+      <Popup ref={popupRef} />
     </>
   )
 }

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './market.module.css'
 import useTransactionState, {
   TRANSACTION_STATE,
@@ -12,6 +12,7 @@ import {
   getListingIDs,
   purchaseHero,
 } from 'utils/HeroMarketUtils'
+import Popup, { PopupRef } from '@components/Popup'
 
 const numOfPage = 12
 
@@ -24,7 +25,7 @@ function Market() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
-  const [popup, setPopup] = useState(null)
+  const popupRef = useRef<PopupRef>()
 
   useEffect(() => {
     getItems()
@@ -47,7 +48,7 @@ function Market() {
     const result = await purchaseHero(
       parseInt(value?.id),
       (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
       },
       async (_) => {
         setData(dataInit)
@@ -55,22 +56,22 @@ function Market() {
     )
     if (result) {
       await getItems()
-      handleTxStateChange(title, result.transactionHash, result.status, setPopup)
+      handleTxStateChange(title, result.transactionHash, result.status, popupRef)
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
     }
   }
 
   const handleCancel = async (value) => {
     const title = 'Cancel listing item'
     const result = await cancelListingItem(value?.id, (txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
     })
     if (result) {
       await getItems()
-      handleTxStateChange(title, result.transactionHash, result.status, setPopup)
+      handleTxStateChange(title, result.transactionHash, result.status, popupRef)
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
     }
   }
 
@@ -235,7 +236,7 @@ function Market() {
           <img src="./images/marketplace/back.webp" alt="img" />
         </a>
       </Link>
-      {popup}
+      <Popup ref={popupRef} />
     </div>
   )
 }

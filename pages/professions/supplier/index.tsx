@@ -12,6 +12,7 @@ import useTransactionState, {
 } from 'hooks/useTransactionState'
 import { useDisclosure } from '@chakra-ui/react'
 import Inventory, { InventoryRef } from '@components/professions/Inventory'
+import Popup, { PopupRef } from '@components/Popup'
 
 function Supplier() {
   const { isOpen: isOpenMakeSushi, onToggle: onToggleMakeSushi } =
@@ -21,8 +22,8 @@ function Supplier() {
   const [typeModal, setTypeModal] = useState(TYPE_OF_MODAL.START)
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
-  const [popup, setPopup] = useState(null)
   const inventoryRef = useRef<InventoryRef>()
+  const popupRef = useRef<PopupRef>()
 
   const getListItemByTrait = useCallback(async () => {
     const data = await getNFTsByTrait(1)
@@ -43,13 +44,13 @@ function Supplier() {
       setIsLoading(true)
 
       const data = await makeMultiSushi(listFishBurn, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
       })
 
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status, setPopup)
+        handleTxStateChange(title, data.transactionHash, data.status, popupRef)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
       }
 
       setIsLoading(false)
@@ -97,7 +98,7 @@ function Supplier() {
       </div>
       <Inventory ref={inventoryRef} />
       {isLoading && <LoadingModal />}
-      {popup}
+      <Popup ref={popupRef} />
     </div>
   )
 }

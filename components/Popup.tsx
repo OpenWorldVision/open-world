@@ -1,45 +1,75 @@
 import styles from "./popup.module.css"
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    useDisclosure,
+} from '@chakra-ui/react'
+import React, {
+    forwardRef,
+    useImperativeHandle,
+} from 'react'
 
 const infoType = {
-    sushi: '/images/popup/sushi.png',
-    stamina: '/images/popup/stamina.png',
-    fish: '/images/popup/fish.png',
-    ore: '/images/popup/ore.png',
-    other: '/images/popup/other.png',
-    success: '/images/popup/success.png',
-    failed: '/images/popup/failed.png',
-    cancel: '/images/popup/cancel.png',
-    waiting: '/images/popup/waiting.png',
+    sushi: '/images/popup/sushi.webp',
+    stamina: '/images/popup/stamina.webp',
+    fish: '/images/popup/fish.webp',
+    ore: '/images/popup/ore.webp',
+    other: '/images/popup/other.webp',
+    success: '/images/popup/success.webp',
+    failed: '/images/popup/failed.webp',
+    cancel: '/images/popup/cancel.webp',
+    waiting: '/images/popup/waiting.webp',
 }
 
-const Popup = ({ 
-    type = null, 
-    content, 
-    subcontent = null, 
-    actionContent,
-    setIsOpen,
-    action
-}) => {
+export type PopupRef = {
+    isOpen: boolean
+    open: () => void
+    close: () => void
+    type: string, 
+    content: any, 
+    subcontent: any, 
+    actionContent: string,
+    action: () => void
+}
+
+function Popup(_, ref) {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    useImperativeHandle(ref, () => ({
+        isOpen: isOpen,
+        open: onOpen,
+        close: onClose,
+        type: '', 
+        content: '', 
+        subcontent: '', 
+        actionContent: '',
+        action: onClose
+    }), [onClose])
+
     return (
-        <div className={styles.modal}>
-            <div className={styles.background3}>
-                <div className={styles.background2}>
-                    <div className={styles.background1}>
-                        <div>
-                            <div>NOTI</div>
-                            <button className="click-cursor" onClick={() => {setIsOpen(null)}}>
-                                <img src='/images/popup/close.png' />
-                            </button>
+        <Modal isOpen={isOpen} onClose={onClose} isCentered>
+            <ModalOverlay />
+            <ModalContent style={{ backgroundColor: "transparent" }}>
+                <div className={styles.background3}>
+                    <div className={styles.background2}>
+                        <div className={styles.background1}>
+                            <div>
+                                <div>NOTI</div>
+                                <button className="click-cursor" onClick={onClose}>
+                                    <img src='/images/popup/close.webp' />
+                                </button>
+                            </div>
+                            {ref.current?.type && <img src={infoType[ref.current?.type]} />}
+                            <div>{ref.current?.content}</div>
+                            {ref.current?.subcontent && <div>({ref.current?.subcontent})</div> }
+                            <button className="click-cursor" onClick={ref.current?.action}>{ref.current?.actionContent}</button>
                         </div>
-                        {type && <img src={infoType[type]} />}
-                        <div>{content}</div>
-                        {subcontent && <div>({subcontent})</div> }
-                        <button className="click-cursor" onClick={action}>{actionContent}</button>
                     </div>
                 </div>
-            </div>
-        </div>
+            </ModalContent>
+        </Modal>
     )
 }
 
-export default Popup
+export default forwardRef<PopupRef>(Popup)

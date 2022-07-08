@@ -19,14 +19,14 @@
     flex: 1;
     max-width: 600px;
     height: fit-content;
-    background-image: url('/images/popup/background-3.png');
+    background-image: url('/images/popup/background-3.webp');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-color: transparent;
 }
 
 .background2{
-    background-image: url('/images/popup/background-2.png');
+    background-image: url('/images/popup/background-2.webp');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     height: 100%;
@@ -35,7 +35,7 @@
 }
 
 .background1{
-    background-image: url('/images/popup/background.png');
+    background-image: url('/images/popup/background.webp');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     height: 100%;

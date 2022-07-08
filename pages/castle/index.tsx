@@ -29,7 +29,7 @@ import {
 import LoadingModal from '@components/LoadingModal'
 import { useDispatch } from 'react-redux'
 import { setOpenBalance } from 'reduxActions/profileAction'
-import Popup from '@components/Popup'
+import Popup, { PopupRef } from '@components/Popup'
 
 export default function Castle() {
   // Ref
@@ -49,7 +49,7 @@ export default function Castle() {
   const handleTxStateChange = useTransactionState()
   const { onClose } = useDisclosure()
   const toast = useToast()
-  const [popup, setPopup] = useState(null)
+  const popupRef = useRef<PopupRef>()
 
   const [nftsAmount, setNftsAmount] = useState({
     openianAmount: 0,
@@ -158,23 +158,21 @@ export default function Castle() {
       if (balance >= NTFCardPrice) {
         const title = 'Purchase NFT card'
         const data = await mintProfessionNFT(trait, (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
         })
         if (data) {
-          handleTxStateChange(title, data.transactionHash, data.status, setPopup)
+          handleTxStateChange(title, data.transactionHash, data.status, popupRef)
           // await fetchNFTAmount()
         } else {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
         }
       } else {
-        setPopup(<Popup 
-          type='failed'
-          content="Purchase NFT card transaction is failed to excute"
-          subcontent={`You don't have enough OPEN to purchase`}
-          actionContent="Close"
-          setIsOpen={setPopup}
-          action={() => { setPopup(null) }}
-        />)
+        popupRef.current.open()
+        popupRef.current.type = 'failed'
+        popupRef.current.content = "Purchase NFT card transaction is failed to excute"
+        popupRef.current.subcontent = 'You don\'t have enough OPEN to purchase'
+        popupRef.current.actionContent = "Close"
+        popupRef.current.action = popupRef.current.close
         onClose()
       }
       fetchNFTAmount()
@@ -308,7 +306,7 @@ export default function Castle() {
         toggleLandAuction={() => setIsLandAuctionOpen(false)}
         key={action}
       />
-      {popup}
+      <Popup ref={popupRef} />
     </div>
   )
 }

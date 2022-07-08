@@ -1,10 +1,11 @@
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { cancelListingItem, getListingIDsBySeller, getNumberOfItemListings } from 'utils/NFTMarket'
 import styles from './history.module.css'
 import useTransactionState, {
     TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import Popup, { PopupRef } from '@components/Popup'
 
 const numOfPage = 4
 
@@ -15,8 +16,8 @@ export default function History() {
     const [totalItems, setTotalItems] = useState(null)
     const [status, setStatus] = useState('Loading ...')
     const [isOpenNotify, setIsOpenNotify] = useState(null)
-    const [popup, setPopup] = useState(null)
     const handleTxStateChange = useTransactionState()
+    const popupRef = useRef<PopupRef>()
     
     useEffect(() => {
         getItems()
@@ -37,7 +38,7 @@ export default function History() {
         const result = await cancelListingItem(
             id,
             (txHash) => {
-                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
             }, 
         )
         if (result) {
@@ -152,7 +153,7 @@ export default function History() {
                         <img src="./images/marketplace/back.webp" alt="img" />
                     </a>
                 </Link>
-                {popup}
+                <Popup ref={popupRef} />
             </div>
             }
         </>
