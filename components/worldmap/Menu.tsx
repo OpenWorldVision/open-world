@@ -22,7 +22,7 @@ export default function Menu() {
           </span>
         </button>
         {isOpenMenu && (
-          <ul>
+          <ul style={{ zIndex: 2000 }}>
             <li className="click-cursor">
               <div className="click-cursor">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -136,7 +136,7 @@ const MenuCSS = styled.div({
       color: 'white',
       '@media(max-width: 1024px)': {
         top: '80px',
-        width: '115px'
+        width: '115px',
       },
       li: {
         padding: '4px',

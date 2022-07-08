@@ -3,6 +3,10 @@
   height: 100vh;
   z-index: 2001;
 }
+.castleMobileOverlay {
+  background-color: #131313;
+  height: 100vh;
+}
 
 .castleContainer {
   position: relative;
@@ -74,7 +78,6 @@
   width: 231.538px;
   height: 48vh;
 }
-
 
 .castleModalBody {
   position: absolute;

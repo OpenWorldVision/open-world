@@ -1,11 +1,35 @@
-import { useRef, useState, useCallback, useEffect } from 'react'
+import { useRef, useState, useCallback, useEffect, useMemo } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
 import style from '@components/castle/castle.module.css'
 import CastleModal from '@components/castle/CastleModal'
 import LandAuction from '@components/castle/LandAuction'
-import { ButtonGroup, Button, Flex } from '@chakra-ui/react'
+import {
+  ButtonGroup,
+  Button,
+  Flex,
+  useMediaQuery,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
+import styles from '@components/castle/mobile/MobileHeaderBar.module.css'
+import MobileHeaderBar from '@components/castle/mobile/MobileHeaderBar'
+import CastleLayout from '@components/castle/mobile/CastleLayout'
+import ModalBuyItem from '@components/ModalBuyItem/ModalBuyItem'
+import useTransactionState, {
+  TRANSACTION_STATE,
+} from 'hooks/useTransactionState'
+import { getOpenBalance } from 'utils/checkBalanceOpen'
+import {
+  fetchProfessionsNFTAmount,
+  fetchProfessionsNFTPrices,
+  mintProfessionNFT,
+} from 'utils/professions'
+import LoadingModal from '@components/LoadingModal'
+import { useDispatch } from 'react-redux'
+import { setOpenBalance } from 'reduxActions/profileAction'
+import Popup from '@components/Popup'
 
 export default function Castle() {
   // Ref
@@ -18,6 +42,71 @@ export default function Castle() {
   const [action, setAction] = useState(0)
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isMobile] = useMediaQuery('(max-width: 1014px)')
+  const [showModalBuy, setShowModalBuy] = useState(false)
+  const [selectedNFT, setSelectedNFT] = useState(null)
+  const handleTxStateChange = useTransactionState()
+  const { onClose } = useDisclosure()
+  const toast = useToast()
+  const [popup, setPopup] = useState(null)
+
+  const [nftsAmount, setNftsAmount] = useState({
+    openianAmount: 0,
+    supplierAmount: 0,
+    blacksmithAmount: 0,
+  })
+  const [nftsPrices, setNftsPrices] = useState({
+    openianPrice: '0',
+    supplierPrice: '0',
+    blacksmithPrice: '0',
+  })
+
+  const fetchNFTAmount = useCallback(async () => {
+    const amount = await fetchProfessionsNFTAmount()
+    setNftsAmount(amount)
+  }, [])
+
+  const fetchNFTPrices = useCallback(async () => {
+    const prices = await fetchProfessionsNFTPrices()
+    setNftsPrices(prices)
+  }, [])
+
+  const dispatch = useDispatch()
+
+  const getListNFTs = useMemo(() => {
+    const listNFTs = [
+      {
+        id: 'openian',
+        name: 'Openian NFT',
+        image: '/images/professions/npc/openianNPC.webp',
+        price: nftsPrices.openianPrice,
+        available: nftsAmount.openianAmount,
+      },
+      {
+        id: 'supplier',
+        name: 'Supplier NFT',
+        image: '/images/professions/npc/supplierNPC.webp',
+        price: nftsPrices.supplierPrice,
+        available: nftsAmount.supplierAmount,
+      },
+      {
+        id: 'blacksmith',
+        name: 'Blacksmith NFT',
+        image: '/images/professions/npc/smithNPC.webp',
+        price: nftsPrices.blacksmithPrice,
+        available: nftsAmount.blacksmithAmount,
+      },
+    ]
+    return listNFTs
+  }, [
+    nftsAmount.blacksmithAmount,
+    nftsAmount.openianAmount,
+    nftsAmount.supplierAmount,
+    nftsPrices.blacksmithPrice,
+    nftsPrices.openianPrice,
+    nftsPrices.supplierPrice,
+  ])
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -25,6 +114,8 @@ export default function Castle() {
     }
 
     checkWindowWidth()
+    fetchNFTAmount()
+    fetchNFTPrices()
 
     window.addEventListener('resize', checkWindowWidth)
 
@@ -37,51 +128,147 @@ export default function Castle() {
     setAction(action)
     setIsLandAuctionOpen(true)
   }, [])
+  const closeModal = useCallback(() => {
+    setShowModalBuy(false)
+  }, [setShowModalBuy])
+
+  const _onBuyNFT = useCallback(
+    (nft) => {
+      //get nft to open modal
+      setShowModalBuy(true)
+      setSelectedNFT(nft)
+    },
+    [setShowModalBuy, setSelectedNFT]
+  )
+
+  const renderMobileUI = useCallback(() => {
+    return (
+      <>
+        <MobileHeaderBar />
+        <CastleLayout onPressBuyNFT={_onBuyNFT} listNFTs={getListNFTs} />
+      </>
+    )
+  }, [_onBuyNFT, getListNFTs])
+  const _mintProfessionsNFT = useCallback(
+    async (trait) => {
+      setShowModalBuy(false)
+      setIsLoading(true)
+      const balance = parseFloat(await getOpenBalance(false))
+      const NTFCardPrice = parseFloat(selectedNFT?.price)
+      if (balance >= NTFCardPrice) {
+        const title = 'Purchase NFT card'
+        const data = await mintProfessionNFT(trait, (txHash) => {
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+        })
+        if (data) {
+          handleTxStateChange(title, data.transactionHash, data.status, setPopup)
+          // await fetchNFTAmount()
+        } else {
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+        }
+      } else {
+        setPopup(<Popup 
+          type='failed'
+          content="Purchase NFT card transaction is failed to excute"
+          subcontent={`You don't have enough OPEN to purchase`}
+          actionContent="Close"
+          setIsOpen={setPopup}
+          action={() => { setPopup(null) }}
+        />)
+        onClose()
+      }
+      fetchNFTAmount()
+      fetchNFTPrices()
+      setIsLoading(false)
+      const newBalance = await getOpenBalance(true)
+      dispatch(setOpenBalance(newBalance))
+    },
+    [
+      dispatch,
+      fetchNFTAmount,
+      fetchNFTPrices,
+      handleTxStateChange,
+      onClose,
+      selectedNFT?.price,
+      toast,
+    ]
+  )
+
+  const _confirmBuy = useCallback(() => {
+    const id =
+      selectedNFT?.id === 'openian' ? 1 : selectedNFT?.id === 'supplier' ? 2 : 3
+    _mintProfessionsNFT(id)
+  }, [_mintProfessionsNFT, selectedNFT])
 
   return (
-    <div className={`${style.castleOverlay} overlay`}>
+    <div
+      className={
+        !isMobile
+          ? `${style.castleOverlay} overlay`
+          : `${style.castleMobileOverlay} overlay`
+      }
+    >
+      {isLoading && <LoadingModal />}
       <Head>
         <title>Castle</title>
       </Head>
-      <TransformWrapper
-        initialPositionX={0}
-        initialPositionY={0}
-        centerOnInit={true}
-        wheel={{
-          disabled: true,
-        }}
-        doubleClick={{
-          disabled: true,
-        }}
-        panning={{
-          disabled: windowWidth >= 1858,
-        }}
-      >
-        <TransformComponent wrapperStyle={{ height: '100vh', width: '100vw' }}>
-          <div
-            ref={castleOverlay}
-            className={`${style.castleContainer} overlay`}
+      {isMobile ? (
+        <>
+          {renderMobileUI()}
+          <ModalBuyItem
+            isOpen={showModalBuy}
+            nft={selectedNFT}
+            onClose={closeModal}
+            fromCastle={true}
+            title={'Buy Items'}
+            confirmBuy={_confirmBuy}
+          />
+        </>
+      ) : (
+        <TransformWrapper
+          initialPositionX={0}
+          initialPositionY={0}
+          centerOnInit={true}
+          wheel={{
+            disabled: true,
+          }}
+          doubleClick={{
+            disabled: true,
+          }}
+          panning={{
+            disabled: windowWidth >= 1858,
+          }}
+        >
+          <TransformComponent
+            wrapperStyle={{ height: '100vh', width: '100vw' }}
           >
-            <div ref={castle} className={style.castleBg}>
+            <div className={styles.webContainer}>
               <div
-                className={`${style.castleBtn} ${style.bankBtn} click-cursor`}
-              ></div>
-              <div
-                className={`${style.castleBtn} ${style.wowBtn} click-cursor`}
-              ></div>
-              <div
-                className={`${style.castleBtn} ${style.landAuctionBtn} click-cursor`}
-                // onClick={() => setIsLandAuctionModalOpen(true)}
-              ></div>
-              <Link href="/castle/shop">
-                <a
-                  className={`${style.castleBtn} ${style.shopBtn} click-cursor`}
-                ></a>
-              </Link>
+                ref={castleOverlay}
+                className={`${style.castleContainer} overlay`}
+              >
+                <div ref={castle} className={style.castleBg}>
+                  <div
+                    className={`${style.castleBtn} ${style.bankBtn} click-cursor`}
+                  ></div>
+                  <div
+                    className={`${style.castleBtn} ${style.wowBtn} click-cursor`}
+                  ></div>
+                  <div
+                    className={`${style.castleBtn} ${style.landAuctionBtn} click-cursor`}
+                    // onClick={() => setIsLandAuctionModalOpen(true)}
+                  ></div>
+                  <Link href="/castle/shop">
+                    <a
+                      className={`${style.castleBtn} ${style.shopBtn} click-cursor`}
+                    ></a>
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
-        </TransformComponent>
-      </TransformWrapper>
+          </TransformComponent>
+        </TransformWrapper>
+      )}
 
       <CastleModal
         isOpen={isLandAuctionModalOpen}
@@ -109,10 +296,11 @@ export default function Castle() {
           </Flex>
         </ButtonGroup>
       </CastleModal>
-
-      <Link href="/">
-        <a className={`${style.backBtn} click-cursor`}></a>
-      </Link>
+      {!isMobile ? (
+        <Link href="/">
+          <a className={`${style.backBtn} click-cursor`}></a>
+        </Link>
+      ) : null}
 
       <LandAuction
         action={action}
@@ -120,6 +308,10 @@ export default function Castle() {
         toggleLandAuction={() => setIsLandAuctionOpen(false)}
         key={action}
       />
+      {popup}
     </div>
   )
+}
+function trait(trait: any, arg1: (txHash: any) => void) {
+  throw new Error('Function not implemented.')
 }

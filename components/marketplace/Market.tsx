@@ -1,253 +1,243 @@
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { cancelListingItem, getListingIDs, purchaseItems } from 'utils/NFTMarket'
+import { useCallback, useEffect, useState } from 'react'
 import styles from './market.module.css'
 import useTransactionState, {
-    TRANSACTION_STATE,
+  TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import NavItem from './NavItem'
+import Item from './Item'
+import { Box, Center, Image, Spinner, Stack, Text } from '@chakra-ui/react'
+import {
+  cancelListingItem,
+  getListingIDs,
+  purchaseHero,
+} from 'utils/HeroMarketUtils'
 
 const numOfPage = 12
 
-export default function Market() {
-    const [isOpenSortPrice, setIsOpenSortPrice] = useState(false)
-    const [page, setPage] = useState(1)
-    const [nav, setNav] = useState(0)
-    const [dataInit, setDataInit] = useState([])
-    const [data, setData] = useState([])
-    const [status, setStatus] = useState('Loading ...')
-    const handleTxStateChange = useTransactionState()
-    const [popup, setPopup] = useState(null)
+const TRAIT_NAME = ['OPENIAN NFT', 'SUPPLIER NFT', 'BLACKSMITH NFT']
 
-    useEffect(() => {
-        getItems()
-    }, [])
+function Market() {
+  const [page, setPage] = useState(1)
+  const [nav, setNav] = useState(0)
+  const [dataInit, setDataInit] = useState([])
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+  const handleTxStateChange = useTransactionState()
+  const [popup, setPopup] = useState(null)
 
-    const getItems = async () => {
-        const result = await getListingIDs(false, true)
-        const dataResult = []
-        for (const i of result) if (i.trait !== 4) dataResult.push(i)
-        if(result.length) {
-            setDataInit(dataResult)
-            setData(dataResult)
-        } else {
-            setStatus('No results found')
-        }
+  useEffect(() => {
+    getItems()
+  }, [])
+
+  const getItems = async () => {
+    setLoading(true)
+    const result = await getListingIDs(false, true)
+    const dataResult = []
+    for (const i of result) if (i.trait !== 4) dataResult.push(i)
+    if (result.length) {
+      setDataInit(dataResult)
+      setData(dataResult)
     }
+    setLoading(false)
+  }
 
-    const sortHighest = () => {
-        changeNav(nav)
-        setIsOpenSortPrice(false)
-        setData(data.sort((a, b) => b.price - a.price))
-    }
-    
-    const sortLowest = () => {
-        changeNav(nav)
-        setIsOpenSortPrice(false)
-        setData(data.sort((a, b) => a.price - b.price))
-    }
-
-    const sortId = (id) => {
-        if (id !== '') {
-            if (nav === 0) {
-                if (!dataInit.length) {
-                    setStatus('No results found')
-                    setData([])
-                } else {
-                    setData(dataInit.filter(value => value.id === Number(id)))
-                }
-            }
-            else if (nav === 4) {
-                const result = dataInit.filter(value => {
-                    return value.isOwner
-                })
-                if (!result.length) {
-                    setStatus('No results found')
-                    setData([])
-                } else {
-                    setData(result.filter(value => value.id === Number(id)))
-                }
-            }
-            else {
-                const result = dataInit.filter(value => {
-                    return value.trait === nav
-                })
-                if (!result.length) {
-                    setStatus('No results found')
-                    setData([])
-                } else {
-                    setData(result.filter(value => value.id === Number(id)))
-                }
-            }
-        } else {
-            changeNav(nav)
-        }
-    }
-
-    const handlePurchase = async (value) => {
-        const title = 'Purchase item'
-        setData([])
-        setStatus('Loading ...')
-        const result = await purchaseItems(
-            parseInt(value?.id), 
-            value?.items, 
-            (txHash) => {
-                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
-            }, 
-            async (error) => {
-                setData(dataInit)
-                setStatus('Loading ...')
-            }
-        )
-        if (result) {
-            setDataInit([])
-            await getItems()
-            handleTxStateChange(title, result.transactionHash, result.status, setPopup)
-        } else {
-            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
-        }
-    }
-
-    const handleCancel = async (value) => {
-        const title = 'Cancel listing item'
-        const result = await cancelListingItem(
-            value?.id,
-            (txHash) => {
-                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
-            }, 
-        )
-        if (result) {
-            setStatus('Loading ...')
-            setData([])
-            await getItems()
-            handleTxStateChange(title, result.transactionHash, result.status, setPopup)
-        } else {
-            handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
-        }
-    }
-
-    const changeNav = (nav: number) => {
-        setNav(nav)
-        setPage(1)
-        if (nav === 0) {
-            if (!dataInit.length){
-                setStatus('No results found')
-                setData([])
-            } else {
-                setData(dataInit)
-            }
-        }
-        else if (nav === 4) {
-            const result = dataInit.filter(value => value.isOwner)
-            if (!result.length) {
-                setStatus('No results found')
-                setData([])
-            } else {
-                setData(result)
-            }
-        }
-        else {
-            const result = dataInit.filter(value => {
-                return value.trait === nav && !value.isOwner
-            })
-            if (!result.length) {
-                setStatus('No results found')
-                setData([])
-            } else {
-                setData(result)
-            }
-        }
-    }
-
-    return (
-        <div className={styles.main}>
-            <div className={styles.nav}>
-                <div className={styles.nav1}>
-                    <div
-                        onClick={() => {changeNav(0)}}
-                    >
-                        <div className={nav === 0 ? styles.select + ' click-cursor' : 'click-cursor'}>ALL</div>
-                    </div>
-                    <div
-                        onClick={() => {changeNav(1)}}
-                    >
-                        <div className={nav === 1 ? styles.select + ' click-cursor' : 'click-cursor'}>OPENIAN</div>
-                    </div>
-                    <div
-                        onClick={() => {changeNav(2)}}
-                    >
-                        <div className={nav === 2 ? styles.select + ' click-cursor' : 'click-cursor'}>SUPPLIER</div>
-                    </div>
-                    <div
-                        onClick={() => {changeNav(3)}}
-                    >
-                        <div className={nav === 3 ? styles.select + ' click-cursor' : 'click-cursor'}>BLACKSMITH</div>
-                    </div>
-                    <div
-                        onClick={() => {changeNav(4)}}
-                    >
-                        <div className={nav === 4 ? styles.select + ' click-cursor' : 'click-cursor'}>MY LISTING</div>
-                    </div>
-                </div>
-                <div className={styles.nav2}>
-                    <div>
-                        <div
-                            onClick={() => {setIsOpenSortPrice(isOpenSortPricePrev => !isOpenSortPricePrev)}}
-                        >SORT PRICE</div>
-                        {isOpenSortPrice && (
-                            <div className={styles.sortPriceBoard}>
-                                <div onClick={() => {sortHighest()}}>HIGHEST</div>
-                                <div onClick={() => {sortLowest()}}>LOWEST</div>
-                            </div>
-                        )}
-                    </div>
-                    <input type="number" placeholder='NFT ID' onChange={(e) => {sortId(e.target.value)}} />
-                </div>
-            </div>
-            <div className={styles.body}>
-                <div>
-                    {data.length === 0 ? <div className={styles.loading}>{status}</div>
-                    : data.slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage).map(value => {
-                        return <div key={value} className={styles.item}>
-                            <div className={styles.itemInfo}>
-                                <div>
-                                    <div>#{value.id} HALLEN</div>
-                                    <img src={`/images/marketplace/items/${value.trait}.webp`} alt="img" />
-                                </div>
-                                <div>{value.price} OPEN</div>
-                            </div>
-                            {nav !== 4 ? <div className={styles.itemBuy}>
-                                <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.webp" alt="img" />
-                            </div> : <div className={styles.itemCancel}>
-                                {/* <img className='click-cursor' onClick={() => handlePurchase(value)} src="./images/marketplace/buy.webp" alt="img" /> */}
-                                <div onClick={() => handleCancel(value)} className='click-cursor'>CANCEL</div>
-                            </div>}
-                        </div>
-                    })}
-                </div>
-            </div>
-            <div className={styles.footer}>
-                <div className={styles.pagination}>
-                    <img 
-                        onClick={() => {setPage(pagePrev => pagePrev > 1 ? pagePrev - 1 : pagePrev )}}
-                        src="./images/marketplace/triangle-left.webp" 
-                        alt="img"
-                        className='click-cursor' 
-                    />
-                    <div>{page < 10 ? `0${page}` : page}</div>
-                    <img
-                        onClick={() => {setPage(pagePrev => pagePrev < Math.ceil(data.length / numOfPage) ? pagePrev + 1 : pagePrev )}}
-                        src="./images/marketplace/triangle-right.webp" 
-                        alt="img" 
-                        className='click-cursor' 
-                    />
-                </div>
-            </div>
-            <Link href='/'>
-                <a className={styles.back}>
-                    <img src="./images/marketplace/back.webp" alt="img" />
-                </a>
-            </Link>
-            {popup}
-        </div>
+  const handlePurchase = async (value) => {
+    const title = 'Purchase item'
+    const result = await purchaseHero(
+      parseInt(value?.id),
+      (txHash) => {
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+      },
+      async (_) => {
+        setData(dataInit)
+      }
     )
+    if (result) {
+      await getItems()
+      handleTxStateChange(title, result.transactionHash, result.status, setPopup)
+    } else {
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+    }
+  }
+
+  const handleCancel = async (value) => {
+    const title = 'Cancel listing item'
+    const result = await cancelListingItem(value?.id, (txHash) => {
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, setPopup)
+    })
+    if (result) {
+      await getItems()
+      handleTxStateChange(title, result.transactionHash, result.status, setPopup)
+    } else {
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, setPopup)
+    }
+  }
+
+  const handleChangeTab = useCallback(
+    (nav: number) => {
+      setNav(nav)
+      setPage(1)
+      if (nav === 0) {
+        if (!dataInit.length) {
+          setData([])
+        } else {
+          setData(dataInit)
+        }
+      } else if (nav === 4) {
+        const result = dataInit.filter((value) => value.isOwner)
+        if (!result.length) {
+          setData([])
+        } else {
+          setData(result)
+        }
+      } else {
+        const result = dataInit.filter((value) => {
+          return value.trait === nav && !value.isOwner
+        })
+        if (!result.length) {
+          setData([])
+        } else {
+          setData(result)
+        }
+      }
+    },
+    [dataInit]
+  )
+
+  return (
+    <div className={styles.main}>
+      <div className={styles.nav}>
+        <div className={styles.nav1}>
+          <NavItem
+            index={0}
+            onClick={handleChangeTab}
+            label="ALL"
+            selected={nav === 0}
+          />
+          {/* <NavItem
+            index={1}
+            onClick={handleChangeTab}
+            label="OPENIAN"
+            selected={nav === 1}
+          />
+          <NavItem
+            index={2}
+            onClick={handleChangeTab}
+            label="SUPPLIER"
+            selected={nav === 2}
+          />
+          <NavItem
+            index={3}
+            onClick={handleChangeTab}
+            label="BLACKSMITH"
+            selected={nav === 3}
+          /> */}
+          <NavItem
+            index={4}
+            onClick={handleChangeTab}
+            label=" MY LISTING"
+            selected={nav === 4}
+          />
+        </div>
+      </div>
+      <Box bgColor="#3F4F5F" m="8px 22px" borderRadius={10} p="0 16px">
+        <Stack
+          overflow="scroll"
+          height="76vh"
+          spacing={2}
+          p="0 16px"
+          bgColor="#C8BB98"
+          align="center"
+        >
+          <Box zIndex={1}>
+            <Box
+              p="10px 18px"
+              bgColor="#CFB183"
+              borderRadius={10}
+              m="16px 48px"
+            >
+              <Text fontWeight="bold" fontSize="16px" color="black">
+                Selling NFT
+              </Text>
+            </Box>
+            <Image
+              src="/images/marketplace/header.webp"
+              alt="header"
+              position="absolute"
+              top={58}
+              mr="auto"
+              ml="auto"
+              left={0}
+              right={0}
+              zIndex={-1}
+              w={`${210 * 0.6}px`}
+              h={`${160 * 0.6}px`}
+            />
+          </Box>
+
+          {loading && <Spinner />}
+          {data.length === 0 && (
+            <Center className={styles.loading}>No results found</Center>
+          )}
+
+          {data
+            .slice((page - 1) * numOfPage, (page - 1) * numOfPage + numOfPage)
+            .map((value, index) => (
+              <Item
+                onBuy={() => {
+                  if (nav === 4) {
+                    handleCancel(value)
+                    return
+                  }
+
+                  handlePurchase(value)
+                }}
+                name={`${TRAIT_NAME[value.trait - 1]} #${value.id}`}
+                price={value.price}
+                seller={value.seller}
+                available={1}
+                imageUrl={`/images/marketplace/items/${value.trait}.webp`}
+                key={`${value.id}${index}`}
+                actionLabel={nav !== 4 ? 'buy' : 'cancel'}
+              />
+            ))}
+        </Stack>
+      </Box>
+
+      <div className={styles.footer}>
+        <div className={styles.pagination}>
+          <img
+            onClick={() => {
+              setPage((pagePrev) => (pagePrev > 1 ? pagePrev - 1 : pagePrev))
+            }}
+            src="./images/marketplace/triangle-left.webp"
+            alt="img"
+            className="click-cursor"
+          />
+          <div>{page < 10 ? `0${page}` : page}</div>
+          <img
+            onClick={() => {
+              setPage((pagePrev) =>
+                pagePrev < Math.ceil(data.length / numOfPage)
+                  ? pagePrev + 1
+                  : pagePrev
+              )
+            }}
+            src="./images/marketplace/triangle-right.webp"
+            alt="img"
+            className="click-cursor"
+          />
+        </div>
+      </div>
+      <Link href="/">
+        <a className={styles.back}>
+          <img src="./images/marketplace/back.webp" alt="img" />
+        </a>
+      </Link>
+      {popup}
+    </div>
+  )
 }
+
+export default Market

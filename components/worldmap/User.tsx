@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import styled from '@emotion/styled'
 import UserInfo from '@components/worldmap/UserInfo'
 import CreateProfile from '@components/worldmap/CreateProfile'
 import { getProfile, getStamina } from 'utils/profileContract'
 import { useDispatch, useSelector } from 'react-redux'
-import { setProfile } from 'reduxActions/profileAction'
+import { setOpenBalance, setProfile } from 'reduxActions/profileAction'
 import Inventory, { InventoryRef } from '../professions/Inventory'
 import ProfessionsTutorial from '@components/professions/ProfessionsTutorial'
 import {
@@ -28,11 +28,19 @@ type UserDetailsProps = {
   staminaPoint: number
   onClickProfile: () => void
   onOpenInventory: () => void
+  onOpenRecover: () => void
 }
 
 function UserDetails(props: UserDetailsProps) {
-  const { profile, balance, career, staminaPoint, onClickProfile, onOpenInventory } = props
-  const { onToggle } = useDisclosure()
+  const {
+    profile,
+    balance,
+    career,
+    staminaPoint,
+    onClickProfile,
+    onOpenInventory,
+    onOpenRecover,
+  } = props
 
   return (
     <div className="user-info">
@@ -40,12 +48,7 @@ function UserDetails(props: UserDetailsProps) {
       <ul>
         <Wrap>
           <WrapItem>
-            <img
-              src="/favicon.ico"
-              alt="img"
-              width={25}
-              height={25}
-            />
+            <img src="/favicon.ico" alt="img" width={25} height={25} />
           </WrapItem>
           <WrapItem alignItems="center">
             <Text> {balance} OPEN</Text>
@@ -63,20 +66,13 @@ function UserDetails(props: UserDetailsProps) {
             />
           </WrapItem>
           <WrapItem>
-            <Text
-              className="click-cursor"
-              onClick={onOpenInventory}
-            >
+            <Text className="click-cursor" onClick={onOpenInventory}>
               Inventory
             </Text>
           </WrapItem>
         </Wrap>
 
-        <Wrap
-          alignItems="center"
-          justifyContent="center"
-          borderTop="none"
-        >
+        <Wrap alignItems="center" justifyContent="center" borderTop="none">
           <WrapItem alignItems="center">
             <img
               src="/images/icons/stamina-point.png"
@@ -94,7 +90,7 @@ function UserDetails(props: UserDetailsProps) {
           </WrapItem>
           <WrapItem>
             <Button
-              onClick={onToggle}
+              onClick={onOpenRecover}
               size="xs"
               colorScheme="yellow"
               leftIcon={<PlusSquareIcon />}
@@ -156,10 +152,11 @@ export default function User() {
     }
   }, [dispatch])
 
-  const getBalance = async () => {
+  const getBalance = useCallback(async () => {
     const balance = await getOpenBalance(true)
+    dispatch(setOpenBalance(balance))
     setBalance(balance)
-  }
+  }, [dispatch])
 
   const handleGetStamina = useCallback(async () => {
     const stamina = await getStamina()
@@ -170,7 +167,30 @@ export default function User() {
 
   const checkWindowWidth = useCallback(() => {
     setWindowWidth(window.innerWidth)
-  }, [window.innerWidth])
+  }, [])
+
+  const buyOpenLink = useMemo(() => {
+    const chainId = window?.ethereum?.chainId
+
+    switch (chainId) {
+      // BSC testnet
+      case '0x61':
+        return 'https://pancake.kiemtienonline360.com/#/swap?outputCurrency=0x28ad774C41c229D48a441B280cBf7b5c5F1FED2B'
+      case '0x38':
+        return 'https://pancakeswap.finance/swap?outputCurrency=0x27a339d9B59b21390d7209b78a839868E319301B'
+      // Harmony mainet
+      case '0x63564c40':
+      case '0x63564c41':
+      case '0x63564c42':
+      case '0x63564c43':
+      // Harmony test
+      case '0x6357d2e0':
+      case '0x6357d2e1':
+      case '0x6357d2e2':
+      case '0x6357d2e3':
+        return 'https://app.sushi.com/swap?outputCurrency=0x27a339d9B59b21390d7209b78a839868E319301B'
+    }
+  }, [])
 
   useEffect(() => {
     getDataProfile()
@@ -249,6 +269,7 @@ export default function User() {
                 staminaPoint={staminaPoint}
                 onClickProfile={handleClickProfile}
                 onOpenInventory={handleOpenInventory}
+                onOpenRecover={onToggle}
               />
             </PopoverContent>
           </Popover>
@@ -300,6 +321,7 @@ export default function User() {
                     staminaPoint={staminaPoint}
                     onClickProfile={handleClickProfile}
                     onOpenInventory={handleOpenInventory}
+                    onOpenRecover={onToggle}
                   />
                 </PopoverContent>
               </Popover>
@@ -313,12 +335,12 @@ export default function User() {
                 <img
                   src="images/profile/OPEN-coin.webp"
                   className="openCoint-icon"
-                ></img>
+                />
                 <a
-                  className='buy-OPEN-link'
+                  className="buy-OPEN-link"
                   target="_blank"
                   rel="noopener noreferrer"
-                  href="https://pancakeswap.finance/swap?outputCurrency=0x27a339d9B59b21390d7209b78a839868E319301B"
+                  href={buyOpenLink}
                 >
                   <span>+</span>
                 </a>
@@ -536,7 +558,7 @@ const UserCSS = styled.div({
               color: '#fff',
               fontWeight: '700',
             },
-          }
+          },
         },
       },
     },

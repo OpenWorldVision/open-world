@@ -1,0 +1,187 @@
+.containerLayout {
+  background-color: #c8bb98;
+  height: fit-content;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 16px;
+}
+.classImage {
+  width: 68px;
+  height: 117px;
+  margin-top: 24px;
+}
+.header {
+  background-color: #405160;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 132px;
+  height: fit-content;
+  margin-top: -16px;
+  border-radius: 10px;
+}
+.header p {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 24px;
+  padding-right: 24px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 19.5px;
+  font-weight: 700;
+}
+.containerDesc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.containerDesc p {
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+  color: '#000';
+  font-weight: 500;
+}
+.containerDesc span {
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: '#000';
+  font-weight: 400;
+}
+.containerPrice {
+  background-color: #dcd7c1;
+  border-radius: 10px;
+  padding: 16px 20px 16px 20px;
+  width: 90%;
+}
+.rowPrice {
+  display: flex;
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 15px;
+}
+.rowPrice span {
+  flex: 0.3;
+}
+
+.rightField {
+  flex: 0.7;
+  display: flex;
+}
+.rightField img {
+  width: 14px;
+  height: 14px;
+  margin-left: 4px;
+}
+.containerButtonQuantity {
+  display: flex;
+  margin-top: 25px;
+}
+.containerButtonQuantityDisable {
+  display: flex;
+  margin-top: 25px;
+  opacity: 0.3;
+}
+.upDownButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  background-image: linear-gradient(180deg, #ffe194 0%, #e7bc7d 100%);
+  border: 1px solid #9a7225;
+  border-radius: 4px;
+}
+.quantityBox {
+  margin: 0px 4px 0px 4px;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 225, 148, 0.5) 0%,
+    rgba(231, 188, 125, 0.5) 100%
+  );
+  width: 65px;
+  height: 24px;
+  border: 1px solid #9a7225;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.quantityBox p {
+  font-size: 12px;
+  line-height: 14px;
+  color: #472805;
+}
+.totalField {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-left: 36px;
+  margin-top: 24px;
+}
+.totalField span {
+  flex: 0.2;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #000000;
+}
+.totalPrice {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 4px 5px 4px 4px;
+  gap: 4px;
+  width: 100px;
+  height: 26px;
+  flex: 0.45;
+  background: #a69876;
+  border-radius: 20px;
+}
+.totalPrice p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+
+  color: #412300;
+}
+.totalPrice img {
+  width: 18px;
+  height: 18px;
+}
+.confirmBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 10px;
+
+  width: 103px;
+  height: 40px;
+  background: #472805;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+.confirmBtn p {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  /* identical to box height */
+  color: #f0e0d0;
+}
+.closeButton {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}

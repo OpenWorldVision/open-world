@@ -48,7 +48,8 @@
 
 @media (max-width: 950px) {
     .nav1 > div {
-        padding: 15px;
+        padding: 8px;
+        font-size: 12px;
     }
 }
 
@@ -125,7 +126,7 @@
 }
 
 .body{
-    padding: 20px 200px;
+    /* padding: 20px 200px; */
     height: calc(100% - 250px);
 }
 
@@ -161,12 +162,12 @@
 }
 
 .loading {
-    font-size: 30px;
+    font-size: 18px;
 }
 
 .item{
-    padding: 0 20px;
-    width: 220px;
+    /* padding: 0 20px; */
+    /* width: 220px; */
 }
 
 .itemInfo {

@@ -19,7 +19,7 @@ const getProfilesContract = async () => {
   )
 }
 
-const getHeroCoreContract = async () => {
+export const getHeroCoreContract = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   const { chainId } = await provider.getNetwork()
   const heroAddress = getAddresses(chainId).HERO_CORE
@@ -58,10 +58,11 @@ export const mintProfessionNFT = async (
   const allowance = await OpenWorld.allowance(currentAddress, HeroCore.address)
 
   if (allowance < web3.utils.toWei('1000000', 'ether')) {
-    await OpenWorld.approve(
+    const tx = await OpenWorld.approve(
       HeroCore.address,
       web3.utils.toWei('1000000', 'ether')
     )
+    tx.wait()
   }
   try {
     const tx = await HeroCore.mint(currentAddress, trait)

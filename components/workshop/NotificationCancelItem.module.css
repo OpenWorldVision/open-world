@@ -1,0 +1,90 @@
+
+@media only screen and (max-width: 970px) {
+  .sellBoard img {
+    display: none;
+  }
+
+  .sellBoard div {
+    background: #405160;
+    border-radius: 10px;
+    color: #F0E0D0;
+    font-weight: 700;
+    font-size: 20px;
+    width: fit-content;
+    padding: 10px 20px;
+  }
+
+  .modal {
+    display: none;
+  }
+
+  .modalMobile {
+    background: #C8BB98;
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+    padding: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buyBoardMobile {
+    background: #405160;
+    border-radius: 10px;
+    position: absolute;
+    top: -16px;
+    left: 23%;
+    padding: 6px 20px;
+    color: #F0E0D0;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .closeBtnMobile {
+    text-align: end;
+    font-size: 30px;
+    color: #472805;
+    width: 100%;
+  }
+
+  .itemBackground {
+    max-width: 100px;
+    min-width: 70px;
+    width: 22%;
+    /* height: 100%; */
+    background: linear-gradient(180deg, rgba(90, 90, 90, 0.7) 0%, rgba(171, 171, 171, 0.7) 100%);
+    padding: 1px;
+
+  }
+
+  .imgContainer {
+    border: 1px solid #F8F8F8;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+  }
+
+  .itemNameMobile {
+    font-weight: 500;
+    font-size: 19px;
+  }
+
+  .itemInfoMobile {
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  .itemBtnConfirm {
+    margin-top: 20px;
+    color: #F0E0D0;
+    font-weight: 700;
+    font-size: 16px;
+    background-color: #472805 !important;
+    border-radius: 10px;
+  }
+
+}

@@ -74,6 +74,16 @@
       "address": "0xae46953433ebE48698c6D86a49fA154eDCad99C3",
       "txHash": "0x8a9e589b359477232366d17fe5769da1ad38535de7860160ecc582031866ad4f",
       "kind": "transparent"
+    },
+    {
+      "address": "0x4509761E5E980A4fa852aAC2906F87C61D21Cad9",
+      "txHash": "0x0e8b106d91f4a0eb197e5f78f536e6c560afc75893bba2fe72b0154b38003bb8",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x68299330d0dc61681c22D693877Be54eAA0dfADE",
+      "txHash": "0xa98d68d2af96ed90a9771c6c81e154b183471de14befab12ef807d9e1a397af1",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -11405,6 +11415,239 @@
           },
           "t_bytes4": {
             "label": "bytes4"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          }
+        }
+      }
+    },
+    "21bfec60a59bab30e1a820af7dd68e874b8c4b2f51fc5bc9ac3bc0b39f39e1dd": {
+      "address": "0x64b02a9731f6096E19a91fc3F030BAf1a8a55Ae7",
+      "txHash": "0x3e72cd26aec90b2e8812f3a1408a6a615ad87c80a2ffc10b21797e96ff07fdfb",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:25"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "../@openzeppelin/contracts-upgradeable/proxy/Initializable.sol:30"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:31"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "_roles",
+            "type": "t_mapping(t_bytes32,t_struct(RoleData)7383_storage)",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61"
+          },
+          {
+            "contract": "AccessControlUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "../@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:225"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "openToken",
+            "type": "t_contract(IERC20)12076",
+            "src": "HeroMarket.sol:60"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "taxRecipient",
+            "type": "t_address",
+            "src": "HeroMarket.sol:61"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "listings",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_struct(Listing)481_storage))",
+            "src": "HeroMarket.sol:65"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "listedTokenIDs",
+            "type": "t_mapping(t_address,t_struct(UintSet)13121_storage)",
+            "src": "HeroMarket.sol:67"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "listedTokenTypes",
+            "type": "t_struct(AddressSet)13000_storage",
+            "src": "HeroMarket.sol:69"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "isTokenBanned",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "HeroMarket.sol:72"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "isUserBanned",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "HeroMarket.sol:74"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "tax",
+            "type": "t_mapping(t_address,t_int128)",
+            "src": "HeroMarket.sol:77"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "freeTax",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "HeroMarket.sol:79"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "defaultTax",
+            "type": "t_int128",
+            "src": "HeroMarket.sol:80"
+          },
+          {
+            "contract": "HeroMarket",
+            "label": "allowedTokenTypes",
+            "type": "t_struct(AddressSet)13000_storage",
+            "src": "HeroMarket.sol:83"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20)12076": {
+            "label": "contract IERC20"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_struct(Listing)481_storage))": {
+            "label": "mapping(address => mapping(uint256 => struct HeroMarket.Listing))"
+          },
+          "t_mapping(t_uint256,t_struct(Listing)481_storage)": {
+            "label": "mapping(uint256 => struct HeroMarket.Listing)"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_struct(Listing)481_storage": {
+            "label": "struct HeroMarket.Listing",
+            "members": [
+              {
+                "label": "seller",
+                "type": "t_address"
+              },
+              {
+                "label": "price",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_mapping(t_address,t_struct(UintSet)13121_storage)": {
+            "label": "mapping(address => struct EnumerableSet.UintSet)"
+          },
+          "t_struct(UintSet)13121_storage": {
+            "label": "struct EnumerableSet.UintSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)12735_storage"
+              }
+            ]
+          },
+          "t_struct(Set)12735_storage": {
+            "label": "struct EnumerableSet.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_bytes32)dyn_storage": {
+            "label": "bytes32[]"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_struct(AddressSet)13000_storage": {
+            "label": "struct EnumerableSet.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)12735_storage"
+              }
+            ]
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_mapping(t_address,t_int128)": {
+            "label": "mapping(address => int128)"
+          },
+          "t_int128": {
+            "label": "int128"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)7383_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)"
+          },
+          "t_struct(RoleData)7383_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "members",
+                "type": "t_struct(AddressSet)10450_storage"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32"
+              }
+            ]
+          },
+          "t_struct(AddressSet)10450_storage": {
+            "label": "struct EnumerableSetUpgradeable.AddressSet",
+            "members": [
+              {
+                "label": "_inner",
+                "type": "t_struct(Set)10185_storage"
+              }
+            ]
+          },
+          "t_struct(Set)10185_storage": {
+            "label": "struct EnumerableSetUpgradeable.Set",
+            "members": [
+              {
+                "label": "_values",
+                "type": "t_array(t_bytes32)dyn_storage"
+              },
+              {
+                "label": "_indexes",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              }
+            ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
           },
           "t_array(t_uint256)50_storage": {
             "label": "uint256[50]"
