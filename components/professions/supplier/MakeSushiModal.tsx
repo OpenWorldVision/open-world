@@ -266,12 +266,13 @@ function MakeSushiModal(props: Props) {
             ? `url('/images/professions/suppliers/supplierModalBackground.png')`
             : `url('/images/professions/openian/claimFish.png')`
         }
-        width={600}
+      
         backgroundPosition="center left, center right"
         bgRepeat="no-repeat"
         bgSize="100% 100%"
         bgColor="transparent"
         padding="80px 50px 70px"
+        className={styles.modalContent}
       >
         <Button className={styles.closeBtn} onClick={toggleModal}>
           <FontAwesomeIcon icon={faTimesCircle} />
@@ -280,6 +281,7 @@ function MakeSushiModal(props: Props) {
         <ModalBody className={styles.boardContent}>
           {typeModal === TYPE_OF_MODAL?.START ? (
             <img
+            className={styles.imgMakeSushi}
               src="/images/professions/suppliers/modalSupImg.png"
               alt="Fish board"
             />
