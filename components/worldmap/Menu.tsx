@@ -69,9 +69,14 @@ export default function Menu() {
               </a>
             </li>
             <li className="click-cursor">
-              <Link href="/about">
-                <a className="click-cursor">About +</a>
-              </Link>
+              <a
+                href="https://wiki.openworld.vision/"
+                target="_blank"
+                rel="noreferrer"
+                className="click-cursor"
+              >
+                About +
+              </a>
             </li>
           </ul>
         )}
