@@ -146,7 +146,7 @@ function Market() {
           overflow="scroll"
           height="76vh"
           spacing={2}
-          p="0 16px"
+          p="0 16px 200px 0"
           bgColor="#C8BB98"
           align="center"
         >
