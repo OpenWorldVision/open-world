@@ -10,7 +10,10 @@ function MarketPlace() {
   const [nav, setNav] = useState(1)
 
   return (
-    <MarketPlaceCSS>
+    <div style={{
+      position: 'relative',
+      zIndex: 1,
+    }}>
       <Head>
         <title>Marketplace</title>
       </Head>
@@ -20,6 +23,9 @@ function MarketPlace() {
         justifyContent="space-evenly"
         gap={2}
         backgroundColor="black"
+        style={{
+          padding: '16px'
+        }}
       >
         <Box>
           <Center
@@ -48,63 +54,8 @@ function MarketPlace() {
       <div>
         {nav === 1 ? <Market /> : nav === 2 ? <DashBoard /> : <History />}
       </div>
-    </MarketPlaceCSS>
+    </div>
   )
 }
-
-const MarketPlaceCSS = styled.div({
-  '.nav': {
-    display: 'flex',
-    backgroundColor: 'black',
-    color: 'white',
-    '.nav-items-1': {
-      flex: 1,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      img: {
-        marginLeft: '100px',
-        '@media(max-width: 950px)': {
-          marginLeft: '20px',
-        },
-      },
-      '@media(max-width: 520px)': {
-        justifyContent: 'flex-end',
-        img: {
-          display: 'none',
-        },
-      },
-    },
-    '.nav-items-2': {
-      display: 'flex',
-      alignItems: 'center',
-    },
-    '.nav-items-3': {
-      flex: 1,
-      display: 'flex',
-      alignItems: 'center',
-    },
-    '.nav-items-1, .nav-items-2, .nav-items-3': {
-      div: {
-        padding: '20px 100px',
-        fontWeight: '700',
-        fontSize: '22px',
-        '@media(max-width: 1020px)': {
-          padding: '20px 50px',
-        },
-        '@media(max-width: 640px)': {
-          padding: '20px 10px',
-        },
-        '@media(max-width: 520px)': {
-          fontSize: '18px',
-          padding: '15px 10px',
-        },
-      },
-      '.select': {
-        color: '#FFB966',
-      },
-    },
-  },
-})
 
 export default MarketPlace
