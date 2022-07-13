@@ -296,7 +296,7 @@
     margin: 0 5px;
     background: #405160;
     color: #F0E0D0;
-    padding: 8px;
+    padding: 6px;
     font-size: 14px;
 
   }
@@ -335,8 +335,7 @@
   .container {
     background: #C8BB98;
     width: 100%;
-    min-height: 80vh;
-    padding: 10px 0;
+    padding: 15px 0;
     position: relative;
     margin-bottom: 160px;
   }
