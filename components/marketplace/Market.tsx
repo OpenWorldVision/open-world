@@ -146,7 +146,7 @@ function Market() {
           overflow="scroll"
           height="76vh"
           spacing={2}
-          p="0 16px"
+          p="0 16px 200px 0"
           bgColor="#C8BB98"
           align="center"
         >
@@ -161,7 +161,7 @@ function Market() {
                 Selling NFT
               </Text>
             </Box>
-            <Image
+            {/* <Image
               src="/images/marketplace/header.webp"
               alt="header"
               position="absolute"
@@ -173,7 +173,7 @@ function Market() {
               zIndex={-1}
               w={`${210 * 0.6}px`}
               h={`${160 * 0.6}px`}
-            />
+            /> */}
           </Box>
 
           {loading && <Spinner />}
