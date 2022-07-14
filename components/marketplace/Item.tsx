@@ -73,6 +73,7 @@ function Item({
           mt={2}
           minW={110}
           mr={1}
+          color='black'
         >
           <Text fontWeight="medium" fontSize={14}>
             Price {price}
