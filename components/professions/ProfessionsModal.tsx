@@ -2,7 +2,7 @@ import { Button, Grid, GridItem } from '@chakra-ui/react'
 import mainStyle from './professions.module.css'
 import inheritStyle from './professionsSelection.module.css'
 import style from './professionsModal.module.css'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   fetchRequireBalanceProfession,
   fetchUserProfessionNFT,
@@ -14,6 +14,7 @@ import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
 import { ethers } from 'ethers'
+import Popup, { PopupRef } from '@components/Popup'
 
 const NPCList = ['openian', 'supplier', 'blacksmith']
 
@@ -58,6 +59,7 @@ function ProfessionsModal(props: Props) {
   const [requireBalance, setRequireBalance] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
+  const popupRef = useRef<PopupRef>()
 
   const onActivateProfession = useCallback(async () => {
     const title = 'Activate career'
@@ -74,15 +76,27 @@ function ProfessionsModal(props: Props) {
         professionNft,
         hero.heroId,
         (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
         }
       )
 
       if (data) {
         getResult(data.status)
-        handleTxStateChange(title, data.transactionHash, data.status)
+        handleTxStateChange(title, data.transactionHash, data.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
       }
     }
     setIsLoading(false)
@@ -209,6 +223,7 @@ function ProfessionsModal(props: Props) {
           onClick={closeModal}
         />
       </div>
+      <Popup ref={popupRef} />
     </>
   )
 }

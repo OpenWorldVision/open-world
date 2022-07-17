@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import {
@@ -10,6 +10,7 @@ import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
 import LoadingModal from '@components/LoadingModal'
+import Popup, { PopupRef } from '@components/Popup'
 
 const imagesIndex = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
@@ -29,6 +30,7 @@ function CreateProfile({
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const handleTxStateChange = useTransactionState()
+  const popupRef = useRef<PopupRef>()
 
   // const dispatch = useDispatch()
   
@@ -63,7 +65,11 @@ function CreateProfile({
           : 'Create profile'
 
       const status = data.status ? 1 : 0
-      handleTxStateChange(title, data.transactionHash, status)
+      handleTxStateChange(title, data.transactionHash, status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     },
     [handleTxStateChange, heroSelector, isEdit, profile?._picId]
   )
@@ -75,7 +81,11 @@ function CreateProfile({
           ? 'Update profile'
           : 'Create profile'
 
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     },
     [handleTxStateChange, heroSelector, isEdit, profile?._picId]
   )
@@ -94,10 +104,11 @@ function CreateProfile({
           router.push('/')
           getDataProfile()
         } else {
-          handleTxStateChange(
-            'Update profile',
-            '',
-            TRANSACTION_STATE.NOT_EXECUTED
+          handleTxStateChange('Update profile', '', TRANSACTION_STATE.NOT_EXECUTED,
+            (type, content, subcontent) => {
+              popupRef.current.open()
+              popupRef.current.popup(type, content, subcontent)
+            }
           )
         }
         setIsOpenCreateProfile(false)
@@ -123,10 +134,11 @@ function CreateProfile({
           getDataProfile()
           handleOpenTutorial(true)
         } else {
-          handleTxStateChange(
-            'Create profile',
-            '',
-            TRANSACTION_STATE.NOT_EXECUTED
+          handleTxStateChange('Create profile', '', TRANSACTION_STATE.NOT_EXECUTED,
+            (type, content, subcontent) => {
+              popupRef.current.open()
+              popupRef.current.popup(type, content, subcontent)
+            }
           )
         }
 
@@ -221,6 +233,7 @@ function CreateProfile({
           </div>
         </div>
       </div>
+      <Popup ref={popupRef} />
     </CreateProfileCSS>
   )
 }

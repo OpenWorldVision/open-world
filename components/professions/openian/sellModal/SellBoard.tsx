@@ -12,6 +12,7 @@ import { listMultiItems } from 'utils/NFTMarket'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import Popup, { PopupRef } from '@components/Popup'
 
 type Props = {
   selectedItem: number
@@ -31,6 +32,7 @@ function SellBoard(props: Props) {
   const [isLoading, setIsLoading] = useState(false)
   const [listingResult, setListingResult] = useState(undefined)
   const handleTxStateChange = useTransactionState()
+  const popupRef = useRef<PopupRef>()
 
   const fetchSelectedItemAmount = async () => {
     const itemAmount = await fetchUserInventoryItemAmount()
@@ -129,15 +131,27 @@ function SellBoard(props: Props) {
 
       const itemSellIds = selectedItemIds.slice(0, sellingAmount)
       const result = await listMultiItems(itemSellIds, price, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       })
       if (result !== null) {
         handleFinishListing()
         setListingResult(true)
-        handleTxStateChange(title, result.transactionHash, result.status)
+        handleTxStateChange(title, result.transactionHash, result.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       } else {
         setListingResult(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
       priceRef.current.value = '0'
       setPrice(0)
@@ -255,6 +269,7 @@ function SellBoard(props: Props) {
           </Button>
         </div>
       </div>
+      <Popup ref={popupRef} />
     </>
   )
 }

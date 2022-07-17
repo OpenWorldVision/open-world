@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import style from './Mining.module.css'
-import { Button, useToast } from '@chakra-ui/react'
+import { Button } from '@chakra-ui/react'
 
 import ResultMining from './ResultMining'
 import MiningWait from './MiningWait'
@@ -18,6 +18,8 @@ import { getStamina } from 'utils/profileContract'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
+import { useRouter } from 'next/router'
+import Popup, { PopupRef } from '@components/Popup'
 
 type Props = {
   isOpen: boolean
@@ -38,7 +40,8 @@ export default function MiningModal(props: Props) {
     intervalToDuration({ start: 0, end: 0 })
   )
   const handleTxStateChange = useTransactionState()
-  const toast = useToast()
+  const router = useRouter()
+  const popupRef = useRef<PopupRef>()
 
   const initialize = useCallback(async () => {
     toggleLoadingModal(true)
@@ -77,30 +80,31 @@ export default function MiningModal(props: Props) {
     const stamina = await getStamina()
 
     if (Number(stamina) < data.requireStamina) {
-      toast({
-        title: 'Mining Quest',
-        description: `Mining quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start mining quest.`,
-        status: 'error',
-        duration: 15000,
-        isClosable: true,
-      })
+      popupRef.current.open()
+      popupRef.current.popup(
+        'stamina', 
+        'Mining Quest', 
+        `Mining quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start mining quest.`,
+        'Bye Sushi',
+        () => { router.push('professions') }
+      )
       return false
     }
 
     const hammerList = await fetchAmountItemByTrait(3)
     if (hammerList?.length < 1) {
-      toast({
-        title: 'Mining Quest',
-        description: "You don't have enough hammer to start mining quest",
-        status: 'error',
-        duration: 15000,
-        isClosable: true,
-      })
+      popupRef.current.open()
+      popupRef.current.popup(
+        'stamina', 
+        'Mining Quest', 
+        'You don\'t have enough hammer to start mining quest',
+        'Bye hammer',
+        () => { router.push('professions') }
+      )
       return false
     }
-
     return true
-  }, [toast])
+  }, [popupRef])
 
   const startQuest = useCallback(async () => {
     try {
@@ -113,17 +117,29 @@ export default function MiningModal(props: Props) {
       toggleLoadingModal(true)
 
       const mining = await startMining((txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       })
 
       if (mining) {
-        handleTxStateChange(title, mining.transactionHash, mining.status)
+        handleTxStateChange(title, mining.transactionHash, mining.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
         const data = await getMiningQuest()
         setIsFinished(data.finish)
         setIsStartQuest(false)
         setCanFinish(false)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
     } catch (e) {
     } finally {
@@ -139,17 +155,29 @@ export default function MiningModal(props: Props) {
     const title = 'Finish mining quest'
     toggleLoadingModal(true)
     const finish = await finishMining((txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     })
     if (finish) {
-      handleTxStateChange(title, finish.transactionHash, finish.status)
+      handleTxStateChange(title, finish.transactionHash, finish.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
 
       updateInventory()
       setIsStartQuest(false)
       setIsFinished(true)
       // setTimeLeft(duration)
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     }
     toggleLoadingModal(false)
   }, [])
@@ -191,6 +219,7 @@ export default function MiningModal(props: Props) {
       ) : (
         <ResultMining toggleModal={confirmResult} />
       )}
+      <Popup ref={popupRef} />
     </div>
   )
 }

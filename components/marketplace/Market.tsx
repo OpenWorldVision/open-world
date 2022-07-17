@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './market.module.css'
 import useTransactionState, {
   TRANSACTION_STATE,
@@ -12,6 +12,7 @@ import {
   getListingIDs,
   purchaseHero,
 } from 'utils/HeroMarketUtils'
+import Popup, { PopupRef } from '@components/Popup'
 
 const numOfPage = 12
 
@@ -24,6 +25,7 @@ function Market() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
+  const popupRef = useRef<PopupRef>()
 
   useEffect(() => {
     getItems()
@@ -43,11 +45,14 @@ function Market() {
 
   const handlePurchase = async (value) => {
     const title = 'Purchase item'
-
     const result = await purchaseHero(
       parseInt(value?.id),
       (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       },
       async (_) => {
         setData(dataInit)
@@ -55,22 +60,42 @@ function Market() {
     )
     if (result) {
       await getItems()
-      handleTxStateChange(title, result.transactionHash, result.status)
+      handleTxStateChange(title, result.transactionHash, result.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     }
   }
 
   const handleCancel = async (value) => {
     const title = 'Cancel listing item'
     const result = await cancelListingItem(value?.id, (txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     })
     if (result) {
       await getItems()
-      handleTxStateChange(title, result.transactionHash, result.status)
+      handleTxStateChange(title, result.transactionHash, result.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+      (type, content, subcontent) => {
+      popupRef.current.open()
+      popupRef.current.popup(type, content, subcontent)
+    })
     }
   }
 
@@ -235,6 +260,7 @@ function Market() {
           <img src="./images/marketplace/back.webp" alt="img" />
         </a>
       </Link>
+      <Popup ref={popupRef} />
     </div>
   )
 }

@@ -29,6 +29,7 @@ import {
 import LoadingModal from '@components/LoadingModal'
 import { useDispatch } from 'react-redux'
 import { setOpenBalance } from 'reduxActions/profileAction'
+import Popup, { PopupRef } from '@components/Popup'
 
 export default function Castle() {
   // Ref
@@ -48,6 +49,7 @@ export default function Castle() {
   const handleTxStateChange = useTransactionState()
   const { onClose } = useDisclosure()
   const toast = useToast()
+  const popupRef = useRef<PopupRef>()
 
   const [nftsAmount, setNftsAmount] = useState({
     openianAmount: 0,
@@ -156,22 +158,33 @@ export default function Castle() {
       if (balance >= NTFCardPrice) {
         const title = 'Purchase NFT card'
         const data = await mintProfessionNFT(trait, (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
         })
         if (data) {
-          handleTxStateChange(title, data.transactionHash, data.status)
+          handleTxStateChange(title, data.transactionHash, data.status, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
           // await fetchNFTAmount()
         } else {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
         }
       } else {
-        toast({
-          title: 'Purchase NFT card transaction is failed to excute',
-          description: "You don't have enough OPEN to purchase",
-          duration: 10000,
-          isClosable: true,
-          status: 'error',
-        })
+        popupRef.current.open()
+        popupRef.current.popup(
+          'failed', 
+          'Purchase NFT card transaction is failed to excute', 
+          'You don\'t have enough OPEN to purchase'
+        )
         onClose()
       }
       fetchNFTAmount()
@@ -305,6 +318,7 @@ export default function Castle() {
         toggleLandAuction={() => setIsLandAuctionOpen(false)}
         key={action}
       />
+      <Popup ref={popupRef} />
     </div>
   )
 }

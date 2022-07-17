@@ -1,11 +1,12 @@
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { listMultiItems } from 'utils/NFTMarket'
 import styles from './dashboard.module.css'
 import useTransactionState, {
   TRANSACTION_STATE,
 } from 'hooks/useTransactionState'
 import { getHeroes, listingHero } from 'utils/HeroMarketUtils'
+import Popup, { PopupRef } from '@components/Popup'
 
 const numOfPage = 8
 
@@ -17,6 +18,7 @@ export default function DashBoard() {
   const [priceInput, setPriceInput] = useState(null)
   const [status, setStatus] = useState('Loading ...')
   const handleTxStateChange = useTransactionState()
+  const popupRef = useRef<PopupRef>()
 
   const getHeroesData = async () => {
     const result = await getHeroes()
@@ -37,17 +39,29 @@ export default function DashBoard() {
       selected.id,
       Number(priceInput),
       (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING,
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
     )
     if (result) {
       setDataInit([])
       await getHeroesData()
-      handleTxStateChange(title, result.transactionHash, result.status)
+      handleTxStateChange(title, result.transactionHash, result.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     } else {
       setData(dataInit)
       setStatus('Loading ...')
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED,
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     }
   }
   const renderData = useMemo(() => {
@@ -164,6 +178,7 @@ export default function DashBoard() {
           />
         </a>
       </Link>
+      <Popup ref={popupRef} />
     </div>
   )
 }

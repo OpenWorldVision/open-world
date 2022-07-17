@@ -1,0 +1,104 @@
+
+.modal {
+    position: fixed; /* Stay in place */
+    z-index: 1000000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100vw; /* Full width */
+    height: 100vh; /* Full height */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Content/Box */
+.background3 {
+    padding: 2px;
+    flex: 1;
+    max-width: 600px;
+    height: fit-content;
+    background-image: url('/images/popup/background-3.webp');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.background2{
+    background-image: url('/images/popup/background-2.webp');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+}
+
+.background1{
+    background-image: url('/images/popup/background.webp');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    padding: 15px 20px;
+}
+
+.background1 > div:first-child{
+    display: flex;
+    justify-content: space-between;
+}
+
+.background1 > div:first-child > img{
+    width: 22px;
+    height: 22px;
+}
+
+.background1 > div:first-child > div{
+    color: #472805;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.background1 > img{
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.background1 > div:nth-child(3){
+    font-family: cursive;
+    color: #592203;
+    font-size: 22px;
+    padding: 16px;
+}
+
+.background1 > div:nth-child(4){
+    font-family: "Gill Sans", sans-serif;
+    color: #c74f0c;
+    font-size: 16px;
+}
+
+.background1 > div:nth-child(4) a svg{
+    margin-top: -5px;
+}
+
+.background1 > button.invalid{
+    font-family: system-ui;
+    background-color: #bcbcbc;
+    color: #838383;
+    padding: 6px 25px;
+    border-radius: 10px;
+    font-weight: 500;
+    margin: 20px 0;
+}
+
+.background1 > button{
+    font-family: system-ui;
+    background-color: #472805;
+    color: #f0e0d0;
+    padding: 5px 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    margin: 20px 0;
+}

@@ -16,6 +16,7 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react'
 import LoadingModal from '@components/LoadingModal'
+import Popup, { PopupRef } from '@components/Popup'
 import Button from '@components/theme/components/Button'
 import { utils } from 'ethers'
 import useTransactionState, {
@@ -28,6 +29,7 @@ import {
   useState,
   useCallback,
   useEffect,
+  useRef,
 } from 'react'
 import { buyFirstHammer, getHammerPrice } from 'utils/Item'
 import Price from './Price'
@@ -43,6 +45,7 @@ function ConfirmationModal(_, ref) {
   const [buyAmount, setBuyAmount] = useState(1)
   const [loading, setLoading] = useState(false)
   const handleTxStateChange = useTransactionState()
+  const popupRef = useRef<PopupRef>()
 
   useEffect(() => {
     ;(async () => {
@@ -67,7 +70,11 @@ function ConfirmationModal(_, ref) {
   const handleConfirm = useCallback(async () => {
     setLoading(true)
     await buyFirstHammer((hash) => {
-      handleTxStateChange('Buy first hammer', hash, TRANSACTION_STATE.WAITING)
+      handleTxStateChange('Buy first hammer', hash, TRANSACTION_STATE.WAITING, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     })
     setLoading(false)
     onToggle()
@@ -148,6 +155,7 @@ function ConfirmationModal(_, ref) {
           </Button>
         </ModalFooter>
       </ModalContent>
+      <Popup ref={popupRef} />
     </Modal>
   )
 }

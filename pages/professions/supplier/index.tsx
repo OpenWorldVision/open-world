@@ -13,6 +13,7 @@ import useTransactionState, {
 import { useDisclosure } from '@chakra-ui/react'
 import Inventory, { InventoryRef } from '@components/professions/Inventory'
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch'
+import Popup, { PopupRef } from '@components/Popup'
 
 function Supplier() {
   const { isOpen: isOpenMakeSushi, onToggle: onToggleMakeSushi } =
@@ -24,6 +25,7 @@ function Supplier() {
   const handleTxStateChange = useTransactionState()
   const inventoryRef = useRef<InventoryRef>()
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const popupRef = useRef<PopupRef>()
 
   useEffect(() => {
     const checkWindowWidth = () => {
@@ -58,13 +60,25 @@ function Supplier() {
       setIsLoading(true)
 
       const data = await makeMultiSushi(listFishBurn, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       })
 
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status)
+        handleTxStateChange(title, data.transactionHash, data.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
 
       setIsLoading(false)
@@ -135,6 +149,7 @@ function Supplier() {
       </div>
       <Inventory ref={inventoryRef} />
       {isLoading && <LoadingModal />}
+      <Popup ref={popupRef} />
     </div>
   )
 }

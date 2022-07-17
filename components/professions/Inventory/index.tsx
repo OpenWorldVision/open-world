@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from 'react'
 import styled from '@emotion/styled'
@@ -22,6 +23,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import ItemGrid from './ItemGrid'
+import Popup, { PopupRef } from '@components/Popup'
 
 type Item = {
   type: 'sushi' | 'ore' | 'hammer' | 'fish'
@@ -41,6 +43,8 @@ function Inventory(_, ref) {
   const [isOpenNotify, setIsOpenNotify] = useState(null)
   const [data, setData] = useState(null)
   const handleTxStateChange = useTransactionState()
+  const popupRef = useRef<PopupRef>()
+  
 
   useImperativeHandle(
     ref,
@@ -68,14 +72,26 @@ function Inventory(_, ref) {
       selectedItem?.ids?.slice(0, Number(amountItems)),
       price,
       (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
     )
 
     if (result) {
-      handleTxStateChange(title, result.transactionHash, result.status)
+      handleTxStateChange(title, result.transactionHash, result.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     }
 
     getItemsIndex()
@@ -250,6 +266,7 @@ function Inventory(_, ref) {
           </InventoryCSS>
         </ModalBody>
       </ModalContent>
+      <Popup ref={popupRef} />
     </Modal>
   )
 }
