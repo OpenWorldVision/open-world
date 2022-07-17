@@ -56,11 +56,13 @@ function RefillStaminaModal(props: Props) {
       const availableSushi = await fetchAmountItemByTrait(4)
       if (availableSushi?.length < amountSushi) {
         popupRef.current.open()
-        popupRef.current.type = 'sushi'
-        popupRef.current.content = "Not enough Sushi to recover stamina"
-        popupRef.current.subcontent = 'Make Sushi or buy on maket'
-        popupRef.current.actionContent = "Bye Sushi"
-        popupRef.current.action = () => { router.push('foodcourt') }
+        popupRef.current.popup(
+          'sushi', 
+          'Not enough Sushi to recover stamina', 
+          'Make Sushi or buy on maket',
+          'Bye Sushi',
+          () => { router.push('foodcourt') }
+        )
         onClose()
         return
       }
@@ -69,16 +71,16 @@ function RefillStaminaModal(props: Props) {
         availableSushi?.slice(0, amountSushi).map((v) => `${v}`),
         (txHash) => {
           popupRef.current.open()
-          popupRef.current.type = 'stamina'
-          popupRef.current.content = "Recover stamina transaction is executing"
-          popupRef.current.subcontent = <Link
-            href={`https://testnet.bscscan.com/tx/${txHash}`}
-            isExternal
-          >
-            Transaction detail <ExternalLinkIcon mx="2px" />
-          </Link>
-          popupRef.current.actionContent = "Close"
-          popupRef.current.action = popupRef.current.close
+          popupRef.current.popup(
+            'stamina', 
+            'Recover stamina transaction is executing', 
+            <Link
+              href={`https://testnet.bscscan.com/tx/${txHash}`}
+              isExternal
+            >
+              Transaction detail <ExternalLinkIcon mx="2px" />
+            </Link>
+          )
         }
       )
       onSuccess()

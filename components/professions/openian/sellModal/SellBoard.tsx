@@ -131,15 +131,27 @@ function SellBoard(props: Props) {
 
       const itemSellIds = selectedItemIds.slice(0, sellingAmount)
       const result = await listMultiItems(itemSellIds, price, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       })
       if (result !== null) {
         handleFinishListing()
         setListingResult(true)
-        handleTxStateChange(title, result.transactionHash, result.status, popupRef)
+        handleTxStateChange(title, result.transactionHash, result.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       } else {
         setListingResult(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
       priceRef.current.value = '0'
       setPrice(0)

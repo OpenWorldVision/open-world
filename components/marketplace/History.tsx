@@ -38,7 +38,11 @@ export default function History() {
         const result = await cancelListingItem(
             id,
             (txHash) => {
-                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+                handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+                    (type, content, subcontent) => {
+                    popupRef.current.open()
+                    popupRef.current.popup(type, content, subcontent)
+                })
             }, 
         )
         if (result) {

@@ -65,7 +65,11 @@ function CreateProfile({
           : 'Create profile'
 
       const status = data.status ? 1 : 0
-      handleTxStateChange(title, data.transactionHash, status, popupRef)
+      handleTxStateChange(title, data.transactionHash, status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     },
     [handleTxStateChange, heroSelector, isEdit, profile?._picId]
   )
@@ -77,7 +81,11 @@ function CreateProfile({
           ? 'Update profile'
           : 'Create profile'
 
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     },
     [handleTxStateChange, heroSelector, isEdit, profile?._picId]
   )
@@ -96,11 +104,11 @@ function CreateProfile({
           router.push('/')
           getDataProfile()
         } else {
-          handleTxStateChange(
-            'Update profile',
-            '',
-            TRANSACTION_STATE.NOT_EXECUTED,
-            popupRef
+          handleTxStateChange('Update profile', '', TRANSACTION_STATE.NOT_EXECUTED,
+            (type, content, subcontent) => {
+              popupRef.current.open()
+              popupRef.current.popup(type, content, subcontent)
+            }
           )
         }
         setIsOpenCreateProfile(false)
@@ -126,11 +134,11 @@ function CreateProfile({
           getDataProfile()
           handleOpenTutorial(true)
         } else {
-          handleTxStateChange(
-            'Create profile',
-            '',
-            TRANSACTION_STATE.NOT_EXECUTED,
-            popupRef
+          handleTxStateChange('Create profile', '', TRANSACTION_STATE.NOT_EXECUTED,
+            (type, content, subcontent) => {
+              popupRef.current.open()
+              popupRef.current.popup(type, content, subcontent)
+            }
           )
         }
 

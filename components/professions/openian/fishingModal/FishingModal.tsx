@@ -86,11 +86,13 @@ function FishingModal(props: Props) {
     const data = await fetchFishingQuestData()
     if (Number(stamina) < data.requireStamina) {
       popupRef.current.open()
-      popupRef.current.type = 'stamina'
-      popupRef.current.content = 'Fishing Quest'
-      popupRef.current.subcontent = `Fishing quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start fishing quest.`
-      popupRef.current.actionContent = stamina
-      popupRef.current.action = () => { router.push('foodcourt') }
+      popupRef.current.popup(
+        'stamina', 
+        'Fishing Quest', 
+        `Fishing quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start fishing quest.`,
+        'Bye Sushi',
+        () => { router.push('foodcourt') }
+      )
     }
     return Number(stamina) >= data.requireStamina
   }, [popupRef])
@@ -111,7 +113,11 @@ function FishingModal(props: Props) {
     toggleLoadingModal(true)
 
     const fishing = await startFishing((txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     })
     setTimeout(() => {
       toggleLoadingModal(false)
@@ -119,10 +125,18 @@ function FishingModal(props: Props) {
     if (fishing !== null) {
       setTypeOfModal(TYPE_OF_MODAL.WAITING)
       setCanFinish(false)
-      handleTxStateChange(title, fishing.transactionHash, fishing.status, popupRef)
+      handleTxStateChange(title, fishing.transactionHash, fishing.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     } else {
       toggleLoadingModal(false)
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     }
   }, [checkRequirementBeforeStartQuest, toggleLoadingModal])
 
@@ -131,14 +145,26 @@ function FishingModal(props: Props) {
     if (canFinish) {
       toggleLoadingModal(true)
       const finish = await finishFishing((txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       })
       if (finish) {
-        handleTxStateChange(title, finish.transactionHash, finish.status, popupRef)
+        handleTxStateChange(title, finish.transactionHash, finish.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
         updateInventory()
         setTypeOfModal(TYPE_OF_MODAL.FINISH)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
       }
       toggleLoadingModal(false)
     }

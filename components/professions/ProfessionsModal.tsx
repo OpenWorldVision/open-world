@@ -76,15 +76,27 @@ function ProfessionsModal(props: Props) {
         professionNft,
         hero.heroId,
         (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
         }
       )
 
       if (data) {
         getResult(data.status)
-        handleTxStateChange(title, data.transactionHash, data.status, popupRef)
+        handleTxStateChange(title, data.transactionHash, data.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
       }
     }
     setIsLoading(false)

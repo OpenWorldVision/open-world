@@ -81,22 +81,26 @@ export default function MiningModal(props: Props) {
 
     if (Number(stamina) < data.requireStamina) {
       popupRef.current.open()
-      popupRef.current.type = 'stamina'
-      popupRef.current.content = 'Mining Quest'
-      popupRef.current.subcontent = `Mining quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start mining quest.`
-      popupRef.current.actionContent = "Bye Sushi"
-      popupRef.current.action = () => { router.push('professions') }
+      popupRef.current.popup(
+        'stamina', 
+        'Mining Quest', 
+        `Mining quest requires at least ${data.requireStamina} stamina to start. You don't have enough stamina to start mining quest.`,
+        'Bye Sushi',
+        () => { router.push('professions') }
+      )
       return false
     }
 
     const hammerList = await fetchAmountItemByTrait(3)
     if (hammerList?.length < 1) {
       popupRef.current.open()
-      popupRef.current.type = 'stamina'
-      popupRef.current.content = 'Mining Quest'
-      popupRef.current.subcontent = "You don't have enough hammer to start mining quest"
-      popupRef.current.actionContent = "Bye hammer"
-      popupRef.current.action = () => { router.push('professions') }
+      popupRef.current.popup(
+        'stamina', 
+        'Mining Quest', 
+        'You don\'t have enough hammer to start mining quest',
+        'Bye hammer',
+        () => { router.push('professions') }
+      )
       return false
     }
     return true
@@ -113,17 +117,29 @@ export default function MiningModal(props: Props) {
       toggleLoadingModal(true)
 
       const mining = await startMining((txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       })
 
       if (mining) {
-        handleTxStateChange(title, mining.transactionHash, mining.status, popupRef)
+        handleTxStateChange(title, mining.transactionHash, mining.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
         const data = await getMiningQuest()
         setIsFinished(data.finish)
         setIsStartQuest(false)
         setCanFinish(false)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
     } catch (e) {
     } finally {
@@ -139,17 +155,29 @@ export default function MiningModal(props: Props) {
     const title = 'Finish mining quest'
     toggleLoadingModal(true)
     const finish = await finishMining((txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     })
     if (finish) {
-      handleTxStateChange(title, finish.transactionHash, finish.status, popupRef)
+      handleTxStateChange(title, finish.transactionHash, finish.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
 
       updateInventory()
       setIsStartQuest(false)
       setIsFinished(true)
       // setTimeLeft(duration)
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     }
     toggleLoadingModal(false)
   }, [])

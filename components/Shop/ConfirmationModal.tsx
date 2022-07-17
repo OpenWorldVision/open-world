@@ -70,7 +70,11 @@ function ConfirmationModal(_, ref) {
   const handleConfirm = useCallback(async () => {
     setLoading(true)
     await buyFirstHammer((hash) => {
-      handleTxStateChange('Buy first hammer', hash, TRANSACTION_STATE.WAITING, popupRef)
+      handleTxStateChange('Buy first hammer', hash, TRANSACTION_STATE.WAITING, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     })
     setLoading(false)
     onToggle()

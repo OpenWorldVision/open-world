@@ -72,14 +72,26 @@ function Inventory(_, ref) {
       selectedItem?.ids?.slice(0, Number(amountItems)),
       price,
       (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
     )
 
     if (result) {
-      handleTxStateChange(title, result.transactionHash, result.status, popupRef)
+      handleTxStateChange(title, result.transactionHash, result.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     }
 
     getItemsIndex()

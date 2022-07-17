@@ -155,15 +155,27 @@ export default function LayoutShop(props: Props) {
       setIsLoading(true)
       const title = isPage === 'workshop' ? `Cancel listing item in Workshop` : `Cancel listing item in Food Court`
       const data = await cancelListingItem(item?.id, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
         setIsLoading(false)
       })
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status, popupRef)
+        handleTxStateChange(title, data.transactionHash, data.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
         handleGetMyList()
         setIsLoading(false)
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
         setIsLoading(false)
       }
     },
@@ -203,15 +215,27 @@ export default function LayoutShop(props: Props) {
         id,
         listIds,
         (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
         },
         (error) => {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
           setIsLoading(false)
         }
       )
       if (data) {
-        handleTxStateChange(title, data.transactionHash, data.status, popupRef)
+        handleTxStateChange(title, data.transactionHash, data.status, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
         setIsLoading(false)
         if (isItemBoard === 'ore' || isItemBoard === 'sushi') {
           handleGetOreOrSushiList()
@@ -221,7 +245,11 @@ export default function LayoutShop(props: Props) {
         return data
       } else {
         setIsLoading(false)
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
     },
     [isItemBoard]

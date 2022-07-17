@@ -53,21 +53,28 @@ export default function ForgeHammer(props: Props) {
     if (numberOreNeed <= numberYourOre.length && numberHammer !== 0) {
       const listSellHammer = numberYourOre.slice(0, numberOreNeed)
       const forgeHammer = await makeHammer(listSellHammer, (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       })
 
       if (forgeHammer) {
         setCheckIsSuccess(forgeHammer)
         setIsStartQuest(true)
-        handleTxStateChange(
-          title,
-          forgeHammer.transactionHash,
-          forgeHammer.status,
-          popupRef
-        )
+        handleTxStateChange(title, forgeHammer.transactionHash, forgeHammer.status,
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
         getListYourOre()
       } else {
-        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+        handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
 
       toggleLoadingModal(false)

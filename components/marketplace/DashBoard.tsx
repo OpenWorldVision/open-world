@@ -39,17 +39,29 @@ export default function DashBoard() {
       selected.id,
       Number(priceInput),
       (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING,
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       }
     )
     if (result) {
       setDataInit([])
       await getHeroesData()
-      handleTxStateChange(title, result.transactionHash, result.status, popupRef)
+      handleTxStateChange(title, result.transactionHash, result.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     } else {
       setData(dataInit)
       setStatus('Loading ...')
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED,
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     }
   }
   const renderData = useMemo(() => {

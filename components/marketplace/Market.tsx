@@ -48,7 +48,11 @@ function Market() {
     const result = await purchaseHero(
       parseInt(value?.id),
       (txHash) => {
-        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+        handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+          (type, content, subcontent) => {
+          popupRef.current.open()
+          popupRef.current.popup(type, content, subcontent)
+        })
       },
       async (_) => {
         setData(dataInit)
@@ -56,22 +60,42 @@ function Market() {
     )
     if (result) {
       await getItems()
-      handleTxStateChange(title, result.transactionHash, result.status, popupRef)
+      handleTxStateChange(title, result.transactionHash, result.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     }
   }
 
   const handleCancel = async (value) => {
     const title = 'Cancel listing item'
     const result = await cancelListingItem(value?.id, (txHash) => {
-      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+      handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     })
     if (result) {
       await getItems()
-      handleTxStateChange(title, result.transactionHash, result.status, popupRef)
+      handleTxStateChange(title, result.transactionHash, result.status, 
+        (type, content, subcontent) => {
+        popupRef.current.open()
+        popupRef.current.popup(type, content, subcontent)
+      })
     } else {
-      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+      handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+      (type, content, subcontent) => {
+      popupRef.current.open()
+      popupRef.current.popup(type, content, subcontent)
+    })
     }
   }
 

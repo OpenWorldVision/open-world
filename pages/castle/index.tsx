@@ -158,21 +158,33 @@ export default function Castle() {
       if (balance >= NTFCardPrice) {
         const title = 'Purchase NFT card'
         const data = await mintProfessionNFT(trait, (txHash) => {
-          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, popupRef)
+          handleTxStateChange(title, txHash, TRANSACTION_STATE.WAITING, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
         })
         if (data) {
-          handleTxStateChange(title, data.transactionHash, data.status, popupRef)
+          handleTxStateChange(title, data.transactionHash, data.status, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
           // await fetchNFTAmount()
         } else {
-          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, popupRef)
+          handleTxStateChange(title, '', TRANSACTION_STATE.NOT_EXECUTED, 
+            (type, content, subcontent) => {
+            popupRef.current.open()
+            popupRef.current.popup(type, content, subcontent)
+          })
         }
       } else {
         popupRef.current.open()
-        popupRef.current.type = 'failed'
-        popupRef.current.content = "Purchase NFT card transaction is failed to excute"
-        popupRef.current.subcontent = 'You don\'t have enough OPEN to purchase'
-        popupRef.current.actionContent = "Close"
-        popupRef.current.action = popupRef.current.close
+        popupRef.current.popup(
+          'failed', 
+          'Purchase NFT card transaction is failed to excute', 
+          'You don\'t have enough OPEN to purchase'
+        )
         onClose()
       }
       fetchNFTAmount()

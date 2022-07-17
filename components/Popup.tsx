@@ -8,6 +8,7 @@ import {
 import React, {
     forwardRef,
     useImperativeHandle,
+    useState,
 } from 'react'
 
 const infoType = {
@@ -26,25 +27,32 @@ export type PopupRef = {
     isOpen: boolean
     open: () => void
     close: () => void
-    type: string, 
-    content: any, 
-    subcontent: any, 
-    actionContent: string,
-    action: () => void
+    popup: (type, content, subcontent?, actionContent?, action?) => void
 }
 
 function Popup(_, ref) {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [info, setInfo] = useState({
+        type: '',
+        content: '',
+        subcontent: '',
+        actionContent: 'Close',
+        action: onClose
+    })
 
     useImperativeHandle(ref, () => ({
         isOpen: isOpen,
         open: onOpen,
         close: onClose,
-        type: '', 
-        content: '', 
-        subcontent: '', 
-        actionContent: '',
-        action: onClose
+        popup(type, content, subcontent = '', actionContent = 'Close', action = onClose){
+            setInfo({
+                type,
+                content,
+                subcontent,
+                actionContent,
+                action
+            })
+        }
     }), [onClose])
 
     return (
@@ -60,10 +68,10 @@ function Popup(_, ref) {
                                     <img src='/images/popup/close.webp' />
                                 </button>
                             </div>
-                            {ref.current?.type && <img src={infoType[ref.current?.type]} />}
-                            <div>{ref.current?.content}</div>
-                            {ref.current?.subcontent && <div>({ref.current?.subcontent})</div> }
-                            <button className="click-cursor" onClick={ref.current?.action}>{ref.current?.actionContent}</button>
+                            {info.type && <img src={infoType[info.type]} />}
+                            <div>{info.content}</div>
+                            {info.subcontent && <div>({info.subcontent})</div> }
+                            <button className="click-cursor" onClick={info.action}>{info.actionContent}</button>
                         </div>
                     </div>
                 </div>
