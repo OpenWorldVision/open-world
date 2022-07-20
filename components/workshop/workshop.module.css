@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.backgroundLayout {
+  display: none;
+}
+
 .workShopBg {
   background-image: url('/images/workshop/background.png');
   background-repeat: no-repeat;
@@ -269,7 +273,7 @@
   }
 }
 
-@media only screen and (max-width: 970px) {
+@media only screen and (max-width: 1024px) {
   .workShopBg {
     display: none;
   }
@@ -325,10 +329,9 @@
 
   .body {
     padding: 0 15px;
-    margin-top: 60px;
+    margin: 60px auto 15px;
     background: #405160;
-    width: 100%;
-    margin-bottom: 20px;
+    max-width: 335px;
     border-radius: 10px;
   }
 

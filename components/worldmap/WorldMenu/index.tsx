@@ -65,6 +65,7 @@ function WorldMenu(props: Props) {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      zIndex="9999"
     >
       <Box
         w={{

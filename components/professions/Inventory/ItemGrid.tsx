@@ -32,12 +32,14 @@ function ItemGrid({ onClose, onClickItem, loading, data }: Props) {
                 key={`${value.indexItem}${index}`}
                 className="container-item click-cursor"
               >
-                <img
-                  onClick={() => onClickItem(value)}
-                  src={`/images/inventory/items/${value.type}Amount.png`}
-                  alt="img"
-                />
-                <div>{value?.ids?.length}</div>
+                {!value.type.includes("Card") && <>
+                  <img
+                    onClick={() => onClickItem(value)}
+                    src={`/images/inventory/items/${value.type}Amount.png`}
+                    alt="img"
+                  />
+                  <div>{value?.ids?.length}</div>
+                </>}
               </div>
             )
           })}

@@ -331,6 +331,7 @@
   .itemNameMobile {
     font-weight: 500;
     font-size: 19px;
+    text-transform: capitalize;
   }
 
   .itemInfoMobile {
@@ -450,6 +451,28 @@
     font-size: 16px;
     background-color: #472805 !important;
     border-radius: 10px;
+    outline: none;
+    border: none;
   }
 
+  .itemBtnConfirm:hover {
+    background: #472805 !important;
+  }
+
+  .itemBtnConfirm:focus {
+    box-shadow: none !important;
+    background: #472805 !important;
+  }
+
+  .itemBtnConfirm[disabled] {
+    background: #a8a8a880 !important;
+    color: #777 !important;
+    font-weight: 700 !important;
+  }
+
+  .sellInput {
+    width: 100%;
+    background-color: transparent;
+    outline: none;
+  }
 }
