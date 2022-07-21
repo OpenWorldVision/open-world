@@ -6,7 +6,9 @@ import React, {
   useState,
 } from 'react'
 import styled from '@emotion/styled'
+import mobileStyle from '@components/workshop/workshop.module.css'
 import { fetchUserInventoryItemAmount } from 'utils/Item'
+import { fetchUserProfessionNFTAmount } from 'utils/professions'
 import { listMultiItems } from 'utils/NFTMarket'
 import useTransactionState, {
   TRANSACTION_STATE,
@@ -21,7 +23,15 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faBowlFood,
+  faGavel,
+  faScroll,
+} from '@fortawesome/free-solid-svg-icons'
 import ItemGrid from './ItemGrid'
+import ItemGridMobile from './ItemGridMobile'
+
 
 type Item = {
   type: 'sushi' | 'ore' | 'hammer' | 'fish'
@@ -39,7 +49,8 @@ function Inventory(_, ref) {
   const [price, setPrice] = useState(null)
   const [amountItems, setAmountItems] = useState(null)
   const [isOpenNotify, setIsOpenNotify] = useState(null)
-  const [data, setData] = useState(null)
+  const [data, setData] = useState([])
+  const [currentFilter, setCurrentFilter] = useState<'all' | 'ore' | 'food' | 'nftCard'>('all')
   const handleTxStateChange = useTransactionState()
 
   useImperativeHandle(
@@ -56,9 +67,10 @@ function Inventory(_, ref) {
   }, [])
 
   const getItemsIndex = useCallback(async () => {
-    const result = await fetchUserInventoryItemAmount()
+    const itemList = await fetchUserInventoryItemAmount()
+    const nftList = await fetchUserProfessionNFTAmount()
 
-    setData(result)
+    setData([...itemList, ...nftList])
   }, [])
 
   const handleSelling = useCallback(async () => {
@@ -132,12 +144,26 @@ function Inventory(_, ref) {
     setAmountItems(selectedItem?.ids?.length)
   }, [selectedItem?.ids?.length])
 
+  const addClassSelected = (itemName) => {
+    if (currentFilter === itemName) {
+      return mobileStyle.selected
+    }
+  }
+
+  const handleFilter = useCallback(
+    (item) => () => {
+      setCurrentFilter(item)
+    },
+    []
+  )
+
   return (
     <Modal isOpen={isOpen} onClose={onToggle} isCentered size="full">
       <ModalOverlay />
       <ModalContent>
         <ModalBody paddingStart={0}>
           <InventoryCSS>
+            {/* PC */}
             <div className="modal-inventory">
               <div className="modal-content">
                 {isOpenNotify ? (
@@ -247,6 +273,53 @@ function Inventory(_, ref) {
                 )}
               </div>
             </div>
+
+            {/* Mobile */}
+            <div className={mobileStyle.backgroundLayout} style={{paddingTop: '95px', height: 'calc(100vh - 18px)'}}>
+              <div className={mobileStyle.overlayBody}>
+                <div className={mobileStyle.body} style={{height: '534px'}}>
+                  <div className={mobileStyle.container} style={{minHeight: 'unset', height: '100%'}}>
+                    <div className={mobileStyle.containerTitle}>
+                      <img src="/images/inventory/mobile/inventory-logo-mobile.webp" alt="inventory-img" style={{top: '-71px'}}/>
+                      <div className={mobileStyle.containerTitleText}>Inventory</div>
+                    </div>
+                    <div className={mobileStyle.containerTitleButtop}>
+                      <Button
+                        className={addClassSelected('all')}
+                        onClick={handleFilter('all')}
+                      >
+                        All
+                      </Button>
+                      <Button
+                        className={addClassSelected('ore')}
+                        onClick={handleFilter('ore')}
+                      >
+                        <FontAwesomeIcon icon={faGavel} />
+                      </Button>
+                      <Button
+                        className={addClassSelected('food')}
+                        onClick={handleFilter('food')}
+                      >
+                        <FontAwesomeIcon icon={faBowlFood} />
+                      </Button>
+                      <Button
+                        className={addClassSelected('nftCard')}
+                        onClick={handleFilter('nftCard')}
+                      >
+                        <FontAwesomeIcon icon={faScroll} />
+                      </Button>
+                    </div>
+
+                    <ItemGridMobile
+                      loading={!data}
+                      data={data}
+                      currentFilter={currentFilter}
+                      onToggleInventory={onToggle}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </InventoryCSS>
         </ModalBody>
       </ModalContent>
@@ -271,6 +344,10 @@ const InventoryCSS = styled.div({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'auto',
+    '@media (max-width: 1024px)': {
+      display: 'none',
+      visibility: 'hidden',
+    },
     '::-webkit-scrollbar': {
       display: 'none',
     },
@@ -519,4 +596,24 @@ const InventoryCSS = styled.div({
       },
     },
   },
+  'modal-mobile-inventory': {
+    display: 'none',
+    visibility: 'hidden',
+    '@media (max-width: 1024px)': {
+      display: 'block',
+      visability: 'visable',
+      marginTop: '150px',
+    },
+    '.main-mobile': {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      paddingBottom: '50px',
+      overflow: 'auto',
+      width: '100vw',
+      '@media (max-width: 1024px)': {
+        padding: '80px 0',
+      },
+    }
+  }
 })

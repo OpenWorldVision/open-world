@@ -94,6 +94,28 @@ export const fetchUserProfessionNFT = async () => {
   }
 }
 
+const NFT_TYPES = ['openianCard', 'supplierCard', 'blacksmithCard']
+
+export async function fetchUserProfessionNFTAmount(): Promise<
+  { type: string; ids: number[] }[]
+> {
+  const nftList = await fetchUserProfessionNFT()
+
+  const nftListIds = NFT_TYPES.map((type, index) => {
+    return nftList.map((nft) => {
+      if (nft.trait === index + 1) {
+        return nft.heroId
+      }
+    })
+  })
+
+  const results = NFT_TYPES.map((type, index) => ({
+    type,
+    ids: nftListIds[index][0] !== undefined ? nftListIds[index] : [],
+  }))
+  return results
+}
+
 export const activateProfession = async (
   profession,
   heroId,
